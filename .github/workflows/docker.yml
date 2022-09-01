@@ -23,8 +23,8 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{steps.tag.outputs.tag}}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/polymers:${{steps.tag.outputs.tag}}
+            ${{ secrets.DOCKERHUB_USERNAME }}/polymers:latest
       - run: sleep 234s
   build-latest:
     runs-on: ubuntu-22.04
@@ -38,5 +38,5 @@ jobs:
       - uses: docker/build-push-action@v2.8.0
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/polymers:latest
       - run: sleep 234s
