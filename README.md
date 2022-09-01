@@ -3,7 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE)](https://pypi.org/project/polymers)
 [![Crates.io](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates.io&color=32592f)](https://crates.io/crates/polymers)
 [![Anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers)
-[![Docker](https://img.shields.io/docker/v/mrbuche/polymers?color=0db7ed&label=Docker%20Hub&logo=docker&logoColor=0db7ed)](https://hub.docker.com/r/mrbuche/polymers)  
+[![Docker](https://img.shields.io/docker/v/mrbuche/polymers?color=0db7ed&label=Docker%20Hub&logo=docker&logoColor=0db7ed)](https://hub.docker.com/r/mrbuche/polymers)
 [![License](https://img.shields.io/github/license/sandialabs/polymers?label=License)](https://github.com/sandialabs/polymers/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7041983.svg)](https://doi.org/10.5281/zenodo.7041983)
 
