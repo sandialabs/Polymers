@@ -6,4 +6,5 @@
 **polymers.egg-info/
 **.coverage
 **.vscode/
+**Cargo.lock
 **target/
