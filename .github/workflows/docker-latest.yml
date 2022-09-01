@@ -20,6 +20,6 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-22.04
-    container: ${{ secrets.DOCKERHUB_USERNAME }}/polymers
+    container: mrbuche/polymers
     steps:
       - run: echo "placeholder"
