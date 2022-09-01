@@ -4,8 +4,6 @@
 [![Rust](https://img.shields.io/github/workflow/status/sandialabs/polymers/main?label=Rust&logo=github)](https://github.com/sandialabs/polymers/tree/main/rust#readme)
 [![CodeQL](https://img.shields.io/github/workflow/status/sandialabs/polymers/CodeQL?label=CodeQL&logo=github)](https://github.com/sandialabs/polymers)
 
-The software package for modeling polymers.
-
 ## Information
 
 - [Contributing](https://github.com/sandialabs/polymers/blob/main/CONTRIBUTING.md)
