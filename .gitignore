@@ -1,0 +1,9 @@
+**.ipynb_checkpoints
+**__pycache__
+**.pyc
+**dist/
+**build/
+**polymers.egg-info/
+**.coverage
+**.vscode/
+**target/
