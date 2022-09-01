@@ -1,11 +1,11 @@
 name: Docker latest
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
 jobs:
   build:
     runs-on: ubuntu-22.04
-    if: startsWith(github.ref, 'refs/heads/dev')
+    if: startsWith(github.ref, 'refs/heads/main')
     steps:
       - uses: actions/checkout@v3
       - uses: docker/login-action@v1.12.0
