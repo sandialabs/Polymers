@@ -3,6 +3,7 @@
 [![Python](https://img.shields.io/github/workflow/status/sandialabs/polymers/main?label=Python&logo=github)](https://github.com/sandialabs/polymers/tree/main/python#readme)
 [![Rust](https://img.shields.io/github/workflow/status/sandialabs/polymers/main?label=Rust&logo=github)](https://github.com/sandialabs/polymers/tree/main/rust#readme)
 [![CodeQL](https://img.shields.io/github/workflow/status/sandialabs/polymers/CodeQL?label=CodeQL&logo=github)](https://github.com/sandialabs/polymers)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7041983.svg)](https://doi.org/10.5281/zenodo.7041983)
 
 ## Information
 
