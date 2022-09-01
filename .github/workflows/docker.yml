@@ -23,10 +23,11 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{steps.tag.outputs.tag}}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
       - run: sleep 234s
   build-latest:
-    needs: build-tagged
     runs-on: ubuntu-22.04
+    if: startsWith(github.ref, 'refs/heads/main')
     steps:
       - uses: actions/checkout@v3
       - uses: docker/login-action@v1.12.0
