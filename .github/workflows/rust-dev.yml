@@ -1,17 +1,26 @@
-name: Rust
+name: rust
 on:
   push:
     branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
 jobs:
-  build:
+  cargo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - id: build
-        run: cargo build
+        run: cargo build --verbose
         working-directory: ./rust/
       - id: test
-        run: cargo test
+        run: cargo test --verbose
+        working-directory: ./rust/
+      - id: clippy
+        run: cargo test --verbose
+        working-directory: ./rust/
+      - id: bench
+        run: cargo test --verbose
+        working-directory: ./rust/
+      - id: doc
+        run: cargo test --verbose
         working-directory: ./rust/
