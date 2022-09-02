@@ -5,12 +5,13 @@ on:
   pull_request:
     branches: [ "dev" ]
 jobs:
-  cargo:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: cd rust/
       - id: build
         run: cargo build
+        working-directory: ./rust/
       - id: test
         run: cargo test
+        working-directory: ./rust/
