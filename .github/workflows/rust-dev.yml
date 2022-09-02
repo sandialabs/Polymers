@@ -16,11 +16,11 @@ jobs:
         run: cargo test --verbose
         working-directory: ./rust/
       - id: clippy
-        run: cargo test --verbose
+        run: cargo clippy --verbose
         working-directory: ./rust/
       - id: bench
-        run: cargo test --verbose
+        run: cargo bench --verbose
         working-directory: ./rust/
       - id: doc
-        run: cargo test --verbose
+        run: cargo doc --verbose
         working-directory: ./rust/
