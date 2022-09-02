@@ -1,0 +1,16 @@
+name: Rust
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+jobs:
+  cargo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd rust/
+      - id: build
+        run: cargo build
+      - id: test
+        run: cargo test
