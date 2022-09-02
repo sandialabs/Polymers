@@ -41,7 +41,7 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
 ..
     Badges ========================================================================
 
-.. |python| image:: https://github.com/sandialabs/polymers/actions/workflows/python.yml/badge.svg
+.. |python| image:: https://img.shields.io/github/workflow/status/sandialabs/polymers/Python?label=Python&logo=github
     :target: https://github.com/sandialabs/polymers/tree/main/python#readme
 
 .. |rtd| image:: https://img.shields.io/readthedocs/polymers?logo=readthedocs&label=Read%20the%20Docs
