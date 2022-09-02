@@ -11,12 +11,6 @@
 cargo install polymers
 ```
 
-## Status
-
-| [__`main`__](https://github.com/sandialabs/polymers) | [![rust](https://github.com/sandialabs/Polymers/actions/workflows/rust-main.yml/badge.svg)](https://github.com/sandialabs/polymers/actions/workflows/rust-main.yml) |
-| :--- | :--- |
-| [__`dev`__](https://github.com/sandialabs/polymers/tree/dev) | [![rust](https://github.com/sandialabs/Polymers/actions/workflows/rust-dev.yml/badge.svg)](https://github.com/sandialabs/polymers/actions/workflows/rust-dev.yml) |
-
 ## Citation
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7041983.svg)](https://doi.org/10.5281/zenodo.7041983)
