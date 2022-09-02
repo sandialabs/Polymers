@@ -1,6 +1,6 @@
 # Polymers Modeling Library
 
-[![rust](https://github.com/sandialabs/polymers/actions/workflows/rust.yml/badge.svg)](https://github.com/sandialabs/polymers/tree/main/rust#readme)
+[![rust](https://img.shields.io/github/workflow/status/sandialabs/polymers/Rust?label=Rust&logo=github)](https://github.com/sandialabs/polymers/tree/main/rust#readme)
 [![Docs.rs](https://img.shields.io/docsrs/polymers?logo=rust&logoColor=000000&label=Docs.rs)](https://docs.rs/crate/polymers)
 
 ## Installation
