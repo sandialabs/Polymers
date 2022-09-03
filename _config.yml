@@ -1,1 +1,5 @@
 title: "Polymers Modeling Library"
+plugins:
+  - jekyll-redirect-from
+redirect_from:
+  - sandialabs.github.io/polymers
