@@ -1,15 +1,2 @@
 <link rel="shortcut icon" href="{{ "favicon.ico" | absolute_url }}" type="image/x-icon">
-
-<script>
-const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
-
-jtd.addEvent(toggleDarkMode, 'click', function(){
-  if (jtd.getTheme() === 'dark') {
-    jtd.setTheme('light');
-    toggleDarkMode.textContent = 'Light mode';
-  } else {
-    jtd.setTheme('dark');
-    toggleDarkMode.textContent = 'Dark mode';
-  }
-});
-</script>
+<link href="/assets/css/fontawesome.all.min.css" rel="stylesheet">

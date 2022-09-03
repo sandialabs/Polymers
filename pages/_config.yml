@@ -7,9 +7,6 @@ url: "https://sandialabs.github.io"
 baseurl: "/Polymers"
 
 remote_theme: just-the-docs/just-the-docs
-aux_links:
-  "Polymers on GitHub":
-    - "//github.com/sandialabs/polymers"
 footer_content: "2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS). Under the terms of Contract DE-NA0003525 with NTESS, the U.S. Government retains certain rights in this software"
 last_edit_timestamp: false
 gh_edit_link: false
