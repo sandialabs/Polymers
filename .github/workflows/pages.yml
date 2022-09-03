@@ -1,7 +1,9 @@
 name: Pages
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 permissions:
   contents: read
   pages: write
@@ -21,6 +23,7 @@ jobs:
           destination: ./_site
       - uses: actions/upload-pages-artifact@v1
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
