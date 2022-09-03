@@ -1,7 +1,9 @@
 name: Pages
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 permissions:
   contents: read
   pages: write
@@ -17,10 +19,11 @@ jobs:
       - uses: actions/configure-pages@v2
       - uses: actions/jekyll-build-pages@v1
         with:
-          source: ./
+          source: ./pages/
           destination: ./_site
       - uses: actions/upload-pages-artifact@v1
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
