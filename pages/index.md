@@ -1,9 +1,11 @@
 ---
+layout: default
+title: Home
+nav_order: 1
+description: "This is the description!"
+permalink: /
 ---
 
-Polymers Modeling Library
+# Polymers Modeling Library
 
-{% assign date = '2020-04-13T10:20:00Z' %}
-
-- Original date - {{ date }}
-- With timeago filter - {{ date | timeago }}
+Hello world!
