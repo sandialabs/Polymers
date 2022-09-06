@@ -11,7 +11,7 @@ mod cauchy_stress {
     #[test]
     fn zero() {
         let model = NeoHookean::init();
-        assert_eq!(model.get_cauchy_stress(&*IDENTITY_TENSOR), *ZERO_TENSOR);
+        assert_eq!(model.cauchy_stress(&*IDENTITY_TENSOR), *ZERO_TENSOR);
     }
 
 }
