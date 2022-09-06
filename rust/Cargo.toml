@@ -10,3 +10,4 @@ blas-src = { version = "0.8", features = ["openblas"] }
 openblas-src = { version = "0.10", features = ["cblas", "static"] }
 ndarray-linalg = { version = "0.14.1", features = ["openblas-static"] }
 lazy_static = "1.4.0"
+rand = "0.8.5"

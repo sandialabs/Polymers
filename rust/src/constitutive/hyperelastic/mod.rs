@@ -1,6 +1,6 @@
 use crate::constitutive::Constitutive;
 
-pub mod tests;
+pub mod test;
 pub mod arruda_boyce;
 pub mod buche_silberstein;
 pub mod gent;

@@ -3,7 +3,7 @@ use crate::constitutive::IDENTITY_TENSOR;
 use crate::constitutive::get_left_cauchy_green_tensor;
 use crate::constitutive::hyperelastic::Hyperelastic;
 
-pub mod tests;
+pub mod test;
 
 pub struct NeoHookean {
     pub hyperelastic: Hyperelastic

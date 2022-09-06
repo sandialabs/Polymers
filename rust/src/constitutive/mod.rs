@@ -6,7 +6,7 @@ use ndarray::{
 };
 use lazy_static::lazy_static;
 
-pub mod tests;
+pub mod test;
 pub mod hyperelastic;
 
 lazy_static! {
