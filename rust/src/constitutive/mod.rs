@@ -6,7 +6,7 @@ use ndarray::{
 };
 use lazy_static::lazy_static;
 
-pub mod tests;
+pub mod test;
 pub mod hyperelastic;
 
 lazy_static! {
@@ -30,6 +30,6 @@ pub fn matrix_multiply(a: &Array2<f64>, b: &Array2<f64>) -> Array2<f64> {
     c
 }
 
-pub fn get_left_cauchy_green_tensor(deformation_gradient: &Array2<f64>) -> Array2<f64> {
+pub fn left_cauchy_green_tensor(deformation_gradient: &Array2<f64>) -> Array2<f64> {
     matrix_multiply(&deformation_gradient.to_owned().reversed_axes(), deformation_gradient)
 }
