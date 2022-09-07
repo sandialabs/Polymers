@@ -1,17 +1,17 @@
 #![cfg(test)]
 
-mod temporary
-{
-    use crate::physics::single_chain::fjc::thermodynamics::isotensional::
-    {
-        nondimensional_end_to_end_length_per_link,
-        nondimensional_relative_gibbs_free_energy_per_link
-    };
+mod init {
+
+    use rand::prelude::*;
+    use crate::physics::single_chain::fjc::thermodynamics::isotensional::Isotensional;
 
     #[test]
-    fn temporary()
+    fn number_of_links()
     {
-        nondimensional_end_to_end_length_per_link(1e-3);
-        nondimensional_relative_gibbs_free_energy_per_link(1e-3);
+        for _ in 0..8
+        {
+            let number_of_links: u16 = rand::thread_rng().gen_range(8..88);
+            assert_eq!(number_of_links, Isotensional::init(number_of_links).number_of_links);
+        }
     }
 }
