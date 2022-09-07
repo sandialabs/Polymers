@@ -45,7 +45,6 @@ mod langevin
             let y = langevin(&eta);
             let residual_abs = &y - &eta/3.0;
             let residual_rel = &residual_abs/&y;
-            println!("{:?}", y);
             for residual_abs_i in residual_abs.iter()
             {
                 assert!(residual_abs_i.abs() <= ABS_TOL);
