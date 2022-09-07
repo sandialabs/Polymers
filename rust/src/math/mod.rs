@@ -1,7 +1,31 @@
-use ndarray::Array1;
-use ndarray::Array2;
+use ndarray::{
+    Array,
+    Array1,
+    Array2,
+    Axis,
+    stack
+};
+use ndarray_rand::RandomExt;
+use ndarray_rand::rand_distr::Uniform;
 
 pub mod test;
+
+// test more moments and stuff (also finish tests for below)
+// implement for a since vector too
+// similarly for random_config
+// possibly find good optimization between array size and overall samples for Monte Carlo using these
+pub fn random_unit_vector(number_of_unit_vectors: u32) -> Array2<f64>
+{
+    let pi = std::f64::consts::PI;
+    let azimuthal_angle: Array1<f64> = 2.0*pi*Array::random(number_of_unit_vectors as usize, Uniform::new(0.0, 1.0));
+    let x: Array1<f64> = Array::random(number_of_unit_vectors as usize, Uniform::new(-1.0, 1.0));
+    let elevation_angle: Array1<f64> = x.mapv_into(|v| v.acos());
+    let azimuthal_sine = azimuthal_angle.to_owned().mapv_into(|v| v.sin());
+    let elevation_sine = elevation_angle.to_owned().mapv_into(|v| v.sin());
+    let azimuthal_cosine = azimuthal_angle.to_owned().mapv_into(|v| v.cos());
+    let elevation_cosine = elevation_angle.to_owned().mapv_into(|v| v.cos());
+    stack![Axis(0),azimuthal_cosine*elevation_sine.to_owned(), azimuthal_sine*elevation_sine, elevation_cosine]
+}
 
 pub fn sinhc<T>(nondimensional_energy: &T) -> T
 where

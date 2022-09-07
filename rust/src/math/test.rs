@@ -1,7 +1,28 @@
 #![cfg(test)]
 
+use ndarray::Axis;
+use crate::math::random_unit_vector;
+
+static REPEATS: u8 = 88;
+static NUMBER: u32 = 88888;
+static ABS_TOL: f64 = 1e-2;
+
+#[test]
+fn temp_test_for_random_unit_vector()
+{
+    for _ in 1..REPEATS
+    {
+        let average_vector = random_unit_vector(NUMBER).sum_axis(Axis(1))/(NUMBER as f64);
+        for average_vector_component in average_vector.iter()
+        {
+            assert!(average_vector_component.abs() <= ABS_TOL);
+        }
+    }
+}
+
 mod langevin
 {
+
     mod scalar
     {
         use rand::prelude::*;
