@@ -1,3 +1,4 @@
+use ndarray::Array1;
 use ndarray::Array2;
 
 pub mod test;
@@ -61,7 +62,7 @@ impl Math<f64> for f64
     }
 }
 
-impl Math<Array2<f64>> for Array2<f64>
+impl Math<Array1<f64>> for Array1<f64>
 {
     fn sinhc(&self) -> Self
     {
@@ -77,8 +78,18 @@ impl Math<Array2<f64>> for Array2<f64>
     }
 }
 
-// pub trait Math<T, A, D>
-//
-// impl Math<f64, _, _> for f64
-//
-// impl<Array<A, D>, A, D> Math for Array<A, D>
+impl Math<Array2<f64>> for Array2<f64>
+{
+    fn sinhc(&self) -> Self
+    {
+        self.to_owned().mapv_into(|v| v.sinh())/self
+    }
+    fn ln_sinhc(&self) -> Self
+    {
+        (self.to_owned().mapv_into(|v| v.sinh())/self).mapv_into(|v| v.ln())
+    }
+    fn langevin(&self) -> Self
+    {
+        1.0/self.to_owned().mapv_into(|v| v.tanh()) - 1.0/self
+    }
+}
