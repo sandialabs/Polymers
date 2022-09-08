@@ -8,9 +8,10 @@ mod init {
     #[test]
     fn number_of_links()
     {
-        for _ in 0..88
+        let mut rng = rand::thread_rng();
+        for _ in 0..8
         {
-            let number_of_links: u16 = rand::thread_rng().gen_range(8..88);
+            let number_of_links: u16 = rng.gen_range(8..88);
             assert_eq!(number_of_links, Isometric::init(number_of_links).number_of_links);
         }
     }

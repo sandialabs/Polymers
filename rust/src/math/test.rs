@@ -19,9 +19,9 @@ mod langevin
             for _ in 1..SIZE
             {
                 let random_float_0_1: f64 = rand::thread_rng().gen();
-                let eta = SCALE*(1.0 + 9.0*random_float_0_1);
-                let y = langevin(&eta);
-                let residual_abs = &y - &eta/3.0;
+                let x = SCALE*(1.0 + 9.0*random_float_0_1);
+                let y = langevin(&x);
+                let residual_abs = &y - &x/3.0;
                 let residual_rel = &residual_abs/&y;
                 assert!(residual_abs.abs() <= ABS_TOL);
                 assert!(residual_rel.abs() <= REL_TOL);
@@ -42,9 +42,9 @@ mod langevin
         #[test]
         fn array_small()
         {
-            let eta = SCALE*Array::<f64, _>::linspace(1.0, 10.0, SIZE);
-            let y = langevin(&eta);
-            let residual_abs = &y - &eta/3.0;
+            let x = SCALE*Array::<f64, _>::linspace(1.0, 10.0, SIZE);
+            let y = langevin(&x);
+            let residual_abs = &y - &x/3.0;
             let residual_rel = &residual_abs/&y;
             for residual_abs_i in residual_abs.iter()
             {
@@ -71,9 +71,9 @@ mod langevin
         #[test]
         fn array_small()
         {
-            let eta = SCALE*Array::<f64, _>::linspace(1.0, 10.0, SIZE).into_shape((QUARTER_SIZE, 4)).unwrap();
-            let y = langevin(&eta);
-            let residual_abs = &y - &eta/3.0;
+            let x = SCALE*Array::<f64, _>::linspace(1.0, 10.0, SIZE).into_shape((QUARTER_SIZE, 4)).unwrap();
+            let y = langevin(&x);
+            let residual_abs = &y - &x/3.0;
             let residual_rel = &residual_abs/&y;
             for residual_abs_i in residual_abs.iter()
             {

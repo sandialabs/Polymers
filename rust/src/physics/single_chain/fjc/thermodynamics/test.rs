@@ -9,7 +9,7 @@ mod init {
     fn number_of_links()
     {
         let mut rng = rand::thread_rng();
-        for _ in 0..88
+        for _ in 0..8
         {
             let number_of_links: u16 = rng.gen_range(8..88);
             assert_eq!(number_of_links, Thermodynamics::init(number_of_links).number_of_links);
@@ -29,25 +29,15 @@ mod init {
     }
 }
 
-mod legendre_transformation {
+mod legendre {
 
-    use rand::prelude::*;
     use crate::physics::single_chain::fjc::thermodynamics::Thermodynamics;
 
     #[test]
-    fn helmholtz_free_energy()
+    fn nondimensional_relative_helmholtz_free_energy_per_link()
     {
-        let mut rng = rand::thread_rng();
-        for _ in 0..88
-        {
-            let number_of_links: u16 = rng.gen_range(8..88);
-            let nondimensional_force: f64 = rng.gen();
-            let model = Thermodynamics::init(number_of_links);
-            assert_eq!(
-                model.isometric.nondimensional_relative_helmholtz_free_energy_per_link_legendre_transformation(nondimensional_force),
-                model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)
-                    + nondimensional_force*model.isotensional.nondimensional_end_to_end_length_per_link(nondimensional_force)
-            );
-        }
+        let model = Thermodynamics::init(8);
+        model.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(1.0);
+        // test whether approximation becomes accurate for large number_of_links
     }
 }
