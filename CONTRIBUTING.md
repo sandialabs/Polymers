@@ -23,7 +23,7 @@ Feature requests that are deemed infeasible will likely be denied.
 
 Contributors can propose changes to the code in the repository by creating a pull request as follows:
 
-- Fork the base repository by clicking the `fork` button [here](https://github.com/sandialabs/polymers).
+- Fork the base repository [here](https://github.com/sandialabs/Polymers/fork).
 - Clone the forked repository, make changes, and push them back to the fork.
 - Create a pull request between the base and forked repositories [here](https://github.com/sandialabs/polymers/pulls).
 - Wait for the pull request to be either approved or dismissed. Approval and subsequent merging of pull requests is contingent upon:
