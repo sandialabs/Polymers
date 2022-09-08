@@ -3,6 +3,8 @@ name = "polymers"
 version = "0.1.0"
 edition = "2021"
 description = "Polymers Modeling Library"
+license = "BSD-3-Clause"
+keywords = ["python", "rust", "polymers"]
 
 [dependencies]
 ndarray = { version = "0.15.4", features = ["blas"] }
