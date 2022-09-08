@@ -1,5 +1,7 @@
-use ndarray::Array1;
-use ndarray::Array2;
+use ndarray::{
+    Array1,
+    Array2
+};
 
 pub mod test;
 

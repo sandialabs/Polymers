@@ -27,14 +27,11 @@ impl Isotensional
     {
         langevin(&nondimensional_force)
     }
-    
     pub fn nondimensional_relative_gibbs_free_energy_per_link<T>(&self, nondimensional_force: T) -> T
     where T:
         Math<T>,
-        T: std::marker::Copy,
-        T: std::ops::Mul<T, Output = T>,
-        T: std::ops::Sub<T, Output = T>,
+        T: std::ops::Neg<Output = T>
     {
-        langevin(&nondimensional_force)*nondimensional_force - ln_sinhc(&nondimensional_force)
+        -ln_sinhc(&nondimensional_force)
     }
 }

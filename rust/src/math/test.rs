@@ -2,6 +2,7 @@
 
 mod langevin
 {
+
     mod scalar
     {
         use rand::prelude::*;
