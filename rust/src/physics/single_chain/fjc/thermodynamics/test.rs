@@ -37,7 +37,7 @@ mod legendre {
     fn nondimensional_relative_helmholtz_free_energy_per_link()
     {
         let model = Thermodynamics::init(8);
-        model.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(1.0);
+        model.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&1.0);
         // test whether approximation becomes accurate for large number_of_links
     }
 }
