@@ -21,15 +21,18 @@ macro_rules! single_chain
 {
     ( $model:ty ) =>
     {
-        #[test]
-        fn mechanics()
-        {
-            let _ = <$model>::init(8).mechanics;
-        }
-        #[test]
-        fn thermodynamics()
-        {
-            let _ = <$model>::init(8).thermodynamics;
+        mod init{
+            use super::*;
+            #[test]
+            fn mechanics()
+            {
+                let _ = <$model>::init(8).mechanics;
+            }
+            #[test]
+            fn thermodynamics()
+            {
+                let _ = <$model>::init(8).thermodynamics;
+            }
         }
     }	
 }
@@ -58,29 +61,46 @@ macro_rules! thermodynamics
 {
     ( $model:ty ) =>
     {
-        #[test]
-        fn isometric()
-        {
-            let _ = <$model>::init(8).isometric;
-        }
-        #[test]
-        fn isotensional()
-        {
-            let _ = <$model>::init(8).isotensional;
-        }
-        #[test]
-        fn legendre_transformation_nondimensional_relative_helmholtz_free_energy_per_link()
-        {
-            let mut rng = rand::thread_rng();
-            for _ in 0..8
+        mod init{
+            use super::*;
+            #[test]
+            fn isometric()
             {
-                let number_of_links: u16 = rng.gen_range(8..88);
-                let model = <$model>::init(number_of_links);
-                model.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&1.0);
-                // test whether approximation becomes accurate for large number_of_links
+                let _ = <$model>::init(8).isometric;
+            }
+            #[test]
+            fn isotensional()
+            {
+                let _ = <$model>::init(8).isotensional;
             }
         }
-    }	
+        mod legendre_transformation{
+            #[test]
+            fn nondimensional_end_to_end_length()
+            {}
+            #[test]
+            fn nondimensional_end_to_end_length_per_link()
+            {}
+            #[test]
+            fn nondimensional_force()
+            {}
+            #[test]
+            fn nondimensional_force_per_link()
+            {}
+            #[test]
+            fn nondimensional_relative_helmholtz_free_energy()
+            {}
+            #[test]
+            fn nondimensional_relative_helmholtz_free_energy_per_link()
+            {}
+            #[test]
+            fn nondimensional_relative_gibbs_free_energy()
+            {}
+            #[test]
+            fn nondimensional_relative_gibbs_free_energy_per_link()
+            {}
+        }
+    }
 }
 pub(crate) use thermodynamics;
 
@@ -92,6 +112,72 @@ pub(crate) use isometric;
 
 macro_rules! isotensional
 {
-    ( $model:ty ) => {}
+    ( $model:ty ) => {
+        mod per_link {
+            use super::*;
+            use rand::prelude::*;
+            static SCALE: f64 = 1e1;
+            static ABS_TOL: f64 = 1e-7;
+            static REL_TOL: f64 = 1e-5;
+            #[test]
+            fn nondimensional_end_to_end_length()
+            {
+                let mut rng = rand::thread_rng();
+                for _ in 0..8
+                {
+                    let number_of_links: u16 = rng.gen_range(8..88);
+                    let nondimensional_force = SCALE*rng.gen::<f64>();
+                    let model = <$model>::init(number_of_links);
+                    let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force);
+                    let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+                    let residual_abs = &nondimensional_end_to_end_length/(model.number_of_links as f64) - &nondimensional_end_to_end_length_per_link;
+                    let residual_rel = &residual_abs/&nondimensional_end_to_end_length_per_link;
+                    assert!(residual_abs.abs() <= ABS_TOL);
+                    assert!(residual_rel.abs() <= REL_TOL);
+                }
+            }
+            #[test]
+            fn nondimensional_relative_gibbs_free_energy()
+            {
+                let mut rng = rand::thread_rng();
+                for _ in 0..8
+                {
+                    let number_of_links: u16 = rng.gen_range(8..88);
+                    let nondimensional_force = SCALE*rng.gen::<f64>();
+                    let model = <$model>::init(number_of_links);
+                    let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force);
+                    let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force);
+                    let residual_abs = &nondimensional_relative_gibbs_free_energy/(model.number_of_links as f64) - &nondimensional_relative_gibbs_free_energy_per_link;
+                    let residual_rel = &residual_abs/&nondimensional_relative_gibbs_free_energy_per_link;
+                    assert!(residual_abs.abs() <= ABS_TOL);
+                    assert!(residual_rel.abs() <= REL_TOL);
+                }
+            }
+            mod legendre {
+                use super::*;
+                use rand::prelude::*;
+                static SCALE: f64 = 1e1;
+                static ABS_TOL: f64 = 1e-7;
+                static REL_TOL: f64 = 1e-5;
+                #[test]
+                fn nondimensional_relative_helmholtz_free_energy_per_link()
+                {
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..8
+                    {
+                        let number_of_links: u16 = rng.gen_range(8..88);
+                        let nondimensional_force = SCALE*rng.gen::<f64>();
+                        let model = <$model>::init(number_of_links);
+                        let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
+                        let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
+                        let residual_abs = &nondimensional_relative_helmholtz_free_energy/(model.number_of_links as f64) - &nondimensional_relative_helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= ABS_TOL);
+                        assert!(residual_rel.abs() <= REL_TOL);
+                    }
+                }
+            }
+        }
+    }
 }
 pub(crate) use isotensional;
