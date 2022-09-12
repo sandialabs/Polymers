@@ -1,6 +1,6 @@
 use ndarray::{
-    Array1,
-    Array2
+    Array,
+    Dimension
 };
 
 pub mod test;
@@ -49,23 +49,9 @@ impl Math<f64> for f64
     }
 }
 
-impl Math<Array1<f64>> for Array1<f64>
-{
-    fn sinhc(&self) -> Self
-    {
-        self.to_owned().mapv_into(|v| v.sinh())/self
-    }
-    fn ln_sinhc(&self) -> Self
-    {
-        (self.to_owned().mapv_into(|v| v.sinh())/self).mapv_into(|v| v.ln())
-    }
-    fn langevin(&self) -> Self
-    {
-        1.0/self.to_owned().mapv_into(|v| v.tanh()) - 1.0/self
-    }
-}
-
-impl Math<Array2<f64>> for Array2<f64>
+impl<D> Math<Array<f64, D>> for Array<f64, D>
+where
+    D: Dimension
 {
     fn sinhc(&self) -> Self
     {
