@@ -1,17 +1,7 @@
 #![cfg(test)]
 
-mod init {
+use crate::physics::single_chain::test;
+use crate::physics::single_chain::fjc::thermodynamics::isometric::Isometric;
 
-    use rand::prelude::*;
-    use crate::physics::single_chain::fjc::thermodynamics::isometric::Isometric;
-
-    #[test]
-    fn number_of_links()
-    {
-        for _ in 0..88
-        {
-            let number_of_links: u16 = rand::thread_rng().gen_range(8..88);
-            assert_eq!(number_of_links, Isometric::init(number_of_links).number_of_links);
-        }
-    }
-}
+test::base!(Isometric);
+test::isometric!(Isometric);

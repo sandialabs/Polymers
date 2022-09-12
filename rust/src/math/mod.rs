@@ -5,25 +5,25 @@ use ndarray::{
 
 pub mod test;
 
-pub fn sinhc<T>(nondimensional_energy: &T) -> T
+pub fn sinhc<T>(x: &T) -> T
 where
     T: Math<T>
 {
-    Math::<T>::sinhc(nondimensional_energy)
+    Math::<T>::sinhc(x)
 }
 
-pub fn ln_sinhc<T>(nondimensional_energy: &T) -> T
+pub fn ln_sinhc<T>(x: &T) -> T
 where
     T: Math<T>
 {
-    Math::<T>::ln_sinhc(nondimensional_energy)
+    Math::<T>::ln_sinhc(x)
 }
 
-pub fn langevin<T>(nondimensional_energy: &T) -> T
+pub fn langevin<T>(x: &T) -> T
 where
     T: Math<T>
 {
-    Math::<T>::langevin(nondimensional_energy)
+    Math::<T>::langevin(x)
 }
 
 pub trait Math<T>
