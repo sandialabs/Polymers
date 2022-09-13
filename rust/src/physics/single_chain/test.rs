@@ -122,6 +122,11 @@ macro_rules! isotensional
             static SCALE: f64 = 1e1;
             static ABS_TOL: f64 = 1e-7;
             static REL_TOL: f64 = 1e-5;
+            // #[test]
+            // fn end_to_end_length()
+            // {
+
+            // }
             #[test]
             fn nondimensional_end_to_end_length()
             {
@@ -139,6 +144,21 @@ macro_rules! isotensional
                     assert!(residual_rel.abs() <= REL_TOL);
                 }
             }
+            // #[test]
+            // fn gibbs_free_energy()
+            // {
+
+            // }
+            // #[test]
+            // fn relative_gibbs_free_energy()
+            // {
+
+            // }
+            // #[test]
+            // fn nondimensional_gibbs_free_energy()
+            // {
+
+            // }
             #[test]
             fn nondimensional_relative_gibbs_free_energy()
             {
@@ -162,8 +182,23 @@ macro_rules! isotensional
                 static SCALE: f64 = 1e1;
                 static ABS_TOL: f64 = 1e-7;
                 static REL_TOL: f64 = 1e-5;
+                // #[test]
+                // fn helmholtz_free_energy()
+                // {
+    
+                // }
+                // #[test]
+                // fn relative_helmholtz_free_energy()
+                // {
+    
+                // }
+                // #[test]
+                // fn nondimensional_helmholtz_free_energy()
+                // {
+    
+                // }
                 #[test]
-                fn nondimensional_relative_helmholtz_free_energy_per_link()
+                fn nondimensional_relative_helmholtz_free_energy()
                 {
                     let mut rng = rand::thread_rng();
                     for _ in 0..8
