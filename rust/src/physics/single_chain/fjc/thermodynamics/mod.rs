@@ -8,21 +8,21 @@ pub mod isotensional;
 pub struct Thermodynamics
 {
     pub number_of_links: u16,
-    pub link_length_in_meters: f64,
+    pub link_length: f64,
     pub isometric: Isometric,
     pub isotensional: Isotensional
 }
 
 impl Thermodynamics
 {
-    pub fn init(number_of_links: u16) -> Thermodynamics
+    pub fn init(number_of_links: u16, link_length: f64) -> Thermodynamics
     {
         Thermodynamics
         {
             number_of_links: number_of_links,
-            link_length_in_meters: 1.0,
-            isometric: Isometric::init(number_of_links),
-            isotensional: Isotensional::init(number_of_links)
+            link_length: link_length,
+            isometric: Isometric::init(number_of_links, link_length),
+            isotensional: Isotensional::init(number_of_links, link_length)
         }
     }
 }
