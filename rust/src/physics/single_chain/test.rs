@@ -112,6 +112,9 @@ pub(crate) use isometric;
 
 macro_rules! isotensional
 {
+
+// add in tests at zero force for absolute free energy / partition functions (zero force == free ensemble, dont need to make that one)
+
     ( $model:ty ) => {
         mod per_link {
             use super::*;

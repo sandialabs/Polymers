@@ -11,6 +11,7 @@ pub struct Isotensional
 {
     pub number_of_links: u16,
     pub number_of_links_f64: f64,
+    pub link_length_in_meters: f64,
     pub legendre: Legendre
 }
 
@@ -23,9 +24,14 @@ impl Isotensional
         {
             number_of_links: number_of_links,
             number_of_links_f64: number_of_links as f64,
+            link_length_in_meters: 1.0,
             legendre: Legendre::init(number_of_links)
         }
     }
+    pub fn end_to_end_length<T>(&self, force_in_newtons: &T, inverse_temperature_in_inverse_joules: f64)
+    {}
+    pub fn end_to_end_length_per_link<T>(&self, force_in_newtons: &T, inverse_temperature_in_inverse_joules: f64)
+    {}
     pub fn nondimensional_end_to_end_length<T>(&self, nondimensional_force: &T) -> T
     where T:
         Math<T> +
@@ -40,6 +46,12 @@ impl Isotensional
     {
         langevin(nondimensional_force)
     }
+    pub fn gibbs_free_energy<T>(&self, nondimensional_force: &T)
+    {}
+    pub fn relative_gibbs_free_energy<T>(&self, nondimensional_force: &T)
+    {}
+    pub fn nondimensional_gibbs_free_energy<T>(&self, nondimensional_force: &T)
+    {}
     pub fn nondimensional_relative_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:
         Math<T> +
