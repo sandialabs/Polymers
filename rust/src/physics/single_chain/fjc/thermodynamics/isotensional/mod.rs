@@ -158,7 +158,7 @@ impl Legendre
         std::ops::Mul<f64, Output = T>
     {
         let nondimensional_force = &(*force*inverse_temperature*self.link_length);
-        self.nondimensional_relative_helmholtz_free_energy(nondimensional_force)/inverse_temperature
+        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)/inverse_temperature
     }
     // pub fn nondimensional_helmholtz_free_energy<T>(&self, nondimensional_force: &T)
     // {
