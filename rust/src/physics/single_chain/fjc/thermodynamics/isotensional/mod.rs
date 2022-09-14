@@ -188,7 +188,6 @@ impl IsotensionalLegendre for FJCLegendre
             link_length: link_length,
             number_of_links: number_of_links,
             number_of_links_f64: number_of_links as f64,
-            link_length: link_length
         }
     }
     // pub fn helmholtz_free_energy<T>(&self, nondimensional_force: &T)
