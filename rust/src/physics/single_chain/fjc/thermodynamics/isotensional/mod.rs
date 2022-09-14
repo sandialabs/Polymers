@@ -4,7 +4,11 @@ use crate::math::
     langevin,
     ln_sinhc
 };
-use crate::physics::single_chain::Isotensional;
+use crate::physics::single_chain::
+{
+    Isotensional,
+    IsotensionalLegendre
+};
 
 pub mod test;
 
@@ -12,7 +16,8 @@ pub struct FJC
 {
     pub link_length: f64,
     pub number_of_links: u16,
-    pub number_of_links_f64: f64
+    pub number_of_links_f64: f64,
+    pub legendre: FJCLegendre
 }
 
 impl Isotensional for FJC
@@ -23,7 +28,8 @@ impl Isotensional for FJC
         {
             link_length: link_length,
             number_of_links: number_of_links,
-            number_of_links_f64: number_of_links as f64
+            number_of_links_f64: number_of_links as f64,
+            legendre: FJCLegendre::init(number_of_links, link_length)
         }
     }
     fn end_to_end_length<T>(&self, force: &T, inverse_temperature: f64) -> T
@@ -164,7 +170,27 @@ impl Isotensional for FJC
     {
         -ln_sinhc(nondimensional_force)
     }
-    // pub fn legendre_helmholtz_free_energy<T>(&self, nondimensional_force: &T)
+}
+
+pub struct FJCLegendre
+{
+    pub link_length: f64,
+    pub number_of_links: u16,
+    pub number_of_links_f64: f64
+}
+
+impl IsotensionalLegendre for FJCLegendre
+{
+    fn init(number_of_links: u16, link_length: f64) -> FJCLegendre
+    {
+        FJCLegendre
+        {
+            link_length: link_length,
+            number_of_links: number_of_links,
+            number_of_links_f64: number_of_links as f64
+        }
+    }
+    // pub fn helmholtz_free_energy<T>(&self, nondimensional_force: &T)
     // where T:
         // Math<T> +
         // std::marker::Copy +
@@ -174,7 +200,7 @@ impl Isotensional for FJC
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    // pub fn legendre_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T)
+    // pub fn helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T)
     // where T:
         // Math<T> +
         // std::marker::Copy +
@@ -184,7 +210,7 @@ impl Isotensional for FJC
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    fn legendre_relative_helmholtz_free_energy<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn relative_helmholtz_free_energy<T>(&self, force: &T, inverse_temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -194,9 +220,9 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.legendre_relative_helmholtz_free_energy_per_link(force, inverse_temperature)*self.number_of_links_f64
+        self.relative_helmholtz_free_energy_per_link(force, inverse_temperature)*self.number_of_links_f64
     }
-    fn legendre_relative_helmholtz_free_energy_per_link<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn relative_helmholtz_free_energy_per_link<T>(&self, force: &T, inverse_temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -207,9 +233,9 @@ impl Isotensional for FJC
         std::ops::Mul<f64, Output = T>
     {
         let nondimensional_force = &(*force*inverse_temperature*self.link_length);
-        self.legendre_nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)/inverse_temperature
+        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)/inverse_temperature
     }
-    // pub fn legendre_nondimensional_helmholtz_free_energy<T>(&self, nondimensional_force: &T)
+    // pub fn nondimensional_helmholtz_free_energy<T>(&self, nondimensional_force: &T)
     // where T:
         // Math<T> +
         // std::marker::Copy +
@@ -219,7 +245,7 @@ impl Isotensional for FJC
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    // pub fn legendre_nondimensional_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T)
+    // pub fn nondimensional_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T)
     // where T:
         // Math<T> +
         // std::marker::Copy +
@@ -229,7 +255,7 @@ impl Isotensional for FJC
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    fn legendre_nondimensional_relative_helmholtz_free_energy<T>(&self, nondimensional_force: &T) -> T
+    fn nondimensional_relative_helmholtz_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -239,9 +265,9 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.legendre_nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)*self.number_of_links_f64
+        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)*self.number_of_links_f64
     }
-    fn legendre_nondimensional_relative_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T) -> T
+    fn nondimensional_relative_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T) -> T
     where T:
         Math<T> +
         std::marker::Copy +

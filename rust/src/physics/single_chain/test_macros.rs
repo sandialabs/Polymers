@@ -156,7 +156,8 @@ macro_rules! thermodynamics
                 let _ = <$model>::init(parameters.default_number_of_links, parameters.default_link_length).isotensional;
             }
         }
-        // mod legendre_transformation{
+        // mod legendre
+        // {
         //     #[test]
         //     fn nondimensional_end_to_end_length()
         //     {}
@@ -188,7 +189,20 @@ pub(crate) use thermodynamics;
 
 macro_rules! isometric
 {
-    ( $model:ty ) => {}
+    ( $model:ty ) =>
+    {
+        mod init
+        {
+            use super::*;
+            use crate::physics::single_chain::test_macros::Parameters;
+            #[test]
+            fn legendre()
+            {
+                let parameters = Parameters::default();
+                let _ = <$model>::init(parameters.default_number_of_links, parameters.default_link_length).legendre;
+            }
+        }
+    }
 }
 pub(crate) use isometric;
 
@@ -196,6 +210,17 @@ macro_rules! isotensional
 {
     ( $model:ty ) =>
     {
+        mod init
+        {
+            use super::*;
+            use crate::physics::single_chain::test_macros::Parameters;
+            #[test]
+            fn legendre()
+            {
+                let parameters = Parameters::default();
+                let _ = <$model>::init(parameters.default_number_of_links, parameters.default_link_length).legendre;
+            }
+        }
         mod nondimensional
         {
             use super::*;
@@ -325,9 +350,9 @@ macro_rules! isotensional
                             let force = parameters.force_scale*rng.gen::<f64>();
                             let inverse_temperature = parameters.inverse_temperature_scale*rng.gen::<f64>();
                             let model = <$model>::init(number_of_links, link_length);
-                            let relative_helmholtz_free_energy = model.legendre_relative_helmholtz_free_energy(&force, inverse_temperature);
+                            let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&force, inverse_temperature);
                             let nondimensional_force = force*inverse_temperature*link_length;
-                            let nondimensional_relative_helmholtz_free_energy = model.legendre_nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
+                            let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
                             let residual_abs = &relative_helmholtz_free_energy*inverse_temperature - &nondimensional_relative_helmholtz_free_energy;
                             let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
                             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -352,9 +377,9 @@ macro_rules! isotensional
                             let force = parameters.force_scale*rng.gen::<f64>();
                             let inverse_temperature = parameters.inverse_temperature_scale*rng.gen::<f64>();
                             let model = <$model>::init(number_of_links, link_length);
-                            let relative_helmholtz_free_energy_per_link = model.legendre_relative_helmholtz_free_energy_per_link(&force, inverse_temperature);
+                            let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&force, inverse_temperature);
                             let nondimensional_force = force*inverse_temperature*link_length;
-                            let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre_nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
+                            let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
                             let residual_abs = &relative_helmholtz_free_energy_per_link*inverse_temperature - &nondimensional_relative_helmholtz_free_energy_per_link;
                             let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link;
                             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -487,8 +512,8 @@ macro_rules! isotensional
                             let force = parameters.force_scale*rng.gen::<f64>();
                             let inverse_temperature = parameters.inverse_temperature_scale*rng.gen::<f64>();
                             let model = <$model>::init(number_of_links, link_length);
-                            let relative_helmholtz_free_energy = model.legendre_relative_helmholtz_free_energy(&force, inverse_temperature);
-                            let relative_helmholtz_free_energy_per_link = model.legendre_relative_helmholtz_free_energy_per_link(&force, inverse_temperature);
+                            let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&force, inverse_temperature);
+                            let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&force, inverse_temperature);
                             let residual_abs = &relative_helmholtz_free_energy/(model.number_of_links as f64) - &relative_helmholtz_free_energy_per_link;
                             let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link;
                             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -512,8 +537,8 @@ macro_rules! isotensional
                             let link_length = parameters.link_length_scale*rng.gen::<f64>();
                             let nondimensional_force = parameters.nondimensional_force_scale*rng.gen::<f64>();
                             let model = <$model>::init(number_of_links, link_length);
-                            let nondimensional_relative_helmholtz_free_energy = model.legendre_nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
-                            let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre_nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
+                            let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
+                            let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
                             let residual_abs = &nondimensional_relative_helmholtz_free_energy/(model.number_of_links as f64) - &nondimensional_relative_helmholtz_free_energy_per_link;
                             let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link;
                             assert!(residual_abs.abs() <= parameters.abs_tol);
