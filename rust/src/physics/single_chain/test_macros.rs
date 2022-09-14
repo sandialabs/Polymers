@@ -526,6 +526,8 @@ macro_rules! isotensional
         mod relative
         {
             // add in tests at zero force for absolute free energy / partition functions (zero force == free ensemble, dont need to make that one)
+            // going to need hinge mass and Planck constant in order to nondimensionalize things
+            // at that point it might be good to use Boltzmann as well (put in physics) and use temperature rather than inverse temperature...
             mod legendre
             {}
         }
