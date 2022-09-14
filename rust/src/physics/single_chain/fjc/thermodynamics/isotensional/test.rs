@@ -3,5 +3,5 @@
 use super::*;
 use crate::physics::single_chain::test_macros;
 
-test_macros::base!(Isotensional);
-test_macros::isotensional!(Isotensional);
+test_macros::base!(FJC);
+test_macros::isotensional!(FJC);
