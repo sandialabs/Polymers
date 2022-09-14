@@ -86,11 +86,11 @@ impl Isotensional
         let nondimensional_force = &(*force*inverse_temperature*self.link_length);
         self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)/inverse_temperature
     }
-    // pub fn nondimensional_gibbs_free_energy<T>(&self, nondimensional_force: &T)
+    // pub fn nondimensional_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     // {
 
     // }
-    // pub fn nondimensional_gibbs_free_energy_per_link<T>(&self, nondimensional_force: &T)
+    // pub fn nondimensional_gibbs_free_energy_per_link<T>(&self, nondimensional_force: &T) -> T
     // {
 
     // }
