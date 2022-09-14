@@ -1,5 +1,8 @@
-use crate::physics::single_chain::fjc::thermodynamics::isometric::Isometric;
-use crate::physics::single_chain::fjc::thermodynamics::isotensional::Isotensional;
+use crate::physics::single_chain::
+{
+    Isometric,
+    Isotensional
+};
 
 pub mod test;
 pub mod isometric;
@@ -7,10 +10,10 @@ pub mod isotensional;
 
 pub struct Thermodynamics
 {
-    pub number_of_links: u16,
     pub link_length: f64,
-    pub isometric: Isometric,
-    pub isotensional: Isotensional
+    pub number_of_links: u16,
+    pub isometric: isometric::FJC,
+    pub isotensional: isotensional::FJC
 }
 
 impl Thermodynamics
@@ -19,10 +22,10 @@ impl Thermodynamics
     {
         Thermodynamics
         {
-            number_of_links: number_of_links,
             link_length: link_length,
-            isometric: Isometric::init(number_of_links, link_length),
-            isotensional: Isotensional::init(number_of_links, link_length)
+            number_of_links: number_of_links,
+            isometric: isometric::FJC::init(number_of_links, link_length),
+            isotensional: isotensional::FJC::init(number_of_links, link_length)
         }
     }
 }
