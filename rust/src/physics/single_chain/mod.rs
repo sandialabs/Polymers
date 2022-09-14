@@ -102,4 +102,58 @@ pub trait Isotensional
         std::ops::Sub<T, Output = T> +
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>;
+    fn legendre_relative_helmholtz_free_energy<T>(&self, force: &T, inverse_temperature: f64) -> T
+    where T:
+            Math<T> +
+            std::marker::Copy +
+            std::ops::Neg<Output = T> +
+            std::ops::Mul<T, Output = T> +
+            std::ops::Sub<T, Output = T> +
+            std::ops::Div<f64, Output = T> +
+            std::ops::Mul<f64, Output = T>;
+    fn legendre_relative_helmholtz_free_energy_per_link<T>(&self, force: &T, inverse_temperature: f64) -> T
+    where T:
+        Math<T> +
+        std::marker::Copy +
+        std::ops::Neg<Output = T> +
+        std::ops::Mul<T, Output = T> +
+        std::ops::Sub<T, Output = T> +
+        std::ops::Div<f64, Output = T> +
+        std::ops::Mul<f64, Output = T>;
+    // pub fn legendre_nondimensional_helmholtz_free_energy<T>(&self, nondimensional_force: &T)
+    // where T:
+        // Math<T> +
+        // std::marker::Copy +
+        // std::ops::Neg<Output = T> +
+        // std::ops::Mul<T, Output = T> +
+        // std::ops::Sub<T, Output = T> +
+        // std::ops::Div<f64, Output = T> +
+        // std::ops::Mul<f64, Output = T>;
+    // pub fn legendre_nondimensional_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T)
+    // where T:
+        // Math<T> +
+        // std::marker::Copy +
+        // std::ops::Neg<Output = T> +
+        // std::ops::Mul<T, Output = T> +
+        // std::ops::Sub<T, Output = T> +
+        // std::ops::Div<f64, Output = T> +
+        // std::ops::Mul<f64, Output = T>;
+    fn legendre_nondimensional_relative_helmholtz_free_energy<T>(&self, nondimensional_force: &T) -> T
+    where T:
+        Math<T> +
+        std::marker::Copy +
+        std::ops::Neg<Output = T> +
+        std::ops::Mul<T, Output = T> +
+        std::ops::Sub<T, Output = T> +
+        std::ops::Div<f64, Output = T> +
+        std::ops::Mul<f64, Output = T>;
+    fn legendre_nondimensional_relative_helmholtz_free_energy_per_link<T>(&self, nondimensional_force: &T) -> T
+    where T:
+        Math<T> +
+        std::marker::Copy +
+        std::ops::Neg<Output = T> +
+        std::ops::Mul<T, Output = T> +
+        std::ops::Sub<T, Output = T> +
+        std::ops::Div<f64, Output = T> +
+        std::ops::Mul<f64, Output = T>;
 }
