@@ -4,6 +4,11 @@ use crate::math::
     langevin,
     ln_sinhc
 };
+use crate::physics::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT
+};
 use crate::physics::single_chain::
 {
     Isotensional,
@@ -14,6 +19,7 @@ pub mod test;
 
 pub struct FJC
 {
+    pub hinge_mass: f64,
     pub link_length: f64,
     pub number_of_links: u16,
     pub number_of_links_f64: f64,
@@ -22,17 +28,18 @@ pub struct FJC
 
 impl Isotensional for FJC
 {
-    fn init(number_of_links: u16, link_length: f64) -> FJC
+    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJC
     {
         FJC
         {
+            hinge_mass: hinge_mass,
             link_length: link_length,
             number_of_links: number_of_links,
             number_of_links_f64: number_of_links as f64,
-            legendre: FJCLegendre::init(number_of_links, link_length)
+            legendre: FJCLegendre::init(number_of_links, link_length, hinge_mass)
         }
     }
-    fn end_to_end_length<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn end_to_end_length<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -42,9 +49,9 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.end_to_end_length_per_link(force, inverse_temperature)*self.number_of_links_f64
+        self.end_to_end_length_per_link(force, temperature)*self.number_of_links_f64
     }
-    fn end_to_end_length_per_link<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn end_to_end_length_per_link<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -54,7 +61,7 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        let nondimensional_force = &(*force*inverse_temperature*self.link_length);
+        let nondimensional_force = &(*force/BOLTZMANN_CONSTANT/temperature*self.link_length);
         self.nondimensional_end_to_end_length_per_link(nondimensional_force)*self.link_length
     }
     fn nondimensional_end_to_end_length<T>(&self, nondimensional_force: &T) -> T
@@ -81,7 +88,7 @@ impl Isotensional for FJC
     {
         langevin(nondimensional_force)
     }
-    // pub fn gibbs_free_energy<T>(&self, force: &T, inverse_temperature: f64)
+    // pub fn gibbs_free_energy<T>(&self, force: &T, temperature: f64)
     // where T:
         // Math<T> +
         // std::marker::Copy +
@@ -91,7 +98,7 @@ impl Isotensional for FJC
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    // pub fn gibbs_free_energy_per_link<T>(&self, force: &T, inverse_temperature: f64)
+    // pub fn gibbs_free_energy_per_link<T>(&self, force: &T, temperature: f64)
     // where T:
         // Math<T> +
         // std::marker::Copy +
@@ -101,7 +108,7 @@ impl Isotensional for FJC
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    fn relative_gibbs_free_energy<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn relative_gibbs_free_energy<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -111,9 +118,9 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.relative_gibbs_free_energy_per_link(force, inverse_temperature)*self.number_of_links_f64
+        self.relative_gibbs_free_energy_per_link(force, temperature)*self.number_of_links_f64
     }
-    fn relative_gibbs_free_energy_per_link<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn relative_gibbs_free_energy_per_link<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -123,29 +130,33 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        let nondimensional_force = &(*force*inverse_temperature*self.link_length);
-        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)/inverse_temperature
+        let nondimensional_force = &(*force/BOLTZMANN_CONSTANT/temperature*self.link_length);
+        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)*BOLTZMANN_CONSTANT*temperature
     }
     // fn nondimensional_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     // where T:
-        // Math<T> +
-        // std::marker::Copy +
-        // std::ops::Neg<Output = T> +
-        // std::ops::Mul<T, Output = T> +
-        // std::ops::Sub<T, Output = T> +
-        // std::ops::Div<f64, Output = T> +
-        // std::ops::Mul<f64, Output = T>
-    // {}
+    //     Math<T> +
+    //     std::marker::Copy +
+    //     std::ops::Neg<Output = T> +
+    //     std::ops::Mul<T, Output = T> +
+    //     std::ops::Sub<T, Output = T> +
+    //     std::ops::Div<f64, Output = T> +
+    //     std::ops::Mul<f64, Output = T>
+    // {
+    //     self.nondimensional_gibbs_free_energy_per_link(nondimensional_force)*self.number_of_links_f64
+    // }
     // fn nondimensional_gibbs_free_energy_per_link<T>(&self, nondimensional_force: &T) -> T
     // where T:
-        // Math<T> +
-        // std::marker::Copy +
-        // std::ops::Neg<Output = T> +
-        // std::ops::Mul<T, Output = T> +
-        // std::ops::Sub<T, Output = T> +
-        // std::ops::Div<f64, Output = T> +
-        // std::ops::Mul<f64, Output = T>
-    // {}
+    //     Math<T> +
+    //     std::marker::Copy +
+    //     std::ops::Neg<Output = T> +
+    //     std::ops::Mul<T, Output = T> +
+    //     std::ops::Sub<T, Output = T> +
+    //     std::ops::Div<f64, Output = T> +
+    //     std::ops::Mul<f64, Output = T>
+    // {
+    //     self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) -
+    // }
     fn nondimensional_relative_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:
         Math<T> +
@@ -174,6 +185,7 @@ impl Isotensional for FJC
 
 pub struct FJCLegendre
 {
+    pub hinge_mass: f64,
     pub link_length: f64,
     pub number_of_links: u16,
     pub number_of_links_f64: f64
@@ -181,10 +193,11 @@ pub struct FJCLegendre
 
 impl IsotensionalLegendre for FJCLegendre
 {
-    fn init(number_of_links: u16, link_length: f64) -> FJCLegendre
+    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJCLegendre
     {
         FJCLegendre
         {
+            hinge_mass: hinge_mass,
             link_length: link_length,
             number_of_links: number_of_links,
             number_of_links_f64: number_of_links as f64,
@@ -210,7 +223,7 @@ impl IsotensionalLegendre for FJCLegendre
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
     // {}
-    fn relative_helmholtz_free_energy<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn relative_helmholtz_free_energy<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -220,9 +233,9 @@ impl IsotensionalLegendre for FJCLegendre
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.relative_helmholtz_free_energy_per_link(force, inverse_temperature)*self.number_of_links_f64
+        self.relative_helmholtz_free_energy_per_link(force, temperature)*self.number_of_links_f64
     }
-    fn relative_helmholtz_free_energy_per_link<T>(&self, force: &T, inverse_temperature: f64) -> T
+    fn relative_helmholtz_free_energy_per_link<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
         std::marker::Copy +
@@ -232,8 +245,8 @@ impl IsotensionalLegendre for FJCLegendre
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        let nondimensional_force = &(*force*inverse_temperature*self.link_length);
-        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)/inverse_temperature
+        let nondimensional_force = &(*force/BOLTZMANN_CONSTANT/temperature*self.link_length);
+        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)*BOLTZMANN_CONSTANT*temperature
     }
     // pub fn nondimensional_helmholtz_free_energy<T>(&self, nondimensional_force: &T)
     // where T:
