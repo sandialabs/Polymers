@@ -17,9 +17,9 @@ impl FJC
     {
         FJC
         {
-            hinge_mass: hinge_mass,
-            link_length: link_length,
-            number_of_links: number_of_links,
+            hinge_mass,
+            link_length,
+            number_of_links,
             mechanics: mechanics::Mechanics::init(number_of_links, link_length, hinge_mass),
             thermodynamics: thermodynamics::Thermodynamics::init(number_of_links, link_length, hinge_mass),
         }

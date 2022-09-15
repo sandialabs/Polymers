@@ -23,9 +23,9 @@ impl Thermodynamics
     {
         Thermodynamics
         {
-            hinge_mass: hinge_mass,
-            link_length: link_length,
-            number_of_links: number_of_links,
+            hinge_mass,
+            link_length,
+            number_of_links,
             isometric: isometric::FJC::init(number_of_links, link_length, hinge_mass),
             isotensional: isotensional::FJC::init(number_of_links, link_length, hinge_mass)
         }

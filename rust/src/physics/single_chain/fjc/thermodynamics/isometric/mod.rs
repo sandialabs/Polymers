@@ -21,9 +21,9 @@ impl Isometric for FJC
     {
         FJC
         {
-            hinge_mass: hinge_mass,
-            link_length: link_length,
-            number_of_links: number_of_links,
+            hinge_mass,
+            link_length,
+            number_of_links,
             number_of_links_f64: number_of_links as f64,
             legendre: FJCLegendre::init(number_of_links, link_length, hinge_mass)
         }
@@ -44,9 +44,9 @@ impl IsometricLegendre for FJCLegendre
     {
         FJCLegendre
         {
-            hinge_mass: hinge_mass,
-            link_length: link_length,
-            number_of_links: number_of_links,
+            hinge_mass,
+            link_length,
+            number_of_links,
             number_of_links_f64: number_of_links as f64
         }
     }
