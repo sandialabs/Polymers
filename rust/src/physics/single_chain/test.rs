@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 pub struct Parameters
 {
     pub number_of_loops: u16,
@@ -38,7 +40,7 @@ macro_rules! base
 {
     ( $model:ty ) =>
     {
-        use rand::prelude::*;
+        use rand::Rng;
         use crate::physics::single_chain::test::Parameters;
         #[test]
         fn number_of_links()
@@ -224,7 +226,7 @@ macro_rules! isotensional
         mod nondimensional
         {
             use super::*;
-            use rand::prelude::*;
+            use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
             #[test]
             fn end_to_end_length()
@@ -331,7 +333,7 @@ macro_rules! isotensional
             mod legendre
             {
                 use super::*;
-                use rand::prelude::*;
+                use rand::Rng;
                 use crate::physics::single_chain::test::Parameters;
                 // #[test]
                 // fn helmholtz_free_energy()
@@ -392,7 +394,7 @@ macro_rules! isotensional
         mod per_link
         {
             use super::*;
-            use rand::prelude::*;
+            use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
             #[test]
             fn end_to_end_length()
@@ -493,7 +495,7 @@ macro_rules! isotensional
             mod legendre
             {
                 use super::*;
-                use rand::prelude::*;
+                use rand::Rng;
                 use crate::physics::single_chain::test::Parameters;
                 // #[test]
                 // fn helmholtz_free_energy()

@@ -5,7 +5,7 @@ mod langevin
 
     mod scalar
     {
-        use rand::prelude::*;
+        use rand::Rng;
         use crate::math::langevin;
 
         static SIZE: u32 = 88888;
