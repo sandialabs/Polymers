@@ -4,18 +4,20 @@ pub mod test;
 
 pub struct Mechanics
 {
+    pub hinge_mass: f64,
+    pub link_length: f64,
     pub number_of_links: u16,
-    pub link_length: f64
 }
 
 impl Mechanics
 {
-    pub fn init(number_of_links: u16, link_length: f64) -> Mechanics
+    pub fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Mechanics
     {
         Mechanics
         {
-            number_of_links: number_of_links,
-            link_length: link_length
+            hinge_mass: hinge_mass,
+            link_length: link_length,
+            number_of_links: number_of_links
         }
     }
     pub fn random_configuration(&self) -> Array1<f64>
