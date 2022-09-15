@@ -1,7 +1,6 @@
 use crate::math::Math;
 
 pub mod test;
-pub mod test_macros;
 pub mod fjc;
 
 pub trait Isometric

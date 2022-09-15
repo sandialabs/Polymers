@@ -1,7 +1,7 @@
 #![cfg(test)]
 
-use crate::physics::single_chain::test_macros;
+use crate::physics::single_chain::test;
 use crate::physics::single_chain::fjc::mechanics::Mechanics;
 
-test_macros::base!(Mechanics);
-test_macros::mechanics!(Mechanics);
+test::base!(Mechanics);
+test::mechanics!(Mechanics);

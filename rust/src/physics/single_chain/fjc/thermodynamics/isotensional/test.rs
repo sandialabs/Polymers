@@ -1,7 +1,7 @@
 #![cfg(test)]
 
 use super::*;
-use crate::physics::single_chain::test_macros;
+use crate::physics::single_chain::test;
 
-test_macros::base!(FJC);
-test_macros::isotensional!(FJC);
+test::base!(FJC);
+test::isotensional!(FJC);
