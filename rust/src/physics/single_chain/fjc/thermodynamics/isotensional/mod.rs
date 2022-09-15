@@ -1,8 +1,9 @@
 use crate::math::
 {
     Math,
-    langevin,
-    ln_sinhc
+    ln,
+    ln_sinhc,
+    langevin
 };
 use crate::physics::
 {
@@ -97,7 +98,9 @@ impl Isotensional for FJC
         // std::ops::Sub<T, Output = T> +
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
-    // {}
+    // {
+    //     self.gibbs_free_energy_per_link(force, temperature)*self.number_of_links_f64
+    // }
     // pub fn gibbs_free_energy_per_link<T>(&self, force: &T, temperature: f64)
     // where T:
         // Math<T> +
@@ -107,7 +110,10 @@ impl Isotensional for FJC
         // std::ops::Sub<T, Output = T> +
         // std::ops::Div<f64, Output = T> +
         // std::ops::Mul<f64, Output = T>
-    // {}
+    // {
+    //     let nondimensional_force = &(*force/BOLTZMANN_CONSTANT/temperature*self.link_length);
+    //     self.nondimensional_gibbs_free_energy_per_link(nondimensional_force)*BOLTZMANN_CONSTANT*temperature
+    // }
     fn relative_gibbs_free_energy<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
@@ -155,7 +161,7 @@ impl Isotensional for FJC
     //     std::ops::Div<f64, Output = T> +
     //     std::ops::Mul<f64, Output = T>
     // {
-    //     self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) -
+    //     self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) - ?*ln(?)
     // }
     fn nondimensional_relative_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:

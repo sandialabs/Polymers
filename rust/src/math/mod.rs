@@ -12,6 +12,13 @@ where
     Math::<T>::sinhc(x)
 }
 
+pub fn ln<T>(x: &T) -> T
+where
+    T: Math<T>
+{
+    Math::<T>::ln_fun(x)
+}
+
 pub fn ln_sinhc<T>(x: &T) -> T
 where
     T: Math<T>
@@ -29,6 +36,7 @@ where
 pub trait Math<T>
 {
     fn sinhc(&self) -> T;
+    fn ln_fun(&self) -> T;
     fn ln_sinhc(&self) -> T;
     fn langevin(&self) -> T;
 }
@@ -38,6 +46,10 @@ impl Math<f64> for f64
     fn sinhc(&self) -> Self
     {
         self.sinh()/self
+    }
+    fn ln_fun(&self) -> Self
+    {
+        self.ln()
     }
     fn ln_sinhc(&self) -> Self
     {
@@ -56,6 +68,10 @@ where
     fn sinhc(&self) -> Self
     {
         self.to_owned().mapv_into(|v| v.sinh())/self
+    }
+    fn ln_fun(&self) -> Self
+    {
+        self.to_owned().mapv_into(|v| v.ln())
     }
     fn ln_sinhc(&self) -> Self
     {
