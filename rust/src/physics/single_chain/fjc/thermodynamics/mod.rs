@@ -10,7 +10,7 @@ pub mod isotensional;
 
 pub struct Thermodynamics
 {
-    pub hinge_mass: f64,
+    pub reduced_mass: f64,
     pub link_length: f64,
     pub number_of_links: u16,
     pub isometric: isometric::FJC,
@@ -19,15 +19,15 @@ pub struct Thermodynamics
 
 impl Thermodynamics
 {
-    pub fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Thermodynamics
+    pub fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> Thermodynamics
     {
         Thermodynamics
         {
-            hinge_mass,
+            reduced_mass,
             link_length,
             number_of_links,
-            isometric: isometric::FJC::init(number_of_links, link_length, hinge_mass),
-            isotensional: isotensional::FJC::init(number_of_links, link_length, hinge_mass)
+            isometric: isometric::FJC::init(number_of_links, link_length, reduced_mass),
+            isotensional: isotensional::FJC::init(number_of_links, link_length, reduced_mass)
         }
     }
 }

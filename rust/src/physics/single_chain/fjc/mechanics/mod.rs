@@ -4,18 +4,18 @@ pub mod test;
 
 pub struct Mechanics
 {
-    pub hinge_mass: f64,
+    pub reduced_mass: f64,
     pub link_length: f64,
     pub number_of_links: u16,
 }
 
 impl Mechanics
 {
-    pub fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Mechanics
+    pub fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> Mechanics
     {
         Mechanics
         {
-            hinge_mass,
+            reduced_mass,
             link_length,
             number_of_links
         }

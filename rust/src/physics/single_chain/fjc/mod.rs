@@ -4,7 +4,7 @@ pub mod thermodynamics;
 
 pub struct FJC
 {
-    pub hinge_mass: f64,
+    pub reduced_mass: f64,
     pub link_length: f64,
     pub number_of_links: u16,
     pub mechanics: mechanics::Mechanics,
@@ -13,15 +13,15 @@ pub struct FJC
 
 impl FJC
 {
-    pub fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJC
+    pub fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> FJC
     {
         FJC
         {
-            hinge_mass,
+            reduced_mass,
             link_length,
             number_of_links,
-            mechanics: mechanics::Mechanics::init(number_of_links, link_length, hinge_mass),
-            thermodynamics: thermodynamics::Thermodynamics::init(number_of_links, link_length, hinge_mass),
+            mechanics: mechanics::Mechanics::init(number_of_links, link_length, reduced_mass),
+            thermodynamics: thermodynamics::Thermodynamics::init(number_of_links, link_length, reduced_mass),
         }
     }
 }
