@@ -172,7 +172,7 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)/BOLTZMANN_CONSTANT/temperature*PLANCK_CONSTANT.powf(2.0)))
+        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 4.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)/BOLTZMANN_CONSTANT/temperature*PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_relative_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:
