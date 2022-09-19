@@ -5,12 +5,12 @@ pub mod fjc;
 
 pub trait Isometric
 {
-    fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> Self;
+    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Self;
 }
 
 pub trait Isotensional
 {
-    fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> Self;
+    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Self;
     fn end_to_end_length<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
@@ -135,12 +135,12 @@ pub trait Isotensional
 
 pub trait IsometricLegendre
 {
-    fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> Self;
+    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Self;
 }
 
 pub trait IsotensionalLegendre
 {
-    fn init(number_of_links: u16, link_length: f64, reduced_mass: f64) -> Self;
+    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Self;
     fn helmholtz_free_energy<T>(&self, force: &T, temperature: f64) -> T
     where T:
         Math<T> +
