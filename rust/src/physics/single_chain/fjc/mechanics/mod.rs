@@ -15,9 +15,9 @@ impl Mechanics
     {
         Mechanics
         {
-            hinge_mass: hinge_mass,
-            link_length: link_length,
-            number_of_links: number_of_links
+            hinge_mass,
+            link_length,
+            number_of_links
         }
     }
     pub fn random_configuration(&self) -> Array1<f64>
