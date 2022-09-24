@@ -3,7 +3,7 @@ use crate::physics::single_chain::
     Isometric,
     IsometricLegendre,
     Isotensional,
-    // IsotensionalLegendre
+    IsotensionalLegendre
 };
 
 pub mod test;
