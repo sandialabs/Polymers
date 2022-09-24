@@ -205,6 +205,27 @@ macro_rules! thermodynamics
             use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
             #[test]
+            fn force()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let force_in = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let end_to_end_length = model.isotensional.end_to_end_length(&force_in, temperature);
+                    let force_out = model.isometric.legendre.force(&end_to_end_length, temperature);
+                    let residual_abs = &force_in - &force_out;
+                    let residual_rel = &residual_abs/&force_in;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
             fn nondimensional_force()
             {
                 let parameters = Parameters::default();
@@ -214,12 +235,186 @@ macro_rules! thermodynamics
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-                    let nondimensional_force_in = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force_in = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let nondimensional_end_to_end_length_per_link = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force_in);
                     let nondimensional_force_out = model.isometric.legendre.nondimensional_force(&nondimensional_end_to_end_length_per_link);
                     let residual_abs = &nondimensional_force_in - &nondimensional_force_out;
                     let residual_rel = &residual_abs/&nondimensional_force_in;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn helmholtz_free_energy()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let helmholtz_free_energy_isotensional_legendre = model.isotensional.legendre.helmholtz_free_energy(&force, temperature);
+                    let end_to_end_length = model.isotensional.end_to_end_length(&force, temperature);
+                    let helmholtz_free_energy_isometric_legendre = model.isometric.legendre.helmholtz_free_energy(&end_to_end_length, temperature);
+                    let residual_abs = &helmholtz_free_energy_isotensional_legendre - &helmholtz_free_energy_isometric_legendre;
+                    let residual_rel = &residual_abs/&helmholtz_free_energy_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn helmholtz_free_energy_per_link()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let helmholtz_free_energy_per_link_isotensional_legendre = model.isotensional.legendre.helmholtz_free_energy_per_link(&force, temperature);
+                    let end_to_end_length = model.isotensional.end_to_end_length(&force, temperature);
+                    let helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.helmholtz_free_energy_per_link(&end_to_end_length, temperature);
+                    let residual_abs = &helmholtz_free_energy_per_link_isotensional_legendre - &helmholtz_free_energy_per_link_isometric_legendre;
+                    let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn relative_helmholtz_free_energy()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let relative_helmholtz_free_energy_isotensional_legendre = model.isotensional.legendre.relative_helmholtz_free_energy(&force, temperature);
+                    let end_to_end_length = model.isotensional.end_to_end_length(&force, temperature);
+                    let relative_helmholtz_free_energy_isometric_legendre = model.isometric.legendre.relative_helmholtz_free_energy(&end_to_end_length, temperature);
+                    let residual_abs = &relative_helmholtz_free_energy_isotensional_legendre - &relative_helmholtz_free_energy_isometric_legendre;
+                    let residual_rel = &residual_abs/&relative_helmholtz_free_energy_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn relative_helmholtz_free_energy_per_link()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let relative_helmholtz_free_energy_per_link_isotensional_legendre = model.isotensional.legendre.relative_helmholtz_free_energy_per_link(&force, temperature);
+                    let end_to_end_length = model.isotensional.end_to_end_length(&force, temperature);
+                    let relative_helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.relative_helmholtz_free_energy_per_link(&end_to_end_length, temperature);
+                    let residual_abs = &relative_helmholtz_free_energy_per_link_isotensional_legendre - &relative_helmholtz_free_energy_per_link_isometric_legendre;
+                    let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn nondimensional_helmholtz_free_energy()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let nondimensional_helmholtz_free_energy_isotensional_legendre = model.isotensional.legendre.nondimensional_helmholtz_free_energy(&nondimensional_force, temperature);
+                    let nondimensional_end_to_end_length_per_link = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+                    let nondimensional_helmholtz_free_energy_isometric_legendre = model.isometric.legendre.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
+                    let residual_abs = &nondimensional_helmholtz_free_energy_isotensional_legendre - &nondimensional_helmholtz_free_energy_isometric_legendre;
+                    let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn nondimensional_helmholtz_free_energy_per_link()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                    let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                    let nondimensional_helmholtz_free_energy_per_link_isotensional_legendre = model.isotensional.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, temperature);
+                    let nondimensional_end_to_end_length_per_link = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+                    let nondimensional_helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, temperature);
+                    let residual_abs = &nondimensional_helmholtz_free_energy_per_link_isotensional_legendre - &nondimensional_helmholtz_free_energy_per_link_isometric_legendre;
+                    let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn nondimensional_relative_helmholtz_free_energy()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                    let nondimensional_relative_helmholtz_free_energy_isotensional_legendre = model.isotensional.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
+                    let nondimensional_end_to_end_length_per_link = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+                    let nondimensional_relative_helmholtz_free_energy_isometric_legendre = model.isometric.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+                    let residual_abs = &nondimensional_relative_helmholtz_free_energy_isotensional_legendre - &nondimensional_relative_helmholtz_free_energy_isometric_legendre;
+                    let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_isotensional_legendre;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            #[test]
+            fn nondimensional_relative_helmholtz_free_energy_per_link()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                    let nondimensional_relative_helmholtz_free_energy_per_link_isotensional_legendre = model.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
+                    let nondimensional_end_to_end_length_per_link = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+                    let nondimensional_relative_helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
+                    let residual_abs = &nondimensional_relative_helmholtz_free_energy_per_link_isotensional_legendre - &nondimensional_relative_helmholtz_free_energy_per_link_isometric_legendre;
+                    let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link_isotensional_legendre;
                     assert!(residual_abs.abs() <= 1e-2);
                     assert!(residual_rel.abs() <= 1e-2);
                 }
@@ -305,9 +500,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let end_to_end_length = model.end_to_end_length(&force, temperature);
                     let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                     let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force);
@@ -327,9 +522,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, temperature);
                     let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                     let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force);
@@ -349,9 +544,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy = model.gibbs_free_energy(&force, temperature);
                     let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                     let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, temperature);
@@ -371,9 +566,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&force, temperature);
                     let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                     let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force);
@@ -393,9 +588,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&force, temperature);
                     let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                     let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, temperature);
@@ -415,9 +610,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&force, temperature);
                     let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                     let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force);
@@ -442,9 +637,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&force, temperature);
                         let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                         let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&nondimensional_force, temperature);
@@ -464,9 +659,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&force, temperature);
                         let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                         let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
@@ -486,9 +681,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&force, temperature);
                         let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                         let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, temperature);
@@ -508,9 +703,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&force, temperature);
                         let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
                         let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
@@ -537,9 +732,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let end_to_end_length = model.end_to_end_length(&force, temperature);
                     let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, temperature);
                     let residual_abs = &end_to_end_length/(model.number_of_links as f64) - &end_to_end_length_per_link;
@@ -558,8 +753,8 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force);
                     let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force);
                     let residual_abs = &nondimensional_end_to_end_length/(model.number_of_links as f64) - &nondimensional_end_to_end_length_per_link;
@@ -578,9 +773,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy = model.gibbs_free_energy(&force, temperature);
                     let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&force, temperature);
                     let residual_abs = &gibbs_free_energy/(model.number_of_links as f64) - &gibbs_free_energy_per_link;
@@ -599,9 +794,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&force, temperature);
                     let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&force, temperature);
                     let residual_abs = &relative_gibbs_free_energy/(model.number_of_links as f64) - &relative_gibbs_free_energy_per_link;
@@ -620,9 +815,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, temperature);
                     let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, temperature);
                     let residual_abs = &nondimensional_gibbs_free_energy/(model.number_of_links as f64) - &nondimensional_gibbs_free_energy_per_link;
@@ -641,8 +836,8 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force);
                     let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force);
                     let residual_abs = &nondimensional_relative_gibbs_free_energy/(model.number_of_links as f64) - &nondimensional_relative_gibbs_free_energy_per_link;
@@ -666,9 +861,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&force, temperature);
                         let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&force, temperature);
                         let residual_abs = &helmholtz_free_energy/(model.number_of_links as f64) - &helmholtz_free_energy_per_link;
@@ -687,9 +882,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&force, temperature);
                         let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&force, temperature);
                         let residual_abs = &relative_helmholtz_free_energy/(model.number_of_links as f64) - &relative_helmholtz_free_energy_per_link;
@@ -708,9 +903,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&nondimensional_force, temperature);
                         let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, temperature);
                         let residual_abs = &nondimensional_helmholtz_free_energy/(model.number_of_links as f64) - &nondimensional_helmholtz_free_energy_per_link;
@@ -729,8 +924,8 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-                        let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
                         let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
                         let residual_abs = &nondimensional_relative_helmholtz_free_energy/(model.number_of_links as f64) - &nondimensional_relative_helmholtz_free_energy_per_link;
@@ -756,9 +951,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy = model.gibbs_free_energy(&force, temperature);
                     let gibbs_free_energy_0 = model.gibbs_free_energy(&parameters.zero, temperature);
                     let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&force, temperature);
@@ -778,9 +973,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&force, temperature);
                     let gibbs_free_energy_per_link_0 = model.gibbs_free_energy_per_link(&parameters.zero, temperature);
                     let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&force, temperature);
@@ -800,9 +995,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, temperature);
                     let nondimensional_gibbs_free_energy_0 = model.nondimensional_gibbs_free_energy(&parameters.zero, temperature);
                     let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force);
@@ -822,9 +1017,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, temperature);
                     let nondimensional_gibbs_free_energy_per_link_0 = model.nondimensional_gibbs_free_energy_per_link(&parameters.zero, temperature);
                     let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force);
@@ -849,9 +1044,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&force, temperature);
                         let helmholtz_free_energy_0 = model.legendre.helmholtz_free_energy(&parameters.zero, temperature);
                         let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&force, temperature);
@@ -871,9 +1066,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&force, temperature);
                         let helmholtz_free_energy_per_link_0 = model.legendre.helmholtz_free_energy_per_link(&parameters.zero, temperature);
                         let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&force, temperature);
@@ -893,9 +1088,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&nondimensional_force, temperature);
                         let nondimensional_helmholtz_free_energy_0 = model.legendre.nondimensional_helmholtz_free_energy(&parameters.zero, temperature);
                         let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
@@ -915,9 +1110,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, temperature);
                         let nondimensional_helmholtz_free_energy_per_link_0 = model.legendre.nondimensional_helmholtz_free_energy_per_link(&parameters.zero, temperature);
                         let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
@@ -944,10 +1139,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let small_force = parameters.small*&force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let end_to_end_length = model.end_to_end_length(&small_force, temperature);
                     let end_to_end_length_from_initial_slope = &small_force/BOLTZMANN_CONSTANT/temperature*(number_of_links as f64)*link_length.powf(2.0)/3.0;
                     let residual_abs = &end_to_end_length - &end_to_end_length_from_initial_slope;
@@ -966,10 +1161,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let small_force = parameters.small*&force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let end_to_end_length_per_link = model.end_to_end_length_per_link(&small_force, temperature);
                     let end_to_end_length_per_link_from_initial_slope = &small_force/BOLTZMANN_CONSTANT/temperature*link_length.powf(2.0)/3.0;
                     let residual_abs = &end_to_end_length_per_link - &end_to_end_length_per_link_from_initial_slope;
@@ -988,9 +1183,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let small_nondimensional_force = parameters.small*&nondimensional_force;
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&small_nondimensional_force);
                     let nondimensional_end_to_end_length_from_initial_slope = &small_nondimensional_force*(number_of_links as f64)/3.0;
                     let residual_abs = &nondimensional_end_to_end_length - &nondimensional_end_to_end_length_from_initial_slope;
@@ -1009,9 +1204,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let small_nondimensional_force = parameters.small*&nondimensional_force;
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&small_nondimensional_force);
                     let nondimensional_end_to_end_length_per_link_from_initial_slope = &small_nondimensional_force/3.0;
                     let residual_abs = &nondimensional_end_to_end_length_per_link - &nondimensional_end_to_end_length_per_link_from_initial_slope;
@@ -1030,10 +1225,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let small_force = parameters.small*&force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy = model.gibbs_free_energy(&small_force, temperature);
                     let gibbs_free_energy_from_initial_slope = model.gibbs_free_energy(&parameters.zero, temperature) - (small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*(number_of_links as f64)*BOLTZMANN_CONSTANT*temperature/6.0;
                     let residual_abs = &gibbs_free_energy - &gibbs_free_energy_from_initial_slope;
@@ -1052,10 +1247,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let small_force = parameters.small*&force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&small_force, temperature);
                     let gibbs_free_energy_per_link_from_initial_slope = model.gibbs_free_energy_per_link(&parameters.zero, temperature) - (small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature/6.0;
                     let residual_abs = &gibbs_free_energy_per_link - &gibbs_free_energy_per_link_from_initial_slope;
@@ -1074,10 +1269,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let small_force = parameters.small*&force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&small_force, temperature);
                     let relative_gibbs_free_energy_from_initial_slope = -(small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*(number_of_links as f64)*BOLTZMANN_CONSTANT*temperature/6.0;
                     let residual_abs = &relative_gibbs_free_energy - &relative_gibbs_free_energy_from_initial_slope;
@@ -1096,10 +1291,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                     let small_force = parameters.small*&force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&small_force, temperature);
                     let relative_gibbs_free_energy_per_link_from_initial_slope = -(small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature/6.0;
                     let residual_abs = &relative_gibbs_free_energy_per_link - &relative_gibbs_free_energy_per_link_from_initial_slope;
@@ -1118,10 +1313,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let small_nondimensional_force = parameters.small*&nondimensional_force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&small_nondimensional_force, temperature);
                     let nondimensional_gibbs_free_energy_from_initial_slope = model.nondimensional_gibbs_free_energy(&parameters.zero, temperature) - small_nondimensional_force.powf(2.0)*(number_of_links as f64)/6.0;
                     let residual_abs = &nondimensional_gibbs_free_energy - &nondimensional_gibbs_free_energy_from_initial_slope;
@@ -1140,10 +1335,10 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let small_nondimensional_force = parameters.small*&nondimensional_force;
                     let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&small_nondimensional_force, temperature);
                     let nondimensional_gibbs_free_energy_per_link_from_initial_slope = model.nondimensional_gibbs_free_energy_per_link(&parameters.zero, temperature) - small_nondimensional_force.powf(2.0)/6.0;
                     let residual_abs = &nondimensional_gibbs_free_energy_per_link - &nondimensional_gibbs_free_energy_per_link_from_initial_slope;
@@ -1162,9 +1357,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let small_nondimensional_force = parameters.small*&nondimensional_force;
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&small_nondimensional_force);
                     let nondimensional_relative_gibbs_free_energy_from_initial_slope = -small_nondimensional_force.powf(2.0)*(number_of_links as f64)/6.0;
                     let residual_abs = &nondimensional_relative_gibbs_free_energy - &nondimensional_relative_gibbs_free_energy_from_initial_slope;
@@ -1183,9 +1378,9 @@ macro_rules! isotensional
                     let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                     let small_nondimensional_force = parameters.small*&nondimensional_force;
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
                     let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&small_nondimensional_force);
                     let nondimensional_relative_gibbs_free_energy_per_link_from_initial_slope = -small_nondimensional_force.powf(2.0)/6.0;
                     let residual_abs = &nondimensional_relative_gibbs_free_energy_per_link - &nondimensional_relative_gibbs_free_energy_per_link_from_initial_slope;
@@ -1209,10 +1404,10 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let small_force = parameters.small*&force;
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&small_force, temperature);
                         let helmholtz_free_energy_from_initial_slope = model.legendre.helmholtz_free_energy(&parameters.zero, temperature) + (small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*(number_of_links as f64)*BOLTZMANN_CONSTANT*temperature/6.0;
                         let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_from_initial_slope;
@@ -1231,10 +1426,10 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let small_force = parameters.small*&force;
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&small_force, temperature);
                         let helmholtz_free_energy_per_link_from_initial_slope = model.legendre.helmholtz_free_energy_per_link(&parameters.zero, temperature) + (small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature/6.0;
                         let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_from_initial_slope;
@@ -1253,10 +1448,10 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let small_force = parameters.small*&force;
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&small_force, temperature);
                         let relative_helmholtz_free_energy_from_initial_slope = (small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*(number_of_links as f64)*BOLTZMANN_CONSTANT*temperature/6.0;
                         let residual_abs = &relative_helmholtz_free_energy - &relative_helmholtz_free_energy_from_initial_slope;
@@ -1275,10 +1470,10 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let force = parameters.force_reference + parameters.force_scale*(0.5 - rng.gen::<f64>());
                         let small_force = parameters.small*&force;
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&small_force, temperature);
                         let relative_helmholtz_free_energy_per_link_from_initial_slope = (small_force/BOLTZMANN_CONSTANT/temperature*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature/6.0;
                         let residual_abs = &relative_helmholtz_free_energy_per_link - &relative_helmholtz_free_energy_per_link_from_initial_slope;
@@ -1297,10 +1492,10 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let small_nondimensional_force = parameters.small*&nondimensional_force;
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&small_nondimensional_force, temperature);
                         let nondimensional_helmholtz_free_energy_from_initial_slope = model.legendre.nondimensional_helmholtz_free_energy(&parameters.zero, temperature) + small_nondimensional_force.powf(2.0)*(number_of_links as f64)/6.0;
                         let residual_abs = &nondimensional_helmholtz_free_energy - &nondimensional_helmholtz_free_energy_from_initial_slope;
@@ -1319,10 +1514,10 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let small_nondimensional_force = parameters.small*&nondimensional_force;
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&small_nondimensional_force, temperature);
                         let nondimensional_helmholtz_free_energy_per_link_from_initial_slope = model.legendre.nondimensional_helmholtz_free_energy_per_link(&parameters.zero, temperature) + small_nondimensional_force.powf(2.0)/6.0;
                         let residual_abs = &nondimensional_helmholtz_free_energy_per_link - &nondimensional_helmholtz_free_energy_per_link_from_initial_slope;
@@ -1341,9 +1536,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let small_nondimensional_force = parameters.small*&nondimensional_force;
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&small_nondimensional_force);
                         let nondimensional_relative_helmholtz_free_energy_from_initial_slope = small_nondimensional_force.powf(2.0)*(number_of_links as f64)/6.0;
                         let residual_abs = &nondimensional_relative_helmholtz_free_energy - &nondimensional_relative_helmholtz_free_energy_from_initial_slope;
@@ -1362,9 +1557,9 @@ macro_rules! isotensional
                         let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                         let small_nondimensional_force = parameters.small*&nondimensional_force;
-                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&small_nondimensional_force);
                         let nondimensional_relative_helmholtz_free_energy_per_link_from_initial_slope = small_nondimensional_force.powf(2.0)/6.0;
                         let residual_abs = &nondimensional_relative_helmholtz_free_energy_per_link - &nondimensional_relative_helmholtz_free_energy_per_link_from_initial_slope;
