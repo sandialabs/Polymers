@@ -1,3 +1,8 @@
+use crate::math::
+{
+    Math,
+    approximate_inverse_langevin
+};
 use crate::physics::single_chain::
 {
     Isometric,
@@ -49,5 +54,18 @@ impl IsometricLegendre for FJCLegendre
             number_of_links,
             number_of_links_f64: number_of_links as f64
         }
+    }
+    fn nondimensional_force<T>(&self, nondimensional_end_to_end_length_per_link: &T) -> T
+    where T:
+        Math<T> +
+        std::marker::Copy +
+        std::ops::Neg<Output = T> +
+        std::ops::Mul<T, Output = T> +
+        std::ops::Sub<T, Output = T> +
+        std::ops::Add<f64, Output = T> +
+        std::ops::Div<f64, Output = T> +
+        std::ops::Mul<f64, Output = T>
+    {
+        approximate_inverse_langevin(nondimensional_end_to_end_length_per_link)
     }
 }

@@ -38,7 +38,7 @@ impl Default for Parameters
     {
         Self
         {
-            number_of_loops: 888888,
+            number_of_loops: 88888,
             abs_tol_for_close: 1e-5,
             rel_tol_for_close: 1e-4,
             abs_tol_for_equals: 1e-9,
@@ -199,8 +199,34 @@ macro_rules! thermodynamics
                 let _ = <$model>::init(parameters.default_number_of_links, parameters.default_link_length, parameters.default_hinge_mass).isotensional;
             }
         }
-        // mod legendre
-        // {
+        mod legendre
+        {
+            use super::*;
+            use rand::Rng;
+            use crate::physics::single_chain::test::Parameters;
+            #[test]
+            fn nondimensional_force()
+            {
+                let parameters = Parameters::default();
+                let mut rng = rand::thread_rng();
+                for _ in 0..parameters.number_of_loops
+                {
+                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                    let nondimensional_force_in = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                    let nondimensional_end_to_end_length_per_link = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force_in);
+                    let nondimensional_force_out = model.isometric.legendre.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+                    let residual_abs = &nondimensional_force_in - &nondimensional_force_out;
+                    let residual_rel = &residual_abs/&nondimensional_force_in;
+                    assert!(residual_abs.abs() <= 1e-2);
+                    assert!(residual_rel.abs() <= 1e-2);
+                }
+            }
+            mod thermodynamic_limit
+            {}
+        }
         //     #[test]
         //     fn nondimensional_end_to_end_length()
         //     {}
