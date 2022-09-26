@@ -1,5 +1,7 @@
 #![cfg(test)]
 
+pub static TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED: f64 = 1e-2;
+
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -51,10 +53,10 @@ impl Default for Parameters
             force_scale: 1e0,
             nondimensional_force_reference: 1e0,
             nondimensional_force_scale: 1e0,
-            end_to_end_length_reference: 1e0,
-            end_to_end_length_scale: 1e0,
-            nondimensional_end_to_end_length_per_link_reference: 1e0,
-            nondimensional_end_to_end_length_per_link_scale: 1e0,
+            end_to_end_length_reference: 1e-1,
+            end_to_end_length_scale: 1e-1,
+            nondimensional_end_to_end_length_per_link_reference: 5e-1,
+            nondimensional_end_to_end_length_per_link_scale: 49e-2,
             temperature_reference: 3e2,
             temperature_scale: 1e0,
             hinge_mass_reference: 1e0,
@@ -212,6 +214,7 @@ macro_rules! thermodynamics
             use super::*;
             use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
+            use crate::physics::single_chain::test::TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED;
             #[test]
             fn force()
             {
@@ -229,8 +232,8 @@ macro_rules! thermodynamics
                     let force_out = model.isometric.legendre.force(&end_to_end_length, temperature);
                     let residual_abs = &force_in - &force_out;
                     let residual_rel = &residual_abs/&force_in;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -249,8 +252,8 @@ macro_rules! thermodynamics
                     let nondimensional_force_out = model.isometric.legendre.nondimensional_force(&nondimensional_end_to_end_length_per_link);
                     let residual_abs = &nondimensional_force_in - &nondimensional_force_out;
                     let residual_rel = &residual_abs/&nondimensional_force_in;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -271,8 +274,8 @@ macro_rules! thermodynamics
                     let helmholtz_free_energy_isometric_legendre = model.isometric.legendre.helmholtz_free_energy(&end_to_end_length, temperature);
                     let residual_abs = &helmholtz_free_energy_isotensional_legendre - &helmholtz_free_energy_isometric_legendre;
                     let residual_rel = &residual_abs/&helmholtz_free_energy_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -293,8 +296,8 @@ macro_rules! thermodynamics
                     let helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.helmholtz_free_energy_per_link(&end_to_end_length, temperature);
                     let residual_abs = &helmholtz_free_energy_per_link_isotensional_legendre - &helmholtz_free_energy_per_link_isometric_legendre;
                     let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -315,8 +318,8 @@ macro_rules! thermodynamics
                     let relative_helmholtz_free_energy_isometric_legendre = model.isometric.legendre.relative_helmholtz_free_energy(&end_to_end_length, temperature);
                     let residual_abs = &relative_helmholtz_free_energy_isotensional_legendre - &relative_helmholtz_free_energy_isometric_legendre;
                     let residual_rel = &residual_abs/&relative_helmholtz_free_energy_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -337,8 +340,8 @@ macro_rules! thermodynamics
                     let relative_helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.relative_helmholtz_free_energy_per_link(&end_to_end_length, temperature);
                     let residual_abs = &relative_helmholtz_free_energy_per_link_isotensional_legendre - &relative_helmholtz_free_energy_per_link_isometric_legendre;
                     let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -359,8 +362,8 @@ macro_rules! thermodynamics
                     let nondimensional_helmholtz_free_energy_isometric_legendre = model.isometric.legendre.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
                     let residual_abs = &nondimensional_helmholtz_free_energy_isotensional_legendre - &nondimensional_helmholtz_free_energy_isometric_legendre;
                     let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -381,8 +384,8 @@ macro_rules! thermodynamics
                     let nondimensional_helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, temperature);
                     let residual_abs = &nondimensional_helmholtz_free_energy_per_link_isotensional_legendre - &nondimensional_helmholtz_free_energy_per_link_isometric_legendre;
                     let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -402,8 +405,8 @@ macro_rules! thermodynamics
                     let nondimensional_relative_helmholtz_free_energy_isometric_legendre = model.isometric.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
                     let residual_abs = &nondimensional_relative_helmholtz_free_energy_isotensional_legendre - &nondimensional_relative_helmholtz_free_energy_isometric_legendre;
                     let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             #[test]
@@ -423,8 +426,8 @@ macro_rules! thermodynamics
                     let nondimensional_relative_helmholtz_free_energy_per_link_isometric_legendre = model.isometric.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
                     let residual_abs = &nondimensional_relative_helmholtz_free_energy_per_link_isotensional_legendre - &nondimensional_relative_helmholtz_free_energy_per_link_isometric_legendre;
                     let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link_isotensional_legendre;
-                    assert!(residual_abs.abs() <= 1e-2);
-                    assert!(residual_rel.abs() <= 1e-2);
+                    assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
             // mod thermodynamic_limit
@@ -470,21 +473,6 @@ macro_rules! isometric
             use super::*;
             // use rand::Rng;
             // use crate::physics::single_chain::test::Parameters;
-            // #[test]
-            // fn force()
-            // {}
-            // #[test]
-            // fn helmholtz_free_energy()
-            // {}
-            // #[test]
-            // fn helmholtz_free_energy_per_link()
-            // {}
-            // #[test]
-            // fn relative_helmholtz_free_energy()
-            // {}
-            // #[test]
-            // fn relative_helmholtz_free_energy_per_link()
-            // {}
             mod legendre
             {
                 use super::*;
@@ -604,38 +592,426 @@ macro_rules! isometric
         }
         mod per_link
         {
-            // use super::*;
+            use super::*;
             // use rand::Rng;
             // use crate::physics::single_chain::test::Parameters;
             mod legendre
             {
-                // use super::*;
-                // use rand::Rng;
-                // use crate::physics::single_chain::test::Parameters;
+                use super::*;
+                use rand::Rng;
+                use crate::physics::single_chain::test::Parameters;
+                #[test]
+                fn helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&end_to_end_length, temperature);
+                        let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&end_to_end_length, temperature);
+                        let residual_abs = &helmholtz_free_energy/(model.number_of_links as f64) - &helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                #[test]
+                fn relative_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&end_to_end_length, temperature);
+                        let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&end_to_end_length, temperature);
+                        let residual_abs = &relative_helmholtz_free_energy/(model.number_of_links as f64) - &relative_helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                #[test]
+                fn nondimensional_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
+                        let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, temperature);
+                        let residual_abs = &nondimensional_helmholtz_free_energy/(model.number_of_links as f64) - &nondimensional_helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                #[test]
+                fn nondimensional_relative_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+                        let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_relative_helmholtz_free_energy/(model.number_of_links as f64) - &nondimensional_relative_helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
             }
         }
         mod relative
         {
-            // use super::*;
+            use super::*;
             // use rand::Rng;
             // use crate::physics::single_chain::test::Parameters;
             mod legendre
             {
-                // use super::*;
-                // use rand::Rng;
-                // use crate::physics::single_chain::test::Parameters;
+                use super::*;
+                use rand::Rng;
+                use crate::physics::single_chain::test::Parameters;
+                #[test]
+                fn helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&end_to_end_length, temperature);
+                        let helmholtz_free_energy_0 = model.legendre.helmholtz_free_energy(&parameters.zero, temperature);
+                        let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&end_to_end_length, temperature);
+                        let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_0 - &relative_helmholtz_free_energy;
+                        let residual_rel = &residual_abs/&helmholtz_free_energy_0;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                #[test]
+                fn helmholtz_free_energy_per_link()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&end_to_end_length, temperature);
+                        let helmholtz_free_energy_per_link_0 = model.legendre.helmholtz_free_energy_per_link(&parameters.zero, temperature);
+                        let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&end_to_end_length, temperature);
+                        let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_0 - &relative_helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_0;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                #[test]
+                fn nondimensional_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
+                        let nondimensional_helmholtz_free_energy_0 = model.legendre.nondimensional_helmholtz_free_energy(&parameters.zero, temperature);
+                        let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_helmholtz_free_energy - &nondimensional_helmholtz_free_energy_0 - &nondimensional_relative_helmholtz_free_energy;
+                        let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_0;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                #[test]
+                fn nondimensional_helmholtz_free_energy_per_link()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, temperature);
+                        let nondimensional_helmholtz_free_energy_per_link_0 = model.legendre.nondimensional_helmholtz_free_energy_per_link(&parameters.zero, temperature);
+                        let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_helmholtz_free_energy_per_link - &nondimensional_helmholtz_free_energy_per_link_0 - &nondimensional_relative_helmholtz_free_energy_per_link;
+                        let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link_0;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
             }
         }
         mod slope
         {
-            // use super::*;
+            use super::*;
             // use rand::Rng;
             // use crate::physics::single_chain::test::Parameters;
             mod legendre
             {
-                // use super::*;
-                // use rand::Rng;
-                // use crate::physics::single_chain::test::Parameters;
+                use super::*;
+                use rand::Rng;
+                use crate::physics::single_chain::test::Parameters;
+                #[test]
+                fn force()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let small_end_to_end_length = parameters.small*&end_to_end_length;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let force = model.legendre.force(&small_end_to_end_length, temperature);
+                        let force_from_initial_slope = (small_end_to_end_length/(number_of_links as f64)/link_length)*BOLTZMANN_CONSTANT*temperature*3.0/link_length;
+                        let residual_abs = &force - &force_from_initial_slope;
+                        let residual_rel = &residual_abs/&force;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn nondimensional_force()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let small_nondimensional_end_to_end_length_per_link = parameters.small*&nondimensional_end_to_end_length_per_link;
+                        let nondimensional_force = model.legendre.nondimensional_force(&small_nondimensional_end_to_end_length_per_link);
+                        let nondimensional_force_from_initial_slope = 3.0*small_nondimensional_end_to_end_length_per_link;
+                        let residual_abs = &nondimensional_force - &nondimensional_force_from_initial_slope;
+                        let residual_rel = &residual_abs/&nondimensional_force;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let small_end_to_end_length = parameters.small*&end_to_end_length;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let helmholtz_free_energy = model.legendre.helmholtz_free_energy(&small_end_to_end_length, temperature);
+                        let helmholtz_free_energy_from_initial_slope = model.legendre.helmholtz_free_energy(&parameters.zero, temperature) + (small_end_to_end_length/(number_of_links as f64)/link_length).powf(2.0)*(number_of_links as f64)*BOLTZMANN_CONSTANT*temperature*1.5;
+                        let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_from_initial_slope;
+                        let residual_rel = &residual_abs/&helmholtz_free_energy;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn helmholtz_free_energy_per_link()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let small_end_to_end_length = parameters.small*&end_to_end_length;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let helmholtz_free_energy_per_link = model.legendre.helmholtz_free_energy_per_link(&small_end_to_end_length, temperature);
+                        let helmholtz_free_energy_per_link_from_initial_slope = model.legendre.helmholtz_free_energy_per_link(&parameters.zero, temperature) + (small_end_to_end_length/(number_of_links as f64)/link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature*1.5;
+                        let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_from_initial_slope;
+                        let residual_rel = &residual_abs/&helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn relative_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let small_end_to_end_length = parameters.small*&end_to_end_length;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let relative_helmholtz_free_energy = model.legendre.relative_helmholtz_free_energy(&small_end_to_end_length, temperature);
+                        let relative_helmholtz_free_energy_from_initial_slope = (small_end_to_end_length/(number_of_links as f64)/link_length).powf(2.0)*(number_of_links as f64)*BOLTZMANN_CONSTANT*temperature*1.5;
+                        let residual_abs = &relative_helmholtz_free_energy - &relative_helmholtz_free_energy_from_initial_slope;
+                        let residual_rel = &residual_abs/&relative_helmholtz_free_energy;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn relative_helmholtz_free_energy_per_link()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let small_end_to_end_length = parameters.small*&end_to_end_length;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let relative_helmholtz_free_energy_per_link = model.legendre.relative_helmholtz_free_energy_per_link(&small_end_to_end_length, temperature);
+                        let relative_helmholtz_free_energy_per_link_from_initial_slope = (small_end_to_end_length/(number_of_links as f64)/link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature*1.5;
+                        let residual_abs = &relative_helmholtz_free_energy_per_link - &relative_helmholtz_free_energy_per_link_from_initial_slope;
+                        let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn nondimensional_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let small_nondimensional_end_to_end_length_per_link = parameters.small*&nondimensional_end_to_end_length_per_link;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_helmholtz_free_energy = model.legendre.nondimensional_helmholtz_free_energy(&small_nondimensional_end_to_end_length_per_link, temperature);
+                        let nondimensional_helmholtz_free_energy_from_initial_slope = model.legendre.nondimensional_helmholtz_free_energy(&parameters.zero, temperature) + small_nondimensional_end_to_end_length_per_link.powf(2.0)*(number_of_links as f64)*1.5;
+                        let residual_abs = &nondimensional_helmholtz_free_energy - &nondimensional_helmholtz_free_energy_from_initial_slope;
+                        let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn nondimensional_helmholtz_free_energy_per_link()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let small_nondimensional_end_to_end_length_per_link = parameters.small*&nondimensional_end_to_end_length_per_link;
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_helmholtz_free_energy_per_link = model.legendre.nondimensional_helmholtz_free_energy_per_link(&small_nondimensional_end_to_end_length_per_link, temperature);
+                        let nondimensional_helmholtz_free_energy_per_link_from_initial_slope = model.legendre.nondimensional_helmholtz_free_energy_per_link(&parameters.zero, temperature) + small_nondimensional_end_to_end_length_per_link.powf(2.0)*1.5;
+                        let residual_abs = &nondimensional_helmholtz_free_energy_per_link - &nondimensional_helmholtz_free_energy_per_link_from_initial_slope;
+                        let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn nondimensional_relative_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let small_nondimensional_end_to_end_length_per_link = parameters.small*&nondimensional_end_to_end_length_per_link;
+                        let nondimensional_relative_helmholtz_free_energy = model.legendre.nondimensional_relative_helmholtz_free_energy(&small_nondimensional_end_to_end_length_per_link);
+                        let nondimensional_relative_helmholtz_free_energy_from_initial_slope = small_nondimensional_end_to_end_length_per_link.powf(2.0)*(number_of_links as f64)*1.5;
+                        let residual_abs = &nondimensional_relative_helmholtz_free_energy - &nondimensional_relative_helmholtz_free_energy_from_initial_slope;
+                        let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
+                #[test]
+                fn nondimensional_relative_helmholtz_free_energy_per_link()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let small_nondimensional_end_to_end_length_per_link = parameters.small*&nondimensional_end_to_end_length_per_link;
+                        let nondimensional_relative_helmholtz_free_energy_per_link = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&small_nondimensional_end_to_end_length_per_link);
+                        let nondimensional_relative_helmholtz_free_energy_per_link_from_initial_slope = small_nondimensional_end_to_end_length_per_link.powf(2.0)*1.5;
+                        let residual_abs = &nondimensional_relative_helmholtz_free_energy_per_link - &nondimensional_relative_helmholtz_free_energy_per_link_from_initial_slope;
+                        let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_close);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    }
+                }
             }
         }
     }
