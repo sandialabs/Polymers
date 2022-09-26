@@ -1,5 +1,81 @@
 #![cfg(test)]
 
+mod inverse_langevin
+{
+    mod scalar
+    {
+        use rand::Rng;
+        use crate::math::langevin;
+        use crate::math::inverse_langevin;
+
+        #[test]
+        fn inverse()
+        {
+            let mut rng = rand::thread_rng();
+            for _ in 0..88888
+            {
+                let y = rng.gen::<f64>();
+                let x = inverse_langevin(&y, 1e-4);
+                let f = langevin(&x);
+                let residual_abs = &y - &f;
+                let residual_rel = &residual_abs/&y;
+                assert!(residual_abs.abs() <= 1e-4);
+                assert!(residual_rel.abs() <= 1e-4);
+            }
+        }
+    }
+}
+
+mod approximate_inverse_langevin
+{
+    mod scalar
+    {
+        use rand::Rng;
+        use crate::math::langevin;
+        use crate::math::approximate_inverse_langevin;
+
+        #[test]
+        fn inverse()
+        {
+            let mut rng = rand::thread_rng();
+            for _ in 0..88888
+            {
+                let y = rng.gen::<f64>();
+                let x = approximate_inverse_langevin(&y);
+                let f = langevin(&x);
+                let residual_abs = &y - &f;
+                let residual_rel = &residual_abs/&y;
+                assert!(residual_abs.abs() <= 1e-3);
+                assert!(residual_rel.abs() <= 1e-3);
+            }
+        }
+    }
+    mod array_1d
+    {
+        use ndarray::Array;
+        use crate::math::langevin;
+        use crate::math::approximate_inverse_langevin;
+
+        #[test]
+        fn inverse()
+        {
+            let y = Array::<f64, _>::linspace(1e-6, 1.0, 88888);
+            let x = approximate_inverse_langevin(&y);
+            let f = langevin(&x);
+            let residual_abs = &y - &f;
+            let residual_rel = &residual_abs/&y;
+            for residual_abs_i in residual_abs.iter()
+            {
+                assert!(residual_abs_i.abs() <= 1e-3);
+            }
+            for residual_rel_i in residual_rel.iter()
+            {
+                assert!(residual_rel_i.abs() <= 1e-3);
+            }
+        }
+    }
+}
+
 mod langevin
 {
 

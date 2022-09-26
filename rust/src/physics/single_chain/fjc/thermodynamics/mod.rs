@@ -1,7 +1,9 @@
 use crate::physics::single_chain::
 {
     Isometric,
-    Isotensional
+    IsometricLegendre,
+    Isotensional,
+    IsotensionalLegendre
 };
 
 pub mod test;
