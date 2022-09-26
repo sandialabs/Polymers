@@ -17,6 +17,8 @@ pub struct Parameters
     pub force_scale: f64,
     pub nondimensional_force_reference: f64,
     pub nondimensional_force_scale: f64,
+    pub end_to_end_length_reference: f64,
+    pub end_to_end_length_scale: f64,
     pub temperature_reference: f64,
     pub temperature_scale: f64,
     pub hinge_mass_reference: f64,
@@ -47,6 +49,8 @@ impl Default for Parameters
             force_scale: 1e0,
             nondimensional_force_reference: 1e0,
             nondimensional_force_scale: 1e0,
+            end_to_end_length_reference: 1e0,
+            end_to_end_length_scale: 1e0,
             temperature_reference: 3e2,
             temperature_scale: 1e0,
             hinge_mass_reference: 1e0,
@@ -419,34 +423,25 @@ macro_rules! thermodynamics
                     assert!(residual_rel.abs() <= 1e-2);
                 }
             }
-            mod thermodynamic_limit
-            {}
+            // mod thermodynamic_limit
+            // {
+            //     use super::*;
+            //     use rand::Rng;
+            //     use crate::physics::single_chain::test::Parameters;
+            //     #[test]
+            //     fn force()
+            //     {}
+            //     #[test]
+            //     fn end_to_end_length()
+            //     {}
+            //     #[test]
+            //     fn helmholtz_free_energy()
+            //     {}
+            //     #[test]
+            //     fn gibbs_free_energy()
+            //     {}
+            // }
         }
-        //     #[test]
-        //     fn nondimensional_end_to_end_length()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_end_to_end_length_per_link()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_force()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_force_per_link()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_relative_helmholtz_free_energy()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_relative_helmholtz_free_energy_per_link()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_relative_gibbs_free_energy()
-        //     {}
-        //     #[test]
-        //     fn nondimensional_relative_gibbs_free_energy_per_link()
-        //     {}
-        // }
     }
 }
 pub(crate) use thermodynamics;
@@ -464,6 +459,103 @@ macro_rules! isometric
             {
                 let parameters = Parameters::default();
                 let _ = <$model>::init(parameters.default_number_of_links, parameters.default_link_length, parameters.default_hinge_mass).legendre;
+            }
+        }
+        mod nondimensional
+        {
+            use super::*;
+            // use rand::Rng;
+            // use crate::physics::single_chain::test::Parameters;
+            // #[test]
+            // fn force()
+            // {}
+            // #[test]
+            // fn helmholtz_free_energy()
+            // {}
+            // #[test]
+            // fn helmholtz_free_energy_per_link()
+            // {}
+            // #[test]
+            // fn relative_helmholtz_free_energy()
+            // {}
+            // #[test]
+            // fn relative_helmholtz_free_energy_per_link()
+            // {}
+            mod legendre
+            {
+                use super::*;
+                use rand::Rng;
+                use crate::physics::single_chain::test::Parameters;
+                #[test]
+                fn force()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let force = model.legendre.force(&end_to_end_length, temperature);
+                        let nondimensional_end_to_end_length_per_link = end_to_end_length/(number_of_links as f64)/link_length;
+                        let nondimensional_force = model.legendre.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &force/BOLTZMANN_CONSTANT/temperature*link_length - &nondimensional_force;
+                        let residual_rel = &residual_abs/&nondimensional_force;
+                        assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
+                        assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
+                    }
+                }
+                // #[test]
+                // fn helmholtz_free_energy()
+                // {}
+                // #[test]
+                // fn helmholtz_free_energy_per_link()
+                // {}
+                // #[test]
+                // fn relative_helmholtz_free_energy()
+                // {}
+                // #[test]
+                // fn relative_helmholtz_free_energy_per_link()
+                // {}
+            }
+        }
+        mod per_link
+        {
+            // use super::*;
+            // use rand::Rng;
+            // use crate::physics::single_chain::test::Parameters;
+            mod legendre
+            {
+                // use super::*;
+                // use rand::Rng;
+                // use crate::physics::single_chain::test::Parameters;
+            }
+        }
+        mod relative
+        {
+            // use super::*;
+            // use rand::Rng;
+            // use crate::physics::single_chain::test::Parameters;
+            mod legendre
+            {
+                // use super::*;
+                // use rand::Rng;
+                // use crate::physics::single_chain::test::Parameters;
+            }
+        }
+        mod slope
+        {
+            // use super::*;
+            // use rand::Rng;
+            // use crate::physics::single_chain::test::Parameters;
+            mod legendre
+            {
+                // use super::*;
+                // use rand::Rng;
+                // use crate::physics::single_chain::test::Parameters;
             }
         }
     }
