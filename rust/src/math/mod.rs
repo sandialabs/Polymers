@@ -5,6 +5,10 @@ use ndarray::{
 
 pub mod test;
 
+pub fn factorial(num: u128) -> u128 {
+    (1..=num).product()
+}
+
 pub fn sinhc<T>(x: &T) -> T
 where
     T: Math<T>

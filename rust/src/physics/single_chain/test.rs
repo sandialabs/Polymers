@@ -430,24 +430,42 @@ macro_rules! thermodynamics
                     assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
-            // mod thermodynamic_limit
-            // {
-            //     use super::*;
-            //     use rand::Rng;
-            //     use crate::physics::single_chain::test::Parameters;
+            mod thermodynamic_limit
+            {
+                use super::*;
+                use rand::Rng;
+                use crate::physics::single_chain::test::Parameters;
             //     #[test]
             //     fn force()
             //     {}
             //     #[test]
             //     fn end_to_end_length()
             //     {}
-            //     #[test]
-            //     fn helmholtz_free_energy()
-            //     {}
+                #[test]
+                fn helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = 12;
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let helmholtz_free_energy = model.isometric.helmholtz_free_energy(&end_to_end_length, temperature);
+                        let helmholtz_free_energy_legendre = model.isometric.legendre.helmholtz_free_energy(&end_to_end_length, temperature);
+                        let residual_abs = &helmholtz_free_energy_legendre - &helmholtz_free_energy;
+                        let residual_rel = &residual_abs/&helmholtz_free_energy;
+                        // assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                        // assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                    }
+                }
             //     #[test]
             //     fn gibbs_free_energy()
             //     {}
-            // }
+            }
         }
     }
 }

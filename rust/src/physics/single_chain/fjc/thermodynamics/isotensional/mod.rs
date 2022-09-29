@@ -25,6 +25,7 @@ pub struct FJC
     pub link_length: f64,
     pub number_of_links: u16,
     pub number_of_links_f64: f64,
+    pub contour_length: f64,
     pub legendre: FJCLegendre
 }
 
@@ -38,6 +39,7 @@ impl Isotensional for FJC
             link_length,
             number_of_links,
             number_of_links_f64: number_of_links as f64,
+            contour_length: (number_of_links as f64)*link_length,
             legendre: FJCLegendre::init(number_of_links, link_length, hinge_mass)
         }
     }
@@ -169,7 +171,7 @@ impl Isotensional for FJC
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 4.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)/BOLTZMANN_CONSTANT/temperature*PLANCK_CONSTANT.powf(2.0)))
+        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_relative_gibbs_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:
@@ -204,7 +206,8 @@ pub struct FJCLegendre
     pub hinge_mass: f64,
     pub link_length: f64,
     pub number_of_links: u16,
-    pub number_of_links_f64: f64
+    pub number_of_links_f64: f64,
+    pub contour_length: f64
 }
 
 impl IsotensionalLegendre for FJCLegendre
@@ -217,6 +220,7 @@ impl IsotensionalLegendre for FJCLegendre
             link_length,
             number_of_links,
             number_of_links_f64: number_of_links as f64,
+            contour_length: (number_of_links as f64)*link_length
         }
     }
     fn helmholtz_free_energy<T>(&self, force: &T, temperature: f64) -> T
@@ -295,7 +299,7 @@ impl IsotensionalLegendre for FJCLegendre
         std::ops::Div<f64, Output = T> +
         std::ops::Mul<f64, Output = T>
     {
-        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)/BOLTZMANN_CONSTANT/temperature*PLANCK_CONSTANT.powf(2.0)))
+        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_relative_helmholtz_free_energy<T>(&self, nondimensional_force: &T) -> T
     where T:
