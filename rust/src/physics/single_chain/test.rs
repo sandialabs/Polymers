@@ -33,6 +33,7 @@ pub struct Parameters
     pub minimum_number_of_links: u16,
     pub maximum_number_of_links: u16,
     pub default_number_of_links: u16,
+    pub large_number_of_links: u16,
     pub default_hinge_mass: f64,
     pub zero: f64,
     pub small: f64
@@ -64,9 +65,10 @@ impl Default for Parameters
             link_length_reference: 1e0,
             link_length_scale: 1e0,
             default_link_length: 1e0,
-            minimum_number_of_links: 8,
-            maximum_number_of_links: 88,
+            minimum_number_of_links: 6,
+            maximum_number_of_links: 33,
             default_number_of_links: 8,
+            large_number_of_links: 25,
             default_hinge_mass: 1e0,
             zero: 1e-88,
             small: 1e-2
@@ -448,7 +450,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = 12;
+                        let number_of_links: u16 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -458,8 +460,8 @@ macro_rules! thermodynamics
                         let helmholtz_free_energy_legendre = model.isometric.legendre.helmholtz_free_energy(&end_to_end_length, temperature);
                         let residual_abs = &helmholtz_free_energy_legendre - &helmholtz_free_energy;
                         let residual_rel = &residual_abs/&helmholtz_free_energy;
-                        // assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
-                        // assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                        assert!(residual_abs.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
+                        assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                     }
                 }
             //     #[test]

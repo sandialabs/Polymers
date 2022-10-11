@@ -1,5 +1,13 @@
 #![cfg(test)]
 
+use crate::math::factorial;
+
+#[test]
+fn largest_factorial()
+{
+    factorial(34);
+}
+
 mod inverse_langevin
 {
     mod scalar
