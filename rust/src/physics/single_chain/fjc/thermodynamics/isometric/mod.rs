@@ -62,7 +62,7 @@ impl Isometric for FJC
         let n = self.number_of_links as u128;
         let p = self.number_of_links_f64 - 2.0;
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-        let k = (self.number_of_links_f64*m).floor() as u128;
+        let k = (self.number_of_links_f64*m).ceil() as u128;
         for s in 0..k
         {
             sum += (-1.0_f64).powf(s as f64)*((factorial(n.into())/factorial(s.into())/factorial((n - s).into())) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
@@ -79,7 +79,7 @@ impl Isometric for FJC
         let n = self.number_of_links as u128;
         let p = self.number_of_links_f64 - 2.0;
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-        let k = (self.number_of_links_f64*m).floor() as u128;
+        let k = (self.number_of_links_f64*m).ceil() as u128;
         for s in 0..k
         {
             sum += (-1.0_f64).powf(s as f64)*((factorial(n.into())/factorial(s.into())/factorial((n - s).into())) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
