@@ -40,11 +40,13 @@ setup(
     extras_require={
       'docs': ['docutils<0.18,>=0.14', 'ipykernel', 'ipython',
                'jinja2>=3.0', 'nbsphinx', 'pycodestyle',
-               'sphinx', 'sphinx-rtd-theme', 'sphinxcontrib-bibtex'],
+               'sphinx', 'sphinx-copybutton',
+               'sphinx-rtd-theme', 'sphinxcontrib-bibtex'],
       'testing': ['pycodestyle', 'pylint', 'pytest', 'pytest-cov'],
       'all': ['docutils<0.18,>=0.14', 'ipykernel', 'ipython', 'jinja2>=3.0',
               'nbsphinx', 'pycodestyle', 'pylint', 'pytest', 'pytest-cov',
-              'sphinx', 'sphinx-rtd-theme', 'sphinxcontrib-bibtex']
+              'sphinx', 'sphinx-copybutton',
+              'sphinx-rtd-theme', 'sphinxcontrib-bibtex']
     },
     classifiers=[
         'License :: OSI Approved :: BSD License',

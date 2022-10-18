@@ -1,9 +1,8 @@
-use ndarray::{
-    Array,
-    Dimension
-};
-
 pub mod test;
+
+pub fn factorial(num: u128) -> u128 {
+    (1..=num).product()
+}
 
 pub fn sinhc<T>(x: &T) -> T
 where
@@ -82,31 +81,5 @@ impl Math<f64> for f64
     fn approximate_inverse_langevin(&self) -> Self
     {
         (2.14234*self.powf(3.0) - 4.22785*self.powf(2.0) + 3.0*self)/(1.0 - self)/(0.71716*self.powf(3.0) - 0.41103*self.powf(2.0) - 0.39165*self + 1.0)
-    }
-}
-
-impl<D> Math<Array<f64, D>> for Array<f64, D>
-where
-    D: Dimension
-{
-    fn sinhc(&self) -> Self
-    {
-        self.to_owned().mapv_into(|v| v.sinh())/self
-    }
-    fn ln_fun(&self) -> Self
-    {
-        self.to_owned().mapv_into(|v| v.ln())
-    }
-    fn ln_sinhc(&self) -> Self
-    {
-        (self.to_owned().mapv_into(|v| v.sinh())/self).mapv_into(|v| v.ln())
-    }
-    fn langevin(&self) -> Self
-    {
-        1.0/self.to_owned().mapv_into(|v| v.tanh()) - 1.0/self
-    }
-    fn approximate_inverse_langevin(&self) -> Self
-    {
-        self*(2.14234*self*self - 4.22785*self + 3.0)/(1.0 - self)/(0.71716*self*self*self - 0.41103*self*self - 0.39165*self + 1.0)
     }
 }

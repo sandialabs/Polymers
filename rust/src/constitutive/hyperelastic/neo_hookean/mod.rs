@@ -1,6 +1,3 @@
-use ndarray::Array2;
-use crate::constitutive::IDENTITY_TENSOR;
-use crate::constitutive::left_cauchy_green_tensor;
 use crate::constitutive::hyperelastic::Hyperelastic;
 
 pub mod test;
@@ -14,9 +11,5 @@ impl NeoHookean {
         NeoHookean {
             hyperelastic: Hyperelastic::init()
         }
-    }
-    pub fn cauchy_stress(&self, deformation_gradient: &Array2<f64>) -> Array2<f64> {
-        let left_cauchy_green_tensor =& left_cauchy_green_tensor(deformation_gradient);
-        left_cauchy_green_tensor - &*IDENTITY_TENSOR
     }
 }
