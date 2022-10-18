@@ -1,4 +1,3 @@
-use ndarray::Array2;
 use crate::constitutive::hyperelastic::Hyperelastic;
 
 pub mod test;

@@ -1,7 +1,6 @@
 use std::f64::consts::PI;
 use crate::math::
 {
-    Math,
     ln,
     ln_sinhc,
     approximate_inverse_langevin,
@@ -46,7 +45,7 @@ impl Isometric for FJC
     }
     fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64
     {
-        self.helmholtz_free_energy(end_to_end_length, temperature)*self.number_of_links_f64
+        self.helmholtz_free_energy_per_link(end_to_end_length, temperature)*self.number_of_links_f64
     }
     fn helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: f64) -> f64
     {

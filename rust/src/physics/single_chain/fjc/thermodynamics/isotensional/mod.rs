@@ -1,7 +1,6 @@
 use std::f64::consts::PI;
 use crate::math::
 {
-    Math,
     ln,
     ln_sinhc,
     langevin

@@ -167,25 +167,14 @@ macro_rules! mechanics
 {
     ( $model:ty ) =>
     {
-        mod init
-        {
-            use super::*;
-            use crate::physics::single_chain::test::Parameters;
-            #[test]
-            fn number_of_configurations()
-            {
-                let parameters = Parameters::default();
-                let mut rng = rand::thread_rng();
-                for _ in 0..parameters.number_of_loops
-                {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
-                    let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-                    let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-                    let model = <$model>::init(number_of_links, link_length, hinge_mass);
-                    assert_eq!(number_of_links + 1, model.random_configuration().len() as u16);
-                }
-            }
-        }
+        // mod init
+        // {
+        //     use super::*;
+        //     use crate::physics::single_chain::test::Parameters;
+        //     #[test]
+        //     fn number_of_configurations()
+        //     {}
+        // }
     }
 }
 pub(crate) use mechanics;

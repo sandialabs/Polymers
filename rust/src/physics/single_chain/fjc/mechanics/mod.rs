@@ -1,5 +1,3 @@
-use ndarray::Array1;
-
 pub mod test;
 
 pub struct Mechanics
@@ -20,10 +18,9 @@ impl Mechanics
             number_of_links
         }
     }
-    pub fn random_configuration(&self) -> Array1<f64>
+    pub fn random_configuration(&self)
     {
         // put random unit vector(s) generator in math, return here, try not to use ndarray
-        Array1::<f64>::linspace(1.0, 10.0, (self.number_of_links + 1) as usize)
     }
 }
 
