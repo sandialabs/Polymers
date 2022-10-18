@@ -4,6 +4,8 @@ pub mod fjc;
 pub trait Isometric
 {
     fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Self;
+    fn force(&self, end_to_end_length: &f64, temperature: f64) -> f64;
+    fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
     fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64;
     fn helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: f64) -> f64;
     fn relative_helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64;
