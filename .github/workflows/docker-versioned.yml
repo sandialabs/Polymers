@@ -23,7 +23,7 @@ jobs:
           tags: |
             mrbuche/polymers:${{steps.tag.outputs.tag}}
             mrbuche/polymers:latest
-      - run: sleep 234s
+      - run: sleep 500s
   test:
     needs: build
     runs-on: ubuntu-22.04
