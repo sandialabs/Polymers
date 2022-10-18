@@ -5,6 +5,7 @@ use crate::physics::single_chain::test;
 
 test::base!(FJC);
 test::isometric!(FJC);
+
 mod legendre
 {
     use super::*;
