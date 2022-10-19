@@ -2,12 +2,6 @@
 
 pub static TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED: f64 = 1e-2;
 
-use crate::physics::
-{
-    PLANCK_CONSTANT,
-    BOLTZMANN_CONSTANT
-};
-
 pub struct Parameters
 {
     pub number_of_loops: u32,
@@ -670,7 +664,6 @@ macro_rules! isometric
         mod per_link
         {
             use super::*;
-            use super::*;
             use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
             #[test]
@@ -759,7 +752,6 @@ macro_rules! isometric
         }
         mod relative
         {
-            use super::*;
             use super::*;
             use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
@@ -961,7 +953,6 @@ macro_rules! isometricLegendre
         mod per_link_legendre
         {
             use super::*;
-            use super::*;
             use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
             #[test]
@@ -1051,7 +1042,6 @@ macro_rules! isometricLegendre
         }
         mod relative_legendre
         {
-            use super::*;
             use super::*;
             use rand::Rng;
             use crate::physics::single_chain::test::Parameters;
