@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+
 use crate::physics::single_chain::
 {
     Isometric,
