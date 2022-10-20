@@ -1,6 +1,7 @@
 # Polymers Modeling Library
 
-[![Discord](https://img.shields.io/badge/Discord-chat-%237289da.svg?logo=discord&color=5865F2&logoColor=5865F2)](https://discord.gg/yC6dbPuc)
+[![Website](https://img.shields.io/badge/GitHub-website-6e5494?logo=github)](https://sandialabs.github.io/Polymers)
+[![Discord](https://img.shields.io/badge/Discord-chat-%237289da.svg?logo=discord&color=5865F2&logoColor=FFFFFF)](https://discord.gg/yC6dbPuc)
 
 ## Citation
 
