@@ -40,10 +40,10 @@ impl Default for Parameters
         Self
         {
             number_of_loops: 88888,
-            abs_tol_for_close: 1e-5,
-            rel_tol_for_close: 1e-4,
-            abs_tol_for_equals: 1e-7,
-            rel_tol_for_equals: 1e-5,
+            abs_tol_for_close: 1e-4,
+            rel_tol_for_close: 1e-3,
+            abs_tol_for_equals: 1e-5,
+            rel_tol_for_equals: 1e-4,
             force_reference: 1e0,
             force_scale: 1e0,
             nondimensional_force_reference: 1e0,
@@ -421,12 +421,12 @@ macro_rules! thermodynamics
                 use rand::Rng;
                 use crate::physics::BOLTZMANN_CONSTANT;
                 use crate::physics::single_chain::test::Parameters;
-            //     #[test]
-            //     fn force()
-            //     {}
-            //     #[test]
-            //     fn end_to_end_length()
-            //     {}
+                // #[test]
+                // fn force()
+                // {}
+                // #[test]
+                // fn end_to_end_length()
+                // {}
                 // #[test]
                 // fn helmholtz_free_energy()
                 // {}
@@ -774,8 +774,7 @@ macro_rules! isometric
                     let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_0 - &relative_helmholtz_free_energy;
                     let residual_rel = &residual_abs/&helmholtz_free_energy_0;
                     // assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
-                    // assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
-                    assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
                 }
             }
             #[test]
@@ -797,8 +796,7 @@ macro_rules! isometric
                     let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_0 - &relative_helmholtz_free_energy_per_link;
                     let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_0;
                     // assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
-                    // assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
-                    assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
                 }
             }
             #[test]
@@ -1064,8 +1062,7 @@ macro_rules! isometricLegendre
                     let residual_abs = &gibbs_free_energy - &gibbs_free_energy_0 - &relative_gibbs_free_energy;
                     let residual_rel = &residual_abs/&gibbs_free_energy_0;
                     // assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
-                    // assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
-                    assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
                 }
             }
             #[test]
@@ -1087,8 +1084,7 @@ macro_rules! isometricLegendre
                     let residual_abs = &gibbs_free_energy_per_link - &gibbs_free_energy_per_link_0 - &relative_gibbs_free_energy_per_link;
                     let residual_rel = &residual_abs/&gibbs_free_energy_per_link_0;
                     // assert!(residual_abs.abs() <= parameters.abs_tol_for_equals);
-                    // assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
-                    assert!(residual_rel.abs() <= parameters.rel_tol_for_close);
+                    assert!(residual_rel.abs() <= parameters.rel_tol_for_equals);
                 }
             }
             #[test]
