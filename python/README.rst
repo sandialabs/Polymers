@@ -56,8 +56,8 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
 .. |docker| image:: https://img.shields.io/docker/v/mrbuche/polymers?color=0db7ed&label=Docker%20Hub&logo=docker&logoColor=0db7ed
     :target: https://hub.docker.com/r/mrbuche/polymers
 
-.. |license| image:: https://img.shields.io/github/license/sandialabs/polymers?label=License
+.. |license| image:: https://img.shields.io/github/license/sandialabs/polymers?label=License&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAPZJREFUOE+tk2ERwjAUgxMHOAAUYIEpAAngAAccDuYAJIACkIADhgMchMuu5Uq7Aj/or92a9700fSU+LEktgBHJVU3GL4CL90nOfwZIsngLIC8ybEeyh8bVO5B0BTBL/t8BHABE6/F7nGg6ktMIsHAfNtckXWDw2xEkFboIsN1zADTR5gCg0EWAO00C4EayqTgodJTkwpsDCgAHOCXZpQ6qOkk+7zJx0AE4+u4zwLBOkgA8Quo24aA8PHb3CrGqC/e+AbAIRzgBaB1kBnCApe7vk5gC82scala8hYGpTOv66StGOevqEONM5E0N6Kf07S18yuHb3hPwkpAEoqucdwAAAABJRU5ErkJggg==
     :target: https://github.com/sandialabs/polymers/blob/main/LICENSE
 
-.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.7041983.svg
+.. |zenodo| image:: https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.7041983-blue
     :target: https://doi.org/10.5281/zenodo.7041983
