@@ -1,6 +1,24 @@
 #![cfg(test)]
 
+use rand::Rng;
+use crate::math::invert;
 use crate::math::factorial;
+
+#[test]
+fn invert_sinh()
+{
+    fn sinh(x: f64) -> f64 {x.sinh()}
+    let mut rng = rand::thread_rng();
+    for _ in 0..88888
+    {
+        let y = rng.gen::<f64>();
+        let x = invert(y, sinh, 0.0);
+        let residual_abs = &y - &x.sinh();
+        let residual_rel = &residual_abs/&y;
+        assert!(residual_abs.abs() <= 1e-4);
+        assert!(residual_rel.abs() <= 1e-4);
+    }
+}
 
 #[test]
 fn largest_factorial()

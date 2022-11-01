@@ -1,6 +1,19 @@
 pub mod test;
 
-pub fn factorial(num: u128) -> u128 {
+pub fn invert<F>(value: f64, function: F, mut guess: f64) -> f64
+where F: Fn(f64) -> f64
+{
+    let mut residual: f64 = 1.0;
+    while residual.abs()/value > 1e-4
+    {
+        residual = function(guess) - value;
+        guess = guess - residual/(function(guess + 5e-4) - function(guess - 5e-4))*1e-3;
+    }
+    guess
+}
+
+pub fn factorial(num: u128) -> u128
+{
     (1..=num).product()
 }
 
