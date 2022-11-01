@@ -241,6 +241,18 @@ macro_rules! thermodynamics
                     assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
+            // #[test]
+            // fn end_to_end_length()
+            // {}
+            // #[test]
+            // fn end_to_end_length_per_link()
+            // {}
+            // #[test]
+            // fn nondimensional_end_to_end_length()
+            // {}
+            // #[test]
+            // fn nondimensional_end_to_end_length_per_link()
+            // {}
             #[test]
             fn helmholtz_free_energy()
             {
@@ -415,17 +427,88 @@ macro_rules! thermodynamics
                     assert!(residual_rel.abs() <= TEMPORARY_REDUCED_TOL_FOR_INV_LANG_RELATED);
                 }
             }
+            // #[test]
+            // fn gibbs_free_energy()
+            // {}
+            // #[test]
+            // fn gibbs_free_energy_per_link()
+            // {}
+            // #[test]
+            // fn relative_gibbs_free_energy_per_link()
+            // {}
+            // #[test]
+            // fn relative_gibbs_free_energy_per_link()
+            // {}
+            // #[test]
+            // fn nondimensional_gibbs_free_energy()
+            // {}
+            // #[test]
+            // fn nondimensional_gibbs_free_energy_per_link()
+            // {}
+            // #[test]
+            // fn nondimensional_relative_gibbs_free_energy_per_link()
+            // {}
+            // #[test]
+            // fn nondimensional_relative_gibbs_free_energy_per_link()
+            // {}
             mod thermodynamic_limit
             {
                 use super::*;
                 use rand::Rng;
                 use crate::physics::BOLTZMANN_CONSTANT;
                 use crate::physics::single_chain::test::Parameters;
-                // #[test]
-                // fn force()
-                // {}
+                #[test]
+                fn force()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let force = model.isometric.force(&end_to_end_length, temperature);
+                        let force_legendre = model.isometric.legendre.force(&end_to_end_length, temperature);
+                        let residual_abs = &force_legendre - &force;
+                        let residual_rel = &residual_abs/&force;
+                        assert!(residual_abs.abs() <= 3e-1*(number_of_links as f64).sqrt());
+                        assert!(residual_rel.abs() <= 3e-1);
+                    }
+                }
+                #[test]
+                fn nondimensional_force()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+                        let nondimensional_force_legendre = model.isometric.legendre.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_force_legendre - &nondimensional_force;
+                        let residual_rel = &residual_abs/&nondimensional_force;
+                        assert!(residual_abs.abs() <= 3e-1*(number_of_links as f64).sqrt());
+                        assert!(residual_rel.abs() <= 3e-1);
+                    }
+                }
                 // #[test]
                 // fn end_to_end_length()
+                // {}
+                // #[test]
+                // fn end_to_end_length_per_link()
+                // {}
+                // #[test]
+                // fn nondimensional_end_to_end_length()
+                // {}
+                // #[test]
+                // fn nondimensional_end_to_end_length_per_link()
                 // {}
                 #[test]
                 fn helmholtz_free_energy()
@@ -593,9 +676,30 @@ macro_rules! thermodynamics
                         assert!(residual_rel.abs() <= 3e-1);
                     }
                 }
-            //     #[test]
-            //     fn gibbs_free_energy()
-            //     {}
+                // #[test]
+                // fn gibbs_free_energy()
+                // {}
+                // #[test]
+                // fn gibbs_free_energy_per_link()
+                // {}
+                // #[test]
+                // fn relative_gibbs_free_energy_per_link()
+                // {}
+                // #[test]
+                // fn relative_gibbs_free_energy_per_link()
+                // {}
+                // #[test]
+                // fn nondimensional_gibbs_free_energy()
+                // {}
+                // #[test]
+                // fn nondimensional_gibbs_free_energy_per_link()
+                // {}
+                // #[test]
+                // fn nondimensional_relative_gibbs_free_energy_per_link()
+                // {}
+                // #[test]
+                // fn nondimensional_relative_gibbs_free_energy_per_link()
+                // {}
             }
         }
     }

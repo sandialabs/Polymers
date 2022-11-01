@@ -51,16 +51,7 @@ impl Isometric for FJC
     }
     fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        let mut sum: f64 = 0.0;
-        let n = self.number_of_links as u128;
-        let p = self.number_of_links_f64 - 2.0;
-        let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-        let k = (self.number_of_links_f64*m).ceil() as u128;
-        for s in 0..k
-        {
-            sum += (-1.0_f64).powf(s as f64)*((factorial(n.into())/factorial(s.into())/factorial((n - s).into())) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-        }
-        0.125/PI/nondimensional_end_to_end_length_per_link.powf(2.0)*(n.pow(n as u32) as f64)/(factorial((n - 2).into()) as f64)*sum/self.nondimensional_equilibrium_distribution(nondimensional_end_to_end_length_per_link)
+        (1.0 - self.nondimensional_equilibrium_distribution(&(nondimensional_end_to_end_length_per_link + 1e-3))/self.nondimensional_equilibrium_distribution(nondimensional_end_to_end_length_per_link))/1e-3/self.number_of_links_f64
     }
     fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64
     {
