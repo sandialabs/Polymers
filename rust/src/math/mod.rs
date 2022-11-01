@@ -73,7 +73,7 @@ pub fn inverse_langevin(y: &f64, tol: f64) -> f64
         x = 1.0/(1.0/x.tanh() - y);
         residual_rel = langevin(&x)/y - 1.0;
     }
-    return x;
+    x
 }
 
 pub trait Math<T>
