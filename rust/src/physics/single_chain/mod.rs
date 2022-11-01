@@ -33,10 +33,10 @@ pub trait IsometricLegendre
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: f64) -> f64;
     fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
     fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
-    // fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64;
-    // fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
-    // fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64;
-    // fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64;
+    fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64;
+    fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
     fn gibbs_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64;
     fn gibbs_free_energy_per_link(&self, end_to_end_length: &f64, temperature: f64) -> f64;
     fn relative_gibbs_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64;

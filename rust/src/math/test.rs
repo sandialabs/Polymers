@@ -1,6 +1,38 @@
 #![cfg(test)]
 
+use rand::Rng;
+use crate::math::integrate;
+use crate::math::invert;
 use crate::math::factorial;
+
+#[test]
+fn integrate_cosh()
+{
+    fn cosh(x: f64) -> f64 {x.cosh()}
+    let mut rng = rand::thread_rng();
+    for _ in 0..88
+    {
+        let limit = rng.gen::<f64>();
+        let integral = integrate(cosh, -limit, limit, 10000);
+        assert!((integral - 2.0*limit.sinh()).abs() <= 1e-8);
+    }
+}
+
+#[test]
+fn invert_sinh()
+{
+    fn sinh(x: f64) -> f64 {x.sinh()}
+    let mut rng = rand::thread_rng();
+    for _ in 0..88888
+    {
+        let y = rng.gen::<f64>();
+        let x = invert(y, sinh, 0.0);
+        let residual_abs = &y - &x.sinh();
+        let residual_rel = &residual_abs/&y;
+        assert!(residual_abs.abs() <= 1e-4);
+        assert!(residual_rel.abs() <= 1e-4);
+    }
+}
 
 #[test]
 fn largest_factorial()

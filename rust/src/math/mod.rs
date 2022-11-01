@@ -1,6 +1,31 @@
 pub mod test;
 
-pub fn factorial(num: u128) -> u128 {
+pub fn invert<F>(value: f64, function: F, mut guess: f64) -> f64
+where F: Fn(f64) -> f64
+{
+    let mut residual: f64 = 1.0;
+    while residual.abs()/value > 1e-4
+    {
+        residual = function(guess) - value;
+        guess = guess - residual/(function(guess + 5e-4) - function(guess - 5e-4))*1e-3;
+    }
+    guess
+}
+
+pub fn integrate<F>(function: F, lower_lim: f64, upper_lim: f64, num_points: u128) -> f64
+where F: Fn(f64) -> f64
+{
+    let dx = (upper_lim - lower_lim)/(num_points as f64);
+    let mut sum: f64 = 0.0;
+    for index in 0..num_points
+    {
+        sum += function(lower_lim + dx/2.0 + (index as f64)*dx)
+    }
+    sum*dx
+}
+
+pub fn factorial(num: u128) -> u128
+{
     (1..=num).product()
 }
 
@@ -48,7 +73,7 @@ pub fn inverse_langevin(y: &f64, tol: f64) -> f64
         x = 1.0/(1.0/x.tanh() - y);
         residual_rel = langevin(&x)/y - 1.0;
     }
-    return x;
+    x
 }
 
 pub trait Math<T>
