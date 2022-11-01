@@ -2,9 +2,11 @@ use std::f64::consts::PI;
 use crate::math::
 {
     ln,
+    sinhc,
     ln_sinhc,
     approximate_inverse_langevin,
-    factorial
+    factorial,
+    integrate
 };
 use crate::physics::
 {
@@ -127,20 +129,33 @@ pub struct FJCLegendre
     pub link_length: f64,
     pub number_of_links: u16,
     pub number_of_links_f64: f64,
-    pub contour_length: f64
+    pub contour_length: f64,
+    normalization_nondimensional_equilibrium_distribution: f64
 }
 
 impl IsometricLegendre for FJCLegendre
 {
     fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJCLegendre
     {
+        let temporary_model = FJCLegendre
+        {
+            hinge_mass,
+            link_length,
+            number_of_links,
+            number_of_links_f64: number_of_links as f64,
+            contour_length: (number_of_links as f64)*link_length,
+            normalization_nondimensional_equilibrium_distribution: 1.0
+        };
+        let integrand = |nondimensional_end_to_end_length_per_link: f64| temporary_model.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link);
+        let normalization = integrate(integrand, 0.0, 1.0, 100);
         FJCLegendre
         {
             hinge_mass,
             link_length,
             number_of_links,
             number_of_links_f64: number_of_links as f64,
-            contour_length: (number_of_links as f64)*link_length
+            contour_length: (number_of_links as f64)*link_length,
+            normalization_nondimensional_equilibrium_distribution: normalization
         }
     }
     fn force(&self, end_to_end_length: &f64, temperature: f64) -> f64
@@ -183,6 +198,23 @@ impl IsometricLegendre for FJCLegendre
     {
         let nondimensional_force = self.nondimensional_force(nondimensional_end_to_end_length_per_link);
         nondimensional_force**nondimensional_end_to_end_length_per_link - ln_sinhc(&nondimensional_force)
+    }
+    fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64
+    {
+        self.nondimensional_equilibrium_distribution(&(*end_to_end_length/self.contour_length))/self.contour_length.powf(3.0)
+    }
+    fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
+    {
+        let nondimensional_force = self.nondimensional_force(nondimensional_end_to_end_length_per_link);
+        (sinhc(&nondimensional_force)*(-nondimensional_force**nondimensional_end_to_end_length_per_link).exp()).powf(self.number_of_links_f64)/self.normalization_nondimensional_equilibrium_distribution
+    }
+    fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64
+    {
+        self.nondimensional_equilibrium_radial_distribution(&(*end_to_end_length/self.contour_length))/self.contour_length
+    }
+    fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
+    {
+        4.0*PI*nondimensional_end_to_end_length_per_link.powf(2.0)*self.nondimensional_equilibrium_distribution(nondimensional_end_to_end_length_per_link)
     }
     fn gibbs_free_energy(&self, end_to_end_length: &f64, temperature: f64) -> f64
     {

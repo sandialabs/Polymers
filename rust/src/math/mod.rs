@@ -12,6 +12,18 @@ where F: Fn(f64) -> f64
     guess
 }
 
+pub fn integrate<F>(function: F, lower_lim: f64, upper_lim: f64, num_points: u128) -> f64
+where F: Fn(f64) -> f64
+{
+    let dx = (upper_lim - lower_lim)/(num_points as f64);
+    let mut sum: f64 = 0.0;
+    for index in 0..num_points
+    {
+        sum += function(lower_lim + dx/2.0 + (index as f64)*dx)
+    }
+    sum*dx
+}
+
 pub fn factorial(num: u128) -> u128
 {
     (1..=num).product()
