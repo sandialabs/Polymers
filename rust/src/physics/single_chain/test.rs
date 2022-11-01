@@ -676,6 +676,83 @@ macro_rules! thermodynamics
                         assert!(residual_rel.abs() <= 3e-1);
                     }
                 }
+                #[test]
+                fn equilibrium_distribution()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let equilibrium_distribution = model.isometric.equilibrium_distribution(&end_to_end_length);
+                        let equilibrium_distribution_legendre = model.isometric.legendre.equilibrium_distribution(&end_to_end_length);
+                        let residual_abs = &equilibrium_distribution_legendre - &equilibrium_distribution;
+                        let residual_rel = &residual_abs/&equilibrium_distribution;
+                        assert!(residual_abs.abs() <= 3e-1/(number_of_links as f64).sqrt() || residual_rel.abs() <= 3e-1);
+                    }
+                }
+                #[test]
+                fn nondimensional_equilibrium_distribution()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_equilibrium_distribution = model.isometric.nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link);
+                        let nondimensional_equilibrium_distribution_legendre = model.isometric.legendre.nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_equilibrium_distribution_legendre - &nondimensional_equilibrium_distribution;
+                        let residual_rel = &residual_abs/&nondimensional_equilibrium_distribution;
+                        assert!(residual_abs.abs() <= 3e-1/(number_of_links as f64).sqrt() || residual_rel.abs() <= 3e-1);
+                    }
+                }
+                #[test]
+                fn equilibrium_radial_distribution()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let end_to_end_length = parameters.end_to_end_length_reference + parameters.end_to_end_length_scale*(0.5 - rng.gen::<f64>());
+                        let equilibrium_radial_distribution = model.isometric.equilibrium_radial_distribution(&end_to_end_length);
+                        let equilibrium_radial_distribution_legendre = model.isometric.legendre.equilibrium_radial_distribution(&end_to_end_length);
+                        let residual_abs = &equilibrium_radial_distribution_legendre - &equilibrium_radial_distribution;
+                        let residual_rel = &residual_abs/&equilibrium_radial_distribution;
+                        assert!(residual_abs.abs() <= 3e-1/(number_of_links as f64).sqrt() || residual_rel.abs() <= 3e-1);
+                    }
+                }
+                #[test]
+                fn nondimensional_equilibrium_radial_distribution()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let nondimensional_equilibrium_radial_distribution = model.isometric.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link);
+                        let nondimensional_equilibrium_radial_distribution_legendre = model.isometric.legendre.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_equilibrium_radial_distribution_legendre - &nondimensional_equilibrium_radial_distribution;
+                        let residual_rel = &residual_abs/&nondimensional_equilibrium_radial_distribution;
+                        // assert!(residual_abs.abs() <= 3e-1/(number_of_links as f64).sqrt() || residual_rel.abs() <= 3e-1);
+                        assert!(residual_abs.abs() <= 3e1/(number_of_links as f64).sqrt() || residual_rel.abs() <= 3e1);
+                    }
+                }
                 // #[test]
                 // fn gibbs_free_energy()
                 // {}
