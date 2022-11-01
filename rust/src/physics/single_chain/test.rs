@@ -434,7 +434,7 @@ macro_rules! thermodynamics
             // fn gibbs_free_energy_per_link()
             // {}
             // #[test]
-            // fn relative_gibbs_free_energy_per_link()
+            // fn relative_gibbs_free_energy()
             // {}
             // #[test]
             // fn relative_gibbs_free_energy_per_link()
@@ -446,7 +446,7 @@ macro_rules! thermodynamics
             // fn nondimensional_gibbs_free_energy_per_link()
             // {}
             // #[test]
-            // fn nondimensional_relative_gibbs_free_energy_per_link()
+            // fn nondimensional_relative_gibbs_free_energy()
             // {}
             // #[test]
             // fn nondimensional_relative_gibbs_free_energy_per_link()
@@ -683,7 +683,7 @@ macro_rules! thermodynamics
                 // fn gibbs_free_energy_per_link()
                 // {}
                 // #[test]
-                // fn relative_gibbs_free_energy_per_link()
+                // fn relative_gibbs_free_energy()
                 // {}
                 // #[test]
                 // fn relative_gibbs_free_energy_per_link()
@@ -695,7 +695,7 @@ macro_rules! thermodynamics
                 // fn nondimensional_gibbs_free_energy_per_link()
                 // {}
                 // #[test]
-                // fn nondimensional_relative_gibbs_free_energy_per_link()
+                // fn nondimensional_relative_gibbs_free_energy()
                 // {}
                 // #[test]
                 // fn nondimensional_relative_gibbs_free_energy_per_link()
