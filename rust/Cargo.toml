@@ -6,5 +6,9 @@ description = "Polymers Modeling Library"
 license = "BSD-3-Clause"
 keywords = ["python", "rust", "polymers"]
 
+[lib]
+crate-type = ["staticlib", "cdylib"]
+
 [dependencies]
 rand = "0.8.5"
+pyo3 = { version = "0.17.3", features = ["extension-module"] }
