@@ -1,0 +1,23 @@
+.main-header {
+  align-items: center;
+
+  z-index: 0;
+  display: none;
+  background-color: $sidebar-color;
+
+  @include mq(md) {
+    display: flex;
+    justify-content: space-between;
+    height: $header-height;
+    background-color: $body-background-color;
+    border-bottom: $border $border-color;
+  }
+
+  &.nav-open {
+    display: block;
+
+    @include mq(md) {
+      display: flex;
+    }
+  }
+}
