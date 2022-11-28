@@ -5,12 +5,14 @@ use crate::physics::single_chain::
     Isometric,
     IsometricLegendre,
     Isotensional,
-    IsotensionalLegendre
+    IsotensionalLegendre,
+    ModifiedCanonical
 };
 
 pub mod test;
 pub mod isometric;
 pub mod isotensional;
+pub mod modified_canonical;
 
 pub struct Thermodynamics
 {

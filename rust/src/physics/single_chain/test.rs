@@ -28,6 +28,7 @@ pub struct Parameters
     pub maximum_number_of_links: u16,
     pub default_number_of_links: u16,
     pub large_number_of_links: u16,
+    pub large_potential_stiffness: f64,
     pub default_hinge_mass: f64,
     pub zero: f64,
     pub small: f64
@@ -39,7 +40,7 @@ impl Default for Parameters
     {
         Self
         {
-            number_of_loops: 888,
+            number_of_loops: 88,
             abs_tol_for_close: 1e-4,
             rel_tol_for_close: 1e-3,
             abs_tol_for_equals: 1e-5,
@@ -63,6 +64,7 @@ impl Default for Parameters
             maximum_number_of_links: 25,
             default_number_of_links: 8,
             large_number_of_links: 25,
+            large_potential_stiffness: 1e2,
             default_hinge_mass: 1e0,
             zero: 1e-8,
             small: 1e-2
@@ -192,6 +194,50 @@ macro_rules! thermodynamics
             {
                 let parameters = Parameters::default();
                 let _ = <$model>::init(parameters.default_number_of_links, parameters.default_link_length, parameters.default_hinge_mass).isotensional;
+            }
+        }
+        mod potential
+        {
+            use super::*;
+            mod strong_limit
+            {
+                use super::*;
+                use rand::Rng;
+                use crate::physics::BOLTZMANN_CONSTANT;
+                use crate::physics::single_chain::test::Parameters;
+
+                use crate::physics::single_chain::fjc::thermodynamics::modified_canonical;
+
+                // will have to compare absolute free energies while accounting for (2*pi/kappa)^(3/2) difference
+                // better to just leave those out?
+
+                // need to implement something like "keyword arguments"
+                // or need to make the potential strength a function argument
+                // because cannot instantiate model the same way as ensembles otherwise
+
+                #[test]
+                fn nondimensional_relative_helmholtz_free_energy()
+                {
+                    let parameters = Parameters::default();
+                    let mut rng = rand::thread_rng();
+                    for _ in 0..parameters.number_of_loops
+                    {
+                        let potential_stiffness: f64 = parameters.large_potential_stiffness;
+                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                        let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                        let model = <$model>::init(number_of_links, link_length, hinge_mass);
+                        let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+                        let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                        let model_2 = modified_canonical::FJC::init(number_of_links, link_length, hinge_mass, potential_stiffness);
+                        let nondimensional_relative_helmholtz_free_energy = model_2.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
+                        let nondimensional_relative_helmholtz_free_energy_isometric = model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+                        let residual_abs = &nondimensional_relative_helmholtz_free_energy_isometric - &nondimensional_relative_helmholtz_free_energy;
+                        let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
+                        // assert!(residual_abs.abs() <= 1.0/potential_stiffness);
+                        assert!(residual_rel.abs() <= 1.0/potential_stiffness);
+                    }
+                }
             }
         }
         mod legendre
