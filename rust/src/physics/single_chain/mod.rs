@@ -91,13 +91,15 @@ pub trait IsotensionalLegendre
 
 pub trait ModifiedCanonical
 {
-    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64, potential_stiffness: f64) -> Self;
-    fn helmholtz_free_energy(&self, potential_distance: &f64, temperature: f64) -> f64;
-    fn helmholtz_free_energy_per_link(&self, potential_distance: &f64, temperature: f64) -> f64;
-    fn relative_helmholtz_free_energy(&self, potential_distance: &f64, temperature: f64) -> f64;
-    fn relative_helmholtz_free_energy_per_link(&self, potential_distance: &f64, temperature: f64) -> f64;
-    fn nondimensional_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, temperature: f64) -> f64;
-    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, temperature: f64) -> f64;
-    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, temperature: f64) -> f64;
-    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, temperature: f64) -> f64;
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
+    fn force(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn nondimensional_force(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64;
+    fn helmholtz_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn helmholtz_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64;
 }

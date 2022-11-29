@@ -210,10 +210,19 @@ macro_rules! thermodynamics
 
                 // will have to compare absolute free energies while accounting for (2*pi/kappa)^(3/2) difference
                 // better to just leave those out?
+                // nah, good to test too
 
                 // need to implement something like "keyword arguments"
                 // or need to make the potential strength a function argument
                 // because cannot instantiate model the same way as ensembles otherwise
+
+                // also these homogeneized interfaces and testing are getting ridiculous...
+                // models are not similar enough
+                // and some won't be "complete" like FJC (lack of analytic solutions) or have more approximate techniques
+                // go back to putting them in respective module folders
+                // and it will be fine to copy some stuff between models
+                //
+                // and move implementation headers to FJC?
 
                 #[test]
                 fn nondimensional_relative_helmholtz_free_energy()
@@ -229,13 +238,13 @@ macro_rules! thermodynamics
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
                         let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
                         let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-                        let model_2 = modified_canonical::FJC::init(number_of_links, link_length, hinge_mass, potential_stiffness);
-                        let nondimensional_relative_helmholtz_free_energy = model_2.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
-                        let nondimensional_relative_helmholtz_free_energy_isometric = model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
-                        let residual_abs = &nondimensional_relative_helmholtz_free_energy_isometric - &nondimensional_relative_helmholtz_free_energy;
-                        let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
-                        // assert!(residual_abs.abs() <= 1.0/potential_stiffness);
-                        assert!(residual_rel.abs() <= 1.0/potential_stiffness);
+                        // let model_2 = modified_canonical::FJC::init(number_of_links, link_length, hinge_mass, potential_stiffness);
+                        // let nondimensional_relative_helmholtz_free_energy = model_2.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, temperature);
+                        // let nondimensional_relative_helmholtz_free_energy_isometric = model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+                        // let residual_abs = &nondimensional_relative_helmholtz_free_energy_isometric - &nondimensional_relative_helmholtz_free_energy;
+                        // let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
+                        // // assert!(residual_abs.abs() <= 1.0/potential_stiffness);
+                        // assert!(residual_rel.abs() <= 1.0/potential_stiffness);
                     }
                 }
             }
