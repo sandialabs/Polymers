@@ -4,12 +4,12 @@ pub struct Mechanics
 {
     pub hinge_mass: f64,
     pub link_length: f64,
-    pub number_of_links: u16,
+    pub number_of_links: u8,
 }
 
 impl Mechanics
 {
-    pub fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Mechanics
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Mechanics
     {
         Mechanics
         {

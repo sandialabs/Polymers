@@ -24,10 +24,10 @@ pub struct Parameters
     pub link_length_reference: f64,
     pub link_length_scale: f64,
     pub default_link_length: f64,
-    pub minimum_number_of_links: u16,
-    pub maximum_number_of_links: u16,
-    pub default_number_of_links: u16,
-    pub large_number_of_links: u16,
+    pub minimum_number_of_links: u8,
+    pub maximum_number_of_links: u8,
+    pub default_number_of_links: u8,
+    pub large_number_of_links: u8,
     pub large_potential_stiffness: f64,
     pub default_hinge_mass: f64,
     pub zero: f64,
@@ -91,7 +91,7 @@ macro_rules! base
             let mut rng = rand::thread_rng();
             for _ in 0..parameters.number_of_loops
             {
-                let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                 assert_eq!(number_of_links, <$model>::init(number_of_links, parameters.default_link_length, parameters.default_hinge_mass).number_of_links);
             }
         }
@@ -124,7 +124,7 @@ macro_rules! base
             let mut rng = rand::thread_rng();
             for _ in 0..parameters.number_of_loops
             {
-                let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                 let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                 let link_length = rng.gen::<f64>();
                 assert_eq!(link_length, <$model>::init(number_of_links, link_length, hinge_mass).link_length);
@@ -232,7 +232,7 @@ macro_rules! thermodynamics
                     for _ in 0..parameters.number_of_loops
                     {
                         let potential_stiffness: f64 = parameters.large_potential_stiffness;
-                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -262,7 +262,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -283,7 +283,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -315,7 +315,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -337,7 +337,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -359,7 +359,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -381,7 +381,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -403,7 +403,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -425,7 +425,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -447,7 +447,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -468,7 +468,7 @@ macro_rules! thermodynamics
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -519,7 +519,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -540,7 +540,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -572,7 +572,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -593,7 +593,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -614,7 +614,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -635,7 +635,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -656,7 +656,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -677,7 +677,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -698,7 +698,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -718,7 +718,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = parameters.large_number_of_links;
+                        let number_of_links: u8 = parameters.large_number_of_links;
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -738,7 +738,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -757,7 +757,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -776,7 +776,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -795,7 +795,7 @@ macro_rules! thermodynamics
                     let mut rng = rand::thread_rng();
                     for _ in 0..parameters.number_of_loops
                     {
-                        let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                        let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                         let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                         let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                         let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -866,7 +866,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -882,7 +882,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -898,7 +898,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -914,7 +914,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -936,7 +936,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -958,7 +958,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -980,7 +980,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1002,7 +1002,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1024,7 +1024,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1052,7 +1052,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1073,7 +1073,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1094,7 +1094,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1115,7 +1115,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1141,7 +1141,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1163,7 +1163,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1185,7 +1185,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1207,7 +1207,7 @@ macro_rules! isometric
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1245,7 +1245,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1267,7 +1267,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1289,7 +1289,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1311,7 +1311,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1339,7 +1339,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1360,7 +1360,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1381,7 +1381,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1402,7 +1402,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1429,7 +1429,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1451,7 +1451,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1473,7 +1473,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1495,7 +1495,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1523,7 +1523,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1545,7 +1545,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1566,7 +1566,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1588,7 +1588,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1610,7 +1610,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1632,7 +1632,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1654,7 +1654,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1676,7 +1676,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1698,7 +1698,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1719,7 +1719,7 @@ macro_rules! isometricLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1765,7 +1765,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1787,7 +1787,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1809,7 +1809,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1831,7 +1831,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1853,7 +1853,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1875,7 +1875,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1903,7 +1903,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1924,7 +1924,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1944,7 +1944,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1965,7 +1965,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -1986,7 +1986,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2007,7 +2007,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2033,7 +2033,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2055,7 +2055,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2077,7 +2077,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2099,7 +2099,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2127,7 +2127,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2149,7 +2149,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2171,7 +2171,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2192,7 +2192,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2213,7 +2213,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2235,7 +2235,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2257,7 +2257,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2279,7 +2279,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2301,7 +2301,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2323,7 +2323,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2345,7 +2345,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2366,7 +2366,7 @@ macro_rules! isotensional
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2401,7 +2401,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2423,7 +2423,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2445,7 +2445,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2467,7 +2467,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2495,7 +2495,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2516,7 +2516,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2537,7 +2537,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2558,7 +2558,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2584,7 +2584,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2606,7 +2606,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2628,7 +2628,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2650,7 +2650,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2678,7 +2678,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2700,7 +2700,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2722,7 +2722,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2744,7 +2744,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2766,7 +2766,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2788,7 +2788,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2810,7 +2810,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);
@@ -2831,7 +2831,7 @@ macro_rules! isotensionalLegendre
                 let mut rng = rand::thread_rng();
                 for _ in 0..parameters.number_of_loops
                 {
-                    let number_of_links: u16 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
+                    let number_of_links: u8 = rng.gen_range(parameters.minimum_number_of_links..parameters.maximum_number_of_links);
                     let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                     let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
                     let model = <$model>::init(number_of_links, link_length, hinge_mass);

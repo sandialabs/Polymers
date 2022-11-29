@@ -1,3 +1,4 @@
+pub mod test;
 use std::f64::consts::PI;
 use crate::math::
 {
@@ -10,27 +11,23 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::
+use crate::physics::single_chain::fjc::thermodynamics::
 {
     Isotensional,
     IsotensionalLegendre
 };
-
-pub mod test;
-
 pub struct FJC
 {
     pub hinge_mass: f64,
     pub link_length: f64,
-    pub number_of_links: u16,
+    pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
     pub legendre: FJCLegendre
 }
-
 impl Isotensional for FJC
 {
-    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJC
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {
         FJC
         {
@@ -91,19 +88,17 @@ impl Isotensional for FJC
         -ln_sinhc(nondimensional_force)
     }
 }
-
 pub struct FJCLegendre
 {
     pub hinge_mass: f64,
     pub link_length: f64,
-    pub number_of_links: u16,
+    pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64
 }
-
 impl IsotensionalLegendre for FJCLegendre
 {
-    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJCLegendre
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJCLegendre
     {
         FJCLegendre
         {

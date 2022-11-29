@@ -1,3 +1,4 @@
+pub mod test;
 use std::f64::consts::PI;
 use crate::math::
 {
@@ -13,29 +14,24 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::
+use crate::physics::single_chain::fjc::thermodynamics::
 {
     Isometric,
     IsometricLegendre
 };
-
-pub mod test;
-
 static ZERO: f64 = 1e-8;
-
 pub struct FJC
 {
     pub hinge_mass: f64,
     pub link_length: f64,
-    pub number_of_links: u16,
+    pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
     pub legendre: FJCLegendre
 }
-
 impl Isometric for FJC
 {
-    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJC
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {
         FJC
         {
@@ -133,12 +129,11 @@ impl Isometric for FJC
         0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(n - 2) as f64)*sum
     }
 }
-
 pub struct FJCLegendre
 {
     pub hinge_mass: f64,
     pub link_length: f64,
-    pub number_of_links: u16,
+    pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
     normalization_nondimensional_equilibrium_distribution: f64
@@ -146,7 +141,7 @@ pub struct FJCLegendre
 
 impl IsometricLegendre for FJCLegendre
 {
-    fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> FJCLegendre
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJCLegendre
     {
         let temporary_model = FJCLegendre
         {
