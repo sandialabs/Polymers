@@ -1,5 +1,6 @@
 #![cfg(test)]
 use super::*;
+use crate::physics::BOLTZMANN_CONSTANT;
 pub struct Parameters
 {
     pub abs_tol: f64,

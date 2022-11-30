@@ -17,10 +17,7 @@ use crate::physics::single_chain::fjc::thermodynamics::
     Isotensional,
     IsotensionalLegendre
 };
-use crate::physics::single_chain::fjc::thermodynamics::isotensional::legendre::{
-    ZERO,
-    FJC as FJCLegendre
-};
+use crate::physics::single_chain::fjc::thermodynamics::isotensional::legendre::FJC as FJCLegendre;
 pub struct FJC
 {
     pub hinge_mass: f64,

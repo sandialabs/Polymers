@@ -1,5 +1,9 @@
 #![cfg(test)]
 use super::*;
+use crate::physics::single_chain::fjc::thermodynamics::isometric::legendre::{
+    ONE,
+    POINTS,
+};
 pub struct Parameters
 {
     pub abs_tol: f64,

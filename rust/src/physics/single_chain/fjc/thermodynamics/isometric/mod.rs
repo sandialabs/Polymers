@@ -17,9 +17,7 @@ use crate::physics::single_chain::fjc::thermodynamics::
     IsometricLegendre
 };
 use crate::physics::single_chain::fjc::thermodynamics::isometric::legendre::{
-    ONE,
     ZERO,
-    POINTS,
     FJC as FJCLegendre
 };
 pub struct FJC
