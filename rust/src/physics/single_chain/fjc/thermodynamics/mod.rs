@@ -1,9 +1,8 @@
-#![allow(unused_imports)]
 pub mod test;
 pub mod isometric;
 pub mod isotensional;
 pub mod modified_canonical;
-pub struct Thermodynamics
+pub struct FJC
 {
     pub hinge_mass: f64,
     pub link_length: f64,
@@ -12,11 +11,11 @@ pub struct Thermodynamics
     pub isotensional: isotensional::FJC,
     pub modified_canonical: modified_canonical::FJC
 }
-impl Thermodynamics
+impl FJC
 {
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Thermodynamics
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {
-        Thermodynamics
+        FJC
         {
             hinge_mass,
             link_length,
@@ -74,28 +73,28 @@ pub trait IsometricLegendre
 pub trait Isotensional
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
-    fn end_to_end_length(&self, force: &f64, temperature: f64) -> f64;
-    fn end_to_end_length_per_link(&self, force: &f64, temperature: f64) -> f64;
+    fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64;
+    fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64;
     fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64;
     fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64;
-    fn gibbs_free_energy(&self, force: &f64, temperature: f64) -> f64;
-    fn gibbs_free_energy_per_link(&self, force: &f64, temperature: f64) -> f64;
-    fn relative_gibbs_free_energy(&self, force: &f64, temperature: f64) -> f64;
-    fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: f64) -> f64;
-    fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: f64) -> f64;
-    fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: f64) -> f64;
+    fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
     fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64;
     fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
 }
 pub trait IsotensionalLegendre
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
-    fn helmholtz_free_energy(&self, force: &f64, temperature: f64) -> f64;
-    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: f64) -> f64;
-    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: f64) -> f64;
-    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: f64) -> f64;
-    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: f64) -> f64;
-    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: f64) -> f64;
+    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
     fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64;
     fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
 }

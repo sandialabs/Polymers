@@ -4,7 +4,6 @@ use crate::math::
 {
     ln,
     factorial,
-    sinhc,
     integrate
 };
 use crate::physics::

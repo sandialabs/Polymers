@@ -1,2 +1,2 @@
 pub mod fjc;
-// pub mod test;
+pub mod test;
