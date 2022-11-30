@@ -24,8 +24,8 @@ impl Default for Parameters
     {
         Self
         {
-            abs_tol: 1e-11,
-            rel_tol: 1e-9,
+            abs_tol: 1e-8,
+            rel_tol: 1e-6,
             number_of_loops: 88,
             hinge_mass_reference: 1e0,
             hinge_mass_scale: 1e0,
