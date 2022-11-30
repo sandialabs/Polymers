@@ -1,17 +1,15 @@
 pub mod test;
-
-pub struct Mechanics
+pub struct FJC
 {
     pub hinge_mass: f64,
     pub link_length: f64,
-    pub number_of_links: u16,
+    pub number_of_links: u8,
 }
-
-impl Mechanics
+impl FJC
 {
-    pub fn init(number_of_links: u16, link_length: f64, hinge_mass: f64) -> Mechanics
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {
-        Mechanics
+        FJC
         {
             hinge_mass,
             link_length,
@@ -23,7 +21,6 @@ impl Mechanics
         // put random unit vector(s) generator in math, return here, try not to use ndarray
     }
 }
-
 // DOF-specific stuff like potential energy function
 // and stuff for Monte Carlo (but keep general stuff in calculation/)
 // can keep stuff that's not general but used for certain/all single-chain modesl in single_chain/
