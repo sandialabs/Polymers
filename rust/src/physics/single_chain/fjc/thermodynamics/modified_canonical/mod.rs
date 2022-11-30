@@ -14,7 +14,7 @@ use crate::physics::
 use crate::physics::single_chain::fjc::thermodynamics::ModifiedCanonical;
 pub static ONE: f64 = 1.0;
 pub static ZERO: f64 = 1e-6;
-pub static POINTS: u128 = 10000;
+pub static POINTS: u128 = 100;
 pub struct FJC
 {
     pub hinge_mass: f64,

@@ -2,6 +2,7 @@ pub mod test;
 pub mod isometric;
 pub mod isotensional;
 pub mod modified_canonical;
+use crate::physics::BOLTZMANN_CONSTANT;
 pub struct FJC
 {
     pub hinge_mass: f64,

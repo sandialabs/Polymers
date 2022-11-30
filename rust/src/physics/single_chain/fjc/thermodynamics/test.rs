@@ -2,6 +2,10 @@
 use super::*;
 pub struct Parameters
 {
+    pub abs_tol: f64,
+    pub rel_tol: f64,
+    pub log_log_tol: f64,
+    pub log_log_scale: f64,
     pub number_of_loops: u32,
     pub hinge_mass_reference: f64,
     pub hinge_mass_scale: f64,
@@ -13,6 +17,7 @@ pub struct Parameters
     pub nondimensional_end_to_end_length_per_link_scale: f64,
     pub nondimensional_potential_distance_reference: f64,
     pub nondimensional_potential_distance_scale: f64,
+    pub nondimensional_potential_distance_small: f64,
     pub nondimensional_potential_stiffness_reference: f64,
     pub nondimensional_potential_stiffness_scale: f64,
     pub temperature_reference: f64,
@@ -24,7 +29,11 @@ impl Default for Parameters
     {
         Self
         {
-            number_of_loops: 88,
+            abs_tol: 1e-8,
+            rel_tol: 1e-6,
+            log_log_tol: 1e-3,
+            log_log_scale: 12e-1,
+            number_of_loops: 8,
             hinge_mass_reference: 1e0,
             hinge_mass_scale: 1e0,
             link_length_reference: 1e0,
@@ -35,6 +44,7 @@ impl Default for Parameters
             nondimensional_end_to_end_length_per_link_scale: 99e-2,
             nondimensional_potential_distance_reference: 1e0,
             nondimensional_potential_distance_scale: 2e0,
+            nondimensional_potential_distance_small: 25e-2,
             nondimensional_potential_stiffness_reference: 5e2,
             nondimensional_potential_stiffness_scale: 1e3,
             temperature_reference: 3e2,
@@ -55,8 +65,8 @@ mod base
     #[test]
     fn number_of_links()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
@@ -66,8 +76,8 @@ mod base
     #[test]
     fn link_length()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
@@ -77,8 +87,8 @@ mod base
     #[test]
     fn hinge_mass()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
@@ -88,8 +98,8 @@ mod base
     #[test]
     fn number_of_links_and_link_length_and_hinge_mass()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
@@ -108,38 +118,145 @@ mod base
 // {
 //     test isometric == isotensional
 // }
-mod strong_potential_limit
+mod strong_potential_small_distance
 {
-    //
-    // maybe do an integral measure of error instead?
-    // then should do the same for the thermodynamic limits as well
-    // in addition to asymptotic approximation validations
-    //
     use super::*;
     use rand::Rng;
+    use crate::math::integrate;
+    use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::{
+        ZERO,
+        POINTS
+    };
     #[test]
-    #[ignore]
-    fn nondimensional_relative_helmholtz_free_energy()
+    fn relative_helmholtz_free_energy()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+                let integrand_numerator = |end_to_end_length: f64|
+                {
+                    (model.modified_canonical.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.relative_helmholtz_free_energy(&end_to_end_length, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |end_to_end_length: f64|
+                {
+                    model.modified_canonical.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_scale);
+            let residual_rel_2 = residual_rel(parameters.log_log_scale*parameters.nondimensional_potential_stiffness_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs()  <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn relative_helmholtz_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+                let integrand_numerator = |end_to_end_length: f64|
+                {
+                    (model.modified_canonical.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |end_to_end_length: f64|
+                {
+                    model.modified_canonical.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_scale);
+            let residual_rel_2 = residual_rel(parameters.log_log_scale*parameters.nondimensional_potential_stiffness_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs()  <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
-            let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference;
-            let nondimensional_relative_helmholtz_free_energy = model.modified_canonical.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness);
-            let nondimensional_relative_helmholtz_free_energy_isometric = model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
-            let residual_abs = &nondimensional_relative_helmholtz_free_energy_isometric - &nondimensional_relative_helmholtz_free_energy;
-            let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
-            assert!(residual_rel.abs() <= 1.0/nondimensional_potential_stiffness);
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                {
+                    (model.modified_canonical.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) - model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                {
+                    model.modified_canonical.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_scale);
+            let residual_rel_2 = residual_rel(parameters.log_log_scale*parameters.nondimensional_potential_stiffness_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs()  <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                {
+                    (model.modified_canonical.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) - model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                {
+                    model.modified_canonical.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_scale);
+            let residual_rel_2 = residual_rel(parameters.log_log_scale*parameters.nondimensional_potential_stiffness_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs()  <= parameters.log_log_tol);
         }
     }
 }
-// mod weak_potential_limit
+// mod weak_potential_high_distance
 // {
 //     test isometric == modifiedCanonical
 // }
