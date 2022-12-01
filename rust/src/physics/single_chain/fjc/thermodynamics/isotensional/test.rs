@@ -1,5 +1,6 @@
 #![cfg(test)]
 use super::*;
+use crate::physics::single_chain::fjc::thermodynamics::isotensional::legendre::ZERO;
 pub struct Parameters
 {
     pub abs_tol: f64,
@@ -51,8 +52,8 @@ mod base
     #[test]
     fn number_of_links()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
@@ -62,8 +63,8 @@ mod base
     #[test]
     fn link_length()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
@@ -73,8 +74,8 @@ mod base
     #[test]
     fn hinge_mass()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
@@ -84,8 +85,8 @@ mod base
     #[test]
     fn number_of_links_and_link_length_and_hinge_mass()
     {
-        let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
