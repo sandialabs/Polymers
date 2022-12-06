@@ -127,4 +127,4 @@ pub trait ModifiedCanonical
 pub trait ModifiedCanonicalAsymptotic
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
-}Z
+}
