@@ -12,7 +12,11 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::ModifiedCanonical;
+use crate::physics::single_chain::fjc::thermodynamics::{
+    ModifiedCanonical,
+    ModifiedCanonicalAsymptotic
+};
+use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::asymptotic::FJC as FJCAsymptotic;
 pub static ONE: f64 = 1.0;
 pub static ZERO: f64 = 1e-6;
 pub static POINTS: u128 = 100;
@@ -22,7 +26,8 @@ pub struct FJC
     pub link_length: f64,
     pub number_of_links: u8,
     pub number_of_links_f64: f64,
-    pub contour_length: f64
+    pub contour_length: f64,
+    pub asymptotic: FJCAsymptotic,
 }
 impl ModifiedCanonical for FJC
 {
@@ -34,7 +39,8 @@ impl ModifiedCanonical for FJC
             link_length,
             number_of_links,
             number_of_links_f64: number_of_links as f64,
-            contour_length: (number_of_links as f64)*link_length
+            contour_length: (number_of_links as f64)*link_length,
+            asymptotic: FJCAsymptotic::init(number_of_links, link_length, hinge_mass)
         }
     }
     fn end_to_end_length(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64

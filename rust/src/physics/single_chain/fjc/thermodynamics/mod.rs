@@ -128,3 +128,13 @@ pub trait ModifiedCanonicalAsymptotic
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
 }
+pub trait ModifiedCanonicalAsymptoticStrongPotential
+{
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
+}
+pub trait ModifiedCanonicalAsymptoticWeakPotential
+{
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
+}
+// really need test for prefactor... i.e. absolute free energy tests
+// and should make modifiedCanonical and isotensional have the extra mass term in absolute free energies (need to nondimensionalize partition functions) and make tests counting that
