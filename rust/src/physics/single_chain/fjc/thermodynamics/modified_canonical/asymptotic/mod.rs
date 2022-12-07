@@ -1,7 +1,8 @@
 pub mod test;
 pub mod strong_potential;
 pub mod weak_potential;
-use crate::physics::single_chain::fjc::thermodynamics::{
+use crate::physics::single_chain::fjc::thermodynamics::
+{
     ModifiedCanonicalAsymptotic,
     ModifiedCanonicalAsymptoticStrongPotential,
     ModifiedCanonicalAsymptoticWeakPotential

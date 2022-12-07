@@ -12,9 +12,12 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::{
+use crate::physics::single_chain::fjc::thermodynamics::
+{
     ModifiedCanonical,
-    ModifiedCanonicalAsymptotic
+    ModifiedCanonicalAsymptotic,
+    ModifiedCanonicalAsymptoticStrongPotential,
+    ModifiedCanonicalAsymptoticWeakPotential
 };
 use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::asymptotic::FJC as FJCAsymptotic;
 pub static ONE: f64 = 1.0;

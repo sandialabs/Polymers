@@ -46,6 +46,7 @@ mod inverse_langevin
     use crate::math::langevin;
     use crate::math::inverse_langevin;
     #[test]
+    #[ignore]
     fn inverse()
     {
         let mut rng = rand::thread_rng();
