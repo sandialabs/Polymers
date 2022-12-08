@@ -437,39 +437,6 @@ mod zero
     use rand::Rng;
     use crate::physics::single_chain::fjc::ZERO;
     #[test]
-    #[ignore]
-    fn force()
-    {
-        let mut rng = rand::thread_rng();
-        let parameters = Parameters::default();
-        for _ in 0..parameters.number_of_loops
-        {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let force_0 = model.force(&(ZERO*(number_of_links as f64)*link_length), &temperature);
-            assert!(force_0.abs() <= 3.0*BOLTZMANN_CONSTANT*temperature/link_length*ZERO);
-        }
-    }
-    #[test]
-    #[ignore]
-    fn nondimensional_force()
-    {
-        let mut rng = rand::thread_rng();
-        let parameters = Parameters::default();
-        for _ in 0..parameters.number_of_loops
-        {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let nondimensional_force_0 = model.nondimensional_force(&ZERO);
-            assert!(nondimensional_force_0.abs() <= 3.0*ZERO);
-        }
-    }
-    #[test]
     fn relative_helmholtz_free_energy()
     {
         let mut rng = rand::thread_rng();
