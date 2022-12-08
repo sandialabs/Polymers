@@ -4,6 +4,25 @@ use rand::Rng;
 use crate::math::integrate;
 use crate::math::invert;
 use crate::math::factorial;
+use crate::math::sequential_uniform_random;
+
+#[test]
+fn test_sequential_uniform_random()
+{
+    let mut x: f64 = 1.0;
+    let mut x_bar = 0.0;
+    let mut x_squared_bar = 0.0;
+    let num = 888888;
+    for _ in 0..num
+    {
+        x = sequential_uniform_random(x);
+        x_bar += x/(num as f64);
+        x_squared_bar += x*x/(num as f64);
+        assert!(x >= 0.0 && x <= 1.0);
+    }
+    assert!((x_bar - 0.5).abs() <= 1e-3);
+    assert!((x_squared_bar - 1.0/3.0).abs() <= 1e-3);
+}
 
 #[test]
 fn integrate_cosh()

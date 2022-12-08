@@ -1,5 +1,19 @@
 pub mod test;
 
+pub fn sequential_uniform_random_integer(mut n: u64) -> u64
+{
+    n = n^(n << 12);
+    n = n^(n >> 25);
+    n = n^(n << 27);
+    n
+}
+
+pub fn sequential_uniform_random(mut x: f64) -> f64
+{
+    x = (sequential_uniform_random_integer(((u64::MAX as f64)*x).ceil() as u64) as f64)/(u64::MAX as f64);
+    x
+}
+
 pub fn invert<F>(value: f64, function: F, mut guess: f64) -> f64
 where F: Fn(f64) -> f64
 {

@@ -21,6 +21,9 @@ impl FJC
         // put random unit vector(s) generator in math, return here, try not to use ndarray
     }
 }
+//
+// do NOT use rand or other external dependencies
+//
 // DOF-specific stuff like potential energy function
 // and stuff for Monte Carlo (but keep general stuff in calculation/)
 // can keep stuff that's not general but used for certain/all single-chain modesl in single_chain/
