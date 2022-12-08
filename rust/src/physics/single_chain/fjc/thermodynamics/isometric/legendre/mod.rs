@@ -82,11 +82,11 @@ impl IsometricLegendre for FJC
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link, temperature)*self.number_of_links_f64
+        self.nondimensional_relative_helmholtz_free_energy(nondimensional_end_to_end_length_per_link) - (self.number_of_links_f64 - 1.0)*ln(&(nondimensional_end_to_end_length_per_link*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link) - ln(&(nondimensional_end_to_end_length_per_link*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
+        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link) - (self.number_of_links_f64 - 1.0)/self.number_of_links_f64*ln(&(nondimensional_end_to_end_length_per_link*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
@@ -137,7 +137,7 @@ impl IsometricLegendre for FJC
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
         let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
-        -(nondimensional_end_to_end_length_per_link*self.number_of_links_f64)*self.nondimensional_force(nondimensional_end_to_end_length_per_link) - ln(&(0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum/self.contour_length.powf(3.0))) - self.number_of_links_f64*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
+        -(nondimensional_end_to_end_length_per_link*self.number_of_links_f64)*self.nondimensional_force(nondimensional_end_to_end_length_per_link) - ln(&(0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum/self.contour_length.powf(3.0))) - (self.number_of_links_f64 - 1.0)*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
