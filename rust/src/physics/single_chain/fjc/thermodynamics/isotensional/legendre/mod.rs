@@ -36,7 +36,7 @@ impl IsotensionalLegendre for FJC
     }
     fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.helmholtz_free_energy_per_link(force, temperature)*self.number_of_links_f64
+        self.nondimensional_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
     fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
@@ -44,7 +44,7 @@ impl IsotensionalLegendre for FJC
     }
     fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.relative_helmholtz_free_energy_per_link(force, temperature)*self.number_of_links_f64
+        self.nondimensional_relative_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
     fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
@@ -52,18 +52,18 @@ impl IsotensionalLegendre for FJC
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_helmholtz_free_energy_per_link(nondimensional_force, temperature)*self.number_of_links_f64
+        (nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force) - ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0))))*self.number_of_links_f64
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force) - ln(&(*nondimensional_force*0.0 + 8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
+        nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force) - ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64
     {
-        self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)*self.number_of_links_f64
+        (nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force))*self.number_of_links_f64
     }
     fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        *nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force)
+        nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force)
     }
 }

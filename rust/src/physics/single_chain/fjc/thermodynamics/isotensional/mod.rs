@@ -43,15 +43,15 @@ impl Isotensional for FJC
     }
     fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.end_to_end_length_per_link(force, temperature)*self.number_of_links_f64
+        langevin(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length*self.number_of_links_f64
     }
     fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_end_to_end_length_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length
+        langevin(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length
     }
     fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64
     {
-        self.nondimensional_end_to_end_length_per_link(nondimensional_force)*self.number_of_links_f64
+        langevin(nondimensional_force)*self.number_of_links_f64
     }
     fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64
     {
@@ -59,31 +59,31 @@ impl Isotensional for FJC
     }
     fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.gibbs_free_energy_per_link(force, temperature)*self.number_of_links_f64
+        -BOLTZMANN_CONSTANT*temperature*self.number_of_links_f64*ln_sinhc(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length)) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_gibbs_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
+        -BOLTZMANN_CONSTANT*temperature*ln_sinhc(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length)) - BOLTZMANN_CONSTANT*temperature*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.relative_gibbs_free_energy_per_link(force, temperature)*self.number_of_links_f64
+        -self.number_of_links_f64*ln_sinhc(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
     fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+        -ln_sinhc(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
     fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_gibbs_free_energy_per_link(nondimensional_force, temperature)*self.number_of_links_f64
+        -self.number_of_links_f64*ln_sinhc(nondimensional_force) - self.number_of_links_f64*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force) - ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
+        -ln_sinhc(nondimensional_force) - ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)*self.number_of_links_f64
+        -self.number_of_links_f64*ln_sinhc(nondimensional_force)
     }
     fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
