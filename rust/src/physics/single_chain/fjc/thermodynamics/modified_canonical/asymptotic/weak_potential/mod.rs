@@ -33,6 +33,14 @@ impl ModifiedCanonicalAsymptoticWeakPotential for FJC
             contour_length: (number_of_links as f64)*link_length
         }
     }
+    fn force(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
+    {
+        potential_stiffness*potential_distance
+    }
+    fn nondimensional_force(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
+    {
+        nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64
+    }
     fn end_to_end_length(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = potential_stiffness*potential_distance*self.link_length/BOLTZMANN_CONSTANT/temperature;

@@ -11,4 +11,4 @@ crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
 rand = "0.8.5"
-pyo3 = { version = "0.17.3", features = ["extension-module"] }
+# pyo3 = { version = "0.17.3", features = ["extension-module"] }

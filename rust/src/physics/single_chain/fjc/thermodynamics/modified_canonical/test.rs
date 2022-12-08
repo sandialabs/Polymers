@@ -1035,8 +1035,8 @@ mod strong_potential
             // println!("{:?}", residual_rel_2);
             // println!("{:?}", log_log_slope);
             // println!("");
-            // assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
-            // assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale).powf(2.0));
+            // assert!(residual_rel_1.abs() <= 1.0/parameters.nondimensional_potential_stiffness_large);
+            // assert!(residual_rel_2.abs() <= 1.0/parameters.nondimensional_potential_stiffness_large/parameters.log_log_scale);
             // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
         }
     }
