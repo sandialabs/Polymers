@@ -4,6 +4,7 @@ use std::f64::consts::PI;
 use crate::math::
 {
     ln,
+    binomial,
     factorial,
     integrate
 };
@@ -20,9 +21,12 @@ use crate::physics::single_chain::fjc::thermodynamics::
     ModifiedCanonicalAsymptoticWeakPotential
 };
 use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::asymptotic::FJC as FJCAsymptotic;
-pub static ONE: f64 = 1.0;
-pub static ZERO: f64 = 1e-6;
-pub static POINTS: u128 = 100;
+use crate::physics::single_chain::fjc::
+{
+    ONE,
+    ZERO,
+    POINTS
+};
 pub struct FJC
 {
     pub hinge_mass: f64,
@@ -68,33 +72,23 @@ impl ModifiedCanonical for FJC
     }
     fn nondimensional_force(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
+        let n = self.number_of_links as u128;
+        let p = self.number_of_links_f64 - 2.0;
         let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
         {
-            let mut sum: f64 = 0.0;
-            let n = self.number_of_links as u128;
-            let p = self.number_of_links_f64 - 2.0;
             let m = -nondimensional_end_to_end_length_per_link*0.5 + 0.5;
             let k = (self.number_of_links_f64*m).ceil() as u128;
-            for s in 0..k
-            {
-                sum += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-            }
-            0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(n - 2) as f64)*sum*((nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link)*(-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link)*(-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link) + ((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance.powf(2.0)*nondimensional_end_to_end_length_per_link))
+            let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+            0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum*((nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link)*(-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link)*(-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link) + ((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance.powf(2.0)*nondimensional_end_to_end_length_per_link))
         };
         let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
         {
-            let mut sum: f64 = 0.0;
-            let n = self.number_of_links as u128;
-            let p = self.number_of_links_f64 - 2.0;
             let m = -nondimensional_end_to_end_length_per_link*0.5 + 0.5;
             let k = (self.number_of_links_f64*m).ceil() as u128;
-            for s in 0..k
-            {
-                sum += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-            }
-            0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(n - 2) as f64)*sum*((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
+            let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+            0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum*((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
         };
-        integrate(integrand_numerator, ZERO, ONE, POINTS)/integrate(integrand_denominator, ZERO, ONE, POINTS)/self.number_of_links_f64
+        integrate(integrand_numerator, &ZERO, &ONE, &POINTS)/integrate(integrand_denominator, &ZERO, &ONE, &POINTS)/self.number_of_links_f64
     
     }
     fn helmholtz_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
@@ -117,18 +111,14 @@ impl ModifiedCanonical for FJC
     {
         let integrand = |nondimensional_end_to_end_length_per_link: f64|
         {
-            let mut sum: f64 = 0.0;
             let n = self.number_of_links as u128;
             let p = self.number_of_links_f64 - 2.0;
             let m = -nondimensional_end_to_end_length_per_link*0.5 + 0.5;
             let k = (self.number_of_links_f64*m).ceil() as u128;
-            for s in 0..k
-            {
-                sum += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-            }
-            0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(n - 2) as f64)*sum*((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
+            let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+            0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum*((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
         };
-        let nondimensional_configurational_partition_function = integrate(integrand, ZERO, ONE, POINTS);
+        let nondimensional_configurational_partition_function = integrate(integrand, &ZERO, &ONE, &POINTS);
         -ln(&nondimensional_configurational_partition_function) - self.number_of_links_f64*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64

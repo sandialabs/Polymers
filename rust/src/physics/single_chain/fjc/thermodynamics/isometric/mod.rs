@@ -4,6 +4,7 @@ use std::f64::consts::PI;
 use crate::math::
 {
     ln,
+    binomial,
     factorial
 };
 use crate::physics::
@@ -16,10 +17,8 @@ use crate::physics::single_chain::fjc::thermodynamics::
     Isometric,
     IsometricLegendre
 };
-use crate::physics::single_chain::fjc::thermodynamics::isometric::legendre::{
-    ZERO,
-    FJC as FJCLegendre
-};
+use crate::physics::single_chain::fjc::thermodynamics::isometric::legendre::FJC as FJCLegendre;
+use crate::physics::single_chain::fjc::ZERO;
 pub struct FJC
 {
     pub hinge_mass: f64,
@@ -49,18 +48,13 @@ impl Isometric for FJC
     }
     fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        let mut sum_denominator: f64 = 0.0;
-        let mut sum_numerator: f64 = 0.0;
         let n = self.number_of_links as u128;
         let p = self.number_of_links_f64 - 2.0;
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
-        for s in 0..k
-        {
-            sum_denominator += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-            sum_numerator += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p - 1.0);
-        }
-        (1.0/nondimensional_end_to_end_length_per_link + (0.5*self.number_of_links_f64 - 1.0)*sum_numerator/sum_denominator)/self.number_of_links_f64
+        let sum_0: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+        let sum_1: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p - 1.0)).sum();
+        (1.0/nondimensional_end_to_end_length_per_link + (0.5*self.number_of_links_f64 - 1.0)*sum_1/sum_0)/self.number_of_links_f64
     }
     fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
@@ -100,16 +94,12 @@ impl Isometric for FJC
     }
     fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        let mut sum: f64 = 0.0;
         let n = self.number_of_links as u128;
         let p = self.number_of_links_f64 - 2.0;
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
-        for s in 0..k
-        {
-            sum += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-        }
-        0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(n - 2) as f64)*sum
+        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+        0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum
     }
     fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64
     {
@@ -117,15 +107,11 @@ impl Isometric for FJC
     }
     fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        let mut sum: f64 = 0.0;
         let n = self.number_of_links as u128;
         let p = self.number_of_links_f64 - 2.0;
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
-        for s in 0..k
-        {
-            sum += (-1.0_f64).powf(s as f64)*((factorial(n)/factorial(s)/factorial(n - s)) as f64)*(m - (s as f64)/self.number_of_links_f64).powf(p);
-        }
-        0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(n - 2) as f64)*sum
+        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(binomial(&n, s) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+        0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum
     }
 }

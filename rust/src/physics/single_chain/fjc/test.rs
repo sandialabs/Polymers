@@ -46,7 +46,7 @@ impl Default for Parameters
             hinge_mass_scale: 1e0,
             link_length_reference: 1e0,
             link_length_scale: 1e0,
-            number_of_links_minimum: 4,
+            number_of_links_minimum: 5,
             number_of_links_maximum: 25,
             nondimensional_end_to_end_length_per_link_reference: 5e-1,
             nondimensional_end_to_end_length_per_link_scale: 99e-2,

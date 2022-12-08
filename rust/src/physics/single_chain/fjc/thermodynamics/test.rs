@@ -539,7 +539,7 @@ mod strong_potential
     use super::*;
     use rand::Rng;
     use crate::math::integrate;
-    use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::{
+    use crate::physics::single_chain::fjc::{
         ZERO,
         POINTS
     };
@@ -566,8 +566,8 @@ mod strong_potential
                 {
                     model.modified_canonical.force(&end_to_end_length, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, ZERO*(number_of_links as f64)*link_length, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
-                let denominator = integrate(integrand_denominator, ZERO*(number_of_links as f64)*link_length, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -597,8 +597,8 @@ mod strong_potential
                 {
                     model.modified_canonical.nondimensional_force(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
-                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -630,8 +630,8 @@ mod strong_potential
                 {
                     model.modified_canonical.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, ZERO*(number_of_links as f64)*link_length, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
-                let denominator = integrate(integrand_denominator, ZERO*(number_of_links as f64)*link_length, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -663,8 +663,8 @@ mod strong_potential
                 {
                     model.modified_canonical.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, ZERO*(number_of_links as f64)*link_length, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
-                let denominator = integrate(integrand_denominator, ZERO*(number_of_links as f64)*link_length, parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length, POINTS);
+                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -694,8 +694,8 @@ mod strong_potential
                 {
                     model.modified_canonical.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
-                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -725,8 +725,8 @@ mod strong_potential
                 {
                     model.modified_canonical.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
-                let denominator = integrate(integrand_denominator, ZERO, parameters.nondimensional_potential_distance_small, POINTS);
+                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -741,7 +741,7 @@ mod weak_potential
     use super::*;
     use rand::Rng;
     use crate::math::integrate;
-    use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::POINTS;
+    use crate::physics::single_chain::fjc::POINTS;
     #[test]
     fn end_to_end_length()
     {
@@ -768,8 +768,8 @@ mod weak_potential
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.end_to_end_length(&potential_distance, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -806,8 +806,8 @@ mod weak_potential
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -840,8 +840,8 @@ mod weak_potential
                 {
                     model.modified_canonical.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -874,8 +874,8 @@ mod weak_potential
                 {
                     model.modified_canonical.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -912,8 +912,8 @@ mod weak_potential
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -950,8 +950,8 @@ mod weak_potential
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -984,8 +984,8 @@ mod weak_potential
                 {
                     model.modified_canonical.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1018,8 +1018,8 @@ mod weak_potential
                 {
                     model.modified_canonical.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powf(2.0)
                 };
-                let numerator = integrate(integrand_numerator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
-                let denominator = integrate(integrand_denominator, parameters.nondimensional_potential_distance_large_1, parameters.nondimensional_potential_distance_large_2, POINTS);
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);

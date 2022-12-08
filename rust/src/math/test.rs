@@ -13,7 +13,7 @@ fn integrate_cosh()
     for _ in 0..88
     {
         let limit = rng.gen::<f64>();
-        let integral = integrate(cosh, -limit, limit, 10000);
+        let integral = integrate(cosh, &-limit, &limit, &10000);
         assert!((integral - 2.0*limit.sinh()).abs() <= 1e-8);
     }
 }
@@ -23,7 +23,7 @@ fn invert_sinh()
 {
     fn sinh(x: f64) -> f64 {x.sinh()}
     let mut rng = rand::thread_rng();
-    for _ in 0..88888
+    for _ in 0..8888
     {
         let y = rng.gen::<f64>();
         let x = invert(y, sinh, 0.0);
@@ -37,7 +37,7 @@ fn invert_sinh()
 #[test]
 fn largest_factorial()
 {
-    factorial(34);
+    factorial(&34_u128);
 }
 
 mod inverse_langevin
@@ -50,7 +50,7 @@ mod inverse_langevin
     fn inverse()
     {
         let mut rng = rand::thread_rng();
-        for _ in 0..88888
+        for _ in 0..8888
         {
             let y = rng.gen::<f64>();
             let x = inverse_langevin(&y, 1e-4);
@@ -72,7 +72,7 @@ mod approximate_inverse_langevin
     fn inverse()
     {
         let mut rng = rand::thread_rng();
-        for _ in 0..88888
+        for _ in 0..8888
         {
             let y = rng.gen::<f64>();
             let x = approximate_inverse_langevin(&y);
@@ -89,7 +89,7 @@ mod langevin
 {
     use rand::Rng;
     use crate::math::langevin;
-    static SIZE: u32 = 88888;
+    static SIZE: u32 = 8888;
     static SCALE: f64 = 1e-3;
     static ABS_TOL: f64 = 1e-7;
     static REL_TOL: f64 = 1e-5;
