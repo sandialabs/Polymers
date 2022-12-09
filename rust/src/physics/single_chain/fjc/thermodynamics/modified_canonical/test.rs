@@ -1268,15 +1268,15 @@ mod weak_potential
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
-            let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            // assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
-            // assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
             // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
-            println!("nondimensional_gibbs_free_energy_per_link");
-            println!("{:?}", residual_rel_1);
-            println!("{:?}", residual_rel_2);
-            println!("{:?}", log_log_slope);
-            println!("");
+            // println!("nondimensional_gibbs_free_energy_per_link");
+            // println!("{:?}", residual_rel_1);
+            // println!("{:?}", residual_rel_2);
+            // println!("{:?}", log_log_slope);
+            // println!("");
         }
     }
 }
