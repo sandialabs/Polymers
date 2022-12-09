@@ -33,7 +33,7 @@ impl ModifiedCanonicalAsymptoticWeakPotential for FJC
             contour_length: (number_of_links as f64)*link_length
         }
     }
-    fn force(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
+    fn force(&self, potential_distance: &f64, potential_stiffness: &f64) -> f64
     {
         potential_stiffness*potential_distance
     }

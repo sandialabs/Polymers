@@ -119,7 +119,7 @@ impl ModifiedCanonical for FJC
             0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/(factorial(&(n - 2)) as f64)*sum*((-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powf(2.0)).exp() - (-0.5*nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powf(2.0)).exp())/(2.0*nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
         };
         let nondimensional_configurational_partition_function = integrate(integrand, &ZERO, &ONE, &POINTS);
-        -ln(&nondimensional_configurational_partition_function) - self.number_of_links_f64*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
+        -ln(&nondimensional_configurational_partition_function) - (self.number_of_links_f64 - 1.0)*ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {

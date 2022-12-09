@@ -127,7 +127,7 @@ mod nondimensional
             let nondimensional_force = model.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
             let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
-            let force = model.force(&potential_distance, &potential_stiffness, &temperature);
+            let force = model.force(&potential_distance, &potential_stiffness);
             let residual_abs = &force/BOLTZMANN_CONSTANT/temperature*link_length - &nondimensional_force;
             let residual_rel = &residual_abs/&nondimensional_force;
             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -378,7 +378,6 @@ mod relative
     use rand::Rng;
     use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::ZERO;
     #[test]
-    #[ignore]
     fn gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -403,7 +402,6 @@ mod relative
         }
     }
     #[test]
-    #[ignore]
     fn gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -478,78 +476,6 @@ mod zero
     use rand::Rng;
     use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::ZERO;
     #[test]
-    #[ignore]
-    fn end_to_end_length()
-    {
-        let mut rng = rand::thread_rng();
-        let parameters = Parameters::default();
-        for _ in 0..parameters.number_of_loops
-        {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
-            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
-            let end_to_end_length_0 = model.end_to_end_length(&ZERO, &potential_stiffness, &temperature);
-            assert!(end_to_end_length_0.abs() <= ZERO);
-        }
-    }
-    #[test]
-    #[ignore]
-    fn end_to_end_length_per_link()
-    {
-        let mut rng = rand::thread_rng();
-        let parameters = Parameters::default();
-        for _ in 0..parameters.number_of_loops
-        {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
-            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
-            let end_to_end_length_0 = model.end_to_end_length_per_link(&ZERO, &potential_stiffness, &temperature);
-            assert!(end_to_end_length_0.abs() <= ZERO);
-        }
-    }
-    #[test]
-    #[ignore]
-    fn nondimensional_end_to_end_length()
-    {
-        let mut rng = rand::thread_rng();
-        let parameters = Parameters::default();
-        for _ in 0..parameters.number_of_loops
-        {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
-            let end_to_end_length_0 = model.nondimensional_end_to_end_length(&ZERO, &nondimensional_potential_stiffness);
-            assert!(end_to_end_length_0.abs() <= ZERO);
-        }
-    }
-    #[test]
-    #[ignore]
-    fn nondimensional_end_to_end_length_per_link()
-    {
-        let mut rng = rand::thread_rng();
-        let parameters = Parameters::default();
-        for _ in 0..parameters.number_of_loops
-        {
-            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
-            let end_to_end_length_0 = model.nondimensional_end_to_end_length_per_link(&ZERO, &nondimensional_potential_stiffness);
-            assert!(end_to_end_length_0.abs() <= ZERO);
-        }
-    }
-    #[test]
     fn force()
     {
         let mut rng = rand::thread_rng();
@@ -563,7 +489,7 @@ mod zero
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
-            let force_0 = model.force(&ZERO, &potential_stiffness, &temperature);
+            let force_0 = model.force(&ZERO, &potential_stiffness);
             assert!(force_0.abs() <= potential_stiffness*ZERO);
         }
     }
@@ -584,7 +510,6 @@ mod zero
         }
     }
     #[test]
-    #[ignore]
     fn relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -598,12 +523,11 @@ mod zero
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
-            let relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(&ZERO, &potential_stiffness, &temperature);
-            assert!(relative_gibbs_free_energy_0.abs() <= ZERO);
+            let relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(&(potential_stiffness*ZERO), &potential_stiffness, &temperature);
+            assert!(relative_gibbs_free_energy_0.abs() <= BOLTZMANN_CONSTANT*temperature*(number_of_links as f64)*ZERO);
         }
     }
     #[test]
-    #[ignore]
     fn relative_gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -622,7 +546,6 @@ mod zero
         }
     }
     #[test]
-    #[ignore]
     fn nondimensional_relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -639,7 +562,6 @@ mod zero
         }
     }
     #[test]
-    #[ignore]
     fn nondimensional_relative_gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
