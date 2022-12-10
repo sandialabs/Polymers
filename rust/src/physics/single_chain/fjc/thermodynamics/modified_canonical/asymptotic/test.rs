@@ -1,6 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::fjc::test::Parameters;
+use crate::physics::single_chain::test::Parameters;
 mod base
 {
     use super::*;
