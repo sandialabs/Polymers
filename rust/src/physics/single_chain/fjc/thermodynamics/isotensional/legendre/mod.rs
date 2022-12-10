@@ -1,11 +1,5 @@
 pub mod test;
 use std::f64::consts::PI;
-use crate::math::
-{
-    ln,
-    ln_sinhc,
-    langevin
-};
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -52,18 +46,18 @@ impl IsotensionalLegendre for FJC
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        (nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force) - ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0))))*self.number_of_links_f64
+        (nondimensional_force/nondimensional_force.tanh() - 1.0 - (nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln())*self.number_of_links_f64
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force) - ln(&(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)))
+        nondimensional_force/nondimensional_force.tanh() - 1.0 - (nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
     }
     fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64
     {
-        (nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force))*self.number_of_links_f64
+        (nondimensional_force/nondimensional_force.tanh() - 1.0 - (nondimensional_force.sinh()/nondimensional_force).ln())*self.number_of_links_f64
     }
     fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        nondimensional_force*langevin(nondimensional_force) - ln_sinhc(nondimensional_force)
+        nondimensional_force/nondimensional_force.tanh() - 1.0 - (nondimensional_force.sinh()/nondimensional_force).ln()
     }
 }
