@@ -56,7 +56,7 @@ mod base
         }
     }
     #[test]
-    fn number_of_links_and_link_length_and_hinge_mass()
+    fn number_of_links_and_link_length_and_hinge_mass_and_well_width()
     {
         let mut rng = rand::thread_rng();
         let parameters = Parameters::default();
