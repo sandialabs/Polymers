@@ -1,6 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::test::Parameters;
+use crate::physics::single_chain::fjc::thermodynamics::isometric::test::Parameters;
 mod base
 {
     use super::*;
@@ -824,7 +824,7 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(&(BOLTZMANN_CONSTANT*temperature/link_length*ZERO), &temperature);
+            let relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             assert!(relative_gibbs_free_energy_0.abs() <= BOLTZMANN_CONSTANT*temperature*(number_of_links as f64)*ZERO);
         }
     }
@@ -840,7 +840,7 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let relative_gibbs_free_energy_per_link_0 = model.relative_gibbs_free_energy_per_link(&(BOLTZMANN_CONSTANT*temperature/link_length*ZERO), &temperature);
+            let relative_gibbs_free_energy_per_link_0 = model.relative_gibbs_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             assert!(relative_gibbs_free_energy_per_link_0.abs() <= BOLTZMANN_CONSTANT*temperature*ZERO);
         }
     }

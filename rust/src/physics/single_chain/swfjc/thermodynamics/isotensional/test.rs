@@ -468,7 +468,7 @@ mod zero
             let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
-            assert!(relative_gibbs_free_energy_0.abs() <= ZERO);
+            assert!(relative_gibbs_free_energy_0.abs() <= BOLTZMANN_CONSTANT*temperature*(number_of_links as f64)*ZERO);
         }
     }
     #[test]
@@ -485,7 +485,7 @@ mod zero
             let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let relative_gibbs_free_energy_per_link_0 = model.relative_gibbs_free_energy_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
-            assert!(relative_gibbs_free_energy_per_link_0.abs() <= ZERO);
+            assert!(relative_gibbs_free_energy_per_link_0.abs() <= BOLTZMANN_CONSTANT*temperature*ZERO);
         }
     }
     #[test]
