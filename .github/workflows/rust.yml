@@ -24,3 +24,6 @@ jobs:
       - id: doc
         run: cargo doc --verbose
         working-directory: ./rust/
+      - id: package
+        run: cargo package --verbose
+        working-directory: ./rust/
