@@ -1,5 +1,12 @@
 pub mod test;
+use std::f64::consts::PI;
+use crate::physics::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT
+};
 use crate::physics::single_chain::swfjc::thermodynamics::IsotensionalLegendre;
+pub static ZERO: f64 = 1e-6;
 pub struct SWFJC
 {
     pub hinge_mass: f64,
@@ -25,5 +32,37 @@ impl IsotensionalLegendre for SWFJC
             nondimensional_well_parameter: 1.0 + well_width/link_length,
 
         }
+    }
+    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
+    {
+        self.nondimensional_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
+    }
+    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
+    {
+        self.nondimensional_helmholtz_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
+    }
+    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
+    {
+        self.nondimensional_relative_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+    }
+    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
+    {
+        self.nondimensional_relative_helmholtz_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+    }
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
+    {
+        self.number_of_links_f64*self.nondimensional_helmholtz_free_energy_per_link(nondimensional_force, temperature)
+    }
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
+    {
+    (self.nondimensional_well_parameter.powf(2.0)*nondimensional_force.powf(2.0)*(self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force.powf(2.0)*nondimensional_force.sinh())/(self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0 + 3.0*nondimensional_force.ln() - (self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln() - (8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+    }
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64
+    {
+        self.nondimensional_helmholtz_free_energy(nondimensional_force, &300.0) - self.nondimensional_helmholtz_free_energy(&ZERO, &300.0)
+    }
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
+    {
+        self.nondimensional_helmholtz_free_energy_per_link(nondimensional_force, &300.0) - self.nondimensional_helmholtz_free_energy_per_link(&ZERO, &300.0)
     }
 }

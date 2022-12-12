@@ -1,12 +1,6 @@
 pub mod test;
 pub mod mechanics;
 pub mod thermodynamics;
-
-// move to single_chain?
-//pub static ONE: f64 = 1.0;
-//pub static ZERO: f64 = 1e-6;
-//pub static POINTS: u128 = 100;
-
 pub struct SWFJC
 {
     pub hinge_mass: f64,

@@ -43,7 +43,7 @@ impl Default for Parameters
             rel_tol_thermodynamic_limit: 1e-1,
             log_log_tol: 5e-2,
             log_log_scale: 12e-1,
-            number_of_loops: 8,
+            number_of_loops: 88,
             hinge_mass_reference: 1e0,
             hinge_mass_scale: 1e0,
             link_length_reference: 1e0,
