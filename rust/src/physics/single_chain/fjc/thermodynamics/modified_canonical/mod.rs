@@ -13,7 +13,8 @@ use crate::physics::single_chain::fjc::
     ZERO,
     POINTS
 };
-use self::asymptotic::{
+use self::asymptotic::
+{
     WeakPotential as AsymptoticWeakPotential,
     StrongPotential as AsymptoticStrongPotential
 };

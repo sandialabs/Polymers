@@ -2,12 +2,15 @@ pub mod test;
 pub mod isometric;
 pub mod isotensional;
 pub mod modified_canonical;
-use self::{
+use self::
+{
     isometric::Legendre as IsometricLegendre,
     isotensional::Legendre as IsotensionalLegendre,
-    modified_canonical::{
+    modified_canonical::
+    {
         Asymptotic as ModifiedCanonicalAsymptotic,
-        asymptotic::{
+        asymptotic::
+        {
             WeakPotential as ModifiedCanonicalAsymptoticWeakPotential,
             StrongPotential as ModifiedCanonicalAsymptoticStrongPotential
         }

@@ -123,7 +123,7 @@ impl Legendre for FJC
     }
     fn relative_gibbs_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(&(end_to_end_length/self.contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
+        self.nondimensional_relative_gibbs_free_energy_per_link(&(end_to_end_length/self.contour_length))*BOLTZMANN_CONSTANT*temperature
     }
     fn nondimensional_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
@@ -138,12 +138,12 @@ impl Legendre for FJC
     {
         self.nondimensional_gibbs_free_energy(nondimensional_end_to_end_length_per_link, temperature)/self.number_of_links_f64
     }
-    fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
+    fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        self.nondimensional_gibbs_free_energy(nondimensional_end_to_end_length_per_link, temperature) - self.nondimensional_gibbs_free_energy(&ZERO, temperature)
+        self.nondimensional_gibbs_free_energy(nondimensional_end_to_end_length_per_link, &300.0) - self.nondimensional_gibbs_free_energy(&ZERO, &300.0)
     }
-    fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
+    fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy(nondimensional_end_to_end_length_per_link, temperature)/self.number_of_links_f64
+        self.nondimensional_relative_gibbs_free_energy(nondimensional_end_to_end_length_per_link)/self.number_of_links_f64
     }
 }
