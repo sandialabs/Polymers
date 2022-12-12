@@ -1,31 +1,6 @@
 #![cfg(test)]
 use super::*;
-pub struct Parameters
-{
-    pub number_of_loops: u32,
-    pub hinge_mass_reference: f64,
-    pub hinge_mass_scale: f64,
-    pub link_length_reference: f64,
-    pub link_length_scale: f64,
-    pub number_of_links_minimum: u8,
-    pub number_of_links_maximum: u8
-}
-impl Default for Parameters
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            number_of_loops: 88,
-            hinge_mass_reference: 1e0,
-            hinge_mass_scale: 1e0,
-            link_length_reference: 1e0,
-            link_length_scale: 1e0,
-            number_of_links_minimum: 4,
-            number_of_links_maximum: 25
-        }
-    }
-}
+use crate::physics::single_chain::test::Parameters;
 mod base
 {
     use super::*;
@@ -80,6 +55,88 @@ mod base
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = rng.gen::<f64>();
             assert_eq!(link_length, FJC::init(number_of_links, link_length, hinge_mass).link_length);
+        }
+    }
+}
+mod implementations
+{
+    use super::*;
+    mod thermodynamics
+    {
+        use super::*;
+        mod isometric
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.isometric.nondimensional_force(&parameters.nondimensional_end_to_end_length_per_link_reference);
+            }
+            mod legendre
+            {
+                use super::*;
+                #[test]
+                fn access()
+                {
+                    let parameters = Parameters::default();
+                    let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.isometric.legendre.nondimensional_relative_gibbs_free_energy_per_link(&parameters.nondimensional_end_to_end_length_per_link_reference);
+                }
+            }
+        }
+        mod isotensional
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference);
+            }
+            mod legendre
+            {
+                use super::*;
+                #[test]
+                fn access()
+                {
+                    let parameters = Parameters::default();
+                    let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference);
+                }
+            }
+        }
+        mod modified_canonical
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.modified_canonical.nondimensional_force(&parameters.nondimensional_potential_distance_small, &parameters.nondimensional_potential_stiffness_reference);
+            }
+            mod asymptotic
+            {
+                use super::*;
+                mod strong_potential
+                {
+                    use super::*;
+                    #[test]
+                    fn access()
+                    {
+                        let parameters = Parameters::default();
+                        let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.modified_canonical.asymptotic.strong_potential.nondimensional_force(&parameters.nondimensional_potential_distance_small, &parameters.nondimensional_potential_stiffness_reference);
+                    }
+                }
+                mod weak_potential
+                {
+                    use super::*;
+                    #[test]
+                    fn access()
+                    {
+                        let parameters = Parameters::default();
+                        let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_potential_distance_reference, &parameters.nondimensional_potential_stiffness_reference);
+                    }
+                }
+            }
         }
     }
 }

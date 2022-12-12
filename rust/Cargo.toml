@@ -1,6 +1,6 @@
 [package]
 name = "polymers"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 description = "Polymers Modeling Library"
 license = "BSD-3-Clause"
@@ -9,6 +9,5 @@ keywords = ["python", "rust", "polymers"]
 [lib]
 crate-type = ["staticlib", "cdylib"]
 
-[dependencies]
+[dev-dependencies]
 rand = "0.8.5"
-pyo3 = { version = "0.17.3", features = ["extension-module"] }

@@ -1,47 +1,6 @@
 #![cfg(test)]
 use super::*;
-pub struct Parameters
-{
-    pub abs_tol: f64,
-    pub rel_tol: f64,
-    pub number_of_loops: u32,
-    pub hinge_mass_reference: f64,
-    pub hinge_mass_scale: f64,
-    pub link_length_reference: f64,
-    pub link_length_scale: f64,
-    pub number_of_links_minimum: u8,
-    pub number_of_links_maximum: u8,
-    pub nondimensional_potential_distance_reference: f64,
-    pub nondimensional_potential_distance_scale: f64,
-    pub nondimensional_potential_stiffness_reference: f64,
-    pub nondimensional_potential_stiffness_scale: f64,
-    pub temperature_reference: f64,
-    pub temperature_scale: f64,
-}
-impl Default for Parameters
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            abs_tol: 1e-8,
-            rel_tol: 1e-6,
-            number_of_loops: 88,
-            hinge_mass_reference: 1e0,
-            hinge_mass_scale: 1e0,
-            link_length_reference: 1e0,
-            link_length_scale: 1e0,
-            number_of_links_minimum: 6,
-            number_of_links_maximum: 25,
-            nondimensional_potential_distance_reference: 1e0,
-            nondimensional_potential_distance_scale: 2e0,
-            nondimensional_potential_stiffness_reference: 5e2,
-            nondimensional_potential_stiffness_scale: 1e3,
-            temperature_reference: 3e2,
-            temperature_scale: 1e2,
-        }
-    }
-}
+use crate::physics::single_chain::test::Parameters;
 mod base
 {
     use super::*;

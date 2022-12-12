@@ -1,6 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::fjc::thermodynamics::isotensional::test::Parameters;
+use crate::physics::single_chain::test::Parameters;
 mod base
 {
     use super::*;
@@ -9,7 +9,7 @@ mod base
     fn init()
     {
         let parameters = Parameters::default();
-        let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference);
+        let _ = SWFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.well_width_reference);
     }
     #[test]
     fn number_of_links()
@@ -19,7 +19,7 @@ mod base
         for _ in 0..parameters.number_of_loops
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
-            assert_eq!(number_of_links, FJC::init(number_of_links, parameters.link_length_reference, parameters.hinge_mass_reference).number_of_links);
+            assert_eq!(number_of_links, SWFJC::init(number_of_links, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.well_width_reference).number_of_links);
         }
     }
     #[test]
@@ -30,7 +30,7 @@ mod base
         for _ in 0..parameters.number_of_loops
         {
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
-            assert_eq!(link_length, FJC::init(parameters.number_of_links_minimum, link_length, parameters.hinge_mass_reference).link_length);
+            assert_eq!(link_length, SWFJC::init(parameters.number_of_links_minimum, link_length, parameters.hinge_mass_reference, parameters.well_width_reference).link_length);
         }
     }
     #[test]
@@ -41,11 +41,22 @@ mod base
         for _ in 0..parameters.number_of_loops
         {
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            assert_eq!(hinge_mass, FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, hinge_mass).hinge_mass);
+            assert_eq!(hinge_mass, SWFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, hinge_mass, parameters.well_width_reference).hinge_mass);
         }
     }
     #[test]
-    fn number_of_links_and_link_length_and_hinge_mass()
+    fn well_width()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            assert_eq!(well_width, SWFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, well_width).well_width);
+        }
+    }
+    #[test]
+    fn number_of_links_and_link_length_and_hinge_mass_and_well_width()
     {
         let mut rng = rand::thread_rng();
         let parameters = Parameters::default();
@@ -54,7 +65,8 @@ mod base
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = rng.gen::<f64>();
-            assert_eq!(link_length, FJC::init(number_of_links, link_length, hinge_mass).link_length);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            assert_eq!(link_length, SWFJC::init(number_of_links, link_length, hinge_mass, well_width).link_length);
         }
     }
 }
@@ -72,7 +84,8 @@ mod nondimensional
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature);
@@ -94,7 +107,8 @@ mod nondimensional
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy_per_link = model.nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, &temperature);
@@ -116,7 +130,8 @@ mod nondimensional
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_helmholtz_free_energy = model.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
@@ -138,7 +153,8 @@ mod nondimensional
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_helmholtz_free_energy_per_link = model.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
@@ -165,7 +181,8 @@ mod per_link
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -187,7 +204,8 @@ mod per_link
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -209,7 +227,8 @@ mod per_link
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature);
@@ -230,7 +249,8 @@ mod per_link
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_helmholtz_free_energy = model.nondimensional_relative_helmholtz_free_energy(&nondimensional_force);
             let nondimensional_relative_helmholtz_free_energy_per_link = model.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force);
@@ -255,12 +275,13 @@ mod relative
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let helmholtz_free_energy = model.helmholtz_free_energy(&force, &temperature);
-            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&ZERO, &temperature);
+            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&force, &temperature);
             let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_0 - &relative_helmholtz_free_energy;
             let residual_rel = &residual_abs/&helmholtz_free_energy_0;
@@ -278,12 +299,13 @@ mod relative
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&force, &temperature);
-            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&ZERO, &temperature);
+            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&force, &temperature);
             let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_0 - &relative_helmholtz_free_energy_per_link;
             let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_0;
@@ -301,7 +323,8 @@ mod relative
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature);
@@ -323,7 +346,8 @@ mod relative
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy_per_link = model.nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, &temperature);
@@ -350,9 +374,10 @@ mod zero
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(&ZERO, &temperature);
+            let relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             assert!(relative_helmholtz_free_energy_0.abs() <= ZERO);
         }
     }
@@ -366,9 +391,10 @@ mod zero
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let relative_helmholtz_free_energy_per_link_0 = model.relative_helmholtz_free_energy_per_link(&ZERO, &temperature);
+            let relative_helmholtz_free_energy_per_link_0 = model.relative_helmholtz_free_energy_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             assert!(relative_helmholtz_free_energy_per_link_0.abs() <= ZERO);
         }
     }
@@ -382,7 +408,8 @@ mod zero
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_relative_helmholtz_free_energy_0 = model.nondimensional_relative_helmholtz_free_energy(&ZERO);
             assert!(nondimensional_relative_helmholtz_free_energy_0.abs() <= ZERO);
         }
@@ -397,7 +424,8 @@ mod zero
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
+            let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_relative_helmholtz_free_energy_per_link_0 = model.nondimensional_relative_helmholtz_free_energy_per_link(&ZERO);
             assert!(nondimensional_relative_helmholtz_free_energy_per_link_0.abs() <= ZERO);
         }

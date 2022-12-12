@@ -1,5 +1,19 @@
 pub mod test;
 
+pub fn sequential_uniform_random_integer(mut n: u64) -> u64
+{
+    n = n^(n << 12);
+    n = n^(n >> 25);
+    n = n^(n << 27);
+    n
+}
+
+pub fn sequential_uniform_random(mut x: f64) -> f64
+{
+    x = (sequential_uniform_random_integer(((u64::MAX as f64)*x).ceil() as u64) as f64)/(u64::MAX as f64);
+    x
+}
+
 pub fn invert<F>(value: f64, function: F, mut guess: f64) -> f64
 where F: Fn(f64) -> f64
 {
@@ -12,56 +26,16 @@ where F: Fn(f64) -> f64
     guess
 }
 
-pub fn integrate<F>(function: F, lower_lim: f64, upper_lim: f64, num_points: u128) -> f64
+pub fn integrate<F>(function: F, lower_lim: &f64, upper_lim: &f64, num_points: &u128) -> f64
 where F: Fn(f64) -> f64
 {
-    let dx = (upper_lim - lower_lim)/(num_points as f64);
-    let mut sum: f64 = 0.0;
-    for index in 0..num_points
-    {
-        sum += function(lower_lim + dx/2.0 + (index as f64)*dx)
-    }
-    sum*dx
+    let dx = (upper_lim - lower_lim)/(*num_points as f64);
+    (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| function(lower_lim + (0.5 + *index as f64)*dx)).sum::<f64>()*dx
 }
 
-pub fn factorial(num: u128) -> u128
+pub fn approximate_inverse_langevin(x: &f64) -> f64
 {
-    (1..=num).product()
-}
-
-pub fn sinhc<T>(x: &T) -> T
-where
-    T: Math<T>
-{
-    Math::<T>::sinhc(x)
-}
-
-pub fn ln<T>(x: &T) -> T
-where
-    T: Math<T>
-{
-    Math::<T>::ln_fun(x)
-}
-
-pub fn ln_sinhc<T>(x: &T) -> T
-where
-    T: Math<T>
-{
-    Math::<T>::ln_sinhc(x)
-}
-
-pub fn langevin<T>(x: &T) -> T
-where
-    T: Math<T>
-{
-    Math::<T>::langevin(x)
-}
-
-pub fn approximate_inverse_langevin<T>(x: &T) -> T
-where
-    T: Math<T>
-{
-    Math::<T>::approximate_inverse_langevin(x)
+    (2.14234*x.powf(3.0) - 4.22785*x.powf(2.0) + 3.0*x)/(1.0 - x)/(0.71716*x.powf(3.0) - 0.41103*x.powf(2.0) - 0.39165*x + 1.0)
 }
 
 pub fn inverse_langevin(y: &f64, tol: f64) -> f64
@@ -71,40 +45,7 @@ pub fn inverse_langevin(y: &f64, tol: f64) -> f64
     while residual_rel.abs() > tol
     {
         x = 1.0/(1.0/x.tanh() - y);
-        residual_rel = langevin(&x)/y - 1.0;
+        residual_rel = 1.0/x.tanh() - 1.0/x - 1.0;
     }
     x
-}
-
-pub trait Math<T>
-{
-    fn sinhc(&self) -> T;
-    fn ln_fun(&self) -> T;
-    fn ln_sinhc(&self) -> T;
-    fn langevin(&self) -> T;
-    fn approximate_inverse_langevin(&self) -> T;
-}
-
-impl Math<f64> for f64
-{
-    fn sinhc(&self) -> Self
-    {
-        self.sinh()/self
-    }
-    fn ln_fun(&self) -> Self
-    {
-        self.ln()
-    }
-    fn ln_sinhc(&self) -> Self
-    {
-        (self.sinh()/self).ln()
-    }
-    fn langevin(&self) -> Self
-    {
-        1.0/self.tanh() - 1.0/self
-    }
-    fn approximate_inverse_langevin(&self) -> Self
-    {
-        (2.14234*self.powf(3.0) - 4.22785*self.powf(2.0) + 3.0*self)/(1.0 - self)/(0.71716*self.powf(3.0) - 0.41103*self.powf(2.0) - 0.39165*self + 1.0)
-    }
 }
