@@ -5,7 +5,6 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::IsotensionalLegendre;
 pub static ZERO: f64 = 1e-6;
 pub struct FJC
 {
@@ -15,7 +14,8 @@ pub struct FJC
     pub number_of_links_f64: f64,
     pub contour_length: f64
 }
-impl IsotensionalLegendre for FJC
+use super::Legendre;
+impl Legendre for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {

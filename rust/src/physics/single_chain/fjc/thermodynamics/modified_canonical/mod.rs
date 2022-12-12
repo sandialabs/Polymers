@@ -7,19 +7,15 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::
-{
-    ModifiedCanonical,
-    ModifiedCanonicalAsymptotic,
-    ModifiedCanonicalAsymptoticStrongPotential,
-    ModifiedCanonicalAsymptoticWeakPotential
-};
-use crate::physics::single_chain::fjc::thermodynamics::modified_canonical::asymptotic::FJC as FJCAsymptotic;
 use crate::physics::single_chain::fjc::
 {
     ONE,
     ZERO,
     POINTS
+};
+use self::asymptotic::{
+    WeakPotential as AsymptoticWeakPotential,
+    StrongPotential as AsymptoticStrongPotential
 };
 pub struct FJC
 {
@@ -28,8 +24,9 @@ pub struct FJC
     pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
-    pub asymptotic: FJCAsymptotic,
+    pub asymptotic: asymptotic::FJC,
 }
+use super::ModifiedCanonical;
 impl ModifiedCanonical for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
@@ -41,7 +38,7 @@ impl ModifiedCanonical for FJC
             number_of_links,
             number_of_links_f64: number_of_links as f64,
             contour_length: (number_of_links as f64)*link_length,
-            asymptotic: FJCAsymptotic::init(number_of_links, link_length, hinge_mass)
+            asymptotic: asymptotic::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
     fn end_to_end_length(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
@@ -159,4 +156,8 @@ impl ModifiedCanonical for FJC
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness) - 0.5*nondimensional_potential_stiffness*nondimensional_potential_distance.powf(2.0)/self.number_of_links_f64
     }
+}
+pub trait Asymptotic
+{
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
 }

@@ -5,7 +5,6 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::ModifiedCanonicalAsymptoticWeakPotential;
 use crate::physics::single_chain::fjc::ZERO;
 pub struct FJC
 {
@@ -15,7 +14,8 @@ pub struct FJC
     pub number_of_links_f64: f64,
     pub contour_length: f64
 }
-impl ModifiedCanonicalAsymptoticWeakPotential for FJC
+use super::WeakPotential;
+impl WeakPotential for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {

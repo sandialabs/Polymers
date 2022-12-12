@@ -5,7 +5,7 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::ModifiedCanonicalAsymptoticStrongPotential;
+use crate::physics::single_chain::fjc::ZERO;
 pub struct FJC
 {
     pub hinge_mass: f64,
@@ -14,7 +14,8 @@ pub struct FJC
     pub number_of_links_f64: f64,
     pub contour_length: f64
 }
-impl ModifiedCanonicalAsymptoticStrongPotential for FJC
+use super::StrongPotential;
+impl StrongPotential for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {
@@ -49,7 +50,15 @@ impl ModifiedCanonicalAsymptoticStrongPotential for FJC
     }
     fn helmholtz_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
-        BOLTZMANN_CONSTANT*temperature*self.nondimensional_helmholtz_free_energy_per_link(&(potential_distance/self.contour_length), &(potential_stiffness*(self.contour_length).powf(2.0)/BOLTZMANN_CONSTANT/temperature), temperature)
+        self.helmholtz_free_energy(potential_distance, potential_stiffness, temperature)/self.number_of_links_f64
+    }
+    fn relative_helmholtz_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
+    {
+        self.helmholtz_free_energy(potential_distance, potential_stiffness, temperature) - self.helmholtz_free_energy(&(ZERO*self.number_of_links_f64*self.link_length), potential_stiffness, temperature)
+    }
+    fn relative_helmholtz_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
+    {
+        self.relative_helmholtz_free_energy(potential_distance, potential_stiffness, temperature)/self.number_of_links_f64
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
@@ -65,5 +74,13 @@ impl ModifiedCanonicalAsymptoticStrongPotential for FJC
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness, temperature)/self.number_of_links_f64
+    }
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
+    {
+        self.nondimensional_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness, &300.0) - self.nondimensional_helmholtz_free_energy(&ZERO, nondimensional_potential_stiffness, &300.0)
+    }
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
+    {
+        self.nondimensional_relative_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness)/self.number_of_links_f64
     }
 }

@@ -6,12 +6,6 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::
-{
-    Isometric,
-    IsometricLegendre
-};
-use crate::physics::single_chain::fjc::thermodynamics::isometric::legendre::FJC as FJCLegendre;
 use crate::physics::single_chain::fjc::ZERO;
 pub struct FJC
 {
@@ -20,8 +14,9 @@ pub struct FJC
     pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
-    pub legendre: FJCLegendre
+    pub legendre: legendre::FJC
 }
+use super::Isometric;
 impl Isometric for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
@@ -33,7 +28,7 @@ impl Isometric for FJC
             number_of_links,
             number_of_links_f64: number_of_links as f64,
             contour_length: (number_of_links as f64)*link_length,
-            legendre: FJCLegendre::init(number_of_links, link_length, hinge_mass)
+            legendre: legendre::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
     fn force(&self, end_to_end_length: &f64, temperature: &f64) -> f64
@@ -108,4 +103,30 @@ impl Isometric for FJC
         let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
         0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum
     }
+}
+pub trait Legendre
+{
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
+    fn force(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64;
+    fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64;
+    fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64;
+    fn gibbs_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn gibbs_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn relative_gibbs_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn relative_gibbs_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64;
+    fn nondimensional_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64;
+    fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64;
 }

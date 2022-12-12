@@ -107,6 +107,7 @@ mod nondimensional
     use super::*;
     use rand::Rng;
     #[test]
+    #[ignore]
     fn end_to_end_length()
     {
         let mut rng = rand::thread_rng();
@@ -131,6 +132,7 @@ mod nondimensional
         }
     }
     #[test]
+    #[ignore]
     fn end_to_end_length_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -179,6 +181,7 @@ mod nondimensional
         }
     }
     #[test]
+    #[ignore]
     fn gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -203,6 +206,7 @@ mod nondimensional
         }
     }
     #[test]
+    #[ignore]
     fn gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -227,6 +231,7 @@ mod nondimensional
         }
     }
     #[test]
+    #[ignore]
     fn relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -251,6 +256,7 @@ mod nondimensional
         }
     }
     #[test]
+    #[ignore]
     fn relative_gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();

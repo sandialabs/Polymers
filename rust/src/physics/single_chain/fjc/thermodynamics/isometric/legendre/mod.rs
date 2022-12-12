@@ -10,7 +10,6 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::IsometricLegendre;
 use crate::physics::single_chain::fjc::
 {
     ONE,
@@ -26,7 +25,8 @@ pub struct FJC
     pub contour_length: f64,
     normalization_nondimensional_equilibrium_distribution: f64
 }
-impl IsometricLegendre for FJC
+use super::Legendre;
+impl Legendre for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
     {

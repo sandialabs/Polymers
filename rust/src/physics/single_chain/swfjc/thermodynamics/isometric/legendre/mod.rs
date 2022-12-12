@@ -1,5 +1,4 @@
 pub mod test;
-use crate::physics::single_chain::swfjc::thermodynamics::IsometricLegendre;
 pub struct SWFJC
 {
     pub hinge_mass: f64,
@@ -10,7 +9,8 @@ pub struct SWFJC
     pub contour_length: f64,
     pub nondimensional_well_parameter: f64
 }
-impl IsometricLegendre for SWFJC
+use super::Legendre;
+impl Legendre for SWFJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> SWFJC
     {

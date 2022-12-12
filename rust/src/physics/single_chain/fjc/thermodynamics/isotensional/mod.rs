@@ -6,12 +6,6 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::thermodynamics::
-{
-    Isotensional,
-    IsotensionalLegendre
-};
-use crate::physics::single_chain::fjc::thermodynamics::isotensional::legendre::FJC as FJCLegendre;
 pub struct FJC
 {
     pub hinge_mass: f64,
@@ -19,8 +13,9 @@ pub struct FJC
     pub number_of_links: u8,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
-    pub legendre: FJCLegendre
+    pub legendre: legendre::FJC
 }
+use super::Isotensional;
 impl Isotensional for FJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
@@ -32,7 +27,7 @@ impl Isotensional for FJC
             number_of_links,
             number_of_links_f64: number_of_links as f64,
             contour_length: (number_of_links as f64)*link_length,
-            legendre: FJCLegendre::init(number_of_links, link_length, hinge_mass)
+            legendre: legendre::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
     fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64
@@ -83,4 +78,16 @@ impl Isotensional for FJC
     {
         -(nondimensional_force.sinh()/nondimensional_force).ln()
     }
+}
+pub trait Legendre
+{
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self;
+    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
 }

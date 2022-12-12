@@ -1,4 +1,6 @@
 #![cfg(test)]
+use super::*;
+use crate::physics::BOLTZMANN_CONSTANT;
 pub struct Parameters
 {
     pub abs_tol: f64,
@@ -73,14 +75,77 @@ impl Default for Parameters
 }
 mod fjc
 {
+    use super::*;
     mod swfjc
     {
+        use super::*;
         use rand::Rng;
-        use crate::physics::single_chain::test::Parameters;
         use crate::physics::single_chain::fjc::FJC;
-        use crate::physics::single_chain::fjc::thermodynamics::Isotensional as IsotensionalFJC;
         use crate::physics::single_chain::swfjc::SWFJC;
-        use crate::physics::single_chain::swfjc::thermodynamics::Isotensional as IsotensionalSWFJC;
+        #[test]
+        fn end_to_end_length()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_length = rng.gen::<f64>();
+                let well_width = parameters.nondimensional_well_width_small*link_length;
+                let fjc = FJC::init(number_of_links, link_length, hinge_mass);
+                let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
+                let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                let end_to_end_length_fjc = fjc.thermodynamics.isotensional.end_to_end_length(&force, &temperature);
+                let end_to_end_length_swfjc = swfjc.thermodynamics.isotensional.end_to_end_length(&force, &temperature);
+                let residual = &end_to_end_length_swfjc - &end_to_end_length_fjc;
+                assert!(residual.abs() <= (number_of_links as f64)*link_length*parameters.nondimensional_well_width_small);
+            }
+        }
+        #[test]
+        fn end_to_end_length_per_link()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_length = rng.gen::<f64>();
+                let well_width = parameters.nondimensional_well_width_small*link_length;
+                let fjc = FJC::init(number_of_links, link_length, hinge_mass);
+                let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
+                let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                let end_to_end_length_per_link_fjc = fjc.thermodynamics.isotensional.end_to_end_length_per_link(&force, &temperature);
+                let end_to_end_length_per_link_swfjc = swfjc.thermodynamics.isotensional.end_to_end_length_per_link(&force, &temperature);
+                let residual = &end_to_end_length_per_link_swfjc - &end_to_end_length_per_link_fjc;
+                assert!(residual.abs() <= link_length*parameters.nondimensional_well_width_small);
+            }
+        }
+        #[test]
+        fn nondimensional_end_to_end_length()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_length = rng.gen::<f64>();
+                let well_width = parameters.nondimensional_well_width_small*link_length;
+                let fjc = FJC::init(number_of_links, link_length, hinge_mass);
+                let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
+                let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+                let nondimensional_end_to_end_length_fjc = fjc.thermodynamics.isotensional.nondimensional_end_to_end_length(&nondimensional_force);
+                let nondimensional_end_to_end_length_swfjc = swfjc.thermodynamics.isotensional.nondimensional_end_to_end_length(&nondimensional_force);
+                let residual = &nondimensional_end_to_end_length_swfjc - &nondimensional_end_to_end_length_fjc;
+                assert!(residual.abs() <= (number_of_links as f64)*parameters.nondimensional_well_width_small);
+            }
+        }
         #[test]
         fn nondimensional_end_to_end_length_per_link()
         {
@@ -92,14 +157,22 @@ mod fjc
                 let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
                 let link_length = rng.gen::<f64>();
                 let well_width = parameters.nondimensional_well_width_small*link_length;
-                let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
-                let fjc = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference);
+                let fjc = FJC::init(number_of_links, link_length, hinge_mass);
                 let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
+                let nondimensional_force = parameters.nondimensional_force_reference + parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
                 let nondimensional_end_to_end_length_per_link_fjc = fjc.thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
                 let nondimensional_end_to_end_length_per_link_swfjc = swfjc.thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
-                let residual = &nondimensional_end_to_end_length_per_link_fjc - &nondimensional_end_to_end_length_per_link_swfjc;
+                let residual = &nondimensional_end_to_end_length_per_link_swfjc - &nondimensional_end_to_end_length_per_link_fjc;
                 assert!(residual.abs() <= parameters.nondimensional_well_width_small);
             }
         }
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
     }
 }

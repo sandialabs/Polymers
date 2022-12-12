@@ -6,13 +6,8 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::swfjc::thermodynamics::isotensional::legendre::SWFJC as SWFJCLegendre;
-use crate::physics::single_chain::swfjc::thermodynamics::
-{
-    Isotensional,
-    IsotensionalLegendre
-};
 use crate::physics::single_chain::fjc::ZERO;
+use self::legendre::SWFJC as SWFJCLegendre;
 pub struct SWFJC
 {
     pub hinge_mass: f64,
@@ -24,6 +19,7 @@ pub struct SWFJC
     pub nondimensional_well_parameter: f64,
     pub legendre: SWFJCLegendre
 }
+use super::Isotensional;
 impl Isotensional for SWFJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> SWFJC
@@ -92,4 +88,16 @@ impl Isotensional for SWFJC
     {
         self.nondimensional_gibbs_free_energy_per_link(nondimensional_force, &300.0) - self.nondimensional_gibbs_free_energy_per_link(&ZERO, &300.0)
     }
+}
+pub trait Legendre
+{
+    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> Self;
+    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
 }

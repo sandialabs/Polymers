@@ -4,6 +4,19 @@ pub mod thermodynamics;
 pub static ONE: f64 = 1.0;
 pub static ZERO: f64 = 1e-6;
 pub static POINTS: u128 = 100;
+use self::{
+    thermodynamics::{
+        Isometric as Isometric,
+        Isotensional as Isotensional,
+        ModifiedCanonical as ModifiedCanonical,
+        isometric::Legendre as IsometricLegendre,
+        isotensional::Legendre as IsotensionalLegendre,
+        modified_canonical::asymptotic::{
+            WeakPotential as ModifiedCanonicalAsymptoticWeakPotential,
+            StrongPotential as ModifiedCanonicalAsymptoticStrongPotential
+        }
+    }
+};
 pub struct FJC
 {
     pub hinge_mass: f64,

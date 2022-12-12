@@ -5,7 +5,6 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::swfjc::thermodynamics::IsotensionalLegendre;
 pub static ZERO: f64 = 1e-6;
 pub struct SWFJC
 {
@@ -17,7 +16,8 @@ pub struct SWFJC
     pub contour_length: f64,
     pub nondimensional_well_parameter: f64
 }
-impl IsotensionalLegendre for SWFJC
+use super::Legendre;
+impl Legendre for SWFJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> SWFJC
     {
