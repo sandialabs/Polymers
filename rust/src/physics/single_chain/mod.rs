@@ -23,9 +23,7 @@ use self::{
     swfjc::{
         SWFJC,
         thermodynamics::{
-            Isometric as SWFJCIsometric,
             Isotensional as SWFJCIsotensional,
-            isometric::Legendre as SWFJCIsometricLegendre,
             isotensional::Legendre as SWFJCIsotensionalLegendre,
         }
     },

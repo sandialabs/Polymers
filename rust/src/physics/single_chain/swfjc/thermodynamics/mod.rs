@@ -1,13 +1,15 @@
 pub mod test;
-pub mod isometric;
 pub mod isotensional;
+use self::
+{
+    isotensional::Legendre as IsotensionalLegendre
+};
 pub struct SWFJC
 {
     pub hinge_mass: f64,
     pub link_length: f64,
     pub number_of_links: u8,
     pub well_width: f64,
-    pub isometric: isometric::SWFJC,
     pub isotensional: isotensional::SWFJC,
 }
 impl SWFJC
@@ -20,14 +22,9 @@ impl SWFJC
             link_length,
             number_of_links,
             well_width,
-            isometric: isometric::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
             isotensional: isotensional::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
         }
     }
-}
-pub trait Isometric
-{
-    fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> Self;
 }
 pub trait Isotensional
 {

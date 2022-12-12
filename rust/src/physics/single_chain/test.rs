@@ -251,4 +251,32 @@ mod implementations
             }
         }
     }
+    mod swfjc
+    {
+        use super::*;
+        mod thermodynamics
+        {
+            use super::*;
+            mod isotensional
+            {
+                use super::*;
+                #[test]
+                fn access()
+                {
+                    let parameters = Parameters::default();
+                    let _ = SWFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.well_width_reference).thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference);
+                }
+                mod legendre
+                {
+                    use super::*;
+                    #[test]
+                    fn access()
+                    {
+                        let parameters = Parameters::default();
+                        let _ = SWFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.well_width_reference).thermodynamics.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference);
+                    }
+                }
+            }
+        }
+    }
 }
