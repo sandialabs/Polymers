@@ -15,7 +15,6 @@ use self::
         isotensional::Legendre as IsotensionalLegendre,
         modified_canonical::
         {
-            Asymptotic as ModifiedCanonicalAsymptotic,
             asymptotic::
             {
                 WeakPotential as ModifiedCanonicalAsymptoticWeakPotential,
