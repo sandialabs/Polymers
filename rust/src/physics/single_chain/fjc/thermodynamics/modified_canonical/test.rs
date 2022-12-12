@@ -1371,6 +1371,188 @@ mod weak_potential
         }
     }
     #[test]
+    fn gibbs_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.gibbs_free_energy(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature) - model.asymptotic.weak_potential.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) + model.asymptotic.weak_potential.gibbs_free_energy(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.gibbs_free_energy(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn gibbs_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.gibbs_free_energy_per_link(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature) - model.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) + model.asymptotic.weak_potential.gibbs_free_energy_per_link(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.gibbs_free_energy_per_link(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn relative_gibbs_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.relative_gibbs_free_energy(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature) - model.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) + model.asymptotic.weak_potential.relative_gibbs_free_energy(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.relative_gibbs_free_energy(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn relative_gibbs_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.relative_gibbs_free_energy_per_link(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature) - model.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) + model.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
+                    (model.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.relative_gibbs_free_energy_per_link(&((number_of_links as f64)*link_length*parameters.nondimensional_potential_distance_large_1), &potential_stiffness, &temperature)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_gibbs_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    (model.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) - model.nondimensional_gibbs_free_energy(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness, &temperature) - model.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) + model.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness, &temperature)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    (model.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) - model.nondimensional_gibbs_free_energy(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness, &temperature)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
     fn nondimensional_gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -1402,11 +1584,72 @@ mod weak_potential
             assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
             assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
             // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
-            // println!("nondimensional_gibbs_free_energy_per_link");
-            // println!("{:?}", residual_rel_1);
-            // println!("{:?}", residual_rel_2);
-            // println!("{:?}", log_log_slope);
-            // println!("");
+        }
+    }
+    #[test]
+    fn nondimensional_relative_gibbs_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    (model.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness) - model.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness) + model.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    (model.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_relative_gibbs_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = parameters.number_of_links_maximum - parameters.number_of_links_minimum;
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let residual_rel = |nondimensional_potential_stiffness|
+            {
+                let integrand_numerator = |nondimensional_potential_distance: f64|
+                {
+                    (model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy_per_link(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness) - model.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) + model.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness)).powf(2.0)
+                };
+                let integrand_denominator = |nondimensional_potential_distance: f64|
+                {
+                    (model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy_per_link(&parameters.nondimensional_potential_distance_large_1, &nondimensional_potential_stiffness)).powf(2.0)
+                };
+                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
+            // let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= (parameters.nondimensional_potential_stiffness_small).powf(2.0));
+            assert!(residual_rel_2.abs() <= (parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale).powf(2.0));
+            // assert!((log_log_slope/2.0 + 1.0).abs() <= parameters.log_log_tol);
         }
     }
 }
