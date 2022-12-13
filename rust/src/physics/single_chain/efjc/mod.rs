@@ -8,25 +8,25 @@ use self::
         isotensional::Legendre as IsotensionalLegendre,
     }
 };
-pub struct SWFJC
+pub struct EFJC
 {
     pub hinge_mass: f64,
     pub link_length: f64,
     pub number_of_links: u8,
-    pub well_width: f64,
-    pub thermodynamics: self::thermodynamics::SWFJC
+    pub link_stiffness: f64,
+    pub thermodynamics: self::thermodynamics::EFJC
 }
-impl SWFJC
+impl EFJC
 {
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> SWFJC
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> EFJC
     {
-        SWFJC
+        EFJC
         {
             hinge_mass,
             link_length,
             number_of_links,
-            well_width,
-            thermodynamics: self::thermodynamics::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
+            link_stiffness,
+            thermodynamics: self::thermodynamics::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
         }
     }
 }

@@ -1,5 +1,6 @@
 pub mod test;
 pub mod fjc;
+pub mod efjc;
 pub mod swfjc;
 use self::{
     fjc::{
