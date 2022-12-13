@@ -50,16 +50,16 @@ pub trait Legendre
 pub trait Asymptotic
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> Self;
-//    fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64;
-//    fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64;
-//    fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64;
-//    fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
-//    fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
-//    fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64;
-//    fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
+    fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64;
+    fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
 }
