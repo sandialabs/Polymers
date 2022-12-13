@@ -54,12 +54,12 @@ pub trait Asymptotic
 //    fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64;
 //    fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64;
 //    fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64;
-//    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
-//    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
-//    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64;
-//    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
+//    fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+//    fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+//    fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+//    fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+//    fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+//    fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+//    fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64;
+//    fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
 }
