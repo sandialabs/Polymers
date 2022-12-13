@@ -5,7 +5,7 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-pub static ZERO: f64 = 1e-6;
+use crate::physics::single_chain::fjc::ZERO;
 pub struct FJC
 {
     pub hinge_mass: f64,

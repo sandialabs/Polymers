@@ -1,7 +1,6 @@
 #![cfg(test)]
 use super::*;
 use crate::physics::single_chain::test::Parameters as DefaultParameters;
-use crate::physics::single_chain::fjc::thermodynamics::isotensional::legendre::ZERO;
 pub struct Parameters
 {
     pub abs_tol: f64,
