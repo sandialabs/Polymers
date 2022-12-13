@@ -91,14 +91,14 @@ impl Asymptotic for EFJC
 pub trait Legendre
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> Self;
-//    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
-//    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
-//    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
-//    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64;
-//    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64;
+    fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64;
+    fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
+    fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64;
 }
 pub trait Alternative
 {
