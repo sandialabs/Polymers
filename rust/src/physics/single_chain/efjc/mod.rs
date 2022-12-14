@@ -4,7 +4,7 @@ use self::
 {
     thermodynamics::
     {
-        Isotensional as Isotensional,
+        Isotensional,
         isotensional::Legendre as IsotensionalLegendre,
     }
 };

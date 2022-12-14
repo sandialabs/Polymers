@@ -7,9 +7,9 @@ use self::
 {
     thermodynamics::
     {
-        Isometric as Isometric,
-        Isotensional as Isotensional,
-        ModifiedCanonical as ModifiedCanonical,
+        Isometric,
+        Isotensional,
+        ModifiedCanonical,
         isometric::Legendre as IsometricLegendre,
         isotensional::Legendre as IsotensionalLegendre,
         modified_canonical::
