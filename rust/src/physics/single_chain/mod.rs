@@ -29,6 +29,13 @@ use self::{
             }
         }
     },
+    efjc::{
+        EFJC,
+        thermodynamics::{
+            Isotensional as EFJCIsotensional,
+            isotensional::Legendre as EFJCIsotensionalLegendre,
+        }
+    },
     swfjc::{
         SWFJC,
         thermodynamics::{
