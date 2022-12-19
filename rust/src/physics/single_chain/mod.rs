@@ -1,8 +1,16 @@
 pub mod test;
+pub mod ideal;
 pub mod fjc;
 pub mod efjc;
 pub mod swfjc;
 use self::{
+    ideal::{
+        Ideal,
+        thermodynamics::{
+            Isometric as IdealIsometric,
+            Isotensional as IdealIsotensional
+        }
+    },
     fjc::{
         FJC,
         thermodynamics::{
