@@ -17,6 +17,7 @@ pub struct EFJC
     pub link_stiffness: f64,
     pub number_of_links_f64: f64,
     pub contour_length: f64,
+    pub alternative: self::alternative::EFJC,
     pub reduced: self::reduced::EFJC
 }
 use super::Asymptotic;
@@ -32,6 +33,7 @@ impl Asymptotic for EFJC
             link_stiffness,
             number_of_links_f64: number_of_links as f64,
             contour_length: (number_of_links as f64)*link_length,
+            alternative: self::alternative::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
             reduced: self::reduced::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
         }
     }
