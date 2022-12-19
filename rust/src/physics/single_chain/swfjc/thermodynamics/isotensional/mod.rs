@@ -7,7 +7,6 @@ use crate::physics::
     BOLTZMANN_CONSTANT
 };
 use crate::physics::single_chain::fjc::ZERO;
-use self::legendre::SWFJC as SWFJCLegendre;
 pub struct SWFJC
 {
     pub hinge_mass: f64,
@@ -17,7 +16,7 @@ pub struct SWFJC
     pub number_of_links_f64: f64,
     pub contour_length: f64,
     pub nondimensional_well_parameter: f64,
-    pub legendre: SWFJCLegendre
+    pub legendre: self::legendre::SWFJC
 }
 use super::Isotensional;
 impl Isotensional for SWFJC
@@ -33,7 +32,7 @@ impl Isotensional for SWFJC
             number_of_links_f64: number_of_links as f64,
             contour_length: (number_of_links as f64)*link_length,
             nondimensional_well_parameter: 1.0 + well_width/link_length,
-            legendre: SWFJCLegendre::init(number_of_links, link_length, hinge_mass, well_width)
+            legendre: self::legendre::SWFJC::init(number_of_links, link_length, hinge_mass, well_width)
         }
     }
     fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64

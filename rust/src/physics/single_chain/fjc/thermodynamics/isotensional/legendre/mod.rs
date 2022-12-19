@@ -5,7 +5,7 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-pub static ZERO: f64 = 1e-6;
+use crate::physics::single_chain::fjc::ZERO;
 pub struct FJC
 {
     pub hinge_mass: f64,
@@ -30,19 +30,19 @@ impl Legendre for FJC
     }
     fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
+        self.nondimensional_helmholtz_free_energy(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
     fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_helmholtz_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
+        self.nondimensional_helmholtz_free_energy_per_link(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
     fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+        self.nondimensional_relative_helmholtz_free_energy(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
     fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_helmholtz_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+        self.nondimensional_relative_helmholtz_free_energy_per_link(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {

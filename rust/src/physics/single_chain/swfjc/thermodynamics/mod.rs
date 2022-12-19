@@ -10,7 +10,7 @@ pub struct SWFJC
     pub link_length: f64,
     pub number_of_links: u8,
     pub well_width: f64,
-    pub isotensional: isotensional::SWFJC,
+    pub isotensional: self::isotensional::SWFJC,
 }
 impl SWFJC
 {
@@ -22,7 +22,7 @@ impl SWFJC
             link_length,
             number_of_links,
             well_width,
-            isotensional: isotensional::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
+            isotensional: self::isotensional::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
         }
     }
 }

@@ -1,7 +1,16 @@
 pub mod test;
+pub mod ideal;
 pub mod fjc;
+pub mod efjc;
 pub mod swfjc;
 use self::{
+    ideal::{
+        Ideal,
+        thermodynamics::{
+            Isometric as IdealIsometric,
+            Isotensional as IdealIsotensional
+        }
+    },
     fjc::{
         FJC,
         thermodynamics::{
@@ -18,6 +27,13 @@ use self::{
                     StrongPotential as ModifiedCanonicalAsymptoticStrongPotential
                 }
             }
+        }
+    },
+    efjc::{
+        EFJC,
+        thermodynamics::{
+            Isotensional as EFJCIsotensional,
+            isotensional::Legendre as EFJCIsotensionalLegendre,
         }
     },
     swfjc::{
