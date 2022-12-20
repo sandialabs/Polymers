@@ -63,7 +63,7 @@ impl Isometric for FJC
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        -(self.equilibrium_distribution(&(nondimensional_end_to_end_length_per_link*self.contour_length))).ln() - (self.number_of_links_f64 - 1.0)*(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        -(self.equilibrium_distribution(&(nondimensional_end_to_end_length_per_link*self.contour_length))).ln() - (self.number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
@@ -79,7 +79,7 @@ impl Isometric for FJC
     }
     fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64
     {
-        self.nondimensional_equilibrium_distribution(&(end_to_end_length/self.contour_length))/self.contour_length.powf(3.0)
+        self.nondimensional_equilibrium_distribution(&(end_to_end_length/self.contour_length))/self.contour_length.powi(3)
     }
     fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {

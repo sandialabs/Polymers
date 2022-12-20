@@ -29,7 +29,7 @@ impl Isometric for Ideal
     }
     fn force(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
-        3.0*end_to_end_length*BOLTZMANN_CONSTANT*temperature/self.number_of_links_f64/self.link_length.powf(2.0)
+        3.0*end_to_end_length*BOLTZMANN_CONSTANT*temperature/self.number_of_links_f64/self.link_length.powi(2)
     }
     fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
@@ -53,27 +53,27 @@ impl Isometric for Ideal
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        1.5*self.number_of_links_f64*nondimensional_end_to_end_length_per_link.powf(2.0) - self.number_of_links_f64*(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        1.5*self.number_of_links_f64*nondimensional_end_to_end_length_per_link.powi(2) - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        1.5*nondimensional_end_to_end_length_per_link.powf(2.0) - (8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        1.5*nondimensional_end_to_end_length_per_link.powi(2) - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        1.5*self.number_of_links_f64*nondimensional_end_to_end_length_per_link.powf(2.0)
+        1.5*self.number_of_links_f64*nondimensional_end_to_end_length_per_link.powi(2)
     }
     fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        1.5*nondimensional_end_to_end_length_per_link.powf(2.0)
+        1.5*nondimensional_end_to_end_length_per_link.powi(2)
     }
     fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64
     {
-        (1.5/PI/self.number_of_links_f64/self.link_length.powf(2.0)).powf(1.5)*(-1.5*(end_to_end_length/self.link_length).powf(2.0)/self.number_of_links_f64).exp()
+        (1.5/PI/self.number_of_links_f64/self.link_length.powi(2)).powf(1.5)*(-1.5*(end_to_end_length/self.link_length).powi(2)/self.number_of_links_f64).exp()
     }
     fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        (1.5/PI*self.number_of_links_f64).powf(1.5)*(-1.5*nondimensional_end_to_end_length_per_link.powf(2.0)*self.number_of_links_f64).exp()
+        (1.5/PI*self.number_of_links_f64).powf(1.5)*(-1.5*nondimensional_end_to_end_length_per_link.powi(2)*self.number_of_links_f64).exp()
     }
     fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64
     {
@@ -81,6 +81,6 @@ impl Isometric for Ideal
     }
     fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        4.0*PI*nondimensional_end_to_end_length_per_link.powf(2.0)*(1.5/PI*self.number_of_links_f64).powf(1.5)*(-1.5*nondimensional_end_to_end_length_per_link.powf(2.0)*self.number_of_links_f64).exp()
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*(1.5/PI*self.number_of_links_f64).powf(1.5)*(-1.5*nondimensional_end_to_end_length_per_link.powi(2)*self.number_of_links_f64).exp()
     }
 }

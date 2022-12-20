@@ -119,7 +119,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force = model.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let force = model.force(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = &force/BOLTZMANN_CONSTANT/temperature*link_length - &nondimensional_force;
             let residual_rel = &residual_abs/&nondimensional_force;
@@ -144,7 +144,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let helmholtz_free_energy = model.helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = helmholtz_free_energy/BOLTZMANN_CONSTANT/temperature - nondimensional_helmholtz_free_energy;
             let residual_rel = residual_abs/nondimensional_helmholtz_free_energy;
@@ -169,7 +169,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_helmholtz_free_energy_per_link = model.nondimensional_helmholtz_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = helmholtz_free_energy_per_link/BOLTZMANN_CONSTANT/temperature - nondimensional_helmholtz_free_energy_per_link;
             let residual_rel = residual_abs/nondimensional_helmholtz_free_energy_per_link;
@@ -194,7 +194,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_helmholtz_free_energy = model.nondimensional_relative_helmholtz_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = relative_helmholtz_free_energy/BOLTZMANN_CONSTANT/temperature - nondimensional_relative_helmholtz_free_energy;
             let residual_rel = residual_abs/nondimensional_relative_helmholtz_free_energy;
@@ -219,7 +219,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_helmholtz_free_energy_per_link = model.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = relative_helmholtz_free_energy_per_link/BOLTZMANN_CONSTANT/temperature - nondimensional_relative_helmholtz_free_energy_per_link;
             let residual_rel = residual_abs/nondimensional_relative_helmholtz_free_energy_per_link;
@@ -247,7 +247,7 @@ mod per_link
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let helmholtz_free_energy = model.helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = helmholtz_free_energy/(number_of_links as f64) - helmholtz_free_energy_per_link;
@@ -271,7 +271,7 @@ mod per_link
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = relative_helmholtz_free_energy/(number_of_links as f64) - relative_helmholtz_free_energy_per_link;
@@ -343,7 +343,7 @@ mod relative
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let helmholtz_free_energy = model.helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let helmholtz_free_energy_0 = model.helmholtz_free_energy(&(ZERO*(number_of_links as f64)*link_length), &potential_stiffness, &temperature);
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature);
@@ -367,7 +367,7 @@ mod relative
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &potential_stiffness, &temperature);
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
@@ -438,7 +438,7 @@ mod zero
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(&(ZERO*(number_of_links as f64)*link_length), &potential_stiffness, &temperature);
             assert!(relative_helmholtz_free_energy_0.abs() <= BOLTZMANN_CONSTANT*temperature*(number_of_links as f64)*ZERO);
         }
@@ -456,7 +456,7 @@ mod zero
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powf(2.0)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_helmholtz_free_energy_per_link_0 = model.relative_helmholtz_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &potential_stiffness, &temperature);
             assert!(relative_helmholtz_free_energy_per_link_0.abs() <= BOLTZMANN_CONSTANT*temperature*ZERO);
         }
