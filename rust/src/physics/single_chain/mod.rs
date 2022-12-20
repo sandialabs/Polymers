@@ -33,7 +33,17 @@ use self::{
         EFJC,
         thermodynamics::{
             Isotensional as EFJCIsotensional,
-            isotensional::Legendre as EFJCIsotensionalLegendre,
+            isotensional::{
+                Legendre as EFJCIsotensionalLegendre,
+                Asymptotic as EFJCIsotensionalAsymptotic,
+                asymptotic::{
+                    Alternative as EFJCIsotensionalAsymptoticAlternative,
+                    Reduced as EFJCIsotensionalAsymptoticReduced,
+                    Legendre as EFJCIsotensionalAsymptoticLegendre,
+                    alternative::Legendre as EFJCIsotensionalAsymptoticAlternativeLegendre,
+                    reduced::Legendre as EFJCIsotensionalAsymptoticReducedLegendre
+                }
+            }
         }
     },
     swfjc::{

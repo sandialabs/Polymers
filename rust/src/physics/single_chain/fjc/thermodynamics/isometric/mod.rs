@@ -38,11 +38,11 @@ impl Isometric for FJC
     fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         let n = self.number_of_links as u128;
-        let p = self.number_of_links_f64 - 2.0;
+        let p: i32 = (self.number_of_links - 2).into();
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
-        let sum_0: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
-        let sum_1: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p - 1.0)).sum();
+        let sum_0: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powi(p)).sum();
+        let sum_1: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powi(p - 1)).sum();
         (1.0/nondimensional_end_to_end_length_per_link + (0.5*self.number_of_links_f64 - 1.0)*sum_1/sum_0)/self.number_of_links_f64
     }
     fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
@@ -63,7 +63,7 @@ impl Isometric for FJC
     }
     fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        -(self.equilibrium_distribution(&(nondimensional_end_to_end_length_per_link*self.contour_length))).ln() - (self.number_of_links_f64 - 1.0)*(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        -(self.equilibrium_distribution(&(nondimensional_end_to_end_length_per_link*self.contour_length))).ln() - (self.number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
@@ -79,15 +79,15 @@ impl Isometric for FJC
     }
     fn equilibrium_distribution(&self, end_to_end_length: &f64) -> f64
     {
-        self.nondimensional_equilibrium_distribution(&(end_to_end_length/self.contour_length))/self.contour_length.powf(3.0)
+        self.nondimensional_equilibrium_distribution(&(end_to_end_length/self.contour_length))/self.contour_length.powi(3)
     }
     fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         let n = self.number_of_links as u128;
-        let p = self.number_of_links_f64 - 2.0;
+        let p: i32 = (self.number_of_links - 2).into();
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
-        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powi(p)).sum();
         0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum
     }
     fn equilibrium_radial_distribution(&self, end_to_end_length: &f64) -> f64
@@ -97,10 +97,10 @@ impl Isometric for FJC
     fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         let n = self.number_of_links as u128;
-        let p = self.number_of_links_f64 - 2.0;
+        let p: i32 = (self.number_of_links - 2).into();
         let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
         let k = (self.number_of_links_f64*m).ceil() as u128;
-        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powf(p)).sum();
+        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powi(p)).sum();
         0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum
     }
 }

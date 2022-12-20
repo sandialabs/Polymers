@@ -49,11 +49,11 @@ impl Isotensional for FJC
     }
     fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.relative_gibbs_free_energy(force, temperature) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        self.relative_gibbs_free_energy(force, temperature) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.relative_gibbs_free_energy_per_link(force, temperature) - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        self.relative_gibbs_free_energy_per_link(force, temperature) - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
@@ -65,11 +65,11 @@ impl Isotensional for FJC
     }
     fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln() - self.number_of_links_f64*(8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln() - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        -(nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powf(2.0)*self.hinge_mass*self.link_length.powf(2.0)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powf(2.0)).ln()
+        -(nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64
     {

@@ -18,6 +18,7 @@ pub struct Parameters
     pub link_stiffness_reference: f64,
     pub link_stiffness_scale: f64,
     pub nondimensional_link_stiffness_large: f64,
+    pub nondimensional_link_stiffness_medium: f64,
     pub well_width_reference: f64,
     pub well_width_scale: f64,
     pub nondimensional_well_width_small: f64,
@@ -60,6 +61,7 @@ impl Default for Parameters
             link_stiffness_reference: 5e5,
             link_stiffness_scale: 99e4,
             nondimensional_link_stiffness_large: 1e4,
+            nondimensional_link_stiffness_medium: 1e1,
             well_width_reference: 99e-2,
             well_width_scale: 5e-1,
             nondimensional_well_width_small: 1e-2,
@@ -668,6 +670,109 @@ mod fjc
         }
     }
 }
+mod efjc
+{
+    use super::*;
+    mod ideal
+    {
+        use super::*;
+        use rand::Rng;
+        #[test]
+        fn end_to_end_length()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = parameters.number_of_links_maximum;
+                let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_stiffness = parameters.link_stiffness_scale;
+                let efjc = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let ideal = Ideal::init(number_of_links, link_length, hinge_mass);
+                let nondimensional_force = parameters.nondimensional_force_small*(1.0 - 0.5*rng.gen::<f64>());
+                let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                let force = BOLTZMANN_CONSTANT*temperature/link_length*nondimensional_force;
+                let end_to_end_length_efjc = efjc.thermodynamics.isotensional.end_to_end_length(&force, &temperature);
+                let end_to_end_length_ideal = ideal.thermodynamics.isotensional.end_to_end_length(&force, &temperature);
+                let residual_abs = &end_to_end_length_efjc - &end_to_end_length_ideal;
+                let residual_rel = &residual_abs/&end_to_end_length_ideal;
+                assert!(residual_rel.abs() <= parameters.rel_tol_thermodynamic_limit);
+                assert!(residual_rel.abs() <= nondimensional_force);
+            }
+        }
+        #[test]
+        fn end_to_end_length_per_link()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = parameters.number_of_links_maximum;
+                let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_stiffness = parameters.link_stiffness_scale;
+                let efjc = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let ideal = Ideal::init(number_of_links, link_length, hinge_mass);
+                let nondimensional_force = parameters.nondimensional_force_small*(1.0 - 0.5*rng.gen::<f64>());
+                let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                let force = BOLTZMANN_CONSTANT*temperature/link_length*nondimensional_force;
+                let end_to_end_length_per_link_efjc = efjc.thermodynamics.isotensional.end_to_end_length_per_link(&force, &temperature);
+                let end_to_end_length_per_link_ideal = ideal.thermodynamics.isotensional.end_to_end_length_per_link(&force, &temperature);
+                let residual_abs = &end_to_end_length_per_link_efjc - &end_to_end_length_per_link_ideal;
+                let residual_rel = &residual_abs/&end_to_end_length_per_link_ideal;
+                assert!(residual_rel.abs() <= parameters.rel_tol_thermodynamic_limit);
+                assert!(residual_rel.abs() <= nondimensional_force);
+            }
+        }
+        #[test]
+        fn nondimensional_end_to_end_length()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = parameters.number_of_links_maximum;
+                let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_stiffness = parameters.link_stiffness_scale;
+                let efjc = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let ideal = Ideal::init(number_of_links, link_length, hinge_mass);
+                let nondimensional_force = parameters.nondimensional_force_small*(1.0 - 0.5*rng.gen::<f64>());
+                let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                let nondimensional_end_to_end_length_efjc = efjc.thermodynamics.isotensional.nondimensional_end_to_end_length(&nondimensional_force, &temperature);
+                let nondimensional_end_to_end_length_ideal = ideal.thermodynamics.isotensional.nondimensional_end_to_end_length(&nondimensional_force);
+                let residual_abs = &nondimensional_end_to_end_length_efjc - &nondimensional_end_to_end_length_ideal;
+                let residual_rel = &residual_abs/&nondimensional_end_to_end_length_ideal;
+                assert!(residual_rel.abs() <= parameters.rel_tol_thermodynamic_limit);
+                assert!(residual_rel.abs() <= nondimensional_force);
+            }
+        }
+        #[test]
+        fn nondimensional_end_to_end_length_per_link()
+        {
+            let mut rng = rand::thread_rng();
+            let parameters = Parameters::default();
+            for _ in 0..parameters.number_of_loops
+            {
+                let number_of_links: u8 = parameters.number_of_links_maximum;
+                let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+                let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+                let link_stiffness = parameters.link_stiffness_scale;
+                let efjc = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let ideal = Ideal::init(number_of_links, link_length, hinge_mass);
+                let nondimensional_force = parameters.nondimensional_force_small*(1.0 - 0.5*rng.gen::<f64>());
+                let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+                let nondimensional_end_to_end_length_per_link_efjc = efjc.thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature);
+                let nondimensional_end_to_end_length_per_link_ideal = ideal.thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+                let residual_abs = &nondimensional_end_to_end_length_per_link_efjc - &nondimensional_end_to_end_length_per_link_ideal;
+                let residual_rel = &residual_abs/&nondimensional_end_to_end_length_per_link_ideal;
+                assert!(residual_rel.abs() <= parameters.rel_tol_thermodynamic_limit);
+                assert!(residual_rel.abs() <= nondimensional_force);
+            }
+        }
+    }
+}
 mod swfjc
 {
     use super::*;
@@ -965,6 +1070,94 @@ mod implementations
                         {
                             let parameters = Parameters::default();
                             let _ = FJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_potential_distance_reference, &parameters.nondimensional_potential_stiffness_reference);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    mod efjc
+    {
+        use super::*;
+        mod thermodynamics
+        {
+            use super::*;
+            mod isotensional
+            {
+                #[test]
+                fn access()
+                {
+                    let parameters = Parameters::default();
+                    let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                }
+                mod legendre
+                {
+                    use super::*;
+                    #[test]
+                    fn access()
+                    {
+                        let parameters = Parameters::default();
+                        let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                    }
+                }
+                use super::*;
+                mod asymptotic
+                {
+                    use super::*;
+                    #[test]
+                    fn access()
+                    {
+                        let parameters = Parameters::default();
+                        let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.asymptotic.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                    }
+                    mod legendre
+                    {
+                        use super::*;
+                        #[test]
+                        fn access()
+                        {
+                            let parameters = Parameters::default();
+                            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.asymptotic.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                        }
+                    }
+                    mod alternative
+                    {
+                        use super::*;
+                        #[test]
+                        fn access()
+                        {
+                            let parameters = Parameters::default();
+                            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.asymptotic.alternative.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                        }
+                        mod legendre
+                        {
+                            use super::*;
+                            #[test]
+                            fn access()
+                            {
+                                let parameters = Parameters::default();
+                                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.asymptotic.alternative.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                            }
+                        }
+                    }
+                    mod reduced
+                    {
+                        use super::*;
+                        #[test]
+                        fn access()
+                        {
+                            let parameters = Parameters::default();
+                            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.asymptotic.reduced.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                        }
+                        mod legendre
+                        {
+                            use super::*;
+                            #[test]
+                            fn access()
+                            {
+                                let parameters = Parameters::default();
+                                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).thermodynamics.isotensional.asymptotic.reduced.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+                            }
                         }
                     }
                 }

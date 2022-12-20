@@ -550,17 +550,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.end_to_end_length(&force, &temperature) - model.reduced.end_to_end_length(&force, &temperature)).powf(2.0)
+                        (model.end_to_end_length(&force, &temperature) - model.reduced.end_to_end_length(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.end_to_end_length(&force, &temperature).powf(2.0)
+                        model.end_to_end_length(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -587,17 +587,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.end_to_end_length_per_link(&force, &temperature) - model.reduced.end_to_end_length_per_link(&force, &temperature)).powf(2.0)
+                        (model.end_to_end_length_per_link(&force, &temperature) - model.reduced.end_to_end_length_per_link(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.end_to_end_length_per_link(&force, &temperature).powf(2.0)
+                        model.end_to_end_length_per_link(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -624,15 +624,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.reduced.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.reduced.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -659,15 +659,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -694,17 +694,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.gibbs_free_energy(&force, &temperature) - model.reduced.gibbs_free_energy(&force, &temperature)).powf(2.0)
+                        (model.gibbs_free_energy(&force, &temperature) - model.reduced.gibbs_free_energy(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.gibbs_free_energy(&force, &temperature).powf(2.0)
+                        model.gibbs_free_energy(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -731,17 +731,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.gibbs_free_energy_per_link(&force, &temperature) - model.reduced.gibbs_free_energy_per_link(&force, &temperature)).powf(2.0)
+                        (model.gibbs_free_energy_per_link(&force, &temperature) - model.reduced.gibbs_free_energy_per_link(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.gibbs_free_energy_per_link(&force, &temperature).powf(2.0)
+                        model.gibbs_free_energy_per_link(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -768,17 +768,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.relative_gibbs_free_energy(&force, &temperature) - model.reduced.relative_gibbs_free_energy(&force, &temperature)).powf(2.0)
+                        (model.relative_gibbs_free_energy(&force, &temperature) - model.reduced.relative_gibbs_free_energy(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.relative_gibbs_free_energy(&force, &temperature).powf(2.0)
+                        model.relative_gibbs_free_energy(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -805,17 +805,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.relative_gibbs_free_energy_per_link(&force, &temperature) - model.reduced.relative_gibbs_free_energy_per_link(&force, &temperature)).powf(2.0)
+                        (model.relative_gibbs_free_energy_per_link(&force, &temperature) - model.reduced.relative_gibbs_free_energy_per_link(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.relative_gibbs_free_energy_per_link(&force, &temperature).powf(2.0)
+                        model.relative_gibbs_free_energy_per_link(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -842,15 +842,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) - model.reduced.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) - model.reduced.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -877,15 +877,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -912,15 +912,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature) - model.reduced.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature) - model.reduced.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -947,15 +947,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -992,17 +992,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.end_to_end_length(&force, &temperature) - model.alternative.end_to_end_length(&force, &temperature)).powf(2.0)
+                        (model.end_to_end_length(&force, &temperature) - model.alternative.end_to_end_length(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.end_to_end_length(&force, &temperature).powf(2.0)
+                        model.end_to_end_length(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1029,17 +1029,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.end_to_end_length_per_link(&force, &temperature) - model.alternative.end_to_end_length_per_link(&force, &temperature)).powf(2.0)
+                        (model.end_to_end_length_per_link(&force, &temperature) - model.alternative.end_to_end_length_per_link(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.end_to_end_length_per_link(&force, &temperature).powf(2.0)
+                        model.end_to_end_length_per_link(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1066,15 +1066,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.alternative.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.alternative.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1101,15 +1101,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.alternative.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.alternative.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1136,17 +1136,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.gibbs_free_energy(&force, &temperature) - model.alternative.gibbs_free_energy(&force, &temperature)).powf(2.0)
+                        (model.gibbs_free_energy(&force, &temperature) - model.alternative.gibbs_free_energy(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.gibbs_free_energy(&force, &temperature).powf(2.0)
+                        model.gibbs_free_energy(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1173,17 +1173,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.gibbs_free_energy_per_link(&force, &temperature) - model.alternative.gibbs_free_energy_per_link(&force, &temperature)).powf(2.0)
+                        (model.gibbs_free_energy_per_link(&force, &temperature) - model.alternative.gibbs_free_energy_per_link(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.gibbs_free_energy_per_link(&force, &temperature).powf(2.0)
+                        model.gibbs_free_energy_per_link(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1210,17 +1210,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.relative_gibbs_free_energy(&force, &temperature) - model.alternative.relative_gibbs_free_energy(&force, &temperature)).powf(2.0)
+                        (model.relative_gibbs_free_energy(&force, &temperature) - model.alternative.relative_gibbs_free_energy(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.relative_gibbs_free_energy(&force, &temperature).powf(2.0)
+                        model.relative_gibbs_free_energy(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1247,17 +1247,17 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        (model.relative_gibbs_free_energy_per_link(&force, &temperature) - model.alternative.relative_gibbs_free_energy_per_link(&force, &temperature)).powf(2.0)
+                        (model.relative_gibbs_free_energy_per_link(&force, &temperature) - model.alternative.relative_gibbs_free_energy_per_link(&force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
                         let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
-                        model.relative_gibbs_free_energy_per_link(&force, &temperature).powf(2.0)
+                        model.relative_gibbs_free_energy_per_link(&force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1284,15 +1284,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) - model.alternative.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) - model.alternative.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1319,15 +1319,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.alternative.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.alternative.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1354,15 +1354,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature) - model.alternative.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature) - model.alternative.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature).powf(2.0)
+                        model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1389,15 +1389,15 @@ mod asymptotic
                 let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
                 let residual_rel = |nondimensional_link_stiffness|
                 {
-                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powf(2.0)*nondimensional_link_stiffness;
+                    let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                     let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
                     let integrand_numerator = |nondimensional_force: f64|
                     {
-                        (model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.alternative.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powf(2.0)
+                        (model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.alternative.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).powi(2)
                     };
                     let integrand_denominator = |nondimensional_force: f64|
                     {
-                        model.alternative.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powf(2.0)
+                        model.alternative.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature).powi(2)
                     };
                     let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
                     let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
@@ -1409,6 +1409,50 @@ mod asymptotic
                 assert!(residual_rel_1.abs() <= 2.0/parameters.nondimensional_link_stiffness_large);
                 assert!(residual_rel_2.abs() <= 2.0/parameters.nondimensional_link_stiffness_large/parameters.log_log_scale);
                 assert!((0.5*log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+            }
+        }
+    }
+}
+mod implementations
+{
+    use super::*;
+    mod alternative
+    {
+        use super::*;
+        #[test]
+        fn access()
+        {
+            let parameters = Parameters::default();
+            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).alternative.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+        }
+        mod legendre
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).alternative.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+            }
+        }
+    }
+    mod reduced
+    {
+        use super::*;
+        #[test]
+        fn access()
+        {
+            let parameters = Parameters::default();
+            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).reduced.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+        }
+        mod legendre
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).reduced.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
             }
         }
     }
