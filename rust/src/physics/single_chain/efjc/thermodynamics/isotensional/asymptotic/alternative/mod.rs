@@ -17,8 +17,8 @@ pub struct EFJC
     pub contour_length: f64,
     pub legendre: self::legendre::EFJC
 }
-use super::Reduced;
-impl Reduced for EFJC
+use super::Alternative;
+impl Alternative for EFJC
 {
     fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> EFJC
     {

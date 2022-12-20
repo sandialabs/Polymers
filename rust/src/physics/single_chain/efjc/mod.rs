@@ -1,18 +1,17 @@
 pub mod test;
 pub mod thermodynamics;
-use self::
+use self::thermodynamics::
 {
-    thermodynamics::
-    {
-        Isotensional,
-        isotensional::{
-            Legendre as IsotensionalLegendre,
-            asymptotic::{
-                Alternative as IsotensionalAsymptoticAlternative,
-                Reduced as IsotensionalAsymptoticReduced,
-                alternative::Legendre as IsotensionalAsymptoticAlternativeLegendre,
-                reduced::Legendre as IsotensionalAsymptoticReducedLegendre
-            }
+    Isotensional,
+    isotensional::{
+        Legendre as IsotensionalLegendre,
+        Asymptotic as IsotensionalAsymptotic,
+        asymptotic::{
+            Alternative as IsotensionalAsymptoticAlternative,
+            Reduced as IsotensionalAsymptoticReduced,
+            Legendre as IsotensionalAsymptoticLegendre,
+            alternative::Legendre as IsotensionalAsymptoticAlternativeLegendre,
+            reduced::Legendre as IsotensionalAsymptoticReducedLegendre
         }
     }
 };

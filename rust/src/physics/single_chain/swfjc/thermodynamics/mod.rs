@@ -1,9 +1,6 @@
 pub mod test;
 pub mod isotensional;
-use self::
-{
-    isotensional::Legendre as IsotensionalLegendre
-};
+use self::isotensional::Legendre as IsotensionalLegendre;
 pub struct SWFJC
 {
     pub hinge_mass: f64,

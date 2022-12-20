@@ -1,7 +1,7 @@
 pub mod test;
-pub mod legendre;
 pub mod alternative;
 pub mod reduced;
+pub mod legendre;
 use self::{
     alternative::Legendre as AlternativeLegendre,
     reduced::Legendre as ReducedLegendre
@@ -22,7 +22,8 @@ pub struct EFJC
     pub number_of_links_f64: f64,
     pub contour_length: f64,
     pub alternative: self::alternative::EFJC,
-    pub reduced: self::reduced::EFJC
+    pub reduced: self::reduced::EFJC,
+    pub legendre: self::legendre::EFJC
 }
 use super::Asymptotic;
 impl Asymptotic for EFJC
@@ -38,7 +39,8 @@ impl Asymptotic for EFJC
             number_of_links_f64: number_of_links as f64,
             contour_length: (number_of_links as f64)*link_length,
             alternative: self::alternative::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
-            reduced: self::reduced::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
+            reduced: self::reduced::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
+            legendre: self::legendre::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
         }
     }
     fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64

@@ -1413,3 +1413,47 @@ mod asymptotic
         }
     }
 }
+mod implementations
+{
+    use super::*;
+    mod alternative
+    {
+        use super::*;
+        #[test]
+        fn access()
+        {
+            let parameters = Parameters::default();
+            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).alternative.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+        }
+        mod legendre
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).alternative.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+            }
+        }
+    }
+    mod reduced
+    {
+        use super::*;
+        #[test]
+        fn access()
+        {
+            let parameters = Parameters::default();
+            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).reduced.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+        }
+        mod legendre
+        {
+            use super::*;
+            #[test]
+            fn access()
+            {
+                let parameters = Parameters::default();
+                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).reduced.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
+            }
+        }
+    }
+}
