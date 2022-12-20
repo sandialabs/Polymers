@@ -5,7 +5,15 @@ use self::
     thermodynamics::
     {
         Isotensional,
-        isotensional::Legendre as IsotensionalLegendre,
+        isotensional::{
+            Legendre as IsotensionalLegendre,
+            asymptotic::{
+                Alternative as IsotensionalAsymptoticAlternative,
+                Reduced as IsotensionalAsymptoticReduced,
+                alternative::Legendre as IsotensionalAsymptoticAlternativeLegendre,
+                reduced::Legendre as IsotensionalAsymptoticReducedLegendre
+            }
+        }
     }
 };
 pub struct EFJC

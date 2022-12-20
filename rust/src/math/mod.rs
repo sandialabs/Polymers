@@ -84,8 +84,7 @@ pub fn erfcx(x: &f64) -> f64
     {
         if x < &-26.7
         {
-            *x
-            // ???????????
+            f64::MAX
         }
         else if x < &-6.1
         {

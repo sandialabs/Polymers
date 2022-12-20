@@ -2,6 +2,10 @@ pub mod test;
 pub mod legendre;
 pub mod alternative;
 pub mod reduced;
+use self::{
+    alternative::Legendre as AlternativeLegendre,
+    reduced::Legendre as ReducedLegendre
+};
 use std::f64::consts::PI;
 use crate::physics::
 {
