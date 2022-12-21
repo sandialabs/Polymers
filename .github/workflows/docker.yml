@@ -2,13 +2,25 @@ name: Docker
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   release:
     types: [ published ]
 jobs:
-  latest:
-    if: github.event_name != 'release'
+  test:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/main')
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: push
+        uses: docker/build-push-action@v3.2.0
+        with:
+          push: false
+          tags: mrbuche/polymers:latest
+  latest:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v3
