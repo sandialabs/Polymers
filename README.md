@@ -1,7 +1,8 @@
 # Polymers Modeling Library
 
-[![Website](https://img.shields.io/badge/GitHub-website-6e5494?logo=github)](https://sandialabs.github.io/Polymers)
+[![Website](https://img.shields.io/badge/GitHub-pages-6e5494?logo=github)](https://sandialabs.github.io/Polymers)
 [![Discord](https://img.shields.io/badge/Discord-chat-%237289da.svg?logo=discord&color=5865F2&logoColor=FFFFFF)](https://discord.gg/yC6dbPuc)
+[![Codefactor](https://img.shields.io/codefactor/grade/github/sandialabs/polymers?label=Codefactor&logo=codefactor)](https://www.codefactor.io/repository/github/sandialabs/polymers)
 
 ## Citation
 

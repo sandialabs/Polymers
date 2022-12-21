@@ -2,7 +2,7 @@
 Polymers Modeling Library
 #########################
 
-|python| |rtd|
+|python| |rtd| |codecov|
 
 ************
 Installation
@@ -41,11 +41,14 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
 ..
     Badges ========================================================================
 
-.. |python| image:: https://img.shields.io/github/actions/workflow/status/sandialabs/polymers/python.yml?branch=main&label=Python&logo=github
+.. |python| image:: https://img.shields.io/github/actions/workflow/status/sandialabs/polymers/python.yml?branch=main&label=GitHub&logo=github
     :target: https://github.com/sandialabs/polymers/tree/main/python#readme
 
 .. |rtd| image:: https://img.shields.io/readthedocs/polymers?logo=readthedocs&label=Read%20the%20Docs
     :target: https://polymers.readthedocs.io/en/latest/
+
+.. |codecov| image:: https://img.shields.io/codecov/c/github/sandialabs/polymers?label=Codecov&logo=codecov
+    :target: https://codecov.io/gh/sandialabs/polymers
 
 .. |pypi| image:: https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE
     :target: https://pypi.org/project/polymers/

@@ -5,8 +5,21 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo "placeholder"
+      - name: install
+        working-directory: python/
+        run: pip install .[test]
+      - name: pylint
+        working-directory: python/
+        run: python -m pylint --output-format=text polymers | tee lint.log || pylint-exit $?
+      - name: pytest
+        working-directory: python/
+        run: python -m pytest --verbose --cov=polymers --cov-report xml
+      - name: codecov
+        uses: codecov/codecov-action@v2
+        with:
+          name: codecov-umbrella
+          verbose: true
