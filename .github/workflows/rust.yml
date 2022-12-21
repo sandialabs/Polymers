@@ -8,13 +8,21 @@ jobs:
   cargo:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
       - id: build
         run: cargo build --verbose
         working-directory: ./rust/
       - id: test
         run: cargo test --verbose
         working-directory: ./rust/
+      - name: rust-grcov
+        uses: actions-rs/grcov@v0.1.5
+      - name: codecov
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          name: codecov-umbrella
+          verbose: true
       - id: clippy
         run: cargo clippy --verbose
         working-directory: ./rust/
