@@ -21,7 +21,8 @@ jobs:
       - name: codecov
         uses: codecov/codecov-action@v3.1.1
         with:
-          name: codecov-umbrella
+          fail_ci_if_error: true
+          flag: rust
           verbose: true
       - id: clippy
         run: cargo clippy --verbose
