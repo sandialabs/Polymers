@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: cd polymers/
+      - run: cd python/
       - name: install
         run: pip install .[test]
       - name: pylint
