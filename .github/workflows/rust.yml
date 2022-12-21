@@ -16,8 +16,9 @@ jobs:
       - id: test
         run: cargo test --verbose
         working-directory: ./rust/
+      - name: hack
+        run: echo -e '[workspace]\nmembers = ["my-crate"]' > Cargo.toml
       - name: rust-grcov
-        working-directory: ./rust/
         uses: actions-rs/grcov@v0.1.5
       - name: codecov
         uses: codecov/codecov-action@v3.1.1
