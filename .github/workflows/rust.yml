@@ -17,6 +17,8 @@ jobs:
         run: cargo build --verbose
       - name: test
         run: cargo test --verbose
+      - name: hack
+        run: cp -r * ../
       - name: grcov
         uses: actions-rs/grcov@v0.1.5
       - name: codecov
