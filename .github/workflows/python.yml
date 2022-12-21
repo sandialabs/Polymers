@@ -7,17 +7,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./python/
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: install
-        working-directory: ./python/
         run: pip install .[test]
       - name: pylint
-        working-directory: ./python/
         run: python -m pylint --output-format=text polymers | tee lint.log || pylint-exit $?
       - name: pytest
-        working-directory: ./python/
         run: python -m pytest --verbose --cov=polymers --cov-report xml
       - name: codecov
         uses: codecov/codecov-action@v3.1.1

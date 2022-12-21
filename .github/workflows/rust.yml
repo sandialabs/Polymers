@@ -7,15 +7,16 @@ on:
 jobs:
   cargo:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./rust/
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: build
         run: cargo build --verbose
-        working-directory: ./rust/
       - name: test
         run: cargo test --verbose
-        working-directory: ./rust/
       - name: hack
         run: cp -r rust/* .
       - name: grcov
@@ -28,13 +29,9 @@ jobs:
           verbose: true
       - name: clippy
         run: cargo clippy --verbose
-        working-directory: ./rust/
       - name: bench
         run: cargo bench --verbose
-        working-directory: ./rust/
       - name: doc
         run: cargo doc --verbose
-        working-directory: ./rust/
       - name: package
         run: cargo package --verbose
-        working-directory: ./rust/
