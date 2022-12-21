@@ -10,12 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: install
-        run: |
-          cd python/
-          pip install .[test]
+        working-directory: python/
+        run: pip install .[test]
       - name: pylint
+        working-directory: python/
         run: python -m pylint --output-format=text polymers | tee lint.log || pylint-exit $?
       - name: pytest
+        working-directory: python/
         run: python -m pytest --verbose --cov=polymers --cov-report xml
       - name: codecov
         uses: codecov/codecov-action@v2
