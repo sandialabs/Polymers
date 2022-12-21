@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: cd python/
       - name: install
-        run: pip install .[test]
+        run: |
+          cd python/
+          pip install .[test]
       - name: pylint
         run: python -m pylint --output-format=text polymers | tee lint.log || pylint-exit $?
       - name: pytest
