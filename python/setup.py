@@ -42,7 +42,7 @@ setup(
                'jinja2>=3.0', 'nbsphinx', 'pycodestyle',
                'sphinx', 'sphinx-copybutton',
                'sphinx-rtd-theme', 'sphinxcontrib-bibtex'],
-      'testing': ['pycodestyle', 'pylint', 'pytest', 'pytest-cov'],
+      'test': ['pycodestyle', 'pylint', 'pytest', 'pytest-cov'],
       'all': ['docutils>=0.14,<0.20', 'ipykernel', 'ipython', 'jinja2>=3.0',
               'nbsphinx', 'pycodestyle', 'pylint', 'pytest', 'pytest-cov',
               'sphinx', 'sphinx-copybutton',
