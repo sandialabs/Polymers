@@ -1,0 +1,47 @@
+name: Docker
+on:
+  push:
+    branches: [ "main" ]
+  release:
+    types: [ published ]
+jobs:
+  latest:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/heads/main')
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: login
+        uses: docker/login-action@v2.1.0
+        with:
+          username: mrbuche
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: push
+        uses: docker/build-push-action@v3.2.0
+        with:
+          push: true
+          tags: mrbuche/polymers:latest
+  versioned:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+        with:
+          strip_v: true
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: login
+        uses: docker/login-action@v2.1.0
+        with:
+          username: mrbuche
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: push
+        uses: docker/build-push-action@v3.2.0
+        with:
+          push: true
+          tags: |
+            mrbuche/polymers:${{steps.tag.outputs.tag}}
+            mrbuche/polymers:latest
