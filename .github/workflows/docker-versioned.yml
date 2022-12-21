@@ -5,7 +5,7 @@ on:
       - '*'
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Get tag
         id: tag
@@ -26,7 +26,7 @@ jobs:
       - run: sleep 500s
   test:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     container: mrbuche/polymers
     steps:
       - run: echo "placeholder"

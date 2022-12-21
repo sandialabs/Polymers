@@ -4,26 +4,53 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+env:
+  CARGO_TERM_COLOR: always
 jobs:
-  cargo:
+  test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./rust/
     steps:
-      - uses: actions/checkout@v3
-      - id: build
-        run: cargo build --verbose
-        working-directory: ./rust/
-      - id: test
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: test
         run: cargo test --verbose
+        env:
+          CARGO_INCREMENTAL: '0'
+          RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
+          RUSTDOCFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
+      - name: hack
+        run: cp -r * ../
+      - name: grcov
+        uses: actions-rs/grcov@v0.1.5
+      - name: codecov
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          fail_ci_if_error: true
+          flags: rust
+          verbose: true
+  checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
         working-directory: ./rust/
-      - id: clippy
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: build
+        run: cargo build --verbose
+      - name: clippy
         run: cargo clippy --verbose
-        working-directory: ./rust/
-      - id: bench
+      - name: bench
         run: cargo bench --verbose
-        working-directory: ./rust/
-      - id: doc
+      - name: doc
         run: cargo doc --verbose
-        working-directory: ./rust/
-      - id: package
+      - name: package
         run: cargo package --verbose
-        working-directory: ./rust/
