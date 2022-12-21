@@ -38,17 +38,17 @@ pub fn approximate_inverse_langevin(x: &f64) -> f64
     (2.14234*x.powi(3) - 4.22785*x.powi(2) + 3.0*x)/(1.0 - x)/(0.71716*x.powi(3) - 0.41103*x.powi(2) - 0.39165*x + 1.0)
 }
 
-pub fn inverse_langevin(y: &f64, tol: f64) -> f64
-{
-    let mut x = approximate_inverse_langevin(y);
-    let mut residual_rel: f64 = 1.0;
-    while residual_rel.abs() > tol
-    {
-        x = 1.0/(1.0/x.tanh() - y);
-        residual_rel = 1.0/x.tanh() - 1.0/x - 1.0;
-    }
-    x
-}
+// pub fn inverse_langevin(y: &f64, tol: f64) -> f64
+// {
+//     let mut x = approximate_inverse_langevin(y);
+//     let mut residual_rel: f64 = 1.0;
+//     while residual_rel.abs() > tol
+//     {
+//         x = 1.0/(1.0/x.tanh() - y);
+//         residual_rel = 1.0/x.tanh() - 1.0/x - 1.0;
+//     }
+//     x
+// }
 
 pub fn erf(x: &f64) -> f64
 {

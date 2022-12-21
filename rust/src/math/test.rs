@@ -52,27 +52,27 @@ fn invert_sinh()
     }
 }
 
-mod inverse_langevin
-{
-    use rand::Rng;
-    use crate::math::inverse_langevin;
-    #[test]
-    #[ignore]
-    fn inverse()
-    {
-        let mut rng = rand::thread_rng();
-        for _ in 0..8888
-        {
-            let y = rng.gen::<f64>();
-            let x = inverse_langevin(&y, 1e-4);
-            let f = 1.0/x.tanh() - 1.0/x;
-            let residual_abs = &y - &f;
-            let residual_rel = &residual_abs/&y;
-            assert!(residual_abs.abs() <= 1e-4);
-            assert!(residual_rel.abs() <= 1e-4);
-        }
-    }
-}
+// mod inverse_langevin
+// {
+//     use rand::Rng;
+//     use crate::math::inverse_langevin;
+//     #[test]
+//     #[ignore]
+//     fn inverse()
+//     {
+//         let mut rng = rand::thread_rng();
+//         for _ in 0..8888
+//         {
+//             let y = rng.gen::<f64>();
+//             let x = inverse_langevin(&y, 1e-4);
+//             let f = 1.0/x.tanh() - 1.0/x;
+//             let residual_abs = &y - &f;
+//             let residual_rel = &residual_abs/&y;
+//             assert!(residual_abs.abs() <= 1e-4);
+//             assert!(residual_rel.abs() <= 1e-4);
+//         }
+//     }
+// }
 
 mod approximate_inverse_langevin
 {
