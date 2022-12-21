@@ -10,15 +10,15 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - id: build
+      - name: build
         run: cargo build --verbose
         working-directory: ./rust/
-      - id: test
+      - name: test
         run: cargo test --verbose
         working-directory: ./rust/
       - name: hack
-        run: echo -e '[workspace]\nmembers = ["my-crate"]' > Cargo.toml
-      - name: rust-grcov
+        run: cp -r rust/* .
+      - name: grcov
         uses: actions-rs/grcov@v0.1.5
       - name: codecov
         uses: codecov/codecov-action@v3.1.1
@@ -26,15 +26,15 @@ jobs:
           fail_ci_if_error: true
           flags: rust
           verbose: true
-      - id: clippy
+      - name: clippy
         run: cargo clippy --verbose
         working-directory: ./rust/
-      - id: bench
+      - name: bench
         run: cargo bench --verbose
         working-directory: ./rust/
-      - id: doc
+      - name: doc
         run: cargo doc --verbose
         working-directory: ./rust/
-      - id: package
+      - name: package
         run: cargo package --verbose
         working-directory: ./rust/
