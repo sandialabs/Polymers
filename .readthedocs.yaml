@@ -7,8 +7,10 @@ build:
     pre_create_environment:
       - cp -r python/* .
     post_build:
+      - ls -ltrah docs/source/_build/
+      - ls -ltrah docs/source/_build/html/
       - sed -i -e "s/ module</</g" docs/source/_build/html/*.html
-      - sed -i '/Built with/,/Docs<\/a>./d' docs/source/_build/html/*.html
+      - sed -i -e "/Built with/,/Docs<\/a>./d" docs/source/_build/html/*.html
 sphinx:
    configuration: docs/source/conf.py
 python:
