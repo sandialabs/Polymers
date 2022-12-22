@@ -6,11 +6,6 @@ build:
   jobs:
     pre_create_environment:
       - cp -r python/* .
-    pre_build:
-      - PYLINT_SCORE=$(python -m pylint --output-format=text polymers | grep "Your code has been rated at" | cut -d / -f1 | rev | cut -d " " -f1 | rev)
-      - curl "https://img.shields.io/badge/Pylint-${PYLINT_SCORE}-brightgreen?logo=python&logoColor=FBE072" -o pylint.svg
-    post_build:
-      - mv pylint.svg docs/source/_build/html/_static/
 sphinx:
    configuration: docs/source/conf.py
 python:
