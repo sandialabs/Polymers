@@ -9,7 +9,7 @@ build:
       - ls -ltrah
     post_build:
       - sed -i -e "s/ module</</g" docs/build/html/**.html
-	    - sed -i '/Built with/,/Docs<\/a>./d' docs/build/html/**.html
+      - sed -i '/Built with/,/Docs<\/a>./d' docs/build/html/**.html
 sphinx:
    configuration: python/docs/source/conf.py
 python:
