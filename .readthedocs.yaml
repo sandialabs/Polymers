@@ -5,15 +5,18 @@ build:
     python: "3.11"
   jobs:
     pre_create_environment:
-      - cd python/
+      - cp -r python/* .
+    pre_build:
+      - PYLINT_SCORE=$(python -m pylint --output-format=text polymers | grep "Your code has been rated at" | cut -d / -f1 | rev | cut -d " " -f1 | rev)
+      - curl "https://img.shields.io/badge/Pylint-${PYLINT_SCORE}-brightgreen?logo=python&logoColor=FBE072" -o pylint.svg
     post_build:
-      - pwd
-      - ls -ltrah
+      - test -d docs/source/_build/html/_images/ || mkdir -p docs/source/_build/html/_images/
+      - mv pylint.svg docs/source/_build/html/_images/
 sphinx:
-   configuration: python/docs/source/conf.py
+   configuration: docs/source/conf.py
 python:
    install:
    - method: pip
      path: .
      extra_requirements:
-       - docs
+       - all
