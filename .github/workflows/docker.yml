@@ -41,7 +41,7 @@ jobs:
           push: true
           tags: |
             mrbuche/polymers:latest
-            ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
+            ghcr.io/sandialabs/polymers:latest
   versioned:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -71,5 +71,5 @@ jobs:
           tags: |
             mrbuche/polymers:${{steps.tag.outputs.tag}}
             mrbuche/polymers:latest
-            ghcr.io/${{ github.actor }}/${{ github.repository }}:${{steps.tag.outputs.tag}}
-            ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
+            ghcr.io/sandialabs/polymers:${{steps.tag.outputs.tag}}
+            ghcr.io/sandialabs/polymers:latest
