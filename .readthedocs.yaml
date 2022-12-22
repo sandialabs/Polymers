@@ -9,11 +9,11 @@ build:
     pre_build:
       - PYLINT_SCORE=$(python -m pylint --output-format=text polymers | grep "Your code has been rated at" | cut -d / -f1 | rev | cut -d " " -f1 | rev)
       - >
-        if (( $(echo "${PYLINT_SCORE} >= 8.0" | bc -l) )); then
+        if [[ ${PYLINT_SCORE} > 8 ]]; then
           COLOR=brightgreen
-        elif (( $(echo "${PYLINT_SCORE} >= 4.0" | bc -l) )); then
+        elif [[ ${PYLINT_SCORE} > 4 ]]; then
           COLOR=yellow
-        elif (( $(echo "${PYLINT_SCORE} >= 2.0" | bc -l) )); then
+        elif [[ ${PYLINT_SCORE} > 2 ]]; then
           COLOR=orange
         else
           COLOR=red
