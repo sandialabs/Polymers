@@ -20,7 +20,7 @@ jobs:
       - name: pytest
         run: python -m pytest --verbose --cov=polymers --cov-report xml
       - name: codecov
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
           flags: python
