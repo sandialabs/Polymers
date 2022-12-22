@@ -4,8 +4,6 @@
 
 import unittest
 
-from .. import *
-
 
 class Dummy(unittest.TestCase):
     """Class for dummy tests.
