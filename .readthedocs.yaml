@@ -4,7 +4,7 @@ build:
   tools:
     python: "3.11"
   jobs:
-    pre_create_environment:
+    pre_build:
       - cp -r python/* .
       - python -m pylint --output-format=text polymers | tee pylint.log || pylint-exit $?
       - PYLINT_SCORE=$(sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' pylint.log)
