@@ -20,12 +20,8 @@ build:
       #     COLOR=red
       #   fi
       # - curl "https://img.shields.io/badge/Pylint-${PYLINT_SCORE}-${COLOR}?logo=python&logoColor=FBE072" -o pylint.svg
-    post_build:
-      # - mv pylint.svg docs/source/_build/html/
-      - cat docs/source/_build/html/index.html
-      - sed -i -e "s/ module</</g" docs/source/_build/html/*.html
-      - sed -i -e "/Built with/,/Docs<\/a>./d" docs/source/_build/html/*.html
-      - cat docs/source/_build/html/index.html
+    # post_build:
+    #   - mv pylint.svg docs/source/_build/html/
 sphinx:
    configuration: docs/source/conf.py
 python:
@@ -33,4 +29,4 @@ python:
    - method: pip
      path: .
      extra_requirements:
-       - docs
+       - all
