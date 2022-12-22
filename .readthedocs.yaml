@@ -6,11 +6,25 @@ build:
   jobs:
     pre_create_environment:
       - cp -r python/* .
+      - python -m pylint --output-format=text polymers | tee pylint.log || pylint-exit $?
+      - PYLINT_SCORE=$(sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' pylint.log)
+      - >
+        if (( $(echo "${PYLINT_SCORE} >= 8.0" | bc -l) )); then
+          COLOR=brightgreen
+        elif (( $(echo "${PYLINT_SCORE} >= 4.0" | bc -l) )); then
+          COLOR=yellow
+        elif (( $(echo "${PYLINT_SCORE} >= 2.0" | bc -l) )); then
+          COLOR=orange
+        else
+          COLOR=red
+        fi
+      - curl "https://img.shields.io/badge/Pylint-${PYLINT_SCORE}-${COLOR}?logo=python&logoColor=FBE072" -o pylint.svg
     post_build:
-      - ls -ltrah docs/source/_build/
-      - ls -ltrah docs/source/_build/html/
+      - mv pylint.svg docs/source/_build/html/
+      - cat docs/source/_build/html/index.html
       - sed -i -e "s/ module</</g" docs/source/_build/html/*.html
       - sed -i -e "/Built with/,/Docs<\/a>./d" docs/source/_build/html/*.html
+      - cat docs/source/_build/html/index.html
 sphinx:
    configuration: docs/source/conf.py
 python:
