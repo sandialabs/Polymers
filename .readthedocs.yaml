@@ -8,16 +8,7 @@ build:
       - cp -r python/* .
     pre_build:
       - PYLINT_SCORE=$(python -m pylint --output-format=text polymers | grep "Your code has been rated at" | cut -d / -f1 | rev | cut -d " " -f1 | rev)
-      - >
-        if [[ ${PYLINT_SCORE} > 8 ]]; then
-          COLOR=brightgreen;
-        elif [[ ${PYLINT_SCORE} > 4 ]]; then
-          COLOR=yellow;
-        elif [[ ${PYLINT_SCORE} > 2 ]]; then
-          COLOR=orange;
-        else
-          COLOR=red;
-        fi
+      - if [[ ${PYLINT_SCORE} > 8 ]]; then COLOR=brightgreen; elif [[ ${PYLINT_SCORE} > 4 ]]; then COLOR=yellow; elif [[ ${PYLINT_SCORE} > 2 ]]; then COLOR=orange; else COLOR=red; fi
       - curl "https://img.shields.io/badge/Pylint-${PYLINT_SCORE}-${COLOR}?logo=python&logoColor=FBE072" -o pylint.svg
     post_build:
       - mv pylint.svg docs/source/_build/html/
