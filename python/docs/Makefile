@@ -21,5 +21,5 @@ help:
 
 html:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	sed -i 's/\ module</</g' build/html/*.html
+	sed -i 's/ module</</g' build/html/*.html
 	sed -i '/Built with/,/Docs<\/a>./d' build/html/*.html
