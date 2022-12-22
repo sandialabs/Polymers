@@ -34,7 +34,7 @@ jobs:
       - name: grcov
         uses: actions-rs/grcov@v0.1.5
       - name: codecov
-        uses: codecov/codecov-action@v3.1.1
+        uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
           flags: rust
