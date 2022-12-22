@@ -9,7 +9,7 @@ class Dummy(unittest.TestCase):
     """Class for dummy tests.
 
     """
-    def test_zero_inverse(self):
+    def test_dummy(self):
         """Function for dummy test.
 
         """
