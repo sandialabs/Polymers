@@ -8,8 +8,9 @@ build:
       - cp -r python/* .
     post_build:
       - ls -ltrah docs/
-      - ls -ltrah build/
-      - ls -ltrah _build/
+      - ls -ltrah docs/source/
+      - find / -type d -name "_build"
+      - find / -type d -name "html"
       # - sed -i -e "s/ module</</g" docs/_build/html/**.html
       # - sed -i '/Built with/,/Docs<\/a>./d' docs/_build/html/**.html
 sphinx:
