@@ -1,10 +1,6 @@
 pub mod test;
 use std::f64::consts::PI;
-use crate::math::
-{
-    approximate_inverse_langevin,
-    integrate
-};
+use crate::math::integrate;
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -53,11 +49,12 @@ impl Legendre for FJC
     }
     fn force(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
-        approximate_inverse_langevin(&(end_to_end_length/self.contour_length))*BOLTZMANN_CONSTANT*temperature/self.link_length
+        let nondimensional_end_to_end_length_per_link = end_to_end_length/self.contour_length;
+        BOLTZMANN_CONSTANT*temperature/self.link_length*(2.14234*nondimensional_end_to_end_length_per_link.powi(3) - 4.22785*nondimensional_end_to_end_length_per_link.powi(2) + 3.0*nondimensional_end_to_end_length_per_link)/(1.0 - nondimensional_end_to_end_length_per_link)/(0.71716*nondimensional_end_to_end_length_per_link.powi(3) - 0.41103*nondimensional_end_to_end_length_per_link.powi(2) - 0.39165*nondimensional_end_to_end_length_per_link + 1.0)
     }
     fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
-        approximate_inverse_langevin(nondimensional_end_to_end_length_per_link)
+        (2.14234*nondimensional_end_to_end_length_per_link.powi(3) - 4.22785*nondimensional_end_to_end_length_per_link.powi(2) + 3.0*nondimensional_end_to_end_length_per_link)/(1.0 - nondimensional_end_to_end_length_per_link)/(0.71716*nondimensional_end_to_end_length_per_link.powi(3) - 0.41103*nondimensional_end_to_end_length_per_link.powi(2) - 0.39165*nondimensional_end_to_end_length_per_link + 1.0)
     }
     fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
