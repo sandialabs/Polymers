@@ -35,8 +35,8 @@ impl Legendre for FJC
             contour_length: (number_of_links as f64)*link_length,
             normalization_nondimensional_equilibrium_distribution: 1.0
         };
-        let integrand = |nondimensional_end_to_end_length_per_link: f64| temporary_model.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link);
-        let normalization = integrate(integrand, &ZERO, &ONE, &POINTS);
+        let dx = (ONE - ZERO)/(POINTS as f64);
+        let normalization = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| temporary_model.nondimensional_equilibrium_radial_distribution(&(ZERO + (0.5 + *index as f64)*dx))).sum::<f64>()*dx;
         FJC
         {
             hinge_mass,
