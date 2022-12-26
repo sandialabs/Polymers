@@ -1,6 +1,55 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::test::Parameters;
+pub struct Parameters
+{
+    pub abs_tol: f64,
+    pub rel_tol: f64,
+    pub log_log_tol: f64,
+    pub log_log_scale: f64,
+    pub number_of_loops: u32,
+    pub hinge_mass_reference: f64,
+    pub hinge_mass_scale: f64,
+    pub link_length_reference: f64,
+    pub link_length_scale: f64,
+    pub number_of_links_minimum: u8,
+    pub number_of_links_maximum: u8,
+    pub link_stiffness_reference: f64,
+    pub link_stiffness_scale: f64,
+    pub nondimensional_link_stiffness_large: f64,
+    pub nondimensional_link_stiffness_medium: f64,
+    pub nondimensional_force_reference: f64,
+    pub nondimensional_force_scale: f64,
+    pub temperature_reference: f64,
+    pub temperature_scale: f64,
+}
+impl Default for Parameters
+{
+    fn default() -> Self
+    {
+        Self
+        {
+            number_of_loops: 888,
+            abs_tol: 1e-8,
+            rel_tol: 1e-6,
+            log_log_tol: 5e-2,
+            log_log_scale: 12e-1,
+            hinge_mass_reference: 1e0,
+            hinge_mass_scale: 1e0,
+            link_length_reference: 1e0,
+            link_length_scale: 1e0,
+            number_of_links_minimum: 5,
+            number_of_links_maximum: 25,
+            link_stiffness_reference: 5e5,
+            link_stiffness_scale: 99e4,
+            nondimensional_link_stiffness_large: 1e4,
+            nondimensional_link_stiffness_medium: 1e1,
+            nondimensional_force_reference: 5e1,
+            nondimensional_force_scale: 1e2,
+            temperature_reference: 3e2,
+            temperature_scale: 1e2,
+        }
+    }
+}
 mod base
 {
     use super::*;

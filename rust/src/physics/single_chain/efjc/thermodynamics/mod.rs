@@ -1,5 +1,12 @@
 pub mod test;
 pub mod isotensional;
+use super::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT,
+    ZERO,
+    POINTS
+};
 use self::isotensional::{
     Legendre as IsotensionalLegendre,
     Asymptotic as IsotensionalAsymptotic,

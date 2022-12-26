@@ -1,6 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::efjc::thermodynamics::isotensional::test::Parameters;
+use super::super::super::super::super::super::test::Parameters;
 mod base
 {
     use super::*;

@@ -3,6 +3,13 @@ pub mod ideal;
 pub mod fjc;
 pub mod efjc;
 pub mod swfjc;
+use super::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT,
+    ZERO,
+    POINTS
+};
 use self::{
     ideal::{
         Ideal,

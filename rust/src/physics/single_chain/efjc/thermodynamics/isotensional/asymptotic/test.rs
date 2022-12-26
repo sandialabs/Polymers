@@ -1,6 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::efjc::thermodynamics::isotensional::test::Parameters;
+use super::super::super::super::test::Parameters;
 mod base
 {
     use super::*;
@@ -533,10 +533,6 @@ mod asymptotic
         use super::*;
         use rand::Rng;
         use crate::physics::single_chain::test::integrate;
-        use crate::physics::single_chain::fjc::{
-            ZERO,
-            POINTS
-        };
         #[test]
         fn end_to_end_length()
         {
@@ -975,10 +971,6 @@ mod asymptotic
         use super::*;
         use rand::Rng;
         use crate::physics::single_chain::test::integrate;
-        use crate::physics::single_chain::fjc::{
-            ZERO,
-            POINTS
-        };
         #[test]
         fn end_to_end_length()
         {

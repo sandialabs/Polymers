@@ -6,7 +6,7 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::single_chain::fjc::
+use crate::physics::
 {
     ONE,
     ZERO,

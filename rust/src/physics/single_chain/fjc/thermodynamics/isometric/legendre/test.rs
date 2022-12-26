@@ -510,7 +510,7 @@ mod relative
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::fjc::ZERO;
+    use crate::physics::ZERO;
     #[test]
     fn helmholtz_free_energy()
     {
@@ -688,7 +688,7 @@ mod zero
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::fjc::ZERO;
+    use crate::physics::ZERO;
     #[test]
     fn force()
     {

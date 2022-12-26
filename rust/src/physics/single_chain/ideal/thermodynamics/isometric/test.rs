@@ -101,7 +101,7 @@ mod normalization
     use super::*;
     use rand::Rng;
     use crate::physics::single_chain::test::integrate;
-    use crate::physics::single_chain::fjc::POINTS;
+    use crate::physics::POINTS;
     #[test]
     fn equilibrium_distribution()
     {

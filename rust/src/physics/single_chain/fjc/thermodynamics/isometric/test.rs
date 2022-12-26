@@ -101,7 +101,7 @@ mod normalization
     use super::*;
     use rand::Rng;
     use crate::physics::single_chain::test::integrate;
-    use crate::physics::single_chain::fjc::
+    use crate::physics::
     {
         ONE,
         ZERO,
@@ -381,7 +381,7 @@ mod relative
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::fjc::ZERO;
+    use crate::physics::ZERO;
     #[test]
     fn helmholtz_free_energy()
     {
@@ -473,7 +473,7 @@ mod zero
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::fjc::ZERO;
+    use crate::physics::ZERO;
     #[test]
     fn relative_helmholtz_free_energy()
     {

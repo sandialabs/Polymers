@@ -894,7 +894,7 @@ mod strong_potential
     use super::*;
     use rand::Rng;
     use crate::physics::single_chain::test::integrate;
-    use crate::physics::single_chain::fjc::{
+    use crate::physics::{
         ZERO,
         POINTS
     };
