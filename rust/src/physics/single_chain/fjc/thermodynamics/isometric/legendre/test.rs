@@ -62,6 +62,7 @@ mod normalization
 {
     use super::*;
     use rand::Rng;
+    use crate::physics::single_chain::test::integrate;
     #[test]
     fn equilibrium_distribution()
     {

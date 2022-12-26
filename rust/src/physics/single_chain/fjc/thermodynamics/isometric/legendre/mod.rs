@@ -1,6 +1,5 @@
 pub mod test;
 use std::f64::consts::PI;
-use crate::math::integrate;
 use crate::physics::
 {
     PLANCK_CONSTANT,

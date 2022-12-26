@@ -1,7 +1,6 @@
 pub mod test;
 pub mod asymptotic;
 use std::f64::consts::PI;
-use crate::math::integrate;
 use crate::physics::
 {
     PLANCK_CONSTANT,

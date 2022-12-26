@@ -541,7 +541,7 @@ mod modified_canonical
     {
         use super::*;
         use rand::Rng;
-        use crate::math::integrate;
+        use crate::physics::single_chain::test::integrate;
         use crate::physics::single_chain::fjc::{
             ZERO,
             POINTS
@@ -743,7 +743,7 @@ mod modified_canonical
     {
         use super::*;
         use rand::Rng;
-        use crate::math::integrate;
+        use crate::physics::single_chain::test::integrate;
         use crate::physics::single_chain::fjc::POINTS;
         #[test]
         fn end_to_end_length()
@@ -1203,7 +1203,7 @@ mod modified_canonical
         {
             use super::*;
             use rand::Rng;
-            use crate::math::integrate;
+            use crate::physics::single_chain::test::integrate;
             use crate::physics::single_chain::fjc::{
                 ZERO,
                 POINTS
@@ -1504,7 +1504,7 @@ mod modified_canonical
         {
             use super::*;
             use rand::Rng;
-            use crate::math::integrate;
+            use crate::physics::single_chain::test::integrate;
             use crate::physics::single_chain::fjc::POINTS;
             #[test]
             fn end_to_end_length()

@@ -579,7 +579,7 @@ mod asymptotic
 {
     use super::*;
     use rand::Rng;
-    use crate::math::integrate;
+    use crate::physics::single_chain::test::integrate;
     use crate::physics::single_chain::fjc::{
         ZERO,
         POINTS
