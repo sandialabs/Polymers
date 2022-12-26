@@ -529,7 +529,7 @@ mod asymptotic
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::test::integrate;
+    use super::super::super::super::test::integrate;
     #[test]
     fn end_to_end_length()
     {
