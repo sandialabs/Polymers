@@ -9,7 +9,7 @@ use self::asymptotic::{
     reduced::Legendre as AsymptoticReducedLegendre
 };
 use std::f64::consts::PI;
-use crate::math::erf;
+use super::erf;
 use crate::physics::
 {
     PLANCK_CONSTANT,
