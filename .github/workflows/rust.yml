@@ -32,7 +32,7 @@ jobs:
       - name: hack
         run: cp -r * ../
       - name: grcov
-        uses: actions-rs/grcov@v0.1.5
+        uses: actions-rs/grcov@v0.1.6
       - name: codecov
         uses: codecov/codecov-action@v3
         with:
