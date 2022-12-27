@@ -100,12 +100,12 @@ mod normalization
 {
     use super::*;
     use rand::Rng;
-    use crate::math::integrate;
-    use crate::physics::single_chain::fjc::
+    use crate::physics::single_chain::
     {
         ONE,
         ZERO,
-        POINTS
+        POINTS,
+        test::integrate
     };
     #[test]
     fn equilibrium_distribution()
@@ -381,7 +381,7 @@ mod relative
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::fjc::ZERO;
+    use crate::physics::single_chain::ZERO;
     #[test]
     fn helmholtz_free_energy()
     {
@@ -473,7 +473,7 @@ mod zero
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::fjc::ZERO;
+    use crate::physics::single_chain::ZERO;
     #[test]
     fn relative_helmholtz_free_energy()
     {

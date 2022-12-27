@@ -9,5 +9,11 @@ keywords = ["python", "rust", "polymers"]
 [lib]
 crate-type = ["staticlib", "cdylib"]
 
+[features]
+python = ["dep:pyo3"]
+
+[dependencies]
+pyo3 = { version = "0.17.3", features = ["extension-module"] , optional = true }
+
 [dev-dependencies]
 rand = "0.8.5"

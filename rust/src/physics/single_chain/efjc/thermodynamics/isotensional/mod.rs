@@ -1,6 +1,18 @@
 pub mod test;
 pub mod asymptotic;
 pub mod legendre;
+use crate::physics::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT,
+    single_chain::
+    {
+        ZERO,
+        POINTS
+    }
+};
+use super::erf;
+use std::f64::consts::PI;
 use self::asymptotic::{
     Alternative as AsymptoticAlternative,
     Reduced as AsymptoticReduced,
@@ -8,14 +20,6 @@ use self::asymptotic::{
     alternative::Legendre as AsymptoticAlternativeLegendre,
     reduced::Legendre as AsymptoticReducedLegendre
 };
-use std::f64::consts::PI;
-use crate::math::erf;
-use crate::physics::
-{
-    PLANCK_CONSTANT,
-    BOLTZMANN_CONSTANT
-};
-use crate::physics::single_chain::fjc::ZERO;
 pub struct EFJC
 {
     pub hinge_mass: f64,

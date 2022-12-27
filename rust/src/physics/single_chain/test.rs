@@ -1,6 +1,12 @@
 #![cfg(test)]
 use super::*;
 use crate::physics::BOLTZMANN_CONSTANT;
+pub fn integrate<F>(function: F, lower_lim: &f64, upper_lim: &f64, num_points: &u128) -> f64
+where F: Fn(f64) -> f64
+{
+    let dx = (upper_lim - lower_lim)/(*num_points as f64);
+    (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| function(lower_lim + (0.5 + *index as f64)*dx)).sum::<f64>()*dx
+}
 pub struct Parameters
 {
     pub abs_tol: f64,
@@ -74,8 +80,8 @@ impl Default for Parameters
             nondimensional_potential_distance_reference: 1e0,
             nondimensional_potential_distance_scale: 2e0,
             nondimensional_potential_distance_small: 25e-2,
-            nondimensional_potential_distance_large_1: 1e0,
-            nondimensional_potential_distance_large_2: 1e1,
+            nondimensional_potential_distance_large_1: 1e1,
+            nondimensional_potential_distance_large_2: 1e1 + 25e-1,
             nondimensional_potential_stiffness_reference: 5e1,
             nondimensional_potential_stiffness_scale: 1e2,
             nondimensional_potential_stiffness_small: 1e-2,

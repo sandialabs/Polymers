@@ -1,12 +1,12 @@
 pub mod test;
-use std::f64::consts::PI;
-use crate::math::erf;
 use crate::physics::
 {
     PLANCK_CONSTANT,
-    BOLTZMANN_CONSTANT
+    BOLTZMANN_CONSTANT,
+    single_chain::ZERO
 };
-use crate::physics::single_chain::fjc::ZERO;
+use super::erf;
+use std::f64::consts::PI;
 pub struct EFJC
 {
     pub hinge_mass: f64,

@@ -2,17 +2,21 @@ pub mod test;
 pub mod alternative;
 pub mod reduced;
 pub mod legendre;
+use crate::physics::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT,
+    single_chain::
+    {
+        ZERO,
+        POINTS
+    }
+};
+use std::f64::consts::PI;
 use self::{
     alternative::Legendre as AlternativeLegendre,
     reduced::Legendre as ReducedLegendre
 };
-use std::f64::consts::PI;
-use crate::physics::
-{
-    PLANCK_CONSTANT,
-    BOLTZMANN_CONSTANT
-};
-use crate::physics::single_chain::fjc::ZERO;
 pub struct EFJC
 {
     pub hinge_mass: f64,
