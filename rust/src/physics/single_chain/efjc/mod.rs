@@ -1,20 +1,5 @@
 pub mod test;
 pub mod thermodynamics;
-use self::thermodynamics::
-{
-    Isotensional,
-    isotensional::{
-        Legendre as IsotensionalLegendre,
-        Asymptotic as IsotensionalAsymptotic,
-        asymptotic::{
-            Alternative as IsotensionalAsymptoticAlternative,
-            Reduced as IsotensionalAsymptoticReduced,
-            Legendre as IsotensionalAsymptoticLegendre,
-            alternative::Legendre as IsotensionalAsymptoticAlternativeLegendre,
-            reduced::Legendre as IsotensionalAsymptoticReducedLegendre
-        }
-    }
-};
 pub struct EFJC
 {
     pub hinge_mass: f64,

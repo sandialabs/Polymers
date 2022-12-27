@@ -1,13 +1,5 @@
 pub mod test;
 pub mod thermodynamics;
-use self::
-{
-    thermodynamics::
-    {
-        Isotensional,
-        isotensional::Legendre as IsotensionalLegendre,
-    }
-};
 pub struct SWFJC
 {
     pub hinge_mass: f64,

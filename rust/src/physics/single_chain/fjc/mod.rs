@@ -1,24 +1,5 @@
 pub mod test;
 pub mod thermodynamics;
-use self::
-{
-    thermodynamics::
-    {
-        Isometric,
-        Isotensional,
-        ModifiedCanonical,
-        isometric::Legendre as IsometricLegendre,
-        isotensional::Legendre as IsotensionalLegendre,
-        modified_canonical::
-        {
-            asymptotic::
-            {
-                WeakPotential as ModifiedCanonicalAsymptoticWeakPotential,
-                StrongPotential as ModifiedCanonicalAsymptoticStrongPotential
-            }
-        }
-    }
-};
 pub struct FJC
 {
     pub hinge_mass: f64,

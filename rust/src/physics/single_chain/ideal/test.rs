@@ -58,31 +58,3 @@ mod base
         }
     }
 }
-mod implementations
-{
-    use super::*;
-    mod thermodynamics
-    {
-        use super::*;
-        mod isometric
-        {
-            use super::*;
-            #[test]
-            fn access()
-            {
-                let parameters = Parameters::default();
-                let _ = Ideal::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.isometric.nondimensional_force(&parameters.nondimensional_end_to_end_length_per_link_reference);
-            }
-        }
-        mod isotensional
-        {
-            use super::*;
-            #[test]
-            fn access()
-            {
-                let parameters = Parameters::default();
-                let _ = Ideal::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference).thermodynamics.isotensional.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference);
-            }
-        }
-    }
-}

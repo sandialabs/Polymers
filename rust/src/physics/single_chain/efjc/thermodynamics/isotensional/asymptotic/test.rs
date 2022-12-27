@@ -532,6 +532,7 @@ mod asymptotic
     {
         use super::*;
         use rand::Rng;
+        use crate::physics::single_chain::POINTS;
         use crate::physics::single_chain::test::integrate;
         #[test]
         fn end_to_end_length()
@@ -970,6 +971,7 @@ mod asymptotic
     {
         use super::*;
         use rand::Rng;
+        use crate::physics::single_chain::POINTS;
         use crate::physics::single_chain::test::integrate;
         #[test]
         fn end_to_end_length()
@@ -1401,50 +1403,6 @@ mod asymptotic
                 assert!(residual_rel_1.abs() <= 2.0/parameters.nondimensional_link_stiffness_large);
                 assert!(residual_rel_2.abs() <= 2.0/parameters.nondimensional_link_stiffness_large/parameters.log_log_scale);
                 assert!((0.5*log_log_slope + 1.0).abs() <= parameters.log_log_tol);
-            }
-        }
-    }
-}
-mod implementations
-{
-    use super::*;
-    mod alternative
-    {
-        use super::*;
-        #[test]
-        fn access()
-        {
-            let parameters = Parameters::default();
-            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).alternative.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
-        }
-        mod legendre
-        {
-            use super::*;
-            #[test]
-            fn access()
-            {
-                let parameters = Parameters::default();
-                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).alternative.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
-            }
-        }
-    }
-    mod reduced
-    {
-        use super::*;
-        #[test]
-        fn access()
-        {
-            let parameters = Parameters::default();
-            let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).reduced.nondimensional_end_to_end_length_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
-        }
-        mod legendre
-        {
-            use super::*;
-            #[test]
-            fn access()
-            {
-                let parameters = Parameters::default();
-                let _ = EFJC::init(parameters.number_of_links_minimum, parameters.link_length_reference, parameters.hinge_mass_reference, parameters.link_stiffness_reference).reduced.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_force_reference, &parameters.temperature_reference);
             }
         }
     }
