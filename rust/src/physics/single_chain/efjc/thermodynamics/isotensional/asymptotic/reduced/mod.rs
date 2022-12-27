@@ -1,10 +1,10 @@
 pub mod test;
 pub mod legendre;
-use super::
+use crate::physics::
 {
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT,
-    ZERO
+    single_chain::ZERO
 };
 use std::f64::consts::PI;
 pub struct EFJC

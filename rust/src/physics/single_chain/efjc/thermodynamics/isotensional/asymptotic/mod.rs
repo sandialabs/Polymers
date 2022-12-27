@@ -2,12 +2,15 @@ pub mod test;
 pub mod alternative;
 pub mod reduced;
 pub mod legendre;
-use super::
+use crate::physics::
 {
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT,
-    ZERO,
-    POINTS
+    single_chain::
+    {
+        ZERO,
+        POINTS
+    }
 };
 use std::f64::consts::PI;
 use self::{

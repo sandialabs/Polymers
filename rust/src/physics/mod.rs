@@ -1,9 +1,3 @@
 pub mod single_chain;
-use super::
-{
-    PLANCK_CONSTANT,
-    BOLTZMANN_CONSTANT,
-    ONE,
-    ZERO,
-    POINTS
-};
+static BOLTZMANN_CONSTANT: f64 = 8.314462618;
+static PLANCK_CONSTANT: f64 = 1.0;

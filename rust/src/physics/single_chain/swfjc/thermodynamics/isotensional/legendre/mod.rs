@@ -5,7 +5,7 @@ use crate::physics::
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT
 };
-use crate::physics::ZERO;
+use crate::physics::single_chain::ZERO;
 pub struct SWFJC
 {
     pub hinge_mass: f64,

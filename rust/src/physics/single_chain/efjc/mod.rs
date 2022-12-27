@@ -1,12 +1,5 @@
 pub mod test;
 pub mod thermodynamics;
-use super::
-{
-    PLANCK_CONSTANT,
-    BOLTZMANN_CONSTANT,
-    ZERO,
-    POINTS
-};
 use self::thermodynamics::
 {
     Isotensional,

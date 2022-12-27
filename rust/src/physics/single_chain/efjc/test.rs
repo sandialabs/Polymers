@@ -1,56 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::test::Parameters as DefaultParameters;
-pub struct Parameters
-{
-    pub abs_tol: f64,
-    pub rel_tol: f64,
-    pub log_log_tol: f64,
-    pub log_log_scale: f64,
-    pub number_of_loops: u32,
-    pub hinge_mass_reference: f64,
-    pub hinge_mass_scale: f64,
-    pub link_length_reference: f64,
-    pub link_length_scale: f64,
-    pub number_of_links_minimum: u8,
-    pub number_of_links_maximum: u8,
-    pub link_stiffness_reference: f64,
-    pub link_stiffness_scale: f64,
-    pub nondimensional_link_stiffness_large: f64,
-    pub nondimensional_link_stiffness_medium: f64,
-    pub nondimensional_force_reference: f64,
-    pub nondimensional_force_scale: f64,
-    pub temperature_reference: f64,
-    pub temperature_scale: f64,
-}
-impl Default for Parameters
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            number_of_loops: 888,
-            abs_tol: DefaultParameters::default().abs_tol,
-            rel_tol: DefaultParameters::default().rel_tol,
-            log_log_tol: DefaultParameters::default().log_log_tol,
-            log_log_scale: DefaultParameters::default().log_log_scale,
-            hinge_mass_reference: DefaultParameters::default().hinge_mass_reference,
-            hinge_mass_scale: DefaultParameters::default().hinge_mass_scale,
-            link_length_reference: DefaultParameters::default().link_length_reference,
-            link_length_scale: DefaultParameters::default().link_length_scale,
-            number_of_links_minimum: DefaultParameters::default().number_of_links_minimum,
-            number_of_links_maximum: DefaultParameters::default().number_of_links_maximum,
-            link_stiffness_reference: DefaultParameters::default().link_stiffness_reference,
-            link_stiffness_scale: DefaultParameters::default().link_stiffness_scale,
-            nondimensional_link_stiffness_large: DefaultParameters::default().nondimensional_link_stiffness_large,
-            nondimensional_link_stiffness_medium: DefaultParameters::default().nondimensional_link_stiffness_medium,
-            nondimensional_force_reference: DefaultParameters::default().nondimensional_force_reference,
-            nondimensional_force_scale: DefaultParameters::default().nondimensional_force_scale,
-            temperature_reference: DefaultParameters::default().temperature_reference,
-            temperature_scale: DefaultParameters::default().temperature_scale,
-        }
-    }
-}
+use crate::physics::single_chain::test::Parameters;
 mod base
 {
     use super::*;

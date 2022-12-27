@@ -1,12 +1,15 @@
 pub mod test;
 pub mod asymptotic;
 pub mod legendre;
-use super::
+use crate::physics::
 {
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT,
-    ZERO,
-    POINTS
+    single_chain::
+    {
+        ZERO,
+        POINTS
+    }
 };
 use super::erf;
 use std::f64::consts::PI;
