@@ -1,6 +1,6 @@
 #![cfg(test)]
 use super::*;
-use super::super::super::super::test::Parameters;
+use crate::physics::single_chain::efjc::test::Parameters;
 mod base
 {
     use super::*;
@@ -532,7 +532,7 @@ mod asymptotic
     {
         use super::*;
         use rand::Rng;
-        use super::super::super::super::super::super::test::integrate;
+        use crate::physics::single_chain::test::integrate;
         #[test]
         fn end_to_end_length()
         {
@@ -970,7 +970,7 @@ mod asymptotic
     {
         use super::*;
         use rand::Rng;
-        use super::super::super::super::super::super::test::integrate;
+        use crate::physics::single_chain::test::integrate;
         #[test]
         fn end_to_end_length()
         {

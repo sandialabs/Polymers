@@ -1,11 +1,6 @@
 #![cfg(test)]
 use super::*;
-pub fn integrate<F>(function: F, lower_lim: &f64, upper_lim: &f64, num_points: &u128) -> f64
-where F: Fn(f64) -> f64
-{
-    let dx = (upper_lim - lower_lim)/(*num_points as f64);
-    (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| function(lower_lim + (0.5 + *index as f64)*dx)).sum::<f64>()*dx
-}
+use crate::physics::single_chain::test::Parameters as DefaultParameters;
 pub struct Parameters
 {
     pub abs_tol: f64,
@@ -35,24 +30,24 @@ impl Default for Parameters
         Self
         {
             number_of_loops: 888,
-            abs_tol: 1e-8,
-            rel_tol: 1e-6,
-            log_log_tol: 5e-2,
-            log_log_scale: 12e-1,
-            hinge_mass_reference: 1e0,
-            hinge_mass_scale: 1e0,
-            link_length_reference: 1e0,
-            link_length_scale: 1e0,
-            number_of_links_minimum: 5,
-            number_of_links_maximum: 25,
-            link_stiffness_reference: 5e5,
-            link_stiffness_scale: 99e4,
-            nondimensional_link_stiffness_large: 1e4,
-            nondimensional_link_stiffness_medium: 1e1,
-            nondimensional_force_reference: 5e1,
-            nondimensional_force_scale: 1e2,
-            temperature_reference: 3e2,
-            temperature_scale: 1e2,
+            abs_tol: DefaultParameters::default().abs_tol,
+            rel_tol: DefaultParameters::default().rel_tol,
+            log_log_tol: DefaultParameters::default().log_log_tol,
+            log_log_scale: DefaultParameters::default().log_log_scale,
+            hinge_mass_reference: DefaultParameters::default().hinge_mass_reference,
+            hinge_mass_scale: DefaultParameters::default().hinge_mass_scale,
+            link_length_reference: DefaultParameters::default().link_length_reference,
+            link_length_scale: DefaultParameters::default().link_length_scale,
+            number_of_links_minimum: DefaultParameters::default().number_of_links_minimum,
+            number_of_links_maximum: DefaultParameters::default().number_of_links_maximum,
+            link_stiffness_reference: DefaultParameters::default().link_stiffness_reference,
+            link_stiffness_scale: DefaultParameters::default().link_stiffness_scale,
+            nondimensional_link_stiffness_large: DefaultParameters::default().nondimensional_link_stiffness_large,
+            nondimensional_link_stiffness_medium: DefaultParameters::default().nondimensional_link_stiffness_medium,
+            nondimensional_force_reference: DefaultParameters::default().nondimensional_force_reference,
+            nondimensional_force_scale: DefaultParameters::default().nondimensional_force_scale,
+            temperature_reference: DefaultParameters::default().temperature_reference,
+            temperature_scale: DefaultParameters::default().temperature_scale,
         }
     }
 }
