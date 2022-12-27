@@ -244,6 +244,7 @@ mod per_link
 mod relative
 {
     use super::*;
+    use crate::physics::single_chain::ZERO;
     use rand::Rng;
     #[test]
     fn helmholtz_free_energy()
@@ -339,6 +340,7 @@ mod relative
 mod zero
 {
     use super::*;
+    use crate::physics::single_chain::ZERO;
     use rand::Rng;
     #[test]
     fn relative_helmholtz_free_energy()

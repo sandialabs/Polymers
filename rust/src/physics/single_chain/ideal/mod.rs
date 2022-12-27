@@ -3,14 +3,6 @@ pub mod thermodynamics;
 pub static ONE: f64 = 1.0;
 pub static ZERO: f64 = 1e-6;
 pub static POINTS: u128 = 100;
-use self::
-{
-    thermodynamics::
-    {
-        Isometric,
-        Isotensional
-    }
-};
 pub struct Ideal
 {
     pub hinge_mass: f64,

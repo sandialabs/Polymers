@@ -7,7 +7,7 @@ license = "BSD-3-Clause"
 keywords = ["python", "rust", "polymers"]
 
 [lib]
-crate-type = ["staticlib", "cdylib"]
+crate-type = ["cdylib", "rlib", "staticlib"]
 
 [features]
 python = ["dep:pyo3"]

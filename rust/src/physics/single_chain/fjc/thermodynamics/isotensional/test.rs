@@ -368,6 +368,7 @@ mod per_link
 mod relative
 {
     use super::*;
+    use crate::physics::single_chain::ZERO;
     use rand::Rng;
     #[test]
     fn gibbs_free_energy()
@@ -463,6 +464,7 @@ mod relative
 mod zero
 {
     use super::*;
+    use crate::physics::single_chain::ZERO;
     use rand::Rng;
     #[test]
     fn end_to_end_length()
