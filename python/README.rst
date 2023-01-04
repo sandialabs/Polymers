@@ -8,7 +8,7 @@ Polymers Modeling Library
 Installation
 ************
 
-|pypi| |conda| |dockerhub|
+|pypi| |conda| |dockerhub| |github|
 
 .. code-block:: shell
 
@@ -21,6 +21,10 @@ Installation
 .. code-block:: shell
 
     docker pull mrbuche/polymers
+
+.. code-block:: shell
+
+    docker pull ghcr.io/sandialabs/polymers
 
 ********
 Citation
