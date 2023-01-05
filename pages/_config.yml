@@ -11,3 +11,9 @@ footer_content: "2022 National Technology & Engineering Solutions of Sandia, LLC
 last_edit_timestamp: false
 gh_edit_link: false
 color_scheme: sandiadark
+
+nav_external_links:
+  - title: Rust documentation (release)
+    url: https://docs.rs/polymers/latest/polymers/
+  - title: Rust documentation (latest)
+    url: https://sandialabs.github.io/Polymers/rust/docs/latest/polymers/index.html

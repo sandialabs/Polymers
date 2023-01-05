@@ -21,6 +21,14 @@ jobs:
         with:
           source: ./pages/
           destination: ./_site
+      - name: latest docs rust
+        run: |
+          sudo chmod -R 777 _site/
+          mkdir -p _site/rust/docs/latest/
+          cd rust/
+          cargo doc
+          cd ../
+          cp -r rust/target/doc/* _site/rust/docs/latest/
       - uses: actions/upload-pages-artifact@v1
   deploy:
     if: github.event_name != 'pull_request'
