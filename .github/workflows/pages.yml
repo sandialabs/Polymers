@@ -28,7 +28,7 @@ jobs:
           cd rust/
           cargo doc
           cd ../
-          sudo cp rust/target/doc/ _site/rust/docs/latest/
+          sudo mv rust/target/doc/ _site/rust/docs/latest/
       - run: ls -ltrah ./_site
       - uses: actions/upload-pages-artifact@v1
   # deploy:
