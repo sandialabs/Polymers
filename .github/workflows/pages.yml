@@ -1,8 +1,7 @@
 name: Pages
 on:
   push:
-    # branches: [ "main" ]
-    branches: [ "main", "dev" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 permissions:
@@ -28,16 +27,16 @@ jobs:
           cd rust/
           cargo doc
           cd ../
-          sudo mv rust/target/doc/ _site/rust/docs/latest/
+          sudo cp -r rust/target/doc/ _site/rust/docs/latest/
       - run: ls -ltrah ./_site
       - uses: actions/upload-pages-artifact@v1
-  # deploy:
-  #   if: github.event_name != 'pull_request'
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - id: deployment
-  #       uses: actions/deploy-pages@v1
+  deploy:
+    if: github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v1
