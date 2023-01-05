@@ -22,13 +22,13 @@ jobs:
         with:
           source: ./pages/
           destination: ./_site
-      - name: latest docs
+      - name: latest docs rust
         run: |
-          mkdir -p _site/rust/docs/latest/
+          sudo mkdir -p _site/rust/docs/latest/
           cd rust/
           cargo doc
           cd ../
-          cp rust/target/doc/ _site/rust/docs/latest/
+          sudo cp rust/target/doc/ _site/rust/docs/latest/
       - run: ls -ltrah ./_site
       - uses: actions/upload-pages-artifact@v1
   # deploy:
