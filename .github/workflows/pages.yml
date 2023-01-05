@@ -1,6 +1,7 @@
 name: Pages
 on:
   push:
+    # branches: [ "main" ]
     branches: [ "main", "dev" ]
   pull_request:
     branches: [ "main" ]
@@ -21,17 +22,15 @@ jobs:
         with:
           source: ./pages/
           destination: ./_site
-      - run: |
-        ls -ltrah
-        ls -ltrah ./_site
+      - run: ls -ltrah ./_site
       - uses: actions/upload-pages-artifact@v1
-  deploy:
-    if: github.event_name != 'pull_request'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v1
+  # deploy:
+  #   if: github.event_name != 'pull_request'
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - id: deployment
+  #       uses: actions/deploy-pages@v1
