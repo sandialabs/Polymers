@@ -1,8 +1,5 @@
-pub mod test;
+mod test;
 pub mod thermodynamics;
-pub static ONE: f64 = 1.0;
-pub static ZERO: f64 = 1e-6;
-pub static POINTS: u128 = 100;
 pub struct Ideal
 {
     pub hinge_mass: f64,

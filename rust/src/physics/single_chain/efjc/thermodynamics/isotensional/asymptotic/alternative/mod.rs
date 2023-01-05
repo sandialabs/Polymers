@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 pub mod legendre;
 use crate::physics::
 {
@@ -13,8 +13,7 @@ pub struct EFJC
     pub link_length: f64,
     pub number_of_links: u8,
     pub link_stiffness: f64,
-    pub number_of_links_f64: f64,
-    pub contour_length: f64,
+    number_of_links_f64: f64,
     pub legendre: self::legendre::EFJC
 }
 impl EFJC
@@ -28,7 +27,6 @@ impl EFJC
             number_of_links,
             link_stiffness,
             number_of_links_f64: number_of_links as f64,
-            contour_length: (number_of_links as f64)*link_length,
             legendre: self::legendre::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
         }
     }
