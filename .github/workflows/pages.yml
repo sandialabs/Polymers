@@ -1,7 +1,7 @@
 name: Pages
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   pull_request:
     branches: [ "main" ]
 permissions:
@@ -21,6 +21,7 @@ jobs:
         with:
           source: ./pages/
           destination: ./_site
+      - run: ls -ltrah
       - uses: actions/upload-pages-artifact@v1
   deploy:
     if: github.event_name != 'pull_request'
