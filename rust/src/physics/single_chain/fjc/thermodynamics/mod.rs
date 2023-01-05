@@ -1,3 +1,6 @@
+#[cfg(feature = "python")]
+pub mod py;
+
 mod test;
 
 /// The thermodynamics of the FJC model in the isometric ensemble.

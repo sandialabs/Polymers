@@ -1,3 +1,6 @@
+#[cfg(feature = "python")]
+pub mod py;
+
 mod test;
 
 /// The ideal single-chain model.
