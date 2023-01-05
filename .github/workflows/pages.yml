@@ -21,7 +21,9 @@ jobs:
         with:
           source: ./pages/
           destination: ./_site
-      - run: ls -ltrah
+      - run: |
+        ls -ltrah
+        ls -ltrah ./_site
       - uses: actions/upload-pages-artifact@v1
   deploy:
     if: github.event_name != 'pull_request'
