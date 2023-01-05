@@ -13,7 +13,7 @@ gh_edit_link: false
 color_scheme: sandiadark
 
 nav_external_links:
-  - title: Rust documentation (release)
+  - title: Rust documentation (stable)
     url: https://docs.rs/polymers/latest/polymers/
   - title: Rust documentation (latest)
-    url: https://sandialabs.github.io/Polymers/rust/docs/latest/polymers/index.html
+    url: https://sandialabs.github.io/Polymers/rust/docs/latest/polymers/
