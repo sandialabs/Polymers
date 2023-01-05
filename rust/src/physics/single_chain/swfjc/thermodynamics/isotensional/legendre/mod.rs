@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -12,8 +12,7 @@ pub struct SWFJC
     pub link_length: f64,
     pub number_of_links: u8,
     pub well_width: f64,
-    pub number_of_links_f64: f64,
-    pub contour_length: f64,
+    number_of_links_f64: f64,
     pub nondimensional_well_parameter: f64
 }
 impl SWFJC
@@ -27,7 +26,6 @@ impl SWFJC
             number_of_links,
             well_width,
             number_of_links_f64: number_of_links as f64,
-            contour_length: (number_of_links as f64)*link_length,
             nondimensional_well_parameter: 1.0 + well_width/link_length,
 
         }

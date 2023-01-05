@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 pub mod isotensional;
 pub struct SWFJC
 {

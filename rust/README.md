@@ -7,25 +7,14 @@
 ## Installation
 
 [![Crates.io](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates.io&color=32592f)](https://crates.io/crates/polymers)
-[![Anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers)
-[![Docker Hub](https://img.shields.io/docker/v/mrbuche/polymers?color=0db7ed&label=Docker%20Hub&logo=docker&logoColor=0db7ed)](https://hub.docker.com/r/mrbuche/polymers)
-[![GitHub](https://img.shields.io/badge/GitHub-latest-6e5494?logo=github)](https://github.com/sandialabs/Polymers/pkgs/container/polymers)
 
-```shell
-cargo install polymers
-```
+The library can be used in an existing Rust project by adding the `polymers` crate as a dependency in Cargo.toml,
 
-```shell
-conda install --channel mrbuche polymers
+```toml
+[dependencies]
+polymers = "*"
 ```
-
-```shell
-docker pull mrbuche/polymers
-```
-
-```shell
-docker pull ghcr.io/sandialabs/polymers
-```
+The asterisk `*` represents the latest version of the crate, but should be changed to a specific version for stability.
 
 ## Citation
 

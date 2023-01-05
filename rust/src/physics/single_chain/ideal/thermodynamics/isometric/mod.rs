@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -10,8 +10,8 @@ pub struct Ideal
     pub hinge_mass: f64,
     pub link_length: f64,
     pub number_of_links: u8,
-    pub number_of_links_f64: f64,
-    pub contour_length: f64
+    number_of_links_f64: f64,
+    contour_length: f64
 }
 impl Ideal
 {

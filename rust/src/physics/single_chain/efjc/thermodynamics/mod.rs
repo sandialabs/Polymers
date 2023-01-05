@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 pub mod isotensional;
 pub struct EFJC
 {
@@ -22,15 +22,15 @@ impl EFJC
         }
     }
 }
-pub fn erf(x: &f64) -> f64
+fn erf(x: &f64) -> f64
 {
     1.0 - erfc(x)
 }
-pub fn erfc(x: &f64) -> f64
+fn erfc(x: &f64) -> f64
 {
     erfcx(x)/(x.powi(2)).exp()
 }
-pub fn erfcx(x: &f64) -> f64
+fn erfcx(x: &f64) -> f64
 {
     if x >= &0.0
     {

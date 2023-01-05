@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -12,8 +12,7 @@ pub struct EFJC
     pub link_length: f64,
     pub number_of_links: u8,
     pub link_stiffness: f64,
-    pub number_of_links_f64: f64,
-    pub contour_length: f64,
+    number_of_links_f64: f64
 }
 impl EFJC
 {
@@ -25,8 +24,7 @@ impl EFJC
             link_length,
             number_of_links,
             link_stiffness,
-            number_of_links_f64: number_of_links as f64,
-            contour_length: (number_of_links as f64)*link_length,
+            number_of_links_f64: number_of_links as f64
         }
     }
     pub fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64

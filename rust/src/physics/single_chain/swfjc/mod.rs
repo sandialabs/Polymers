@@ -1,4 +1,4 @@
-pub mod test;
+mod test;
 pub mod thermodynamics;
 pub struct SWFJC
 {
