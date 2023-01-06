@@ -4,10 +4,11 @@ build:
   tools:
     python: "3.11"
     rust: "1.64"
-  commands:
-    - pip install cffi maturin
-    - cargo build --features python
-    - maturin build --features python
+  # commands:
+  #   - pip install cffi maturin
+  #   - cargo build --features python
+  #   - maturin build --features python
+  #   - pip install polymers
 sphinx:
   configuration: docs/source/conf.py
 python:
