@@ -27,16 +27,6 @@ jobs:
           mkdir -p _site/rust/docs/latest/
           cargo doc
           cp -r target/doc/* _site/rust/docs/latest/
-      - name: latest docs python
-        run: |
-          mkdir -p _site/python/docs/latest/
-          pip install maturin
-          maturin build --features python
-          pip install target/wheels/*.whl
-          pip install -r docs/requirements.txt
-          cd docs/
-          make html
-          cp -r build/html/* ../_site/python/docs/latest/
       - uses: actions/upload-pages-artifact@v1
   deploy:
     if: github.event_name != 'pull_request'
