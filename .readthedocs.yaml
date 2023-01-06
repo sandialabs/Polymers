@@ -5,7 +5,7 @@ build:
     python: "3.11"
     rust: "1.64"
   jobs:
-    pre_build:
+    pre_install:
       - pip install cffi maturin
 sphinx:
   configuration: docs/source/conf.py
