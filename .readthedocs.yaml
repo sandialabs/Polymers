@@ -4,6 +4,8 @@ build:
   tools:
     python: "3.11"
     rust: "1.64"
+  commands:
+    - pip install cffi maturin
 sphinx:
   configuration: docs/source/conf.py
 python:
