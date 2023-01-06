@@ -1,0 +1,6 @@
+matplotlib
+nbsphinx
+sphinx
+sphinxcontrib-bibtex
+sphinx-copybutton
+sphinx-rtd-theme
