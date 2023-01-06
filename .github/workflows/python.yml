@@ -12,5 +12,6 @@ jobs:
         uses: actions/checkout@v3
       - name: install
         run: |
+          pip install maturin
           maturin build --features python
           pip install target/wheels/*.whl
