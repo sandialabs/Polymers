@@ -5,7 +5,7 @@ build-backend = "maturin"
 [project]
 name = "polymers"
 requires-python = ">=3.7"
-dependencies = ["cffi"]
+# dependencies = ["cffi"]
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
