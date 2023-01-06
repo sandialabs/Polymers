@@ -4,9 +4,10 @@ build:
   tools:
     python: "3.11"
     rust: "1.64"
-  jobs:
-    pre_install:
-      - pip install cffi maturin
+  commands:
+    - pip install cffi maturin
+    - cargo build --features python
+    - maturin develop --features python
 sphinx:
   configuration: docs/source/conf.py
 python:
