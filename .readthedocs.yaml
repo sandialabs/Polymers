@@ -8,9 +8,8 @@ build:
     - pip install maturin
     - maturin build --features python
     - pip install target/wheels/*.whl
-    - cd docs/
-    - pip install -r requirements.txt
-    - make html
+    - pip install -r docs/requirements.txt
+    - cd docs/ ** make html
 sphinx:
   configuration: docs/source/conf.py
 python:
