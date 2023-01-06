@@ -4,4 +4,5 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN git clone --depth 1 https://github.com/sandialabs/polymers.git && \
     cd polymers/ && \
     pip install maturin && \
-    maturin develop --features python
+    maturin build --features python && \
+    pip install target/wheels/*.whl
