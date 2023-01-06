@@ -1,7 +1,7 @@
 [package]
 name = "polymers"
 version = "0.0.5"
-edition = "2021"
+edition = "2020"
 description = "Polymers Modeling Library"
 license = "BSD-3-Clause"
 keywords = ["python", "rust", "polymers"]
