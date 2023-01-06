@@ -5,7 +5,7 @@
 [![Codefactor](https://img.shields.io/codefactor/grade/github/sandialabs/polymers?label=Codefactor&logo=codefactor&color=00b16a)](https://www.codefactor.io/repository/github/sandialabs/polymers)
 [![Codecov](https://img.shields.io/codecov/c/github/sandialabs/polymers?label=Codecov&logo=codecov&flag=rust)](https://codecov.io/gh/sandialabs/polymers)
 
-The library is implemented entirely in Rust and has an associated Python API.
+The library is implemented entirely in Rust, including the Python API.
 
 ## Python
 
