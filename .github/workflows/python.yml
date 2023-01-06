@@ -7,21 +7,11 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./python/
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: install
-        run: pip install .[test]
-      - name: pylint
-        run: python -m pylint --output-format=text polymers | tee lint.log || pylint-exit $?
-      - name: pytest
-        run: python -m pytest --verbose --cov=polymers --cov-report xml
-      - name: codecov
-        uses: codecov/codecov-action@v3
-        with:
-          fail_ci_if_error: true
-          flags: python
-          verbose: true
+        run: |
+          pip install maturin
+          maturin build --features python
+          pip install target/wheels/*.whl

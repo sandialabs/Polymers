@@ -5,10 +5,10 @@ sys.path.insert(0, abspath("../../"))
 
 
 def get_version():
-    VERSIONFILE = join('..', '..', 'polymers', '__init__.py')
+    VERSIONFILE = join('..', '..', 'Cargo.toml')
     with open(VERSIONFILE, 'rt') as f:
         lines = f.readlines()
-    vgx = '^__version__ = \"[0-9+.0-9+.0-9+]*[a-zA-Z0-9]*\"'
+    vgx = '^version = \"[0-9+.0-9+.0-9+]*[a-zA-Z0-9]*\"'
     for line in lines:
         mo = re.search(vgx, line, re.M)
         if mo:

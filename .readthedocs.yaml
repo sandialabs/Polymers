@@ -3,14 +3,12 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
-  jobs:
-    pre_create_environment:
-      - cp -r python/* .
-sphinx:
-   configuration: docs/source/conf.py
-python:
-   install:
-   - method: pip
-     path: .
-     extra_requirements:
-       - all
+    rust: "1.64"
+  commands:
+    - pip install maturin
+    - maturin build --features python
+    - pip install target/wheels/*.whl
+    - pip install -r docs/requirements.txt
+    - cd docs/ && make html
+    - mkdir _readthedocs/
+    - mv docs/build/html/ _readthedocs/

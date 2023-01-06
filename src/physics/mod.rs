@@ -1,3 +1,6 @@
+#[cfg(feature = "python")]
+pub mod py;
+
 /// Single-chain models for polymer physics.
 pub mod single_chain;
 
