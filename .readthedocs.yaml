@@ -5,8 +5,9 @@ build:
     python: "3.10"
     rust: "1.61"
 sphinx:
-   configuration: docs/source/conf.py
+  configuration: docs/source/conf.py
 python:
-   install:
-   - method: pip
-     path: .
+  install:
+  - requirements: docs/requirements.txt
+  - method: pip
+    path: .
