@@ -5,15 +5,16 @@ build:
     python: "3.11"
     rust: "1.64"
   commands:
-    - pip install -r docs/requirements.txt
+    - pip install maturin
     - maturin build --features python
     - pip install target/wheels/*.whl
+    - pip install -r docs/requirements.txt
     - cd docs/ && make html
     - ls -ltrah docs/
 sphinx:
   configuration: docs/source/conf.py
-python:
-  install:
-  - requirements: docs/requirements.txt
-  - method: pip
-    path: .
+#python:
+#  install:
+#  - requirements: docs/requirements.txt
+#  - method: pip
+#    path: .
