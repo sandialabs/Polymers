@@ -1,15 +1,5 @@
-polymers
-========
-
 .. toctree::
-   :maxdepth: 8
+   :hidden:
+   :caption: Examples
 
-   polymers
-
-polymers.physics module
-=======================
-
-.. automodule:: polymers.physics
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   example_notebook
