@@ -3,22 +3,73 @@
 [![GitHub Pages](https://img.shields.io/badge/GitHub-pages-6e5494?logo=github)](https://sandialabs.github.io/Polymers)
 [![Discord](https://img.shields.io/badge/Discord-chat-%237289da.svg?logo=discord&color=5865F2&logoColor=FFFFFF)](https://discord.gg/yC6dbPuc)
 [![Codefactor](https://img.shields.io/codefactor/grade/github/sandialabs/polymers?label=Codefactor&logo=codefactor&color=00b16a)](https://www.codefactor.io/repository/github/sandialabs/polymers)
-
-[![rust](https://img.shields.io/github/actions/workflow/status/sandialabs/polymers/rust.yml?branch=main&label=GitHub&logo=github)](https://github.com/sandialabs/polymers/tree/main/rust#readme)
-[![Docs.rs](https://img.shields.io/docsrs/polymers?logo=rust&logoColor=000000&label=Docs.rs)](https://docs.rs/crate/polymers)
 [![Codecov](https://img.shields.io/codecov/c/github/sandialabs/polymers?label=Codecov&logo=codecov&flag=rust)](https://codecov.io/gh/sandialabs/polymers)
 
-## Installation
+The library is implemented entirely in Rust and has an associated Python API.
 
-[![Crates.io](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates.io&color=32592f)](https://crates.io/crates/polymers)
+## Python
 
-The library can be used in an existing Rust project by adding the `polymers` crate as a dependency in Cargo.toml,
+[![Read the Docs](https://img.shields.io/badge/Docs-stable-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/latest/)
+[![Read the Docs latest](https://img.shields.io/badge/Docs-latest-8CA1AF?logo=readthedocs)](https://sandialabs.github.io/Polymers/python/docs/latest/polymers)
+[![PyPI](https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE)](https://pypi.org/project/polymers)
+[![Anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers/)
+[![Docker Hub](https://img.shields.io/docker/v/mrbuche/polymers?color=0db7ed&label=Docker%20Hub&logo=docker&logoColor=0db7ed)](https://hub.docker.com/r/mrbuche/polymers)
+[![GitHub Container Registry](https://img.shields.io/badge/GitHub-latest-6e5494?logo=github)](https://github.com/sandialabs/Polymers/pkgs/container/polymers)
+
+The library can be installed as a Python package using
+
+```shell
+pip install polymers
+```
+
+or as an Anaconda package using
+
+```shell
+conda install --channel mrbuche polymers
+```
+
+The latest edition of the library can be installed from the main branch of the GitHub repository:
+
+```shell
+git clone git@github.com:sandialabs/Polymers.git
+cd Polymers/
+pip install maturin
+maturin build --features python
+pip install target/wheels/*.whl
+```
+
+Docker images are available for all stable versions that have been released, as well as the latest edition. These images have everything necessary installed, and can be pulled from Docker Hub:
+
+```shell
+docker pull mrbuche/polymers
+```
+
+as well as from the GitHub container registry:
+
+```shell
+docker pull ghcr.io/sandialabs/polymers
+```
+
+## Rust
+
+[![Docs.rs](https://img.shields.io/badge/Docs-stable-32592f?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
+[![Docs.rs latest](https://img.shields.io/badge/Docs-latest-32592f?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest/polymers)
+[![Crates.io](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crate&color=32592f)](https://crates.io/crates/polymers)
+
+The library can be used in an existing Rust project by adding the `polymers` crate as a dependency in Cargo.toml:
 
 ```toml
 [dependencies]
 polymers = "*"
 ```
-The asterisk `*` represents the latest version of the crate, but should be changed to a specific version for stability.
+The asterisk `*` represents the newest released version of the crate, and should be changed to a specific version.
+
+To use the latest edition of the library, add the main branch of the GitHub repository to Cargo.toml:
+
+```toml
+[dependencies]
+regex = { git = "https://github.com/sandialabs/polymers" }
+```
 
 ## Citation
 
