@@ -4,6 +4,22 @@
 [![Discord](https://img.shields.io/badge/Discord-chat-%237289da.svg?logo=discord&color=5865F2&logoColor=FFFFFF)](https://discord.gg/yC6dbPuc)
 [![Codefactor](https://img.shields.io/codefactor/grade/github/sandialabs/polymers?label=Codefactor&logo=codefactor&color=00b16a)](https://www.codefactor.io/repository/github/sandialabs/polymers)
 
+[![rust](https://img.shields.io/github/actions/workflow/status/sandialabs/polymers/rust.yml?branch=main&label=GitHub&logo=github)](https://github.com/sandialabs/polymers/tree/main/rust#readme)
+[![Docs.rs](https://img.shields.io/docsrs/polymers?logo=rust&logoColor=000000&label=Docs.rs)](https://docs.rs/crate/polymers)
+[![Codecov](https://img.shields.io/codecov/c/github/sandialabs/polymers?label=Codecov&logo=codecov&flag=rust)](https://codecov.io/gh/sandialabs/polymers)
+
+## Installation
+
+[![Crates.io](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates.io&color=32592f)](https://crates.io/crates/polymers)
+
+The library can be used in an existing Rust project by adding the `polymers` crate as a dependency in Cargo.toml,
+
+```toml
+[dependencies]
+polymers = "*"
+```
+The asterisk `*` represents the latest version of the crate, but should be changed to a specific version for stability.
+
 ## Citation
 
 [![Zenodo](https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.7041983-blue)](https://doi.org/10.5281/zenodo.7041983)
