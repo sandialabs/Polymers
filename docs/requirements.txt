@@ -3,7 +3,7 @@ ipykernel
 ipython
 jinja2>=3.0
 matplotlib
-mistune==0.8.4
+mistune==2.0.4
 nbsphinx
 sphinx
 sphinx-copybutton
