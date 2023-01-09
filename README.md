@@ -22,7 +22,7 @@ The library can be installed as a Python package using
 pip install polymers
 ```
 
-or as an Anaconda package using
+or as Python package within a Conda environment using
 
 ```shell
 conda install --channel mrbuche polymers
