@@ -1,11 +1,11 @@
 version: 2
 updates:
   - package-ecosystem: "cargo"
-    directory: "rust/"
+    directory: "/"
     schedule:
       interval: "weekly"
   - package-ecosystem: "pip"
-    directory: "python/"
+    directory: "/"
     schedule:
       interval: "weekly"
   - package-ecosystem: "docker"
