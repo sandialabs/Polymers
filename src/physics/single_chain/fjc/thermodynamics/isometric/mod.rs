@@ -3,7 +3,7 @@ pub mod py;
 
 mod test;
 
-/// The thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
+/// The freely-jointed chain (FJC) model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
 use std::f64::consts::PI;
