@@ -27,4 +27,4 @@ jobs:
       - name: publish
         run: |
           pip install maturin
-          maturin publish -F python -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_TOKEN }}
+          maturin publish -F python -u __token__ -p ${{ secrets.PYPI_TOKEN }}
