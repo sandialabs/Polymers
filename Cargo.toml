@@ -1,6 +1,6 @@
 [package]
 name = "polymers"
-version = "0.0.5"
+version = "0.0.5a"
 edition = "2021"
 description = "Polymers Modeling Library"
 license = "BSD-3-Clause"

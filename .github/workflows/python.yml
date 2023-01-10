@@ -1,11 +1,14 @@
 name: Python
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
+  release:
+    types: [ published ]
 jobs:
   test:
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -15,3 +18,13 @@ jobs:
           pip install maturin
           maturin build --features python
           pip install target/wheels/*.whl
+  publish:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: publish
+        run: |
+          pip install maturin
+          maturin publish -F python -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_TOKEN }}
