@@ -11,7 +11,7 @@ pub struct Ideal
 }
 impl Ideal
 {
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Ideal
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
         Ideal
         {

@@ -17,7 +17,7 @@ pub struct SWFJC
 }
 impl SWFJC
 {
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> SWFJC
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64) -> Self
     {
         SWFJC
         {

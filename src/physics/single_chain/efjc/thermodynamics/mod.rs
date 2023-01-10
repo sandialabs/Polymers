@@ -10,7 +10,7 @@ pub struct EFJC
 }
 impl EFJC
 {
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> EFJC
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> Self
     {
         EFJC
         {

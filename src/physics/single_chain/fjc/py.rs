@@ -10,19 +10,33 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 }
 
 #[pyclass]
+/// The structure of the FJC model.
 pub struct FJC
 {
+    #[pyo3(get)]
+    /// The mass of each hinge in the chain in units of kg/mol.
     pub hinge_mass: f64,
+    
+    #[pyo3(get)]
+    /// The length of each link in the chain in units of nm.
     pub link_length: f64,
+    
+    #[pyo3(get)]
+    /// The number of links in the chain.
     pub number_of_links: u8,
+    
+    #[pyo3(get)]
+    /// The thermodynamic functions of the model.
     pub thermodynamics: super::thermodynamics::py::FJC
 }
 
 #[pymethods]
+/// The implemented functionality of the FJC model.
 impl FJC
 {
     #[new]
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
+    /// Initializes and returns an instance of the FJC model.
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
         FJC
         {

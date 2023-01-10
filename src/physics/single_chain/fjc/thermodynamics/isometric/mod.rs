@@ -38,7 +38,7 @@ pub struct FJC
 impl FJC
 {
     /// Initializes and returns an instance of the thermodynamics of the FJC model in the isometric ensemble.
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
         FJC
         {
