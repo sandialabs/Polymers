@@ -24,27 +24,27 @@ copyright = '2022 National Technology & Engineering Solutions of Sandia, \
     LLC (NTESS). Under the terms of Contract DE-NA0003525 with NTESS, \
     the U.S. Government retains certain rights in this software'
 
-templates_path = ['_templates']
-html_static_path = ['_static']
-html_css_files = ['custom.css']
-html_theme = 'sphinx_rtd_theme'
-html_theme_options = {'navigation_depth': 8}
+add_module_names = False
+bibtex_bibfiles = ['main.bib']
+bibtex_default_style = 'plain'
 extensions = [
+    'matplotlib.sphinxext.plot_directive',
+    'nbsphinx',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'matplotlib.sphinxext.plot_directive',
     'sphinxcontrib.bibtex',
-    'nbsphinx',
 ]
+html_css_files = ['custom.css']
 html_show_sphinx = False
+html_static_path = ['_static']
+html_theme = 'sphinx_rtd_theme'
+html_theme_options = {'navigation_depth': 8}
 latex_engine = 'xelatex'
-bibtex_bibfiles = ['main.bib']
-bibtex_default_style = 'plain'
+nbsphinx_allow_errors = True
 plot_html_show_formats = False
 plot_html_show_source_link = False
 plot_include_source = True
-add_module_names = False
 plot_rcparams = {'font.size': 10}
 plot_formats = [('png', 300)]
-nbsphinx_allow_errors = True
+templates_path = ['_templates']
