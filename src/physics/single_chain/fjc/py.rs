@@ -12,9 +12,16 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 #[pyclass]
 pub struct FJC
 {
+    #[pyo3(get)]
     pub hinge_mass: f64,
+    
+    #[pyo3(get)]
     pub link_length: f64,
+    
+    #[pyo3(get)]
     pub number_of_links: u8,
+    
+    #[pyo3(get)]
     pub thermodynamics: super::thermodynamics::py::FJC
 }
 
@@ -22,7 +29,7 @@ pub struct FJC
 impl FJC
 {
     #[new]
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
         FJC
         {
@@ -31,13 +38,5 @@ impl FJC
             number_of_links,
             thermodynamics: super::thermodynamics::py::FJC::init(number_of_links, link_length, hinge_mass)
         }
-    }
-    fn __call__(&self) -> PyResult<(u8, f64, f64)>
-    {
-        Ok((self.number_of_links, self.link_length, self.hinge_mass))
-    }
-    fn __repr__(&self) -> PyResult<String>
-    {
-        Ok(format!("FJC(number_of_links={N}, link_length={l}, hinge_mass={m})", N=self.number_of_links, l=self.link_length, m=self.hinge_mass).into())
     }
 }

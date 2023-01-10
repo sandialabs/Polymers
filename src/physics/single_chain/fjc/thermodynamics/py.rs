@@ -10,11 +10,19 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 }
 
 #[pyclass]
+#[derive(Copy, Clone)]
 pub struct FJC
 {
+    #[pyo3(get)]
     pub hinge_mass: f64,
+    
+    #[pyo3(get)]
     pub link_length: f64,
+    
+    #[pyo3(get)]
     pub number_of_links: u8,
+    
+    #[pyo3(get)]
     pub isometric: super::isometric::py::FJC
 }
 
@@ -22,7 +30,7 @@ pub struct FJC
 impl FJC
 {
     #[new]
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> FJC
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
         FJC
         {
