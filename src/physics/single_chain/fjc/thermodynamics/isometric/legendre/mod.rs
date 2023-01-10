@@ -1,6 +1,3 @@
-//!
-//! These approximations become accurate in the thermodynamic limit of a large number of links in the chain.
-
 #[cfg(feature = "python")]
 pub mod py;
 

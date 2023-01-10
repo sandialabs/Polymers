@@ -3,13 +3,13 @@ pub mod py;
 
 mod test;
 
-/// The thermodynamics of the FJC model in the isometric ensemble.
+/// The freely-jointed chain (FJC) model thermodynamics in the isometric ensemble.
 pub mod isometric;
 
-/// The thermodynamics of the FJC model in the isotensional ensemble.
+/// The freely-jointed chain (FJC) model thermodynamics in the isotensional ensemble.
 pub mod isotensional;
 
-/// The thermodynamics of the FJC model in the modified canonical ensemble.
+/// The freely-jointed chain (FJC) model thermodynamics in the modified canonical ensemble.
 pub mod modified_canonical;
 
 /// The structure of the thermodynamics of the FJC model.

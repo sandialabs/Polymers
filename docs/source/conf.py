@@ -39,7 +39,9 @@ html_css_files = ['custom.css']
 html_show_sphinx = False
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
-html_theme_options = {'navigation_depth': 8}
+html_theme_options = {
+    'navigation_depth': 8
+}
 latex_engine = 'xelatex'
 nbsphinx_allow_errors = True
 plot_html_show_formats = False

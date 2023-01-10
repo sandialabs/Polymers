@@ -3,7 +3,7 @@ pub mod py;
 
 mod test;
 
-/// The thermodynamics of the FJC model.
+/// The freely-jointed chain (FJC) model thermodynamics.
 pub mod thermodynamics;
 
 /// The structure of the FJC model.
