@@ -75,7 +75,7 @@ regex = { git = "https://github.com/sandialabs/polymers" }
 
 [![Zenodo](https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.7041983-blue)](https://doi.org/10.5281/zenodo.7041983)
 
-Michael R. Buche. Polymers Modeling Library. [Zenodo (2022)](https://doi.org/10.5281/zenodo.7041983).
+Michael R. Buche. Polymers Modeling Library. [Zenodo (2023)](https://doi.org/10.5281/zenodo.7041983).
 
 ## Copyright
 
