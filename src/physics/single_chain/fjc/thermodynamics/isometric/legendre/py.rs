@@ -35,4 +35,12 @@ impl FJC
             number_of_links
         }
     }
+    pub fn force(&self, end_to_end_length_per_link: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).force(&end_to_end_length_per_link, &temperature))
+    }
+    pub fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_force(&nondimensional_end_to_end_length_per_link))
+    }
 }
