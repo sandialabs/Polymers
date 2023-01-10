@@ -34,6 +34,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinxcontrib.bibtex',
+    'sphinx_copybutton'
 ]
 html_css_files = ['custom.css']
 html_show_sphinx = False
