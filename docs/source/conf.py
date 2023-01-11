@@ -20,9 +20,7 @@ project = 'Polymers'
 version = get_version()
 release = version
 author = 'Michael R. Buche'
-copyright = '2022 National Technology & Engineering Solutions of Sandia, \
-    LLC (NTESS). Under the terms of Contract DE-NA0003525 with NTESS, \
-    the U.S. Government retains certain rights in this software'
+copyright = '2022 National Technology & Engineering Solutions of Sandia, LLC'
 
 add_module_names = False
 bibtex_bibfiles = ['main.bib']
@@ -36,8 +34,11 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinx_copybutton'
 ]
-html_css_files = ['custom.css']
+html_css_files = [
+    'custom.css'
+]
 html_show_sphinx = False
+html_show_sourcelink = False
 html_static_path = ['_static']
 html_theme = 'sphinx_rtd_theme'
 html_theme_options = {
