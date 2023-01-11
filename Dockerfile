@@ -14,9 +14,10 @@ RUN adduser --disabled-password \
 COPY . ${HOME}
 WORKDIR ${HOME}
 USER root
+RUN pip install jupyterlab maturin notebook && \
+    maturin build --features python
 RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 RUN pip install jupyterlab maturin notebook && \
-    maturin build --features python && \
     pip install target/wheels/*.whl
 ENV PATH="${HOME}/.local/bin:${PATH}"
