@@ -1,6 +1,6 @@
 FROM python:3.11
 
-ARG NB_USER=polymers_user
+ARG NB_USER=jovyan
 ARG NB_UID=1000
 ENV USER ${NB_USER}
 ENV NB_UID ${NB_UID}
@@ -12,8 +12,8 @@ WORKDIR ${HOME}
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="${HOME}/.cargo/bin:${PATH}"
 
-RUN pip install jupyterlab maturin notebook && \
-    maturin build --features python
+# RUN pip install jupyterlab maturin notebook && \
+#     maturin build --features python
 
 RUN adduser --disabled-password \
     --gecos "Default user" \
@@ -25,4 +25,5 @@ RUN chown -R ${NB_UID} ${HOME}
 
 USER ${NB_USER}
 RUN pip install jupyterlab maturin notebook && \
+    # maturin build --features python && \
     pip install target/wheels/*.whl
