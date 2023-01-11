@@ -10,7 +10,7 @@ COPY . ${HOME}
 WORKDIR ${HOME}
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="${HOME}/.cargo/bin:${PATH}"
+# ENV PATH="${HOME}/.cargo/bin:${PATH}"
 
 # RUN pip install jupyterlab maturin notebook && \
 #     maturin build --features python
@@ -24,6 +24,7 @@ USER root
 RUN chown -R ${NB_UID} ${HOME}
 
 USER ${NB_USER}
+ENV PATH="${HOME}/.cargo/bin:${PATH}"
 RUN pip install jupyterlab maturin notebook && \
     # maturin build --features python && \
     pip install target/wheels/*.whl
