@@ -4,6 +4,6 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - rust
+  - rust=1.65.0
   - pip:
-    - polymers==0.0.5
+    - polymers
