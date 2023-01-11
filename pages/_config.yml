@@ -13,11 +13,15 @@ gh_edit_link: false
 color_scheme: sandiadark
 
 nav_external_links:
-  - title: Python documentation (stable)
-    url: https://polymers.readthedocs.io/en/stable
-  - title: Python documentation (latest)
-    url: https://polymers.readthedocs.io/en/latest
-  - title: Rust documentation (stable)
+  - title: Python docs (stable)
+    hide_icon: true
+    url: https://polymers.readthedocs.io/en/stable/
+  - title: Python docs (latest)
+    hide_icon: true
+    url: https://polymers.readthedocs.io/en/latest/
+  - title: Rust docs (stable)
+    hide_icon: true
     url: https://docs.rs/polymers/latest/polymers/
-  - title: Rust documentation (latest)
+  - title: Rust docs (latest)
+    hide_icon: true
     url: https://sandialabs.github.io/Polymers/rust/docs/latest/polymers/
