@@ -1,0 +1,8 @@
+name: polymers
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pip:
+    - polymers==0.0.5
