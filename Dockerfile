@@ -10,7 +10,7 @@ COPY . ${HOME}
 WORKDIR ${HOME}
 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+ENV PATH="${HOME}/.cargo/bin:${PATH}"
 
 RUN pip install jupyterlab maturin notebook && \
     maturin build --features python
