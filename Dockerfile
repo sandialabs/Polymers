@@ -23,6 +23,7 @@ RUN chown -R 1000 ${HOME}
 
 USER polymers_user
 ENV PATH="${HOME}/.cargo/bin:${PATH}"
-RUN pip install jupyterlab maturin notebook && \
-    maturin build --features python && \
+RUN pip install jupyterlab maturin notebook
+ENV PATH="${HOME}/.local/bin:${PATH}"
+RUN maturin build --features python && \
     pip install target/wheels/*.whl
