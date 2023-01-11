@@ -26,5 +26,5 @@ RUN chown -R ${NB_UID} ${HOME}
 USER ${NB_USER}
 ENV PATH="${HOME}/.cargo/bin:${PATH}"
 RUN pip install jupyterlab maturin notebook && \
-    # maturin build --features python && \
+    maturin build --features python && \
     pip install target/wheels/*.whl
