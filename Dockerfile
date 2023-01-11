@@ -1,4 +1,6 @@
 FROM python:3.11
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 ARG NB_USER=polymers_user
 ARG NB_UID=1000
 ENV USER ${NB_USER}
@@ -6,8 +8,11 @@ ENV NB_UID ${NB_UID}
 ENV HOME /home/${NB_USER}
 COPY . ${HOME}
 WORKDIR ${HOME}
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+
+RUN ls -ltrah
+RUN ls -ltrah /
+RUN ls -ltrah ${HOME}
+
 RUN pip install jupyterlab maturin notebook && \
     maturin build --features python
 RUN adduser --disabled-password \
