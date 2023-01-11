@@ -7,6 +7,15 @@ on:
   release:
     types: [ "published" ]
 jobs:
+  binder:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+    - name: cache
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        NO_PUSH: true
+        MYBINDERORG_TAG: ${{ github.event.ref }}
   test:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
