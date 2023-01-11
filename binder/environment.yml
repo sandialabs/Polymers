@@ -8,4 +8,6 @@ dependencies:
   - maturin
   - rust=1.65.0
   - pip:
+    - cffi
+    - maturin
     - polymers
