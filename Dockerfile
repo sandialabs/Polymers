@@ -1,5 +1,11 @@
 FROM python:3.11
 
+ARG NB_USER=polymers_user
+ARG NB_UID=1000
+ENV USER ${NB_USER}
+ENV NB_UID ${NB_UID}
+ENV HOME /home/${NB_USER}
+
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
@@ -8,12 +14,6 @@ WORKDIR ${HOME}
 
 RUN pip install jupyterlab maturin notebook && \
     maturin build --features python
-
-ARG NB_USER=polymers_user
-ARG NB_UID=1000
-ENV USER ${NB_USER}
-ENV NB_UID ${NB_UID}
-ENV HOME /home/${NB_USER}
 
 RUN adduser --disabled-password \
     --gecos "Default user" \
