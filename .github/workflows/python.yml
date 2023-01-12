@@ -71,8 +71,7 @@ jobs:
       - name: check
         run: |
           mkdir wheelhouse/
-          mv ./*-wheel/*.whl wheelhouse/
-          ls -l wheelhouse/
+          mv ./*-wheel/*.whl wheelhouse/ || true
           pip install twine
           twine check wheelhouse/*.whl
       - name: upload
