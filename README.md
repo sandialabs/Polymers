@@ -29,7 +29,7 @@ or as Python package within a Conda environment using
 conda install --channel mrbuche polymers
 ```
 
-The latest edition of the library can be installed from the main branch of the GitHub repository:
+If Rust is installed, the latest edition of the library can be installed from the main branch of the GitHub repository:
 
 ```shell
 git clone git@github.com:sandialabs/Polymers.git
