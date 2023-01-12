@@ -13,16 +13,55 @@ jobs:
     container: quay.io/pypa/manylinux2014_x86_64
     steps:
      - uses: actions/checkout@v3
-     - name: wheels
-       run: |
-         curl https://sh.rustup.rs -sSf | sh -s -- -y
-         source $HOME/.cargo/env
-         export PATH="$HOME/root/.cargo/bin:$PATH"
-         bash .github/workflows/build-wheels.sh
+     - uses: actions-rs/toolchain@v1
+       with:
+         toolchain: 1.65.0
+         default: true
+     - name: build wheels
+       run: bash .github/workflows/build-wheels.sh
      - uses: actions/upload-artifact@v1
        with:
          name: linux-wheels
          path: wheelhouse/
+  osx-wheels:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+    steps:
+     - uses: actions/checkout@v3
+     - uses: actions-rs/toolchain@v1
+       with:
+         toolchain: 1.65.0
+         default: true
+     - uses: actions/setup-python@v4
+       with:
+         python-version: ${{ matrix.python-version }}
+     - name: build wheels
+       run: |
+         python3 -m pip install cffi maturin
+         maturin build --release
+     - uses: actions/upload-artifact@v1
+       with:
+         name: osx-${{ matrix.python-version }}-wheel
+         path: target/wheels
+  windows-wheels:
+    runs-on: windows-latest
+    steps:
+     - uses: actions/checkout@v3
+     - uses: actions-rs/toolchain@v1
+       with:
+         toolchain: 1.65.0
+         default: true
+     - uses: actions/setup-python@v4
+     - name: build wheels
+       run: |
+         python -m pip install cffi maturin
+         maturin build --release
+     - uses: actions/upload-artifact@v1
+       with:
+         name: windows-wheels
+         path: target/wheels
   test:
     if: github.event_name != 'release'
     runs-on: ubuntu-latest
