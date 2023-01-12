@@ -9,5 +9,7 @@ dependencies:
   - rust=1.65.0
   - pip:
     - cffi==1.15.1
+    - matplotlib==3.5.1
     - maturin==0.14.8
-    - polymers==0.0.5
+    - numpy==1.23.1
+    - polymers
