@@ -21,7 +21,11 @@ jobs:
           cd conda/
           conda update conda
           conda install anaconda-client conda-build
+          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
+          cat meta.yaml
           conda build .
+          ls -lrtah /usr/share/miniconda/conda-bld/noarch/
   conda:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -35,6 +39,8 @@ jobs:
         run: |
           conda update conda
           conda install anaconda-client conda-build
+          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
           conda build .
           PATH="/usr/share/miniconda/bin/:$PATH"
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
