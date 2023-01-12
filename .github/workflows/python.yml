@@ -63,7 +63,7 @@ jobs:
          name: windows-wheels
          path: target/wheels
   pypi:
-    if: github.event_name == 'release'
+    # if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
