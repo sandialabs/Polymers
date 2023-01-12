@@ -4,11 +4,10 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  # - cffi
-  # - maturin
-  - pip
-  - python=3.10
-  - rust=1.64
+  - pip=22.1.2
+  - python=3.10.4
+  - rust=1.65.0
   - pip:
-    - cffi
-    - maturin
+    - cffi==1.15.1
+    - maturin==0.14.8
+    - polymers==0.0.5
