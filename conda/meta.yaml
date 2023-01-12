@@ -1,0 +1,28 @@
+package:
+  name: "polymers"
+  version: "VERSION_PLACEHOLDER"
+source:
+  git_depth: 1
+  git_url: https://github.com/sandialabs/Polymers
+build:
+  noarch: python
+  number: 0
+  script: |
+    maturin build --features python
+    pip install target/wheels/*.whl
+requirements:
+  build:
+    - maturin
+    - pip
+    - python
+    - rust
+  run:
+    - python
+about:
+  dev_url: https://github.com/sandialabs/Polymers
+  doc_url: https://polymers.readthedocs.io/en/stable
+  home: https://sandialabs.github.io/Polymers
+  license: BSD-3-Clause
+  license_file: LICENSE
+  license_url: https://github.com/sandialabs/polymers/blob/main/LICENSE
+  summary: Polymers Modeling Library

@@ -13,12 +13,40 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: install
+      - name: pypi
         run: |
           pip install maturin
           maturin build --features python
           pip install target/wheels/*.whl
-  publish:
+      - name: conda
+        run: |
+          cd conda/
+          conda update conda
+          conda install anaconda-client conda-build
+          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
+          conda build .
+          conda install /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
+  conda:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./conda/
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: publish
+        run: |
+          conda update conda
+          conda install anaconda-client conda-build
+          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
+          conda build .
+          PATH="/usr/share/miniconda/bin/:$PATH"
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+          anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
+  pypi:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
