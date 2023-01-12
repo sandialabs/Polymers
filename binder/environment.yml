@@ -8,9 +8,9 @@ dependencies:
   - python
   - rust=1.65.0
   - pip:
-    - cffi==1.15.1
+    - cffi
     - matplotlib
-    - maturin==0.14.9
+    - maturin
     - numpy
     - polymers
     - scipy
