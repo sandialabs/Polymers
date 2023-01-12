@@ -62,14 +62,19 @@ jobs:
        with:
          name: windows-wheels
          path: target/wheels
-  pypi:
+  twine:
     # if: github.event_name == 'release'
     needs: [linux-wheels, osx-wheels, windows-wheels]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
-      - name: Display structure of downloaded files
-        run: ls -R
+      - name: prepare
+        run: |
+          mkdir wheelhouse/
+          mv ./*wheels/*.whl wheelhouse/
+          pip install twine
+      - name: upload
+        run: twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} wheelhouse/*.whl
   test:
     if: github.event_name != 'release'
     runs-on: ubuntu-latest
