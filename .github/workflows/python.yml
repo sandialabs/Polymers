@@ -68,11 +68,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
-      - name: prepare
+      - name: check
         run: |
           mkdir wheelhouse/
-          mv ./*wheels/*.whl wheelhouse/
+          mv ./*-wheel/*.whl wheelhouse/
+          ls -l wheelhouse/
           pip install twine
+          twine check wheelhouse/*.whl
       - name: upload
         run: twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} wheelhouse/*.whl
   test:
