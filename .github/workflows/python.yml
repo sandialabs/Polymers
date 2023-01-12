@@ -62,6 +62,13 @@ jobs:
        with:
          name: windows-wheels
          path: target/wheels
+  pypi:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+      - name: Display structure of downloaded files
+        run: ls -R
   test:
     if: github.event_name != 'release'
     runs-on: ubuntu-latest
@@ -101,13 +108,3 @@ jobs:
           PATH="/usr/share/miniconda/bin/:$PATH"
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
           anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
-  pypi:
-    if: github.event_name == 'release'
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: publish
-        run: |
-          pip install maturin
-          maturin publish -F python -u __token__ -p ${{ secrets.PYPI_TOKEN }}
