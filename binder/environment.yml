@@ -1,0 +1,16 @@
+name: polymers
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - pip
+  - python
+  - rust=1.65.0
+  - pip:
+    - cffi
+    - matplotlib
+    - maturin
+    - numpy
+    - polymers
+    - scipy
