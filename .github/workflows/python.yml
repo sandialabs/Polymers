@@ -7,6 +7,74 @@ on:
   release:
     types: [ published ]
 jobs:
+  linux-wheels:
+    runs-on: ubuntu-latest
+    container: quay.io/pypa/manylinux2014_x86_64
+    steps:
+     - uses: actions/checkout@v3
+     - uses: actions-rs/toolchain@v1
+       with:
+         toolchain: 1.65.0
+         default: true
+     - name: build wheels
+       run: bash .github/workflows/build-wheels.sh
+     - uses: actions/upload-artifact@v1
+       with:
+         name: linux-wheels
+         path: wheelhouse/
+  osx-wheels:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+    steps:
+     - uses: actions/checkout@v3
+     - uses: actions-rs/toolchain@v1
+       with:
+         toolchain: 1.65.0
+         default: true
+     - uses: actions/setup-python@v4
+       with:
+         python-version: ${{ matrix.python-version }}
+     - name: build wheels
+       run: |
+         python3 -m pip install cffi maturin
+         maturin build --features python --release
+     - uses: actions/upload-artifact@v1
+       with:
+         name: osx-${{ matrix.python-version }}-wheel
+         path: target/wheels
+  windows-wheels:
+    runs-on: windows-latest
+    steps:
+     - uses: actions/checkout@v3
+     - uses: actions-rs/toolchain@v1
+       with:
+         toolchain: 1.65.0
+         default: true
+     - uses: actions/setup-python@v4
+     - name: build wheels
+       run: |
+         python -m pip install cffi maturin
+         maturin build --features python --release
+     - uses: actions/upload-artifact@v1
+       with:
+         name: windows-wheels
+         path: target/wheels
+  twine:
+    if: github.event_name == 'release'
+    needs: [linux-wheels, osx-wheels, windows-wheels]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+      - name: check
+        run: |
+          mkdir wheelhouse/
+          mv ./*-wheel*/*.whl wheelhouse/ || true
+          pip install twine
+          twine check wheelhouse/*.whl
+      - name: upload
+        run: twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} wheelhouse/*.whl
   test:
     if: github.event_name != 'release'
     runs-on: ubuntu-latest
@@ -20,10 +88,10 @@ jobs:
           pip install target/wheels/*.whl
       - name: conda
         run: |
-          cd conda/
+          cd .github/conda/
           conda update conda
           conda install anaconda-client conda-build
-          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          export VERSION=$(grep "version =" ../../Cargo.toml | cut -d '"' -f2 | head -n 1)
           sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
           conda build .
           conda install /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
@@ -32,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./conda/
+        working-directory: .github/conda/
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -40,19 +108,9 @@ jobs:
         run: |
           conda update conda
           conda install anaconda-client conda-build
-          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          export VERSION=$(grep "version =" ../../Cargo.toml | cut -d '"' -f2 | head -n 1)
           sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
           conda build .
           PATH="/usr/share/miniconda/bin/:$PATH"
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
           anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
-  pypi:
-    if: github.event_name == 'release'
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: publish
-        run: |
-          pip install maturin
-          maturin publish -F python -u __token__ -p ${{ secrets.PYPI_TOKEN }}
