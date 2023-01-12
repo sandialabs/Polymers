@@ -1,8 +1,7 @@
 name: Python
 on:
   push:
-    # branches: [ "main" ]
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -63,7 +62,7 @@ jobs:
          name: windows-wheels
          path: target/wheels
   twine:
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     needs: [linux-wheels, osx-wheels, windows-wheels]
     runs-on: ubuntu-latest
     steps:
@@ -89,10 +88,10 @@ jobs:
           pip install target/wheels/*.whl
       - name: conda
         run: |
-          cd conda/
+          cd .github/conda/
           conda update conda
           conda install anaconda-client conda-build
-          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          export VERSION=$(grep "version =" ../../Cargo.toml | cut -d '"' -f2 | head -n 1)
           sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
           conda build .
           conda install /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
@@ -101,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .github/workflows/
+        working-directory: .github/conda/
     steps:
       - name: checkout
         uses: actions/checkout@v3
