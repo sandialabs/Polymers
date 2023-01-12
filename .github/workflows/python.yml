@@ -40,7 +40,7 @@ jobs:
      - name: build wheels
        run: |
          python3 -m pip install cffi maturin
-         maturin build --release
+         maturin build --release --features python
      - uses: actions/upload-artifact@v1
        with:
          name: osx-${{ matrix.python-version }}-wheel
@@ -57,7 +57,7 @@ jobs:
      - name: build wheels
        run: |
          python -m pip install cffi maturin
-         maturin build --release
+         maturin build --release --features python
      - uses: actions/upload-artifact@v1
        with:
          name: windows-wheels
