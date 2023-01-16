@@ -1,8 +1,7 @@
 name: Julia
 on:
   push:
-    # branches: [ "main" ]
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -25,4 +24,9 @@ jobs:
         uses: julia-actions/setup-julia@v1
         with:
           version: 1.8
-      - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'"); Pkg.build("Polymers"); Pkg.test("Polymers")'
+      - name: add
+        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
+      - name: build
+        run: julia -e 'using Pkg; Pkg.build("Polymers")'
+      - name: test
+        run: julia -e 'using Pkg; Pkg.test("Polymers")'
