@@ -1,8 +1,7 @@
 name: Julia
 on:
   push:
-    branches: [ "dev" ]
-    # branches: [ "main" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -30,7 +29,7 @@ jobs:
         run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
       - name: add
         if: github.event_name == 'pull_request'
-        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_BASE_REF##*/}'")'
+        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_HEAD_REF##*/}'")'
       - name: build
         run: julia -e 'using Pkg; Pkg.build("Polymers")'
       - name: test
