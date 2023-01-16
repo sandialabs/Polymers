@@ -1,5 +1,2 @@
-using Pkg
-
-Pkg.activate(".")
-
+cd("../")
 run(`cargo build --features julia`)
