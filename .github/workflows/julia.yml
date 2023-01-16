@@ -25,4 +25,4 @@ jobs:
         uses: julia-actions/setup-julia@v1
         with:
           version: 1.8
-      - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="${GITHUB_REF##*/}"); Pkg.build("Polymers"); Pkg.test("Polymers")'
+      - run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'"); Pkg.build("Polymers"); Pkg.test("Polymers")'
