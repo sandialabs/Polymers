@@ -1,6 +1,7 @@
 module Polymers
 
-export get_name
-include("functions.jl")
+const PROJECT_ROOT = string(dirname(@__FILE__), "/../")
+
+include("./physics/mod.jl")
 
 end

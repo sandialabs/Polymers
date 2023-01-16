@@ -1,0 +1,36 @@
+name: Julia
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [ published ]
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  test:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: 1.8
+      - name: add
+        if: github.event_name != 'pull_request'
+        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
+      - name: add
+        if: github.event_name == 'pull_request'
+        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_HEAD_REF##*/}'")'
+      - name: build
+        run: julia -e 'using Pkg; Pkg.build("Polymers")'
+      - name: test
+        run: julia -e 'using Pkg; Pkg.test("Polymers")'
