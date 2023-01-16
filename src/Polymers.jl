@@ -1,6 +1,5 @@
 module Polymers
 
-export get_name
-include("functions.jl")
+include("./physics/mod.jl")
 
 end
