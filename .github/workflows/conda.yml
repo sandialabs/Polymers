@@ -1,0 +1,43 @@
+name: Conda
+on:
+  push:
+   branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [ published ]
+jobs:
+  anaconda:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: conda/
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: meta
+        run: |
+          export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
+          sed -i '/about:/a \ \ description: |' meta.yaml
+          sed 's/^/    /' ../README.md > README.md
+          sed -i '/dev_url/e cat README.md' meta.yaml
+          cat meta.yaml
+      - name: build
+        run: |
+          conda update conda
+          conda install anaconda-client conda-build
+          conda build --channel conda-forge .
+      - name: test
+        if: github.event_name != 'release'
+        run: |
+          conda install /usr/share/miniconda/conda-bld/linux-64/polymers*.tar.bz2
+#           python -c 'from polymers import physics'
+#           julia -e 'using Pkg; Pkg.test("Polymers")'
+      - name: upload
+        if: github.event_name == 'release'
+        run: |
+          PATH="/usr/share/miniconda/bin/:$PATH"
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+          anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/linux-64/polymers*.tar.bz2
