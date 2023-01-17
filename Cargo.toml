@@ -4,7 +4,7 @@ version = "0.0.7"
 edition = "2021"
 description = "Polymers Modeling Library"
 license = "BSD-3-Clause"
-keywords = ["python", "rust", "polymers"]
+keywords = ["julia", "polymers", "python", "rust"]
 
 [lib]
 crate-type = ["cdylib", "rlib", "staticlib"]
