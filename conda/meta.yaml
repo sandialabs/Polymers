@@ -26,7 +26,6 @@ requirements:
 #     - polymers
 about:
   dev_url: https://github.com/sandialabs/Polymers
-  doc_url: https://polymers.readthedocs.io/en/stable
   home: https://sandialabs.github.io/Polymers
   license: BSD-3-Clause
   license_file: LICENSE
