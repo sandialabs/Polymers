@@ -10,17 +10,18 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: check
+      - name: get
         id: last_release
-        uses: InsonusK/get-latest-release@v1.0.1
+        uses: InsonusK/get-latest-release@v1
         with:
           myToken: ${{ github.token }}
           view_top: 1
-      - name: result
+      - name: check
         run: |
-          echo "id: ${{ steps.last_release.outputs.id }}"
-          echo "name: ${{ steps.last_release.outputs.name }}"
-          echo "tag_name: ${{ steps.last_release.outputs.tag_name }}"
-          echo "created_at: ${{ steps.last_release.outputs.created_atd }}"
-          echo "draft: ${{ steps.last_release.outputs.draft }}"
-          echo "prerelease: ${{ steps.last_release.outputs.prerelease }}"
+          export LATEST_VERSION=$(echo ${{ steps.last_release.outputs.tag_name }} | cut -d v -f 2)
+          echo ${LATEST_VERSION}
+          export CURRENT_VERSION=$(grep -m 1 version Cargo.toml | cut -d '"' -f 2)
+          echo ${CURRENT_VERSION}
+          pip install packaging
+          export CHECK=$(python -c 'from packaging.version import parse; print(parse("'${CURRENT_VERSION}'") > parse("'${LATEST_VERSION}'"))' | tr '[:upper:]' '[:lower:]')
+          $CHECK
