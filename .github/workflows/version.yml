@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ "main" ]
 jobs:
-  check:
+  version:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -15,7 +15,6 @@ jobs:
         uses: InsonusK/get-latest-release@v1.0.1
         with:
           myToken: ${{ github.token }}
-          exclude_types: "release"
           view_top: 1
       - name: result
         run: |
