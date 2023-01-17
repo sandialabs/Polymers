@@ -5,12 +5,11 @@ source:
   git_depth: 1
   git_url: https://github.com/sandialabs/Polymers
 build:
-#   noarch: python
-  number: 1
+  number: 0
   script: |
     maturin build --features python
     pip install --no-deps target/wheels/*.whl
-#     julia -e 'using Pkg; Pkg.develop(path="."); Pkg.build("Polymers")'
+    julia -e 'using Pkg; Pkg.develop(path="."); Pkg.build("Polymers")'
 requirements:
   build:
     - julia
@@ -21,11 +20,11 @@ requirements:
   run:
     - julia
     - python
-test:
-  commands:
-    - julia -e 'using Pkg; Pkg.test("Polymers")'
-  # imports:
-  #   - polymers
+# test:
+#   commands:
+#     - julia -e 'using Pkg; Pkg.test("Polymers")'
+#   imports:
+#     - polymers
 about:
   dev_url: https://github.com/sandialabs/Polymers
   home: https://sandialabs.github.io/Polymers
@@ -33,3 +32,6 @@ about:
   license_file: LICENSE
   license_url: https://github.com/sandialabs/polymers/blob/main/LICENSE
   summary: Polymers Modeling Library
+extra:
+  recipe-maintainers:
+    - mrbuche

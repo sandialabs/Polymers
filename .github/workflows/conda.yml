@@ -30,11 +30,11 @@ jobs:
           conda update conda
           conda install anaconda-client conda-build
           conda build --channel conda-forge .
-      # - name: test
-      #   if: github.event_name != 'release'
-      #   run: |
-      #     conda install /usr/share/miniconda/conda-bld/linux-64/polymers*.tar.bz2
-      #     python -c 'from polymers import physics'
+      - name: test
+        if: github.event_name != 'release'
+        run: |
+          conda install --use-local polymers
+#           python -c 'from polymers import physics'
 #           julia -e 'using Pkg; Pkg.test("Polymers")'
       - name: upload
 #         if: github.event_name == 'release'
