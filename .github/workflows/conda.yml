@@ -35,4 +35,4 @@ jobs:
         run: |
           PATH="/usr/share/miniconda/bin/:$PATH"
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
-          anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
+          anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/linux-64/polymers*.tar.bz2
