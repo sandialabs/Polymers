@@ -10,16 +10,16 @@ build:
   script: |
     maturin build --features python
     pip install --no-deps target/wheels/*.whl
-    julia -e 'using Pkg; Pkg.develop(path="."); Pkg.build("Polymers")'
+#     julia -e 'using Pkg; Pkg.develop(path="."); Pkg.build("Polymers")'
 requirements:
   build:
-    - julia
+#     - julia
     - maturin
     - pip
     - python
     - rust
   run:
-    - julia
+#     - julia
     - python
 # test:
 #   imports:
