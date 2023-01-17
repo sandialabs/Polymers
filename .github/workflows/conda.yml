@@ -27,7 +27,7 @@ jobs:
       - name: test
         if: github.event_name != 'release'
         run: |
-          conda install /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
+          conda install /usr/share/miniconda/conda-bld/linux-64/polymers*.tar.bz2
           python -c 'from polymers import physics'
 #           julia -e 'using Pkg; Pkg.test("Polymers")'
       - name: upload
