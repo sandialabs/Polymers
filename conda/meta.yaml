@@ -9,7 +9,7 @@ build:
   number: 1
   script: |
     maturin build --features python
-    pip install target/wheels/*.whl
+    pip install --no-deps target/wheels/*.whl
 requirements:
   build:
     - maturin
@@ -18,6 +18,9 @@ requirements:
     - rust
   run:
     - python
+test:
+  imports:
+    - polymers
 about:
   dev_url: https://github.com/sandialabs/Polymers
   doc_url: https://polymers.readthedocs.io/en/stable
