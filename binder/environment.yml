@@ -4,6 +4,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - julia
   - pip
   - python
   - rust=1.65.0
