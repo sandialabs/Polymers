@@ -5,7 +5,7 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 COPY . .
 RUN pip install --no-cache-dir maturin && \
-    maturin build --features all && \
+    maturin build --all-features && \
     pip install --no-cache-dir target/wheels/*.whl
 COPY --from=julia /usr/local/julia/ /opt/julia/
 ENV PATH "${PATH}:/opt/julia/bin"
