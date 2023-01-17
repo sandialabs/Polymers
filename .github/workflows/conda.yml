@@ -1,8 +1,7 @@
 name: Conda
 on:
   push:
-#    branches: [ "main" ]
-    branches: [ "dev" ]
+   branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -33,11 +32,11 @@ jobs:
       - name: test
         if: github.event_name != 'release'
         run: |
-          conda install --use-local polymers
+          conda install /usr/share/miniconda/conda-bld/linux-64/polymers*.tar.bz2
 #           python -c 'from polymers import physics'
 #           julia -e 'using Pkg; Pkg.test("Polymers")'
       - name: upload
-#         if: github.event_name == 'release'
+        if: github.event_name == 'release'
         run: |
           PATH="/usr/share/miniconda/bin/:$PATH"
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
