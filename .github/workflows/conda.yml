@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .github/conda/
+        working-directory: conda/
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -27,12 +27,12 @@ jobs:
           conda install /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
       - name: test
         run: python -c 'from polymers import physics'
-  conda:
+  upload:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: .github/conda/
+        working-directory: conda/
     steps:
       - name: checkout
         uses: actions/checkout@v3
