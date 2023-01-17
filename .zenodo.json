@@ -8,9 +8,10 @@
       }
     ],
     "keywords": [
+      "julia",
+      "polymers",
       "python",
-      "rust",
-      "polymers"
+      "rust"
     ],
     "license": "BSD-3-Clause",
     "upload_type": "software"
