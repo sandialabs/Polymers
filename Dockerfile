@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir maturin && \
     pip install --no-cache-dir target/wheels/*.whl
 COPY --from=julia /usr/local/julia/ /opt/julia/
 ENV PATH "${PATH}:/opt/julia/bin"
-RUN julia -e 'using Pkg; Pkg.develop(path="."); Pkg.test("Polymers")'
+RUN julia -e 'using Pkg; Pkg.develop(path="."); Pkg.build("Polymers"); Pkg.test("Polymers")'
