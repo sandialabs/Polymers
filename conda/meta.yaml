@@ -13,17 +13,22 @@ build:
 #     julia -e 'using Pkg; Pkg.develop(path="."); Pkg.build("Polymers")'
 requirements:
   build:
-#     - julia
+    - julia
     - maturin
     - pip
     - python
     - rust
-  run:
-#     - julia
+  host:
+    - julia
     - python
-# test:
-#   imports:
-#     - polymers
+  run:
+    - julia
+    - python
+test:
+  commands:
+    - julia -e 'using Pkg; Pkg.test("Polymers")'
+  # imports:
+  #   - polymers
 about:
   dev_url: https://github.com/sandialabs/Polymers
   home: https://sandialabs.github.io/Polymers
