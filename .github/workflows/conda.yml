@@ -22,7 +22,7 @@ jobs:
           export VERSION=$(grep "version =" ../Cargo.toml | cut -d '"' -f2 | head -n 1)
           sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
           sed -i '/about:/a \ \ description: |' meta.yaml
-          sed -i 's/^/    /' ../README.md > README.md
+          sed 's/^/    /' ../README.md > README.md
           sed -i '/dev_url/e cat README.md' meta.yaml
           cat meta.yaml
       - name: build
