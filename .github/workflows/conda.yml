@@ -1,0 +1,48 @@
+name: Conda
+on:
+  push:
+#    branches: [ "main" ]
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "main" ]
+  release:
+    types: [ published ]
+jobs:
+  test:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .github/conda/
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: install
+        run: |
+          conda update conda
+          conda install anaconda-client conda-build
+          export VERSION=$(grep "version =" ../../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
+          conda build .
+          conda install /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
+      - name: test
+        run: python -c 'from polymers import physics'
+  conda:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .github/conda/
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: publish
+        run: |
+          conda update conda
+          conda install anaconda-client conda-build
+          export VERSION=$(grep "version =" ../../Cargo.toml | cut -d '"' -f2 | head -n 1)
+          sed -i "s/VERSION_PLACEHOLDER/$VERSION/" meta.yaml
+          conda build .
+          PATH="/usr/share/miniconda/bin/:$PATH"
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+          anaconda upload --user mrbuche /usr/share/miniconda/conda-bld/noarch/polymers*.tar.bz2
