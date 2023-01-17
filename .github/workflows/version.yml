@@ -1,7 +1,5 @@
 name: Version
 on:
-  push:
-   branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
 jobs:
@@ -18,10 +16,10 @@ jobs:
           view_top: 1
       - name: check
         run: |
+          pip install packaging
           export LATEST_VERSION=$(echo ${{ steps.last_release.outputs.tag_name }} | cut -d v -f 2)
           echo "latest tag is ${LATEST_VERSION}"
           export CURRENT_VERSION=$(grep -m 1 version Cargo.toml | cut -d '"' -f 2)
           echo "version in PR is ${CURRENT_VERSION}"
-          pip install packaging
           export CHECK=$(python -c 'from packaging.version import parse; print(parse("'${CURRENT_VERSION}'") > parse("'${LATEST_VERSION}'"))' | tr '[:upper:]' '[:lower:]')
           $CHECK
