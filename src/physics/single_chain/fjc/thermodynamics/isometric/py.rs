@@ -197,7 +197,7 @@ impl FJC
     /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link,
     ///
     /// .. math::
-    ///     P_\mathrm{eq}(\xi) = \frac{Q(\xi)}{4\pi\int Q(\xi') {\xi'}{}^2 d\xi'} = \frac{1}{8\pi\ell_b^2\xi}\frac{N_b^{N_b - 2}}{(N_b - 2)!}\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2},
+    ///     P_\mathrm{eq}(\xi) = \frac{e^{-\beta\psi(\xi, T)}}{4\pi\int e^{-\beta\psi(\xi', T)} \,{\xi'}{}^2 d\xi'} = \frac{1}{8\pi\ell_b^2\xi}\frac{N_b^{N_b - 2}}{(N_b - 2)!}\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2},
     ///
     /// where :math:`m\equiv(1 - \xi/N_b\ell_b)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
@@ -214,7 +214,7 @@ impl FJC
     /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link,
     ///
     /// .. math::
-    ///     \mathscr{P}_\mathrm{eq}(\gamma) = \frac{1}{8\pi\gamma}\frac{N_b^{N_b}}{(N_b - 2)!}\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2},
+    ///     \mathscr{P}_\mathrm{eq}(\gamma) = \frac{e^{-\Delta\vartheta(\gamma)}}{4\pi\int e^{-\Delta\vartheta(\gamma')} \,{\gamma'}{}^2 d\gamma'} = \frac{1}{8\pi\gamma}\frac{N_b^{N_b}}{(N_b - 2)!}\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2},
     ///
     /// where :math:`m\equiv(1 - \gamma)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
