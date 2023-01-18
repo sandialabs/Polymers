@@ -114,7 +114,7 @@ impl FJC
     {
         self.nondimensional_equilibrium_distribution(&(end_to_end_length/self.contour_length))/self.contour_length.powi(3)
     }
-    /// The equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link.
+    /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link.
     pub fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         let n = self.number_of_links as u128;
@@ -129,7 +129,7 @@ impl FJC
     {
         self.nondimensional_equilibrium_radial_distribution(&(end_to_end_length/self.contour_length))/self.contour_length
     }
-    /// The equilibrium probability density of nondimensional end-to-end lengths per link as a function of the nondimensional end-to-end length per link.
+    /// The nondimensional equilibrium probability density of nondimensional end-to-end lengths per link as a function of the nondimensional end-to-end length per link.
     pub fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         let n = self.number_of_links as u128;

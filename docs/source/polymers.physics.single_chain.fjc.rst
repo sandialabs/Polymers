@@ -3,10 +3,13 @@ FJC model
 
 .. toctree::
    :hidden:
-   :maxdepth: 2
+   :maxdepth: 1
 
    Thermodynamics <polymers.physics.single_chain.fjc.thermodynamics>
 
-.. automodule:: polymers.physics.single_chain.fjc
-   :members:
-   :undoc-members:
+.. autoclass:: polymers.physics.single_chain.fjc::FJC(number_of_links, link_length, hinge_mass)
+
+   .. autoattribute:: number_of_links
+   .. autoattribute:: link_length
+   .. autoattribute:: hinge_mass
+   .. autoattribute:: thermodynamics
