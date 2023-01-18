@@ -78,12 +78,6 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
 
 .. toctree::
    :hidden:
-   :caption: Examples
-
-   example_notebook
-
-.. toctree::
-   :hidden:
    :caption: Indices and Tables
 
    General Index <./genindex.html#http://>

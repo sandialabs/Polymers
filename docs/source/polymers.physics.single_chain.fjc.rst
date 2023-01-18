@@ -2,9 +2,9 @@ FJC model
 =========
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
 
+   Examples <polymers.physics.single_chain.fjc.examples>
    Thermodynamics <polymers.physics.single_chain.fjc.thermodynamics>
 
 .. autoclass:: polymers.physics.single_chain.fjc::FJC(number_of_links, link_length, hinge_mass)

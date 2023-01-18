@@ -2,9 +2,9 @@ FJC model thermodynamics (isometric)
 ====================================
 
 .. toctree::
-   :hidden:
    :maxdepth: 1
 
+   Examples <polymers.physics.single_chain.fjc.thermodynamics.isometric.examples>
    Legendre <polymers.physics.single_chain.fjc.thermodynamics.isometric.legendre>
 
 .. autoclass:: polymers.physics.single_chain.fjc.thermodynamics.isometric::FJC(number_of_links, link_length, hinge_mass)

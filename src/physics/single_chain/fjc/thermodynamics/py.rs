@@ -4,6 +4,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
     let thermodynamics = PyModule::new(py, "thermodynamics")?;
     super::isometric::py::register_module(py, thermodynamics)?;
+    super::isotensional::py::register_module(py, thermodynamics)?;
     parent_module.add_submodule(thermodynamics)?;
     thermodynamics.add_class::<FJC>()?;
     Ok(())
@@ -28,7 +29,11 @@ pub struct FJC
 
     /// The thermodynamic functions of the model in the isometric ensemble.
     #[pyo3(get)]
-    pub isometric: super::isometric::py::FJC
+    pub isometric: super::isometric::py::FJC,
+
+    /// The thermodynamic functions of the model in the isotensional ensemble.
+    #[pyo3(get)]
+    pub isotensional: super::isotensional::py::FJC
 }
 
 #[pymethods]
@@ -42,7 +47,8 @@ impl FJC
             hinge_mass,
             link_length,
             number_of_links,
-            isometric: super::isometric::py::FJC::init(number_of_links, link_length, hinge_mass)
+            isometric: super::isometric::py::FJC::init(number_of_links, link_length, hinge_mass),
+            isotensional: super::isotensional::py::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
 }
