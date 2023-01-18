@@ -10,7 +10,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
     Ok(())
 }
 
-/// ????????????????????????????????
+/// The freely-jointed chain (FJC) model thermodynamics in the modified canonical ensemble approximated using an asymptotic approach.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct FJC
@@ -27,11 +27,11 @@ pub struct FJC
     #[pyo3(get)]
     pub number_of_links: u8,
 
-    /// ????????????????????????????????
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach valid for weak potentials.
     #[pyo3(get)]
     pub weak_potential: super::weak_potential::py::FJC,
 
-    /// ????????????????????????????????
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach valid for strong potentials.
     #[pyo3(get)]
     pub strong_potential: super::strong_potential::py::FJC
 }

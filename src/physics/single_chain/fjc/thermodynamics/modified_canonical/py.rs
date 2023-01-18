@@ -26,7 +26,7 @@ pub struct FJC
     #[pyo3(get)]
     pub number_of_links: u8,
 
-    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach..
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach.
     #[pyo3(get)]
     pub asymptotic: super::asymptotic::py::FJC,
 }
