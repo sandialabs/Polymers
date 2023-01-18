@@ -8,7 +8,7 @@ This is the documentation for Python API, which is implemented in Rust.
 Installation
 ------------
 
-|pypi| |conda| |docker| |ghcr|  
+|pypi| |conda|  
 
 The library can be installed as a Python package using
 
@@ -31,18 +31,6 @@ The latest edition of the library can be installed from the main branch of the G
    pip install maturin
    maturin build --features python
    pip install target/wheels/*.whl
-
-Docker images are available for all stable versions that have been released, as well as the latest edition. These images have everything necessary installed, and can be pulled from Docker Hub:
-
-.. code-block:: sh
-
-   docker pull mrbuche/polymers
-
-as well as from the GitHub container registry:
-
-.. code-block:: sh
-
-   docker pull ghcr.io/sandialabs/polymers
 
 Citation
 --------
@@ -87,12 +75,6 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
    :caption: Modules
 
    Physics <polymers.physics>
-
-.. toctree::
-   :hidden:
-   :caption: Examples
-
-   example_notebook
 
 .. toctree::
    :hidden:
