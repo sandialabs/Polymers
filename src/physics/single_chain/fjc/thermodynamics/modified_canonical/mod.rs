@@ -1,5 +1,11 @@
+#[cfg(feature = "python")]
+pub mod py;
+
 mod test;
+
+/// The freely-jointed chain (FJC) model thermodynamics in the modified canonical ensemble approximated using an asymptotic approach.
 pub mod asymptotic;
+
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -12,17 +18,30 @@ use crate::physics::single_chain::
     ZERO,
     POINTS
 };
+
+/// The structure of the thermodynamics of the FJC model in the modified canonical ensemble.
 pub struct FJC
 {
+    /// The mass of each hinge in the chain in units of kg/mol.
     pub hinge_mass: f64,
+
+    /// The length of each link in the chain in units of nm.
     pub link_length: f64,
+
+    /// The number of links in the chain.
     pub number_of_links: u8,
-    number_of_links_f64: f64,
-    contour_length: f64,
+
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach.
     pub asymptotic: asymptotic::FJC,
+
+    number_of_links_f64: f64,
+    contour_length: f64
 }
+
+/// The implemented functionality of the thermodynamics of the FJC model in the modified canonical ensemble.
 impl FJC
 {
+    /// Initializes and returns an instance of the thermodynamics of the FJC model in the modified canonical ensemble.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
         FJC
@@ -35,26 +54,32 @@ impl FJC
             asymptotic: asymptotic::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
+    /// The expected end-to-end length as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn end_to_end_length(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         potential_distance - self.force(potential_distance, potential_stiffness, temperature)/potential_stiffness
     }
+    /// The expected end-to-end length per link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn end_to_end_length_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         (potential_distance - self.force(potential_distance, potential_stiffness, temperature)/potential_stiffness)/self.number_of_links_f64
     }
+    /// The expected nondimensional end-to-end length as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_end_to_end_length(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         self.number_of_links_f64*nondimensional_potential_distance - self.number_of_links_f64.powi(2)*self.nondimensional_force(nondimensional_potential_distance, nondimensional_potential_stiffness)/nondimensional_potential_stiffness
     }
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         nondimensional_potential_distance - self.number_of_links_f64*self.nondimensional_force(nondimensional_potential_distance, nondimensional_potential_stiffness)/nondimensional_potential_stiffness
     }
+    /// The expected force as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn force(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_force(&(*potential_distance/self.contour_length), &(potential_stiffness*self.contour_length.powi(2)/BOLTZMANN_CONSTANT/temperature))*BOLTZMANN_CONSTANT*temperature/self.link_length
     }
+    /// The expected nondimensional force as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_force(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         let n = self.number_of_links as u128;
@@ -76,22 +101,27 @@ impl FJC
         let dx = (ONE - ZERO)/(POINTS as f64);
         (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand_numerator(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()/(0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand_denominator(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()/self.number_of_links_f64    
     }
+    /// The helmholtz free energy as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn helmholtz_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(&(potential_distance/self.contour_length), &(potential_stiffness*self.contour_length.powi(2)/BOLTZMANN_CONSTANT/temperature), temperature)*BOLTZMANN_CONSTANT*temperature
     }
+    /// The helmholtz free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn helmholtz_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy_per_link(&(*potential_distance/self.contour_length), &(potential_stiffness*self.contour_length.powi(2)/BOLTZMANN_CONSTANT/temperature), temperature)*BOLTZMANN_CONSTANT*temperature
     }
+    /// The relative helmholtz free energy as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn relative_helmholtz_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy(&(*potential_distance/self.contour_length), &(potential_stiffness*self.contour_length.powi(2)/BOLTZMANN_CONSTANT/temperature))*BOLTZMANN_CONSTANT*temperature
     }
+    /// The relative helmholtz free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn relative_helmholtz_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(&(*potential_distance/self.contour_length), &(potential_stiffness*self.contour_length.powi(2)/BOLTZMANN_CONSTANT/temperature))*BOLTZMANN_CONSTANT*temperature
     }
+    /// The nondimensional helmholtz free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let integrand = |nondimensional_end_to_end_length_per_link: f64|
@@ -107,46 +137,57 @@ impl FJC
         let nondimensional_configurational_partition_function = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()*dx;
         -nondimensional_configurational_partition_function.ln() - (self.number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
+    /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness, temperature)/self.number_of_links_f64
     }
+    /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness, &300.0) - self.nondimensional_helmholtz_free_energy(&ZERO, nondimensional_potential_stiffness, &300.0)
     }
+    /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness)/self.number_of_links_f64
     }
+    /// The gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn gibbs_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.helmholtz_free_energy(potential_distance, potential_stiffness, temperature) - 0.5*potential_stiffness*potential_distance.powi(2)
     }
+    /// The gibbs free energy epr link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn gibbs_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.helmholtz_free_energy_per_link(potential_distance, potential_stiffness, temperature) - 0.5*potential_stiffness*potential_distance.powi(2)/self.number_of_links_f64
     }
+    /// The relative gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn relative_gibbs_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.relative_helmholtz_free_energy(potential_distance, potential_stiffness, temperature) - 0.5*potential_stiffness*potential_distance.powi(2)
     }
+    /// The relative gibbs free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn relative_gibbs_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.relative_helmholtz_free_energy_per_link(potential_distance, potential_stiffness, temperature) - 0.5*potential_stiffness*potential_distance.powi(2)/self.number_of_links_f64
     }
+    /// The nondimensional gibbs free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     pub fn nondimensional_gibbs_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness, temperature) - 0.5*nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)
     }
+    /// The nondimensional gibbs free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness, temperature) - 0.5*nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)/self.number_of_links_f64
     }
+    /// The nondimensional relative gibbs free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness) - 0.5*nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)
     }
+    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness) - 0.5*nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)/self.number_of_links_f64
