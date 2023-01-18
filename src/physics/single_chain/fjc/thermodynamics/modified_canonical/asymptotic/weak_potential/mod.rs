@@ -1,4 +1,8 @@
+#[cfg(feature = "python")]
+pub mod py;
+
 mod test;
+
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -6,14 +10,23 @@ use crate::physics::
     BOLTZMANN_CONSTANT
 };
 use crate::physics::single_chain::ZERO;
+
 pub struct FJC
 {
+    /// The mass of each hinge in the chain in units of kg/mol.
     pub hinge_mass: f64,
+
+    /// The length of each link in the chain in units of nm.
     pub link_length: f64,
+
+    /// The number of links in the chain.
     pub number_of_links: u8,
+
     number_of_links_f64: f64,
+
     contour_length: f64
 }
+
 impl FJC
 {
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
