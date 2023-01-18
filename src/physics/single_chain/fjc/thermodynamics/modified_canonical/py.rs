@@ -244,7 +244,7 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The gibbs free energy per link :math:`\varphi`.
+    ///     float: The gibbs free energy :math:`\varphi`.
     ///
     pub fn gibbs_free_energy(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
