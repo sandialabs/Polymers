@@ -14,7 +14,7 @@ julia = []
 python = ["dep:pyo3"]
 
 [dependencies]
-pyo3 = {version = "0.17.3", features = ["extension-module"], optional = true}
+pyo3 = {version = "0.18.0", features = ["extension-module"], optional = true}
 
 [dev-dependencies]
 rand = "0.8.5"
