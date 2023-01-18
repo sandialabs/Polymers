@@ -251,4 +251,109 @@ impl FJC
     {
         Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link))
     }
+    /// The gibbs free energy as a function of the applied end-to-end length and temperature,
+    ///
+    /// .. math::
+    ///     \varphi(\xi, T) \sim \psi(\xi, T) - \xi f(\xi, T) \quad \text{for } N_b\gg 1.
+    ///
+    /// Args:
+    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The gibbs free energy :math:`\varphi`.
+    ///
+    pub fn gibbs_free_energy(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy(&end_to_end_length, &temperature))
+    }
+    /// The gibbs free energy per link as a function of the applied end-to-end length and temperature.
+    ///
+    /// Args:
+    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The gibbs free energy per link :math:`\varphi/N_b`.
+    ///
+    pub fn gibbs_free_energy_per_link(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy_per_link(&end_to_end_length, &temperature))
+    }
+    /// The relative gibbs free energy as a function of the applied end-to-end length and temperature.
+    ///
+    /// Args:
+    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The relative gibbs free energy :math:`\Delta\varphi\equiv\varphi(\xi,T)-\varphi(0,T)`.
+    ///
+    pub fn relative_gibbs_free_energy(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy(&end_to_end_length, &temperature))
+    }
+    /// The relative gibbs free energy per link as a function of the applied end-to-end length and temperature.
+    ///
+    /// Args:
+    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The relative gibbs free energy per link :math:`\Delta\varphi/N_b`.
+    ///
+    pub fn relative_gibbs_free_energy_per_link(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy_per_link(&end_to_end_length, &temperature))
+    }
+    /// The nondimensional gibbs free energy as a function of the applied nondimensional end-to-end length per link and temperature.
+    ///
+    /// Args:
+    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///
+    pub fn nondimensional_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy(&nondimensional_end_to_end_length_per_link, &temperature))
+    }
+    /// The nondimensional gibbs free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
+    ///
+    /// Args:
+    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
+    ///
+    pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature))
+    }
+    /// The nondimensional relative gibbs free energy as a function of the applied nondimensional end-to-end length per link.
+    ///
+    /// Args:
+    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional relative gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
+    ///
+    pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy(&nondimensional_end_to_end_length_per_link))
+    }
+    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional end-to-end length per link.
+    ///
+    /// Args:
+    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional relative gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
+    ///
+    pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    {
+        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_end_to_end_length_per_link))
+    }
 }
