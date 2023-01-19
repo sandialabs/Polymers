@@ -12,4 +12,3 @@ Ideal model
    .. autoattribute:: link_length
    .. autoattribute:: hinge_mass
    .. autoattribute:: thermodynamics
-
