@@ -4,10 +4,10 @@ FJC model thermodynamics
 .. toctree::
    :maxdepth: 1
 
-   Examples <polymers.physics.single_chain.fjc.thermodynamics.examples>
-   Isometric <polymers.physics.single_chain.fjc.thermodynamics.isometric>
-   Isotensional <polymers.physics.single_chain.fjc.thermodynamics.isotensional>
-   Modified Canonical <polymers.physics.single_chain.fjc.thermodynamics.modified_canonical>
+   Examples <thermodynamics/examples>
+   Isometric <thermodynamics/isometric>
+   Isotensional <thermodynamics/isotensional>
+   Modified Canonical <thermodynamics/modified_canonical>
 
 .. autoclass:: polymers.physics.single_chain.fjc.thermodynamics::FJC(number_of_links, link_length, hinge_mass)
 
