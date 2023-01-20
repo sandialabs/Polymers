@@ -4,8 +4,7 @@ FJC model thermodynamics (modified canonical)
 .. toctree::
    :maxdepth: 1
 
-   Examples <polymers.physics.single_chain.fjc.thermodynamics.modified_canonical.examples>
-   Asymptotic <polymers.physics.single_chain.fjc.thermodynamics.modified_canonical.asymptotic>
+   Asymptotic <modified_canonical/asymptotic>
 
 .. autoclass:: polymers.physics.single_chain.fjc.thermodynamics.modified_canonical::FJC(number_of_links, link_length, hinge_mass)
 

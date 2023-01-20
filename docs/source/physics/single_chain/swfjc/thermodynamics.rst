@@ -4,7 +4,7 @@ SWFJC model thermodynamics
 .. toctree::
    :maxdepth: 1
 
-   Isotensional <polymers.physics.single_chain.swfjc.thermodynamics.isotensional>
+   Isotensional <thermodynamics/isotensional>
 
 .. autoclass:: polymers.physics.single_chain.swfjc.thermodynamics::SWFJC(number_of_links, link_length, hinge_mass, well_width)
 

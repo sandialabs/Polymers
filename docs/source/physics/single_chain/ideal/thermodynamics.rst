@@ -4,8 +4,8 @@ Ideal model thermodynamics
 .. toctree::
    :maxdepth: 1
 
-   Isometric <polymers.physics.single_chain.ideal.thermodynamics.isometric>
-   Isotensional <polymers.physics.single_chain.ideal.thermodynamics.isotensional>
+   Isometric <thermodynamics/isometric>
+   Isotensional <thermodynamics/isotensional>
 
 .. autoclass:: polymers.physics.single_chain.ideal.thermodynamics::Ideal(number_of_links, link_length, hinge_mass)
 
@@ -14,4 +14,3 @@ Ideal model thermodynamics
    .. autoattribute:: hinge_mass
    .. autoattribute:: isometric
    .. autoattribute:: isotensional
-

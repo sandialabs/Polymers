@@ -4,7 +4,7 @@ Polymer physics models
 .. toctree::
    :maxdepth: 1
 
-   Single Chain <polymers.physics.single_chain>
+   Single Chain <physics/single_chain>
 
 .. automodule:: polymers.physics.single_chain
    :members:

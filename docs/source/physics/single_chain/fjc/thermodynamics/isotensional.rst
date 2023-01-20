@@ -1,17 +1,16 @@
-SWFJC model thermodynamics (isotensional)
-=========================================
+FJC model thermodynamics (isotensional)
+=======================================
 
 .. toctree::
    :maxdepth: 1
 
-   Legendre <polymers.physics.single_chain.swfjc.thermodynamics.isotensional.legendre>
+   Legendre <isotensional/legendre>
 
-.. autoclass:: polymers.physics.single_chain.swfjc.thermodynamics.isotensional::SWFJC(number_of_links, link_length, hinge_mass, well_width)
+.. autoclass:: polymers.physics.single_chain.fjc.thermodynamics.isotensional::FJC(number_of_links, link_length, hinge_mass)
 
    .. autoattribute:: number_of_links
    .. autoattribute:: link_length
    .. autoattribute:: hinge_mass
-   .. autoattribute:: well_width
    .. autoattribute:: legendre
    .. automethod:: end_to_end_length(force, temperature)
    .. automethod:: end_to_end_length_per_link(force, temperature)

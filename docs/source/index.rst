@@ -74,7 +74,7 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
    :hidden:
    :caption: Modules
 
-   Physics <polymers.physics>
+   Physics <physics>
 
 .. toctree::
    :hidden:

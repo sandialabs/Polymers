@@ -20,4 +20,3 @@ Ideal model thermodynamics (isometric)
    .. automethod:: nondimensional_equilibrium_distribution(nondimensional_end_to_end_length_per_link)
    .. automethod:: equilibrium_radial_distribution(end_to_end_length)
    .. automethod:: nondimensional_equilibrium_radial_distribution(nondimensional_end_to_end_length_per_link)
-
