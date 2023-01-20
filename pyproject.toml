@@ -16,7 +16,6 @@ classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Science/Research',
     'Topic :: Scientific/Engineering',
-    'Programming Language :: Julia',
     'Programming Language :: Python',
     'Programming Language :: Rust',
 ]

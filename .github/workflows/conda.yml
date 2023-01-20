@@ -6,7 +6,6 @@ on:
     types: [ published ]
 jobs:
   anaconda:
-    if: github.event_name != 'release'
     runs-on: ubuntu-latest
     defaults:
       run:
