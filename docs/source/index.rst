@@ -58,12 +58,6 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
 .. |conda| image:: https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda
    :target: https://anaconda.org/mrbuche/polymers
 
-.. |docker| image:: https://img.shields.io/docker/v/mrbuche/polymers?color=0db7ed&label=Docker%20Hub&logo=docker&logoColor=0db7ed
-   :target: https://hub.docker.com/r/mrbuche/polymers
-
-.. |ghcr| image:: https://img.shields.io/badge/GitHub-latest-6e5494?logo=github
-   :target: https://github.com/sandialabs/Polymers/pkgs/container/polymers
-
 .. |zenodo| image:: https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.7041983-blue
    :target: https://doi.org/10.5281/zenodo.7041983
 

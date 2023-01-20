@@ -9,7 +9,7 @@ The library is implemented entirely in Rust, including the Python API. The Julia
 
 ## Python
 
-[![Read the Docs](https://img.shields.io/badge/Docs-stable-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/stable)
+[![Read the Docs stable](https://img.shields.io/badge/Docs-stable-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/stable)
 [![Read the Docs latest](https://img.shields.io/badge/Docs-latest-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/latest)
 [![PyPI](https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE)](https://pypi.org/project/polymers)
 [![Anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers/)
@@ -38,6 +38,8 @@ pip install target/wheels/*.whl
 
 ## Julia
 
+[![Julia docs stable](https://img.shields.io/badge/Docs-stable-9558B2.svg?logo=julia&logoColor=9558B2)](https://sandialabs.github.io/Polymers/julia/docs/stable/polymers)
+[![Julia docs latest](https://img.shields.io/badge/Docs-latest-9558B2.svg?logo=julia&logoColor=9558B2)](https://sandialabs.github.io/Polymers/julia/docs/latest/polymers)
 [![Anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers/)
 
 The latest edition of the library can be installed as a Julia package using
@@ -56,8 +58,8 @@ conda install --channel mrbuche polymers
 
 ## Rust
 
-[![Docs.rs](https://img.shields.io/badge/Docs-stable-32592f?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
-[![Docs.rs latest](https://img.shields.io/badge/Docs-latest-32592f?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest/polymers)
+[![Docs.rs stable](https://img.shields.io/badge/Docs-stable-f46623?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
+[![Docs.rs latest](https://img.shields.io/badge/Docs-latest-f46623?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest/polymers)
 [![Crates.io](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crate&color=32592f)](https://crates.io/crates/polymers)
 
 The library can be used in an existing Rust project by adding the `polymers` crate as a dependency in Cargo.toml:
