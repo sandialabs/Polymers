@@ -85,8 +85,8 @@ jobs:
           maturin build --features python
           pip install target/wheels/*.whl
       - name: pytest
-        run: pytest . --verbose
+        run: pytest --verbose .
       - name: pycodestyle
-        run: pycodestyle . --verbose
+        run: pycodestyle --verbose .
       - name: pylint
-        run: pylint src/ --verbose
+        run: pylint --verbose src/
