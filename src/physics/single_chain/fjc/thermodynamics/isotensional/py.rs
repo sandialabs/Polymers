@@ -45,7 +45,7 @@ impl FJC
             legendre: super::legendre::py::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
-    /// The expected end-to-end length as a function of the applied force and temperature, given by :cite:t:`rubinstein2003polymer` as
+    /// The expected end-to-end length as a function of the applied force and temperature, given by :footcite:t:`rubinstein2003polymer` as
     ///
     /// .. math::
     ///     \xi(f, T) = -\frac{\partial\varphi}{\partial f} = N_b \ell_b \mathcal{L}(\beta f\ell_b),
@@ -88,7 +88,7 @@ impl FJC
     {
         Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length(&nondimensional_force))
     }
-    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force,
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2021statistical` as
     ///
     /// .. math::
     ///     \gamma(\eta) = -\frac{\partial\varrho}{\partial\eta} = \mathcal{L}(\eta),
@@ -201,7 +201,7 @@ impl FJC
     {
         Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy(&nondimensional_force))
     }
-    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force,
+    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2021chain` as
     ///
     /// .. math::
     ///     \Delta\varrho(\eta) = \ln\left[\frac{\eta}{\sinh(\eta)}\right].

@@ -11,7 +11,7 @@ use crate::physics::
     single_chain::ZERO
 };
 
-/// ???
+/// The structure of the thermodynamics of the EFJC model thermodynamics in the isotensional ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
 pub struct EFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
@@ -29,10 +29,10 @@ pub struct EFJC
     number_of_links_f64: f64
 }
 
-/// ???
+/// The implemented functionality of the thermodynamics of the EFJC model in the isotensional ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
 impl EFJC
 {
-    /// ???
+    /// Initializes and returns an instance of the thermodynamics of the EFJC model in the isotensional ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> Self
     {
         EFJC

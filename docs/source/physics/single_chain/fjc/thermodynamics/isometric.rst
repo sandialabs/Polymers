@@ -33,5 +33,4 @@ FJC model thermodynamics (isometric)
 
    <hr>
 
-.. bibliography::
-   :filter: docname in docnames
+.. footbibliography::

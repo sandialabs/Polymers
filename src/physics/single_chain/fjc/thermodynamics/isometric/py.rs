@@ -228,7 +228,7 @@ impl FJC
     {
         Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link))
     }
-    /// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length, given by :cite:t:`treloar1949physics` as
+    /// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length, given by :footcite:t:`treloar1949physics` as
     ///
     /// .. math::
     ///     g_\mathrm{eq}(\xi) = 4\pi\xi^2 P_\mathrm{eq}(\xi) = \frac{\xi}{2\ell_b^2}\frac{N_b^{N_b-2}}{(N_b - 2)!}\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2},
