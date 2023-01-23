@@ -53,5 +53,4 @@ plot_html_show_source_link = False
 plot_include_source = True
 plot_rcparams = {'font.size': 10}
 plot_formats = [('png', 300)]
-suppress_warnings = ["bibtex.duplicate_label"]
 templates_path = ['_templates']

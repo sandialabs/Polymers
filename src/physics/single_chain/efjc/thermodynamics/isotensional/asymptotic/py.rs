@@ -11,7 +11,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
     Ok(())
 }
 
-/// ???
+/// The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct EFJC
@@ -32,15 +32,15 @@ pub struct EFJC
     #[pyo3(get)]
     pub link_stiffness: f64,
 
-    /// ???
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an alternative asymptotic approach.
     #[pyo3(get)]
     pub alternative: super::alternative::py::EFJC,
 
-    /// ???
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using a reduced asymptotic approach.
     #[pyo3(get)]
     pub reduced: super::reduced::py::EFJC,
 
-    /// ???
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
     #[pyo3(get)]
     pub legendre: super::legendre::py::EFJC
 }
@@ -61,5 +61,175 @@ impl EFJC
             reduced: super::reduced::py::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
             legendre: super::legendre::py::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
         }
+    }
+    /// The expected end-to-end length as a function of the applied force and temperature,
+    ///
+    /// .. math::
+    ///     \xi(f, T) = -\frac{\partial\varphi}{\partial f}.
+    ///
+    /// Args:
+    ///     force (float): The force :math:`f`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The end-to-end length :math:`\xi`.
+    ///
+    pub fn end_to_end_length(&self, force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).end_to_end_length(&force, &temperature))
+    }
+    /// The expected end-to-end length per link as a function of the applied force and temperature.
+    ///
+    /// Args:
+    ///     force (float): The force :math:`f`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The end-to-end length per link :math:`\xi/N_b=\ell_b\gamma`.
+    ///
+    pub fn end_to_end_length_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).end_to_end_length_per_link(&force, &temperature))
+    }
+    /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
+    ///
+    /// Args:
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional end-to-end length :math:`N_b\gamma=\xi/\ell_b`.
+    ///
+    pub fn nondimensional_end_to_end_length(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_end_to_end_length(&nondimensional_force, &temperature))
+    }
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :cite:t:`radiom2017influence,fiasconaro2019analytical,buche2020statistical,buche2022freely` as
+    ///
+    /// .. math::
+    ///     \gamma(\eta) \sim \mathcal{L}(\eta) + \frac{\eta}{\kappa}\left[1 + \frac{1 - \mathcal{L}(\eta)\coth(\eta)}{1 + (\eta/\kappa)\coth(\eta)}\right] \quad \text{for } \kappa\gg 1,
+    ///
+    /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function.
+    ///
+    /// Args:
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///
+    pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature))
+    }
+    /// The gibbs free energy as a function of the applied force and temperature,
+    ///
+    /// .. math::
+    ///     \varphi(f, T) = -kT\ln Z(f, T).
+    ///
+    /// Args:
+    ///     force (float): The force :math:`f`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The gibbs free energy :math:`\varphi`.
+    ///
+    pub fn gibbs_free_energy(&self, force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).gibbs_free_energy(&force, &temperature))
+    }
+    /// The gibbs free energy per link as a function of the applied force and temperature.
+    ///
+    /// Args:
+    ///     force (float): The force :math:`f`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The gibbs free energy per link :math:`\varphi/N_b`.
+    ///
+    pub fn gibbs_free_energy_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).gibbs_free_energy_per_link(&force, &temperature))
+    }
+    /// The relative gibbs free energy as a function of the applied force and temperature.
+    ///
+    /// Args:
+    ///     force (float): The force :math:`f`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The relative gibbs free energy :math:`\Delta\varphi\equiv\varphi(f,T)-\varphi(0,T)`.
+    ///
+    pub fn relative_gibbs_free_energy(&self, force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).relative_gibbs_free_energy(&force, &temperature))
+    }
+    /// The relative gibbs free energy per link as a function of the applied force and temperature.
+    ///
+    /// Args:
+    ///     force (float): The force :math:`f`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The relative gibbs free energy per link :math:`\Delta\varphi/N_b`.
+    ///
+    pub fn relative_gibbs_free_energy_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).relative_gibbs_free_energy_per_link(&force, &temperature))
+    }
+    /// The nondimensional gibbs free energy as a function of the applied nondimensional force and temperature.
+    ///
+    /// Args:
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///
+    pub fn nondimensional_gibbs_free_energy(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_gibbs_free_energy(&nondimensional_force, &temperature))
+    }
+    /// The nondimensional gibbs free energy per link as a function of the applied nondimensional force and temperature.
+    ///
+    /// Args:
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
+    ///
+    pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature))
+    }
+    /// The nondimensional relative gibbs free energy as a function of the applied nondimensional force.
+    ///
+    /// Args:
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional relative gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
+    ///
+    pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature))
+    }
+    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force,
+    ///
+    /// .. math::
+    ///     \Delta\varrho(\eta) = \ln\left[\frac{\eta}{\sinh(\eta)}\right] - \frac{\eta^2}{2\kappa} - \ln\left[1 + \frac{\eta}{\kappa}\,\coth(\eta)\right] \quad \text{for } \kappa\gg 1.
+    ///
+    /// Args:
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     temperature (float): The temperature :math:`T`.
+    /// 
+    /// Returns:
+    ///     float: The nondimensional relative gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
+    ///
+    pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    {
+        Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature))
     }
 }
