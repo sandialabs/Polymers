@@ -6,8 +6,8 @@ mod test;
 /// The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensional ensemble.
 pub mod isotensional;
 
-/// The structure of the thermodynamics of the FJC model.
-pub struct FJC
+/// The structure of the thermodynamics of the EFJC model.
+pub struct EFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
     pub hinge_mass: f64,
@@ -22,7 +22,7 @@ pub struct FJC
     pub link_stiffness: f64,
 
     /// The thermodynamic functions of the model in the isotensional ensemble.
-    pub isotensional: isotensional::FJC
+    pub isotensional: isotensional::EFJC
 }
 
 /// The implemented functionality of the thermodynamics of the EFJC model.

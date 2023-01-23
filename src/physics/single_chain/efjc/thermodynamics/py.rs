@@ -9,7 +9,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
     Ok(())
 }
 
-/// The freely-jointed chain (EFJC) model thermodynamics.
+/// The extensible freely-jointed chain (EFJC) model thermodynamics.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct EFJC
@@ -39,7 +39,7 @@ pub struct EFJC
 impl EFJC
 {
     #[new]
-    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness:f64) -> Self
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> Self
     {
         EFJC
         {
@@ -47,7 +47,7 @@ impl EFJC
             link_length,
             number_of_links,
             link_stiffness,
-            isotensional: super::isotensional::py::EFJC::init(number_of_links, link_length, hinge_mass)
+            isotensional: super::isotensional::py::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
         }
     }
 }

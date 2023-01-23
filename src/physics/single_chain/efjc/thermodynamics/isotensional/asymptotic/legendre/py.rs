@@ -1,34 +1,39 @@
-#[cfg(feature = "python")]
-pub mod py;
+use pyo3::prelude::*;
 
-mod test;
+pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
+{
+    let legendre = PyModule::new(py, "legendre")?;
+    parent_module.add_submodule(legendre)?;
+    legendre.add_class::<EFJC>()?;
+    Ok(())
+}
 
-/// The extensible freely-jointed chain (EFJC) model thermodynamics.
-pub mod thermodynamics;
-
-/// The structure of the EFJC model.
+/// ???
+#[pyclass]
+#[derive(Copy, Clone)]
 pub struct EFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
+    #[pyo3(get)]
     pub hinge_mass: f64,
-
+    
     /// The length of each link in the chain in units of nm.
+    #[pyo3(get)]
     pub link_length: f64,
-
+    
     /// The number of links in the chain.
+    #[pyo3(get)]
     pub number_of_links: u8,
 
     /// The stiffness of each link in the chain in units of J/(mol⋅nm^2).
-    pub link_stiffness: f64,
-
-    /// The thermodynamic functions of the model.
-    pub thermodynamics: self::thermodynamics::EFJC
+    #[pyo3(get)]
+    pub link_stiffness: f64
 }
 
-/// The implemented functionality of the EFJC model.
+#[pymethods]
 impl EFJC
 {
-    /// Initializes and returns an instance of the EFJC model.
+    #[new]
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64) -> Self
     {
         EFJC
@@ -36,8 +41,7 @@ impl EFJC
             hinge_mass,
             link_length,
             number_of_links,
-            link_stiffness,
-            thermodynamics: self::thermodynamics::EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
+            link_stiffness
         }
     }
 }
