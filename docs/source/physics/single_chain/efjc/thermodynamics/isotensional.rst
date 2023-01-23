@@ -33,5 +33,4 @@ EFJC model thermodynamics (isotensional)
 
    <hr>
 
-.. bibliography::
-   :filter: docname in docnames
+.. footbibliography::

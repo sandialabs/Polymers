@@ -35,5 +35,4 @@ EFJC model thermodynamics (isotensional/asymptotic)
 
    <hr>
 
-.. bibliography::
-   :filter: docname in docnames
+.. footbibliography::

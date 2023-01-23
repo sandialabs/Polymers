@@ -92,7 +92,7 @@ impl EFJC
     {
         Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_end_to_end_length(&nondimensional_force, &temperature))
     }
-    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :cite:t:`buche2022freely` as
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
     ///     \gamma(\eta) \sim \mathcal{L}(\eta) + \frac{\eta}{\kappa} \quad \text{for } \kappa\gg 1.
@@ -202,7 +202,7 @@ impl EFJC
     {
         Ok(super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature))
     }
-    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force,
+    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
     ///     \Delta\varrho(\eta) = \ln\left[\frac{\eta}{\sinh(\eta)}\right] - \frac{\eta^2}{2\kappa} \quad \text{for } \kappa\gg 1.

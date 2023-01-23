@@ -91,7 +91,7 @@ impl SWFJC
     {
         Ok(super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_end_to_end_length(&nondimensional_force))
     }
-    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :cite:t:`buche2022freely` as
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
     ///     \gamma(\eta) = -\frac{\partial\varrho}{\partial\eta} = \frac{\varsigma^2\eta\sinh(\varsigma\eta) - \eta\sinh(\eta)}{w(\eta,\varsigma) - w(\eta,1)},
@@ -201,7 +201,7 @@ impl SWFJC
     {
         Ok(super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_relative_gibbs_free_energy(&nondimensional_force))
     }
-    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force,
+    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
     ///     \Delta\varrho(\eta) = 3\ln(\eta) - \ln\left[w(\eta,\varsigma) - w(\eta,1)\right],

@@ -30,5 +30,4 @@ FJC model thermodynamics (isotensional)
 
    <hr>
 
-.. bibliography::
-   :filter: docname in docnames
+.. footbibliography::

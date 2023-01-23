@@ -144,7 +144,7 @@ impl FJC
     {
         Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature))
     }
-    /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature,
+    /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature, given by :footcite:t:`buche2021statistical` as
     ///
     /// .. math::
     ///     \vartheta(\gamma, T) \sim \varphi\left[\mathcal{L}^{-1}(\gamma), T\right] + \gamma\mathcal{L}^{-1}(\gamma) \quad \text{for } N_b\gg 1,
@@ -174,7 +174,7 @@ impl FJC
     {
         Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link))
     }
-    /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link,
+    /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link, given by :footcite:t:`buche2021chain` as
     ///
     /// .. math::
     ///     \Delta\vartheta(\gamma) \sim \gamma\mathcal{L}^{-1}(\gamma) + \ln\left\{\frac{\mathcal{L}^{-1}(\gamma)}{\sinh[\mathcal{L}^{-1}(\gamma)]}\right\} \quad \text{for } N_b\gg 1,
