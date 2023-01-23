@@ -24,3 +24,7 @@ classifiers = [
 Documentation = "https://polymers.readthedocs.io"
 Homepage = "https://sandialabs.github.io/Polymers"
 Repository = "https://github.com/sandialabs/polymers"
+
+[tool.pytest.ini_options]
+python_files = ["test.py"]
+testpaths = ["src"]
