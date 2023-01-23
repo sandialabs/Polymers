@@ -79,8 +79,20 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: pypi
+      - name: maturin
         run: |
           pip install maturin
           maturin build --features python
           pip install target/wheels/*.whl
+      - name: pytest
+        run: |
+          pip install pytest
+          pytest --verbose .
+      - name: pycodestyle
+        run: |
+          pip install pycodestyle
+          pycodestyle --verbose .
+      - name: pylint
+        run: |
+          pip install pylint
+          pylint --verbose src/
