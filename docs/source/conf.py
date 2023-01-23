@@ -24,7 +24,9 @@ copyright = '2022 National Technology & Engineering Solutions of Sandia, LLC'
 
 add_module_names = False
 bibtex_bibfiles = ['main.bib']
+bibtex_bibliography_header = ".. rubric:: References"
 bibtex_default_style = 'plain'
+bibtex_footbibliography_header = bibtex_bibliography_header
 extensions = [
     'matplotlib.sphinxext.plot_directive',
     'nbsphinx',
@@ -51,4 +53,5 @@ plot_html_show_source_link = False
 plot_include_source = True
 plot_rcparams = {'font.size': 10}
 plot_formats = [('png', 300)]
+suppress_warnings = ["bibtex.duplicate_label"]
 templates_path = ['_templates']
