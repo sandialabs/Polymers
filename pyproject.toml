@@ -28,3 +28,8 @@ Repository = "https://github.com/sandialabs/polymers"
 [tool.pytest.ini_options]
 python_files = ["test.py"]
 testpaths = ["src"]
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = """
+    no-name-in-module
+"""

@@ -18,7 +18,7 @@ class Base(unittest.TestCase):
         """Function to test ...
 
         """
-        model = FJC(
+        _ = FJC(
             parameters.number_of_links_minimum,
             parameters.link_length_reference,
             parameters.hinge_mass_reference
