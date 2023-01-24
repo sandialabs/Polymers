@@ -50,11 +50,11 @@ impl SWFJC
     ///     \psi(f, T) \sim \varphi(f, T) + f \xi(f, T) \quad \text{for } N_b\gg 1.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy :math:`\psi`.
+    ///     numpy.ndarray: The helmholtz free energy :math:`\psi`.
     ///
     pub fn helmholtz_free_energy(&self, force: f64, temperature: f64) -> PyResult<f64>
     {
@@ -63,11 +63,11 @@ impl SWFJC
     /// The helmholtz free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy per link :math:`\psi/N_b`.
+    ///     numpy.ndarray: The helmholtz free energy per link :math:`\psi/N_b`.
     ///
     pub fn helmholtz_free_energy_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
     {
@@ -76,11 +76,11 @@ impl SWFJC
     /// The relative helmholtz free energy as a function of the applied force and temperature.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy :math:`\Delta\psi\equiv\psi(f,T)-\psi(0,T)`.
+    ///     numpy.ndarray: The relative helmholtz free energy :math:`\Delta\psi\equiv\psi(f,T)-\psi(0,T)`.
     ///
     pub fn relative_helmholtz_free_energy(&self, force: f64, temperature: f64) -> PyResult<f64>
     {
@@ -89,11 +89,11 @@ impl SWFJC
     /// The relative helmholtz free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
+    ///     numpy.ndarray: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
     ///
     pub fn relative_helmholtz_free_energy_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
     {
@@ -102,11 +102,11 @@ impl SWFJC
     /// The nondimensional helmholtz free energy as a function of the applied nondimensional force and temperature.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
     ///
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
     {
@@ -115,11 +115,11 @@ impl SWFJC
     /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional force and temperature.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
     ///
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
     {
@@ -128,10 +128,10 @@ impl SWFJC
     /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional force.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
     ///
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: f64) -> PyResult<f64>
     {
@@ -140,10 +140,10 @@ impl SWFJC
     /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional force.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
     ///
     pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: f64) -> PyResult<f64>
     {

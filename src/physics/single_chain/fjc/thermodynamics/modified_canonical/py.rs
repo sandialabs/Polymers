@@ -48,12 +48,12 @@ impl FJC
     /// The expected end-to-end length as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The end-to-end length :math:`\xi`.
+    ///     numpy.ndarray: The end-to-end length :math:`\xi`.
     ///
     pub fn end_to_end_length(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -62,12 +62,12 @@ impl FJC
     /// The expected end-to-end length per link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The end-to-end length per link :math:`\xi/N_b=\ell_b\gamma`.
+    ///     numpy.ndarray: The end-to-end length per link :math:`\xi/N_b=\ell_b\gamma`.
     ///
     pub fn end_to_end_length_per_link(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -76,11 +76,11 @@ impl FJC
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional end-to-end length :math:`N_b\gamma=\xi/\ell_b`.
+    ///     numpy.ndarray: The nondimensional end-to-end length :math:`N_b\gamma=\xi/\ell_b`.
     ///
     pub fn nondimensional_end_to_end_length(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
@@ -89,11 +89,11 @@ impl FJC
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional end-to-end length :math:`\gamma\equiv\xi/N_b\ell_b`.
+    ///     numpy.ndarray: The nondimensional end-to-end length :math:`\gamma\equiv\xi/N_b\ell_b`.
     ///
     pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
@@ -102,12 +102,12 @@ impl FJC
     /// The expected force as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The force :math:`f`.
+    ///     numpy.ndarray: The force :math:`f`.
     ///
     pub fn force(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -116,11 +116,11 @@ impl FJC
     /// The expected nondimensional force as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     numpy.ndarray: The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///
     pub fn nondimensional_force(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
@@ -129,12 +129,12 @@ impl FJC
     /// The helmholtz free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy :math:`\psi`.
+    ///     numpy.ndarray: The helmholtz free energy :math:`\psi`.
     ///
     pub fn helmholtz_free_energy(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -143,12 +143,12 @@ impl FJC
     /// The helmholtz free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy per link :math:`\psi/N_b`.
+    ///     numpy.ndarray: The helmholtz free energy per link :math:`\psi/N_b`.
     ///
     pub fn helmholtz_free_energy_per_link(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -157,12 +157,12 @@ impl FJC
     /// The relative helmholtz free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy :math:`\Delta\psi`.
+    ///     numpy.ndarray: The relative helmholtz free energy :math:`\Delta\psi`.
     ///
     pub fn relative_helmholtz_free_energy(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -171,12 +171,12 @@ impl FJC
     /// The relative helmholtz free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
+    ///     numpy.ndarray: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
     ///
     pub fn relative_helmholtz_free_energy_per_link(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -185,12 +185,12 @@ impl FJC
     /// The nondimensional helmholtz free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
     ///
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -199,12 +199,12 @@ impl FJC
     /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
     ///
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -213,11 +213,11 @@ impl FJC
     /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
     ///
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
@@ -226,11 +226,11 @@ impl FJC
     /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
     ///
     pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
@@ -239,12 +239,12 @@ impl FJC
     /// The gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The gibbs free energy :math:`\varphi`.
+    ///     numpy.ndarray: The gibbs free energy :math:`\varphi`.
     ///
     pub fn gibbs_free_energy(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -253,12 +253,12 @@ impl FJC
     /// The gibbs free energy epr link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The gibbs free energy per link :math:`\varphi/N_b`.
+    ///     numpy.ndarray: The gibbs free energy per link :math:`\varphi/N_b`.
     ///
     pub fn gibbs_free_energy_per_link(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -267,12 +267,12 @@ impl FJC
     /// The relative gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative gibbs free energy :math:`\Delta\varphi`.
+    ///     numpy.ndarray: The relative gibbs free energy :math:`\Delta\varphi`.
     ///
     pub fn relative_gibbs_free_energy(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -281,12 +281,12 @@ impl FJC
     /// The relative gibbs free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
-    ///     potential_distance (float): The potential distance.
+    ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative gibbs free energy per link :math:`\Delta\varphi/N_b`.
+    ///     numpy.ndarray: The relative gibbs free energy per link :math:`\Delta\varphi/N_b`.
     ///
     pub fn relative_gibbs_free_energy_per_link(&self, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -295,12 +295,12 @@ impl FJC
     /// The nondimensional gibbs free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///     numpy.ndarray: The nondimensional gibbs free energy :math:`\beta\varphi=N_b\varrho`.
     ///
     pub fn nondimensional_gibbs_free_energy(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -309,12 +309,12 @@ impl FJC
     /// The nondimensional gibbs free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
+    ///     numpy.ndarray: The nondimensional gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
     ///
     pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64, temperature: f64) -> PyResult<f64>
     {
@@ -323,11 +323,11 @@ impl FJC
     /// The nondimensional relative gibbs free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
+    ///     numpy.ndarray: The nondimensional relative gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
@@ -336,11 +336,11 @@ impl FJC
     /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
-    ///     nondimensional_potential_distance (float): The nondimensional potential distance.
+    ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> PyResult<f64>
     {
