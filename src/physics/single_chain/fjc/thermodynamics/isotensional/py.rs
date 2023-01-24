@@ -65,9 +65,9 @@ impl FJC
     /// Returns:
     ///     float: The end-to-end length :math:`\xi`.
     ///
-    pub fn end_to_end_length(&self, force: f64, temperature: f64) -> PyResult<f64>
+    pub fn end_to_end_length<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).end_to_end_length(&force, &temperature))
+        force.as_array().mapv(|force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).end_to_end_length(&force, &temperature)).into_pyarray(py)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     ///
@@ -78,9 +78,9 @@ impl FJC
     /// Returns:
     ///     float: The end-to-end length per link :math:`\xi/N_b=\ell_b\gamma`.
     ///
-    pub fn end_to_end_length_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
+    pub fn end_to_end_length_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).end_to_end_length_per_link(&force, &temperature))
+        force.as_array().mapv(|force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).end_to_end_length_per_link(&force, &temperature)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     ///
@@ -90,9 +90,9 @@ impl FJC
     /// Returns:
     ///     float: The nondimensional end-to-end length :math:`N_b\gamma=\xi/\ell_b`.
     ///
-    pub fn nondimensional_end_to_end_length(&self, nondimensional_force: f64) -> PyResult<f64>
+    pub fn nondimensional_end_to_end_length<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length(&nondimensional_force))
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length(&nondimensional_force)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2021statistical` as
     ///
@@ -102,10 +102,10 @@ impl FJC
     /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function.
     ///
     /// Args:
-    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     float: The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     ///
     pub fn nondimensional_end_to_end_length_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
