@@ -1,4 +1,10 @@
 use pyo3::prelude::*;
+use numpy::
+{
+    IntoPyArray,
+    PyArrayDyn,
+    PyReadonlyArrayDyn
+};
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
@@ -53,15 +59,15 @@ impl FJC
     /// where :math:`m\equiv(1 - \xi/N_b\ell_b)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The force :math:`f`.
+    ///     numpy.ndarray: The force :math:`f`.
     ///
-    pub fn force(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    pub fn force<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).force(&end_to_end_length, &temperature))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).force(&end_to_end_length, &temperature)).into_pyarray(py)
     }
     /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link,
     ///
@@ -71,14 +77,14 @@ impl FJC
     /// where :math:`m\equiv(1 - \gamma)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     numpy.ndarray: The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///
-    pub fn nondimensional_force(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    pub fn nondimensional_force<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_force(&nondimensional_end_to_end_length_per_link))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_force(&nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
     /// The helmholtz free energy as a function of the applied end-to-end length and temperature,
     ///
@@ -86,28 +92,28 @@ impl FJC
     ///     \psi(\xi, T) = -kT\ln Q(\xi, T).
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy :math:`\psi`.
+    ///     numpy.ndarray: The helmholtz free energy :math:`\psi`.
     ///
-    pub fn helmholtz_free_energy(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    pub fn helmholtz_free_energy<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy(&end_to_end_length, &temperature))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy(&end_to_end_length, &temperature)).into_pyarray(py)
     }
     /// The helmholtz free energy per link as a function of the applied end-to-end length and temperature.
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy per link :math:`\psi/N_b`.
+    ///     numpy.ndarray: The helmholtz free energy per link :math:`\psi/N_b`.
     ///
-    pub fn helmholtz_free_energy_per_link(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    pub fn helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy_per_link(&end_to_end_length, &temperature))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy_per_link(&end_to_end_length, &temperature)).into_pyarray(py)
     }
     /// The relative helmholtz free energy as a function of the applied end-to-end length and temperature,
     ///
@@ -115,54 +121,54 @@ impl FJC
     ///     \Delta\psi(\xi, T) = kT\ln\left[\frac{P_\mathrm{eq}(0)}{P_\mathrm{eq}(\xi)}\right].
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy :math:`\Delta\psi\equiv\psi(\xi,T)-\psi(0,T)`.
+    ///     numpy.ndarray: The relative helmholtz free energy :math:`\Delta\psi\equiv\psi(\xi,T)-\psi(0,T)`.
     ///
-    pub fn relative_helmholtz_free_energy(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    pub fn relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy(&end_to_end_length, &temperature))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy(&end_to_end_length, &temperature)).into_pyarray(py)
     }
     /// The relative helmholtz free energy per link as a function of the applied end-to-end length and temperature.
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
+    ///     numpy.ndarray: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
     ///
-    pub fn relative_helmholtz_free_energy_per_link(&self, end_to_end_length: f64, temperature: f64) -> PyResult<f64>
+    pub fn relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature)).into_pyarray(py)
     }
     /// The nondimensional helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature.
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
     ///
-    pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: f64, temperature: f64) -> PyResult<f64>
+    pub fn nondimensional_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature)).into_pyarray(py)
     }
     /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
     ///
-    pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: f64, temperature: f64) -> PyResult<f64>
+    pub fn nondimensional_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional end-to-end length per link,
     ///
@@ -170,14 +176,14 @@ impl FJC
     ///     \beta\Delta\psi(\gamma) = \ln\left[\frac{\mathscr{P}_\mathrm{eq}(0)}{\mathscr{P}_\mathrm{eq}(\gamma)}\right].
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
     ///
-    pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    pub fn nondimensional_relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
     /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link,
     ///
@@ -185,14 +191,14 @@ impl FJC
     ///     \Delta\vartheta(\gamma) = \ln\left[\frac{\mathscr{P}_\mathrm{eq}(0)}{\mathscr{P}_\mathrm{eq}(\gamma)}\right]^{1/N_b}.
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
     ///
-    pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    pub fn nondimensional_relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
     /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link,
     ///
@@ -202,14 +208,14 @@ impl FJC
     /// where :math:`m\equiv(1 - \xi/N_b\ell_b)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     /// 
     /// Returns:
-    ///     float: The equilibrium probability density :math:`P_\mathrm{eq}`.
+    ///     numpy.ndarray: The equilibrium probability density :math:`P_\mathrm{eq}`.
     ///
-    pub fn equilibrium_distribution(&self, end_to_end_length: f64) -> PyResult<f64>
+    pub fn equilibrium_distribution<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).equilibrium_distribution(&end_to_end_length))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).equilibrium_radial_distribution(&end_to_end_length)).into_pyarray(py)
     }
     /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link,
     ///
@@ -219,14 +225,14 @@ impl FJC
     /// where :math:`m\equiv(1 - \gamma)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional equilibrium probability density :math:`\mathscr{P}_\mathrm{eq}\equiv (N_b\ell_b)^3 P_\mathrm{eq}`.
+    ///     numpy.ndarray: The nondimensional equilibrium probability density :math:`\mathscr{P}_\mathrm{eq}\equiv (N_b\ell_b)^3 P_\mathrm{eq}`.
     ///
-    pub fn nondimensional_equilibrium_distribution(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    pub fn nondimensional_equilibrium_distribution<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
     /// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length, given by :footcite:t:`treloar1949physics` as
     ///
@@ -236,14 +242,14 @@ impl FJC
     /// where :math:`m\equiv(1 - \xi/N_b\ell_b)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
     /// Args:
-    ///     end_to_end_length (float): The end-to-end length :math:`\xi`.
+    ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
     /// 
     /// Returns:
-    ///     float: The equilibrium probability density :math:`g_\mathrm{eq}`.
+    ///     numpy.ndarray: The equilibrium probability density :math:`g_\mathrm{eq}`.
     ///
-    pub fn equilibrium_radial_distribution(&self, end_to_end_length: f64) -> PyResult<f64>
+    pub fn equilibrium_radial_distribution<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).equilibrium_radial_distribution(&end_to_end_length))
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).equilibrium_radial_distribution(&end_to_end_length)).into_pyarray(py)
     }
     /// The nondimensional equilibrium probability density of nondimensional end-to-end lengths per link as a function of the nondimensional end-to-end length per link,
     ///
@@ -253,13 +259,13 @@ impl FJC
     /// where :math:`m\equiv(1 - \gamma)/2` and :math:`s_\mathrm{max}/N_b\leq m\leq (s_\mathrm{max}+1)/N_b`.
     ///
     /// Args:
-    ///     nondimensional_end_to_end_length_per_link (float): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
+    ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional equilibrium probability density :math:`\mathscr{g}_\mathrm{eq}\equiv N_b\ell_b g_\mathrm{eq}`.
+    ///     numpy.ndarray: The nondimensional equilibrium probability density :math:`\mathscr{g}_\mathrm{eq}\equiv N_b\ell_b g_\mathrm{eq}`.
     ///
-    pub fn nondimensional_equilibrium_radial_distribution(&self, nondimensional_end_to_end_length_per_link: f64) -> PyResult<f64>
+    pub fn nondimensional_equilibrium_radial_distribution<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link))
+        nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
 }

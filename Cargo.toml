@@ -11,10 +11,11 @@ crate-type = ["cdylib", "rlib", "staticlib"]
 
 [features]
 julia = []
-python = ["dep:pyo3"]
+python = ["dep:numpy", "dep:pyo3"]
 
 [dependencies]
-pyo3 = {version = "0.18.0", features = ["extension-module"], optional = true}
+numpy = {version = "0.18", optional = true}
+pyo3 = {version = "0.18", features = ["extension-module"], optional = true}
 
 [dev-dependencies]
 rand = "0.8.5"

@@ -4,7 +4,6 @@ FJC model thermodynamics
 .. toctree::
    :maxdepth: 1
 
-   Examples <thermodynamics/examples>
    Isometric <thermodynamics/isometric>
    Isotensional <thermodynamics/isotensional>
    Modified Canonical <thermodynamics/modified_canonical>

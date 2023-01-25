@@ -1,4 +1,10 @@
 use pyo3::prelude::*;
+use numpy::
+{
+    IntoPyArray,
+    PyArrayDyn,
+    PyReadonlyArrayDyn
+};
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
@@ -45,103 +51,103 @@ impl FJC
     ///     \psi(f, T) \sim \varphi(f, T) + f \xi(f, T) \quad \text{for } N_b\gg 1.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy :math:`\psi`.
+    ///     numpy.ndarray: The helmholtz free energy :math:`\psi`.
     ///
-    pub fn helmholtz_free_energy(&self, force: f64, temperature: f64) -> PyResult<f64>
+    pub fn helmholtz_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy(&force, &temperature))
+        force.as_array().mapv(|force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy(&force, &temperature)).into_pyarray(py)
     }
     /// The helmholtz free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The helmholtz free energy per link :math:`\psi/N_b`.
+    ///     numpy.ndarray: The helmholtz free energy per link :math:`\psi/N_b`.
     ///
-    pub fn helmholtz_free_energy_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
+    pub fn helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy_per_link(&force, &temperature))
+        force.as_array().mapv(|force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy_per_link(&force, &temperature)).into_pyarray(py)
     }
     /// The relative helmholtz free energy as a function of the applied force and temperature.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy :math:`\Delta\psi\equiv\psi(f,T)-\psi(0,T)`.
+    ///     numpy.ndarray: The relative helmholtz free energy :math:`\Delta\psi\equiv\psi(f,T)-\psi(0,T)`.
     ///
-    pub fn relative_helmholtz_free_energy(&self, force: f64, temperature: f64) -> PyResult<f64>
+    pub fn relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy(&force, &temperature))
+        force.as_array().mapv(|force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy(&force, &temperature)).into_pyarray(py)
     }
     /// The relative helmholtz free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
-    ///     force (float): The force :math:`f`.
+    ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
+    ///     numpy.ndarray: The relative helmholtz free energy per link :math:`\Delta\psi/N_b`.
     ///
-    pub fn relative_helmholtz_free_energy_per_link(&self, force: f64, temperature: f64) -> PyResult<f64>
+    pub fn relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy_per_link(&force, &temperature))
+        force.as_array().mapv(|force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_helmholtz_free_energy_per_link(&force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional helmholtz free energy as a function of the applied nondimensional force and temperature.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
     ///
-    pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    pub fn nondimensional_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature))
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional force and temperature.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     float: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional helmholtz free energy per link :math:`\vartheta\equiv\beta\psi/N_b`.
     ///
-    pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: f64, temperature: f64) -> PyResult<f64>
+    pub fn nondimensional_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, &temperature))
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional force.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
     ///
-    pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: f64) -> PyResult<f64>
+    pub fn nondimensional_relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy(&nondimensional_force))
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy(&nondimensional_force)).into_pyarray(py)
     }
     /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional force.
     ///
     /// Args:
-    ///     nondimensional_force (float): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
+    ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     float: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative helmholtz free energy per link :math:`\Delta\vartheta\equiv\beta\Delta\psi/N_b`.
     ///
-    pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: f64) -> PyResult<f64>
+    pub fn nondimensional_relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        Ok(super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force))
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force)).into_pyarray(py)
     }
 }
