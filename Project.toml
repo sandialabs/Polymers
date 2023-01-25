@@ -1,7 +1,7 @@
 name = "Polymers"
 uuid = "8aef037c-a721-4e8a-9d81-eb7093daef2c"
 authors = ["mrbuche <mrbuche@sandia.gov>"]
-version = "0.0.7"
+version = "0.0.11"
 
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
