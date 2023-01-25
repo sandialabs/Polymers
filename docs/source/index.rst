@@ -8,7 +8,7 @@ This is the documentation for Python API, which is implemented in Rust.
 Installation
 ------------
 
-|pypi| |conda|  
+|pypi|
 
 The library can be installed as a Python package using
 
@@ -16,13 +16,7 @@ The library can be installed as a Python package using
 
    pip install polymers
 
-or as Python package within a Conda environment using
-
-.. code-block:: sh
-
-   conda install --channel mrbuche polymers
-
-The latest edition of the library can be installed from the main branch of the GitHub repository:
+If Rust is installed, the latest edition of the library can be installed from the main branch of the GitHub repository:
 
 .. code-block:: sh
 
@@ -54,9 +48,6 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
 
 .. |pypi| image:: https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE
    :target: https://pypi.org/project/polymers
-
-.. |conda| image:: https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda
-   :target: https://anaconda.org/mrbuche/polymers
 
 .. |zenodo| image:: https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.7041983-blue
    :target: https://doi.org/10.5281/zenodo.7041983

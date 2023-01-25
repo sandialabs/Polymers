@@ -11,18 +11,11 @@ The library is implemented entirely in Rust, including the Python API. The Julia
 [![docs (stable)](https://img.shields.io/badge/Docs-stable-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/stable)
 [![docs (latest)](https://img.shields.io/badge/Docs-latest-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/latest)
 [![pypi](https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE)](https://pypi.org/project/polymers)
-[![anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers/)
 
 The library can be installed as a Python package using
 
 ```shell
 pip install polymers
-```
-
-or as Python package within a Conda environment using
-
-```shell
-conda install --channel mrbuche polymers
 ```
 
 If Rust is installed, the latest edition of the library can be installed from the main branch of the GitHub repository:
@@ -39,7 +32,6 @@ pip install target/wheels/*.whl
 
 [![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable/polymers)
 [![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest/polymers)
-[![anaconda](https://img.shields.io/conda/v/mrbuche/polymers.svg?logo=anaconda&color=3EB049&label=Anaconda)](https://anaconda.org/mrbuche/polymers/)
 
 The latest edition of the library can be installed as a Julia package using
 
@@ -47,12 +39,6 @@ The latest edition of the library can be installed as a Julia package using
 using Pkg
 Pkg.add(url="https://github.com/sandialabs/Polymers")
 Pkg.build("Polymers")
-```
-
-or as Julia package within a Conda environment using
-
-```shell
-conda install --channel mrbuche polymers
 ```
 
 ## Rust
