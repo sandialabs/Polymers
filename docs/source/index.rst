@@ -16,7 +16,7 @@ The library can be installed as a Python package using
 
    pip install polymers
 
-If Rust is installed, the latest edition of the library can be installed from the main branch of the GitHub repository:
+If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
 
 .. code-block:: sh
 

@@ -18,7 +18,7 @@ The library can be installed as a Python package using
 pip install polymers
 ```
 
-If Rust is installed, the latest edition of the library can be installed from the main branch of the GitHub repository:
+If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
 
 ```shell
 git clone git@github.com:sandialabs/Polymers.git
@@ -53,9 +53,9 @@ The library can be used in an existing Rust project by adding the `polymers` cra
 [dependencies]
 polymers = "*"
 ```
-The asterisk `*` represents the newest released version of the crate, and should be changed to a specific version.
+The `*` represents the newest released version of the crate, and should be changed to a specific version.
 
-To use the latest edition of the library, add the main branch of the GitHub repository to Cargo.toml:
+To use the latest edition of the library, add the GitHub repository to Cargo.toml:
 
 ```toml
 [dependencies]
