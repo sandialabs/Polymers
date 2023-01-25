@@ -12,7 +12,7 @@ The library is implemented entirely in Rust, including the Python API. The Julia
 [![docs (latest)](https://img.shields.io/badge/Docs-latest-8CA1AF?logo=readthedocs)](https://polymers.readthedocs.io/en/latest)
 [![pypi](https://img.shields.io/pypi/v/polymers?logo=pypi&logoColor=FBE072&label=PyPI&color=4B8BBE)](https://pypi.org/project/polymers)
 
-The library can be installed as a Python package using
+The library can be installed as a Python package:
 
 ```shell
 pip install polymers
@@ -33,7 +33,7 @@ pip install target/wheels/*.whl
 [![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable/polymers)
 [![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest/polymers)
 
-The latest edition of the library can be installed as a Julia package using
+The latest edition of the library can be installed as a Julia package:
 
 ```julia
 using Pkg
@@ -53,8 +53,6 @@ The library can be used in an existing Rust project by adding the `polymers` cra
 [dependencies]
 polymers = "*"
 ```
-The `*` represents the newest released version of the crate, and should be changed to a specific version.
-
 To use the latest edition of the library, add the GitHub repository to Cargo.toml:
 
 ```toml
