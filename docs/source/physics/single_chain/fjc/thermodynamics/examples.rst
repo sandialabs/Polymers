@@ -3,4 +3,5 @@ Examples: FJC model thermodynamics
 
 .. toctree::
 
-   thermodynamic_limit
+   example_thermodynamic_limit
+   Modified Canonical <modified_canonical/examples>

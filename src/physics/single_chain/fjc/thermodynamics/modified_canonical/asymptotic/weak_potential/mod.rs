@@ -61,6 +61,12 @@ impl FJC
         let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
         self.number_of_links_f64*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
     }
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
+    pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
+    {
+        let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
+        1.0/nondimensional_force.tanh() - 1.0/nondimensional_force - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)/self.number_of_links_f64
+    }
     /// The expected force as a function of the applied potential distance and potential stiffness
     pub fn force(&self, potential_distance: &f64, potential_stiffness: &f64) -> f64
     {
@@ -70,12 +76,6 @@ impl FJC
     pub fn nondimensional_force(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64
-    }
-    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
-    pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
-    {
-        let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
-        1.0/nondimensional_force.tanh() - 1.0/nondimensional_force - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)/self.number_of_links_f64
     }
     /// The gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn gibbs_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
