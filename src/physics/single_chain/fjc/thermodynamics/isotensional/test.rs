@@ -14,6 +14,7 @@ pub struct Parameters
     pub number_of_links_maximum: u8,
     pub nondimensional_force_reference: f64,
     pub nondimensional_force_scale: f64,
+    pub nondimensional_force_small: f64,
     pub temperature_reference: f64,
     pub temperature_scale: f64,
 }
@@ -34,6 +35,7 @@ impl Default for Parameters
             number_of_links_maximum: DefaultParameters::default().number_of_links_maximum,
             nondimensional_force_reference: DefaultParameters::default().nondimensional_force_reference,
             nondimensional_force_scale: DefaultParameters::default().nondimensional_force_scale,
+            nondimensional_force_small: DefaultParameters::default().nondimensional_force_small,
             temperature_reference: DefaultParameters::default().temperature_reference,
             temperature_scale: DefaultParameters::default().temperature_scale,
         }
@@ -588,6 +590,95 @@ mod zero
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_relative_gibbs_free_energy_per_link_0 = model.nondimensional_relative_gibbs_free_energy_per_link(&ZERO);
             assert!(nondimensional_relative_gibbs_free_energy_per_link_0.abs() <= ZERO);
+        }
+    }
+}
+mod connection
+{
+    use super::*;
+    use rand::Rng;
+    #[test]
+    fn end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_force = parameters.nondimensional_force_reference + 0.5*parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+            let end_to_end_length = model.end_to_end_length(&force, &temperature);
+            let h = parameters.rel_tol*BOLTZMANN_CONSTANT*temperature/link_length;
+            let end_to_end_length_from_derivative = -(model.relative_gibbs_free_energy(&(force + 0.5*h), &temperature) - model.relative_gibbs_free_energy(&(force - 0.5*h), &temperature))/h;
+            let residual_abs = &end_to_end_length - &end_to_end_length_from_derivative;
+            let residual_rel = &residual_abs/&end_to_end_length;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_force = parameters.nondimensional_force_reference + 0.5*parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+            let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, &temperature);
+            let h = parameters.rel_tol*BOLTZMANN_CONSTANT*temperature/link_length;
+            let end_to_end_length_per_link_from_derivative = -(model.relative_gibbs_free_energy_per_link(&(force + 0.5*h), &temperature) - model.relative_gibbs_free_energy_per_link(&(force - 0.5*h), &temperature))/h;
+            let residual_abs = &end_to_end_length_per_link - &end_to_end_length_per_link_from_derivative;
+            let residual_rel = &residual_abs/&end_to_end_length_per_link;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_force = parameters.nondimensional_force_reference + 0.5*parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force);
+            let h = parameters.rel_tol;
+            let nondimensional_end_to_end_length_from_derivative = -(model.nondimensional_relative_gibbs_free_energy(&(nondimensional_force + 0.5*h)) - model.nondimensional_relative_gibbs_free_energy(&(nondimensional_force - 0.5*h)))/h;
+            let residual_abs = &nondimensional_end_to_end_length - &nondimensional_end_to_end_length_from_derivative;
+            let residual_rel = &residual_abs/&nondimensional_end_to_end_length;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_force = parameters.nondimensional_force_reference + 0.5*parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+            let h = parameters.rel_tol;
+            let nondimensional_end_to_end_length_per_link_from_derivative = -(model.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_force + 0.5*h)) - model.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_force - 0.5*h)))/h;
+            let residual_abs = &nondimensional_end_to_end_length_per_link - &nondimensional_end_to_end_length_per_link_from_derivative;
+            let residual_rel = &residual_abs/&nondimensional_end_to_end_length_per_link;
+            assert!(residual_rel.abs() <= h);
         }
     }
 }

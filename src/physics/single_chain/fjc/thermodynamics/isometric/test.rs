@@ -567,6 +567,94 @@ mod zero
         }
     }
 }
+mod connection
+{
+    use super::*;
+    use rand::Rng;
+    use crate::physics::single_chain::ZERO;
+    #[test]
+    fn force()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let force = model.force(&end_to_end_length, &temperature);
+            let h = parameters.rel_tol*(number_of_links as f64)*link_length;
+            let force_from_derivative = (model.relative_helmholtz_free_energy(&(end_to_end_length + 0.5*h), &temperature) - model.relative_helmholtz_free_energy(&(end_to_end_length - 0.5*h), &temperature))/h;
+            let residual_abs = &force - &force_from_derivative;
+            let residual_rel = &residual_abs/&force;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn nondimensional_force()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_force = model.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+            let h = parameters.rel_tol;
+            let nondimensional_force_from_derivative = (model.nondimensional_relative_helmholtz_free_energy_per_link(&(nondimensional_end_to_end_length_per_link + 0.5*h)) - model.nondimensional_relative_helmholtz_free_energy_per_link(&(nondimensional_end_to_end_length_per_link - 0.5*h)))/h;
+            let residual_abs = &nondimensional_force - &nondimensional_force_from_derivative;
+            let residual_rel = &residual_abs/&nondimensional_force;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn relative_helmholtz_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&end_to_end_length, &temperature);
+            let relative_helmholtz_free_energy_from_connection = BOLTZMANN_CONSTANT*temperature*(model.equilibrium_distribution(&(ZERO*(number_of_links as f64)*link_length))/model.equilibrium_distribution(&end_to_end_length)).ln();
+            let residual_abs = &relative_helmholtz_free_energy - &relative_helmholtz_free_energy_from_connection;
+            let residual_rel = &residual_abs/&relative_helmholtz_free_energy;
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_relative_helmholtz_free_energy = model.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_relative_helmholtz_free_energy_from_connection = (model.nondimensional_equilibrium_distribution(&ZERO)/model.nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link)).ln();
+            let residual_abs = &nondimensional_relative_helmholtz_free_energy - &nondimensional_relative_helmholtz_free_energy_from_connection;
+            let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+}
 mod thermodynamic_limit
 {
     use super::*;
