@@ -84,7 +84,7 @@ impl Default for Parameters
             nondimensional_force_small: 75e-2,
             nondimensional_potential_distance_reference: 1e0,
             nondimensional_potential_distance_scale: 2e0,
-            nondimensional_potential_distance_small: 25e-2,
+            nondimensional_potential_distance_small: 33e-2,
             nondimensional_potential_distance_large_1: 1e1,
             nondimensional_potential_distance_large_2: 1e1 + 25e-1,
             nondimensional_potential_stiffness_reference: 5e1,

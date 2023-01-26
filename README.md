@@ -43,8 +43,8 @@ Pkg.build("Polymers")
 
 ## Rust
 
-[![docs (stable)](https://img.shields.io/badge/Docs-stable-f46623?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
-[![docs (latest)](https://img.shields.io/badge/Docs-latest-f46623?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest/polymers)
+[![docs (stable)](https://img.shields.io/badge/Docs-stable-e57300?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
+[![docs (latest)](https://img.shields.io/badge/Docs-latest-e57300?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest/polymers)
 [![crates](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates&color=32592f)](https://crates.io/crates/polymers)
 
 The library can be used in an existing Rust project by adding the `polymers` crate to Cargo.toml:
