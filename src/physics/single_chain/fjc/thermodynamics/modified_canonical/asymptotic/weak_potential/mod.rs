@@ -81,13 +81,13 @@ impl FJC
     pub fn gibbs_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = potential_stiffness*potential_distance*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        -self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*potential_stiffness*self.contour_length.powi(2)*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) + (1.0 + nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2))/self.number_of_links_f64) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        -self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*potential_stiffness*self.contour_length.powi(2)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     /// The gibbs free energy epr link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn gibbs_free_energy_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = potential_stiffness*potential_distance*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        -BOLTZMANN_CONSTANT*temperature*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*potential_stiffness*self.contour_length.powi(2)*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) + (1.0 + nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2))/self.number_of_links_f64)/self.number_of_links_f64 - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        -BOLTZMANN_CONSTANT*temperature*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*potential_stiffness*self.contour_length.powi(2)/self.number_of_links_f64*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     /// The relative gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn relative_gibbs_free_energy(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
@@ -103,13 +103,13 @@ impl FJC
     pub fn nondimensional_gibbs_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
-        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) + (1.0 + nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2))/self.number_of_links_f64) - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     /// The nondimensional gibbs free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
-        -(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) + (1.0 + nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2))/self.number_of_links_f64)/self.number_of_links_f64 - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        -(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness/self.number_of_links_f64*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
     /// The nondimensional relative gibbs free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64

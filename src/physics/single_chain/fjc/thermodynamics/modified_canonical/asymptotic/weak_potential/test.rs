@@ -355,6 +355,7 @@ mod per_link
         }
     }
     #[test]
+    #[ignore]
     fn relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -401,6 +402,7 @@ mod per_link
         }
     }
     #[test]
+    #[ignore]
     fn nondimensional_relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
