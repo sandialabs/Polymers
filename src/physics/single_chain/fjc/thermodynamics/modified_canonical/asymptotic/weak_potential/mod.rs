@@ -47,25 +47,29 @@ impl FJC
     pub fn end_to_end_length(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = potential_stiffness*potential_distance*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        self.contour_length*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - potential_stiffness*self.contour_length.powi(2)*self.link_length/BOLTZMANN_CONSTANT/temperature*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
+        // self.contour_length*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - potential_stiffness*self.contour_length.powi(2)*self.link_length/BOLTZMANN_CONSTANT/temperature*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
+        self.contour_length*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - potential_stiffness*self.number_of_links_f64*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
     }
     /// The expected end-to-end length per link as a function of the applied potential distance, potential stiffness, and temperature.
     pub fn end_to_end_length_per_link(&self, potential_distance: &f64, potential_stiffness: &f64, temperature: &f64) -> f64
     {
         let nondimensional_force = potential_stiffness*potential_distance*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        self.link_length*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - potential_stiffness*self.number_of_links_f64*self.link_length.powi(3)/BOLTZMANN_CONSTANT/temperature*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
+        // self.link_length*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - potential_stiffness*self.number_of_links_f64*self.link_length.powi(3)/BOLTZMANN_CONSTANT/temperature*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
+        self.link_length*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - potential_stiffness*self.number_of_links_f64*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_end_to_end_length(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
-        self.number_of_links_f64*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
+        // self.number_of_links_f64*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force) - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)
+        self.number_of_links_f64*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - nondimensional_potential_stiffness/self.number_of_links_f64*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
     {
         let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/self.number_of_links_f64;
-        1.0/nondimensional_force.tanh() - 1.0/nondimensional_force - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)/self.number_of_links_f64
+        // 1.0/nondimensional_force.tanh() - 1.0/nondimensional_force - nondimensional_potential_stiffness*((1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)) + ((nondimensional_force.sinh()).powi(-2)/nondimensional_force.tanh() - nondimensional_force.powi(-3))/self.number_of_links_f64)/self.number_of_links_f64
+        (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - nondimensional_potential_stiffness/self.number_of_links_f64*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
     }
     /// The expected force as a function of the applied potential distance and potential stiffness
     pub fn force(&self, potential_distance: &f64, potential_stiffness: &f64) -> f64
