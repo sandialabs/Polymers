@@ -44,7 +44,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: compare
+      - name: install
         run: |
-          pip install pytest
-          pytest --quiet --compare .
+          pip install maturin pytest
+          maturin develop --features python
+      - name: compare
+        run: pytest --quiet --compare .
