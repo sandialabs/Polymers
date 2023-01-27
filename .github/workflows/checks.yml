@@ -45,4 +45,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: compare
-        run: pytest --quiet --compare .
+        run: |
+          pip install pytest
+          pytest --quiet --compare .
