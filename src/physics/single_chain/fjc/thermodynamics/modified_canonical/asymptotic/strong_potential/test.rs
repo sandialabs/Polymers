@@ -85,7 +85,7 @@ mod base
         }
     }
     #[test]
-    fn number_of_links_and_link_length_and_hinge_mass()
+    fn all_parameters()
     {
         let mut rng = rand::thread_rng();
         let parameters = Parameters::default();
@@ -94,7 +94,10 @@ mod base
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = rng.gen::<f64>();
-            assert_eq!(link_length, FJC::init(number_of_links, link_length, hinge_mass).link_length);
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            assert_eq!(number_of_links, model.number_of_links);
+            assert_eq!(link_length, model.link_length);
+            assert_eq!(hinge_mass, model.hinge_mass);
         }
     }
 }
