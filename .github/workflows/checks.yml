@@ -44,9 +44,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: install
+      - name: maturin
         run: |
-          pip install maturin pytest
-          maturin develop --features python
+          pip install maturin
+          maturin build --features python
+          pip install target/wheels/*.whl
       - name: compare
-        run: pytest --quiet --compare .
+        run: |
+          pip install pytest
+          pytest --quiet --compare .
