@@ -7,6 +7,7 @@ from polymers import physics
 from ..test import Parameters
 
 parameters = Parameters()
+parameters.number_of_loops = 8888
 Ideal = physics.single_chain.ideal.thermodynamics.isometric.Ideal
 
 

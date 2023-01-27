@@ -26,7 +26,7 @@ impl Default for Parameters
     {
         Self
         {
-            number_of_loops: 8888,
+            number_of_loops: 888,
             abs_tol: DefaultParameters::default().abs_tol,
             rel_tol: DefaultParameters::default().rel_tol,
             hinge_mass_reference: DefaultParameters::default().hinge_mass_reference,

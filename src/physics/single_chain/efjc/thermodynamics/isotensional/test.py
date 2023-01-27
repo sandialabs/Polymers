@@ -7,6 +7,7 @@ from polymers import physics
 from ..test import Parameters
 
 parameters = Parameters()
+parameters.number_of_loops = 888
 EFJC = physics.single_chain.efjc.thermodynamics.isotensional.EFJC
 
 
