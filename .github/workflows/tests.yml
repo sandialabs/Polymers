@@ -1,0 +1,19 @@
+name: Tests
+on:
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: cargo
+        run: cargo test --tests -- --list --format=terse > cargo.tests
+      - pytest
+        run: |
+          pip install pytest
+          pytest --quiet --my_test_dump . > pytest.tests
+          ex -snc '$-2,$d|x' pytest.tests
+      - compare
+        run: cmp cargo.tests pytest.tests
