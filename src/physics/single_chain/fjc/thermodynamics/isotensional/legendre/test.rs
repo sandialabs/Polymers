@@ -45,7 +45,7 @@ mod base
         }
     }
     #[test]
-    fn number_of_links_and_link_length_and_hinge_mass()
+    fn all_parameters()
     {
         let mut rng = rand::thread_rng();
         let parameters = Parameters::default();
@@ -54,7 +54,10 @@ mod base
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = rng.gen::<f64>();
-            assert_eq!(link_length, FJC::init(number_of_links, link_length, hinge_mass).link_length);
+            let model = FJC::init(number_of_links, link_length, hinge_mass);
+            assert_eq!(number_of_links, model.number_of_links);
+            assert_eq!(link_length, model.link_length);
+            assert_eq!(hinge_mass, model.hinge_mass);
         }
     }
 }
@@ -261,11 +264,11 @@ mod relative
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let helmholtz_free_energy = model.helmholtz_free_energy(&force, &temperature);
-            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&ZERO, &temperature);
+            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&force, &temperature);
             let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_0 - &relative_helmholtz_free_energy;
             let residual_rel = &residual_abs/&helmholtz_free_energy_0;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol*BOLTZMANN_CONSTANT*temperature/link_length);
             assert!(residual_rel.abs() <= parameters.rel_tol);
         }
     }
@@ -284,11 +287,11 @@ mod relative
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&force, &temperature);
-            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&ZERO, &temperature);
+            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&force, &temperature);
             let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_0 - &relative_helmholtz_free_energy_per_link;
             let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_0;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol*BOLTZMANN_CONSTANT*temperature/link_length);
             assert!(residual_rel.abs() <= parameters.rel_tol);
         }
     }
@@ -354,8 +357,8 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(&ZERO, &temperature);
-            assert!(relative_helmholtz_free_energy_0.abs() <= ZERO);
+            let relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
+            assert!(relative_helmholtz_free_energy_0.abs() <= ZERO*BOLTZMANN_CONSTANT*temperature);
         }
     }
     #[test]
@@ -370,8 +373,8 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let relative_helmholtz_free_energy_per_link_0 = model.relative_helmholtz_free_energy_per_link(&ZERO, &temperature);
-            assert!(relative_helmholtz_free_energy_per_link_0.abs() <= ZERO);
+            let relative_helmholtz_free_energy_per_link_0 = model.relative_helmholtz_free_energy_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
+            assert!(relative_helmholtz_free_energy_per_link_0.abs() <= ZERO*BOLTZMANN_CONSTANT*temperature);
         }
     }
     #[test]

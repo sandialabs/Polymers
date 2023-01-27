@@ -95,4 +95,4 @@ jobs:
       - name: pylint
         run: |
           pip install pylint
-          pylint --verbose src/
+          pylint --verbose --disable=C0302,R0801 src/

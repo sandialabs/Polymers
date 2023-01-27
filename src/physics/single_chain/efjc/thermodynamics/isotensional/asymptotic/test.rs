@@ -56,7 +56,7 @@ mod base
         }
     }
     #[test]
-    fn number_of_links_and_link_length_and_hinge_mass_and_link_stiffness()
+    fn all_parameters()
     {
         let mut rng = rand::thread_rng();
         let parameters = Parameters::default();
@@ -66,7 +66,11 @@ mod base
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = rng.gen::<f64>();
             let link_stiffness = parameters.link_stiffness_reference + parameters.link_stiffness_scale*(0.5 - rng.gen::<f64>());
-            assert_eq!(link_length, EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness).link_length);
+            let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+            assert_eq!(number_of_links, model.number_of_links);
+            assert_eq!(link_length, model.link_length);
+            assert_eq!(hinge_mass, model.hinge_mass);
+            assert_eq!(link_stiffness, model.link_stiffness);
         }
     }
 }
