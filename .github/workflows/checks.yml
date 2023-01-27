@@ -1,4 +1,4 @@
-name: Version
+name: Checks
 on:
   pull_request:
     branches: [ "main" ]
@@ -39,3 +39,10 @@ jobs:
           echo "julia version in PR is ${CURRENT_VERSION_JULIA}"
           export CHECK=$(python -c 'from packaging.version import parse; print(parse("'${CURRENT_VERSION_RUST}'") == parse("'${CURRENT_VERSION_JULIA}'"))' | tr '[:upper:]' '[:lower:]')
           $CHECK
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: compare
+        run: pytest --quiet --compare .
