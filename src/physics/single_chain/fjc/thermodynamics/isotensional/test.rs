@@ -483,8 +483,8 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let end_to_end_length_0 = model.end_to_end_length(&ZERO, &temperature);
-            assert!(end_to_end_length_0.abs() <= 3.0*BOLTZMANN_CONSTANT*temperature*(number_of_links as f64)*ZERO);
+            let end_to_end_length_0 = model.end_to_end_length(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
+            assert!(end_to_end_length_0.abs() <= ZERO*(number_of_links as f64)*link_length);
         }
     }
     #[test]
@@ -499,8 +499,8 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let end_to_end_length_per_link_0 = model.end_to_end_length_per_link(&ZERO, &temperature);
-            assert!(end_to_end_length_per_link_0.abs() <= 3.0*BOLTZMANN_CONSTANT*temperature*ZERO);
+            let end_to_end_length_per_link_0 = model.end_to_end_length_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
+            assert!(end_to_end_length_per_link_0.abs() <= ZERO*link_length);
         }
     }
     #[test]
@@ -515,7 +515,7 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_end_to_end_length_0 = model.nondimensional_end_to_end_length(&ZERO);
-            assert!(nondimensional_end_to_end_length_0.abs() <= 3.0*(number_of_links as f64)*ZERO);
+            assert!(nondimensional_end_to_end_length_0.abs() <= ZERO*(number_of_links as f64));
         }
     }
     #[test]
@@ -530,7 +530,7 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_end_to_end_length_per_link_0 = model.nondimensional_end_to_end_length_per_link(&ZERO);
-            assert!(nondimensional_end_to_end_length_per_link_0.abs() <= 3.0*ZERO);
+            assert!(nondimensional_end_to_end_length_per_link_0.abs() <= ZERO);
         }
     }
     #[test]

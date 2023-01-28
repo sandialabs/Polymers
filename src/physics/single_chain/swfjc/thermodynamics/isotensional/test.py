@@ -7,7 +7,6 @@ from polymers import physics
 from ..test import Parameters
 
 parameters = Parameters()
-parameters.number_of_loops = 8888
 SWFJC = physics.single_chain.swfjc.thermodynamics.isotensional.SWFJC
 
 
