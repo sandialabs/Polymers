@@ -39,7 +39,7 @@ jobs:
           echo "julia version in PR is ${CURRENT_VERSION_JULIA}"
           export CHECK=$(python -c 'from packaging.version import parse; print(parse("'${CURRENT_VERSION_RUST}'") == parse("'${CURRENT_VERSION_JULIA}'"))' | tr '[:upper:]' '[:lower:]')
           $CHECK
-  api:
+  concurrency:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -49,8 +49,6 @@ jobs:
           pip install maturin
           maturin build --features python
           pip install target/wheels/*.whl
-      - name: api
-        run: echo "Placeholder for checking that full API is also available across languages."
       - name: tests
         run: |
           pip install pytest
