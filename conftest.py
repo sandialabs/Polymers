@@ -45,6 +45,12 @@ def pytest_collection_finish(session):
         run(
             ['sed', '-i', 's@/@::@g', '__pycache__/pytest.tests']
         )
+        run(
+            ['sort', '__pycache__/pytest.tests', '-o', '__pycache__/pytest.tests']
+        )
+        run(
+            ['sort', '__pycache__/cargo.tests', '-o', '__pycache__/cargo.tests']
+        )
         code = run(
             ['cmp', '__pycache__/cargo.tests', '__pycache__/pytest.tests']
         ).returncode
