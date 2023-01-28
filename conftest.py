@@ -15,7 +15,7 @@ def pytest_collection_finish(session):
     f = open("__pycache__/cargo.tests", "w")
     run(
         ['cargo', 'test', '--tests', '--', '--list', '--format=terse'],
-        stdout=f
+        stdout=f, stderr=0
     )
     f.close()
     run(
@@ -46,13 +46,16 @@ def pytest_collection_finish(session):
             ['sed', '-i', 's@/@::@g', '__pycache__/pytest.tests']
         )
         run(
-            ['sort', '__pycache__/cargo.tests', '-o', '__pycache__/cargo.tests']
+            ['sort', '__pycache__/cargo.tests',
+             '-o', '__pycache__/cargo.tests']
         )
         run(
-            ['sort', '__pycache__/pytest.tests', '-o', '__pycache__/pytest.tests']
+            ['sort', '__pycache__/pytest.tests',
+             '-o', '__pycache__/pytest.tests']
         )
         code = run(
-            ['cmp', '__pycache__/cargo.tests', '__pycache__/pytest.tests']
+            ['cmp', '-s', '__pycache__/cargo.tests',
+             '__pycache__/pytest.tests']
         ).returncode
         if code == 0:
             pytest.exit('tests match across languages', code)
