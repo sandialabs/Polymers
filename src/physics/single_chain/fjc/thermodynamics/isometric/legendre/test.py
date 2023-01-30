@@ -112,3 +112,155 @@ class Base(unittest.TestCase):
                 hinge_mass,
                 model.hinge_mass
             )
+
+
+class Normalization(unittest.TestCase):
+    """Class for normalization tests.
+
+    """
+    def test_equilibrium_distribution(self):
+        """Function to test the normalization
+        of the equilibrium distribution.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            integral = integrate(
+                lambda end_to_end_length:
+                    4.0*np.pi*end_to_end_length**2 *
+                    model.equilibrium_distribution(
+                        end_to_end_length
+                    ),
+                parameters.zero*number_of_links*link_length,
+                parameters.one*number_of_links*link_length,
+                parameters.points
+            )
+            self.assertLessEqual(
+                np.abs(integral - 1.0),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_equilibrium_distribution(self):
+        """Function to test the normalization
+        of the nondimensional equilibrium distribution.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            integral = integrate(
+                lambda nondimensional_end_to_end_length_per_link_per_link:
+                    4.0*np.pi * 
+                    nondimensional_end_to_end_length_per_link_per_link**2 *
+                    model.nondimensional_equilibrium_distribution(
+                        nondimensional_end_to_end_length_per_link_per_link
+                    ),
+                parameters.zero,
+                parameters.one,
+                parameters.points
+            )
+            self.assertLessEqual(
+                np.abs(integral - 1.0),
+                parameters.rel_tol
+            )
+
+    def test_equilibrium_radial_distribution(self):
+        """Function to test the normalization
+        of the equilibrium radial distribution.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            integral = integrate(
+                lambda end_to_end_length:
+                    model.equilibrium_radial_distribution(
+                        end_to_end_length
+                    ),
+                parameters.zero*number_of_links*link_length,
+                parameters.one*number_of_links*link_length,
+                parameters.points
+            )
+            self.assertLessEqual(
+                np.abs(integral - 1.0),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_equilibrium_radial_distribution(self):
+        """Function to test the normalization
+        of the nondimensional equilibrium radial distribution.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            integral = integrate(
+                lambda nondimensional_end_to_end_length_per_link_per_link:
+                    model.nondimensional_equilibrium_radial_distribution(
+                        nondimensional_end_to_end_length_per_link_per_link
+                    ),
+                parameters.zero,
+                parameters.one,
+                parameters.points
+            )
+            self.assertLessEqual(
+                np.abs(integral - 1.0),
+                parameters.rel_tol
+            )

@@ -26,6 +26,7 @@ class BasicParameters:
         self.log_log_tol = 5e-2
         self.log_log_scale = 12e-1
         self.number_of_loops = 8
+        self.one = 1e0
         self.zero = 1e-6
         self.points = 100
 
