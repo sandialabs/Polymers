@@ -131,7 +131,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn helmholtz_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -156,7 +155,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn helmholtz_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
