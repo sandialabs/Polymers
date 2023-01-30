@@ -535,9 +535,6 @@ class PerLink(unittest.TestCase):
             nondimensional_force = \
                 parameters.nondimensional_force_reference + \
                 parameters.nondimensional_force_scale*(0.5 - np.random.rand())
-            temperature = \
-                parameters.temperature_reference + \
-                parameters.temperature_scale*(0.5 - np.random.rand())
             nondimensional_end_to_end_length = \
                 model.nondimensional_end_to_end_length(
                     np.array(nondimensional_force)
@@ -1354,25 +1351,22 @@ class Connection(unittest.TestCase):
                     np.array(force),
                     temperature
                 )
-            h = parameters.rel_tol * \
+            h_step = parameters.rel_tol * \
                 parameters.boltzmann_constant*temperature/link_length
             end_to_end_length_from_derivative = -(
                 model.relative_gibbs_free_energy(
-                    np.array(force + 0.5*h),
+                    np.array(force + 0.5*h_step),
                     temperature
                 )
                 - model.relative_gibbs_free_energy(
-                    np.array(force - 0.5*h),
+                    np.array(force - 0.5*h_step),
                     temperature
-                ))/h
+                ))/h_step
             residual_abs = \
                 end_to_end_length \
                 - end_to_end_length_from_derivative
-            residual_rel = \
-                residual_abs / \
-                end_to_end_length
             self.assertLessEqual(
-                residual_abs, h
+                residual_abs, h_step
             )
 
     def test_end_to_end_length_per_link(self):
@@ -1410,25 +1404,22 @@ class Connection(unittest.TestCase):
                     np.array(force),
                     temperature
                 )
-            h = parameters.rel_tol * \
+            h_step = parameters.rel_tol * \
                 parameters.boltzmann_constant*temperature/link_length
             end_to_end_length_per_link_from_derivative = -(
                 model.relative_gibbs_free_energy_per_link(
-                    np.array(force + 0.5*h),
+                    np.array(force + 0.5*h_step),
                     temperature
                 )
                 - model.relative_gibbs_free_energy_per_link(
-                    np.array(force - 0.5*h),
+                    np.array(force - 0.5*h_step),
                     temperature
-                ))/h
+                ))/h_step
             residual_abs = \
                 end_to_end_length_per_link \
                 - end_to_end_length_per_link_from_derivative
-            residual_rel = \
-                residual_abs / \
-                end_to_end_length_per_link
             self.assertLessEqual(
-                residual_abs, h
+                residual_abs, h_step
             )
 
     def test_nondimensional_end_to_end_length(self):
@@ -1460,22 +1451,19 @@ class Connection(unittest.TestCase):
                 model.nondimensional_end_to_end_length(
                     np.array(nondimensional_force)
                 )
-            h = parameters.rel_tol
+            h_step = parameters.rel_tol
             nondimensional_end_to_end_length_from_derivative = -(
                 model.nondimensional_relative_gibbs_free_energy(
-                    np.array(nondimensional_force + 0.5*h)
+                    np.array(nondimensional_force + 0.5*h_step)
                 )
                 - model.nondimensional_relative_gibbs_free_energy(
-                    np.array(nondimensional_force - 0.5*h)
-                ))/h
+                    np.array(nondimensional_force - 0.5*h_step)
+                ))/h_step
             residual_abs = \
                 nondimensional_end_to_end_length \
                 - nondimensional_end_to_end_length_from_derivative
-            residual_rel = \
-                residual_abs / \
-                nondimensional_end_to_end_length
             self.assertLessEqual(
-                residual_abs, h
+                residual_abs, h_step
             )
 
     def test_nondimensional_end_to_end_length_per_link(self):
@@ -1507,20 +1495,17 @@ class Connection(unittest.TestCase):
                 model.nondimensional_end_to_end_length_per_link(
                     np.array(nondimensional_force)
                 )
-            h = parameters.rel_tol
+            h_step = parameters.rel_tol
             nondimensional_end_to_end_length_per_link_from_derivative = -(
                 model.nondimensional_relative_gibbs_free_energy_per_link(
-                    np.array(nondimensional_force + 0.5*h)
+                    np.array(nondimensional_force + 0.5*h_step)
                 )
                 - model.nondimensional_relative_gibbs_free_energy_per_link(
-                    np.array(nondimensional_force - 0.5*h)
-                ))/h
+                    np.array(nondimensional_force - 0.5*h_step)
+                ))/h_step
             residual_abs = \
                 nondimensional_end_to_end_length_per_link \
                 - nondimensional_end_to_end_length_per_link_from_derivative
-            residual_rel = \
-                residual_abs / \
-                nondimensional_end_to_end_length_per_link
             self.assertLessEqual(
-                residual_abs, h
+                residual_abs, h_step
             )
