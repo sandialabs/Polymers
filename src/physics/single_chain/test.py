@@ -1366,7 +1366,7 @@ class FjcIdeal(unittest.TestCase):
                 number_of_links*link_length
             equilibrium_distribution_fjc = \
                 fjc.thermodynamics.isometric. \
-                equilibrium_distribution(
+                equilibrium_radial_distribution(
                     np.array(end_to_end_length)
                 )
             equilibrium_distribution_ideal = \
