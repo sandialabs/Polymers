@@ -896,7 +896,7 @@ mod swfjc_fjc
             let end_to_end_length_fjc = fjc.thermodynamics.isotensional.end_to_end_length(&force, &temperature);
             let end_to_end_length_swfjc = swfjc.thermodynamics.isotensional.end_to_end_length(&force, &temperature);
             let residual = &end_to_end_length_swfjc - &end_to_end_length_fjc;
-            assert!(residual.abs() <= (number_of_links as f64)*link_length*parameters.nondimensional_well_width_small);
+            assert!(residual.abs() <= (number_of_links as f64)*well_width);
         }
     }
     #[test]
@@ -918,7 +918,7 @@ mod swfjc_fjc
             let end_to_end_length_per_link_fjc = fjc.thermodynamics.isotensional.end_to_end_length_per_link(&force, &temperature);
             let end_to_end_length_per_link_swfjc = swfjc.thermodynamics.isotensional.end_to_end_length_per_link(&force, &temperature);
             let residual = &end_to_end_length_per_link_swfjc - &end_to_end_length_per_link_fjc;
-            assert!(residual.abs() <= link_length*parameters.nondimensional_well_width_small);
+            assert!(residual.abs() <= well_width);
         }
     }
     #[test]
