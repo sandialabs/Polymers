@@ -203,7 +203,7 @@ impl Ideal
     ///
     pub fn equilibrium_distribution<'py>(&self, py: Python<'py>, end_to_end_length: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).equilibrium_radial_distribution(&end_to_end_length)).into_pyarray(py)
+        end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).equilibrium_distribution(&end_to_end_length)).into_pyarray(py)
     }
     /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link,
     ///
