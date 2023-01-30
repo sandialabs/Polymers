@@ -5,6 +5,7 @@ import unittest
 import numpy as np
 from polymers import physics
 from ..test import Parameters
+from .....test import integrate
 
 parameters = Parameters()
 FJC = physics.single_chain.fjc.thermodynamics.isometric.legendre.FJC
