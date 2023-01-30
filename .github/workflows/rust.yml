@@ -43,7 +43,7 @@ jobs:
       - name: build
         run: cargo build --verbose
       - name: clippy
-        run: cargo clippy --verbose
+        run: cargo clippy -- -D warnings
       - name: bench
         run: cargo bench --verbose
       - name: doc
