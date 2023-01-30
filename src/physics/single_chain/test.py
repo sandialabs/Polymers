@@ -1,6 +1,17 @@
 """Module to test the local module.
 
 """
+import numpy as np
+
+
+def integrate(function, lower_lim, upper_lim, num_points):
+    """Function for integration.
+
+    """
+    d_x = (upper_lim - lower_lim)/num_points
+    return function(
+        lower_lim + (0.5 + np.arange(0, num_points))*d_x
+    ).sum()*d_x
 
 
 class BasicParameters:
@@ -8,10 +19,13 @@ class BasicParameters:
 
     """
     def __init__(self):
-        self.abs_tol = 1e-8
-        self.rel_tol = 1e-6
+        self.abs_tol = 1e-7
+        self.rel_tol = 1e-5
+        self.log_log_tol = 1e-1
+        self.log_log_scale = 12e-1
         self.number_of_loops = 8
         self.zero = 1e-6
+        self.points = 100
 
     def dummy_1(self):
         """Dummy function to please pylint.
@@ -57,6 +71,7 @@ class ExtraSingleChainParameters(BasicSingleChainParameters):
         super().__init__()
         self.link_stiffness_reference = 5e5
         self.link_stiffness_scale = 99e4
+        self.nondimensional_link_stiffness_large = 1e4
         self.well_width_reference = 99e-2
         self.well_width_scale = 5e-1
 

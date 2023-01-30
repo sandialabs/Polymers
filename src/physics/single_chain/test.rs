@@ -57,8 +57,8 @@ impl Default for Parameters
     {
         Self
         {
-            abs_tol: 1e-8,
-            rel_tol: 1e-6,
+            abs_tol: 1e-7,
+            rel_tol: 1e-5,
             rel_tol_thermodynamic_limit: 1e-1,
             log_log_tol: 5e-2,
             log_log_scale: 12e-1,
