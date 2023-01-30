@@ -1617,7 +1617,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -1704,7 +1704,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -1787,7 +1787,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -1871,7 +1871,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -1958,7 +1958,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2045,7 +2045,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2132,7 +2132,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2219,7 +2219,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2305,7 +2305,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2391,7 +2391,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2477,7 +2477,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
@@ -2563,7 +2563,7 @@ class Asymptotic(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_rel_2),
                 np.exp(-parameters.nondimensional_link_stiffness_medium *
-                parameters.log_log_scale)
+                       parameters.log_log_scale)
             )
             self.assertLessEqual(
                 log_log_slope,
