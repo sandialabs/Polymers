@@ -1466,7 +1466,7 @@ class Connection(unittest.TestCase):
                 nondimensional_end_to_end_length \
                 - nondimensional_end_to_end_length_from_derivative
             self.assertLessEqual(
-                residual_abs, 3.0*h_step
+                residual_abs, h_step
             )
 
     def test_nondimensional_end_to_end_length_per_link(self):

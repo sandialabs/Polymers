@@ -21,7 +21,7 @@ class BasicParameters:
     def __init__(self):
         self.abs_tol = 1e-7
         self.rel_tol = 1e-5
-        self.log_log_tol = 1e-1
+        self.log_log_tol = 5e-2
         self.log_log_scale = 12e-1
         self.number_of_loops = 8
         self.zero = 1e-6
@@ -72,6 +72,7 @@ class ExtraSingleChainParameters(BasicSingleChainParameters):
         self.link_stiffness_reference = 5e5
         self.link_stiffness_scale = 99e4
         self.nondimensional_link_stiffness_large = 1e4
+        self.nondimensional_link_stiffness_medium = 1e1
         self.well_width_reference = 99e-2
         self.well_width_scale = 5e-1
 

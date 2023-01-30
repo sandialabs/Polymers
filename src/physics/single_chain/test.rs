@@ -60,7 +60,7 @@ impl Default for Parameters
             abs_tol: 1e-7,
             rel_tol: 1e-5,
             rel_tol_thermodynamic_limit: 1e-1,
-            log_log_tol: 1e-1,
+            log_log_tol: 5e-1,
             log_log_scale: 12e-1,
             number_of_loops: 8,
             hinge_mass_reference: 1e0,
