@@ -23,8 +23,6 @@ class BasicParameters:
     def __init__(self):
         self.abs_tol = 1e-7
         self.rel_tol = 1e-5
-        self.log_log_tol = 5e-2
-        self.log_log_scale = 12e-1
         self.number_of_loops = 8
         self.one = 1e0
         self.zero = 1e-6
@@ -47,6 +45,8 @@ class BasicPhysicsParameters(BasicParameters):
     """
     def __init__(self):
         super().__init__()
+        self.log_log_tol = 5e-2
+        self.log_log_scale = 12e-1
         self.rel_tol_thermodynamic_limit = 1e-1
         self.temperature_reference = 3e2
         self.temperature_scale = 1e2

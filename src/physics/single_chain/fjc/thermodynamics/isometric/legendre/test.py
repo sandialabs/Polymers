@@ -140,12 +140,15 @@ class Normalization(unittest.TestCase):
                 link_length,
                 hinge_mass
             )
-            integral = integrate(
-                lambda end_to_end_length:
-                    4.0*np.pi*end_to_end_length**2 *
+
+            def integrand(end_to_end_length):
+                return 4.0*np.pi*end_to_end_length**2 * \
                     model.equilibrium_distribution(
                         end_to_end_length
-                    ),
+                    )
+
+            integral = integrate(
+                integrand,
                 parameters.zero*number_of_links*link_length,
                 parameters.one*number_of_links*link_length,
                 parameters.points
@@ -177,13 +180,16 @@ class Normalization(unittest.TestCase):
                 link_length,
                 hinge_mass
             )
-            integral = integrate(
-                lambda nondimensional_end_to_end_length_per_link_per_link:
-                    4.0*np.pi * 
-                    nondimensional_end_to_end_length_per_link_per_link**2 *
+
+            def integrand(nondimensional_end_to_end_length_per_link_per_link):
+                return 4.0*np.pi * \
+                    nondimensional_end_to_end_length_per_link_per_link**2 * \
                     model.nondimensional_equilibrium_distribution(
                         nondimensional_end_to_end_length_per_link_per_link
-                    ),
+                    )
+
+            integral = integrate(
+                integrand,
                 parameters.zero,
                 parameters.one,
                 parameters.points
@@ -215,11 +221,14 @@ class Normalization(unittest.TestCase):
                 link_length,
                 hinge_mass
             )
-            integral = integrate(
-                lambda end_to_end_length:
-                    model.equilibrium_radial_distribution(
+
+            def integrand(end_to_end_length):
+                return model.equilibrium_radial_distribution(
                         end_to_end_length
-                    ),
+                    )
+
+            integral = integrate(
+                integrand,
                 parameters.zero*number_of_links*link_length,
                 parameters.one*number_of_links*link_length,
                 parameters.points
@@ -251,11 +260,14 @@ class Normalization(unittest.TestCase):
                 link_length,
                 hinge_mass
             )
-            integral = integrate(
-                lambda nondimensional_end_to_end_length_per_link_per_link:
-                    model.nondimensional_equilibrium_radial_distribution(
+
+            def integrand(nondimensional_end_to_end_length_per_link_per_link):
+                return model.nondimensional_equilibrium_radial_distribution(
                         nondimensional_end_to_end_length_per_link_per_link
-                    ),
+                    )
+
+            integral = integrate(
+                integrand,
                 parameters.zero,
                 parameters.one,
                 parameters.points
