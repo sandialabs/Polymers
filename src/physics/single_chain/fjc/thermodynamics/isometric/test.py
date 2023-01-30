@@ -5,6 +5,7 @@ import unittest
 import numpy as np
 from polymers import physics
 from ..test import Parameters
+from ....test import integrate
 
 parameters = Parameters()
 FJC = physics.single_chain.fjc.thermodynamics.isometric.FJC
@@ -110,4 +111,46 @@ class Base(unittest.TestCase):
             self.assertEqual(
                 hinge_mass,
                 model.hinge_mass
+            )
+
+
+class Normalization(unittest.TestCase):
+    """Class for normalization tests.
+
+    """
+    def test_equilibrium_distribution(self):
+        """Function to test the normalization
+        of the equilibrium distribution.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            integral = integrate(
+                lambda end_to_end_length:
+                    4.0*np.pi*end_to_end_length**2 *
+                    model.equilibrium_distribution(
+                        end_to_end_length
+                    ),
+                parameters.zero*number_of_links*link_length,
+                number_of_links*link_length,
+                parameters.points
+            )
+            self.assertLessEqual(
+                np.abs(integral - 1.0),
+                parameters.rel_tol
             )
