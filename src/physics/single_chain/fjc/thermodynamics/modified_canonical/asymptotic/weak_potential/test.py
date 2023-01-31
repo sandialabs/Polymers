@@ -144,12 +144,14 @@ class Nondimensional(unittest.TestCase):
                 parameters. \
                 nondimensional_potential_distance_reference + \
                 parameters. \
-                nondimensional_potential_distance_scale*(0.5 - np.random.rand())
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
             nondimensional_potential_stiffness = \
                 parameters. \
                 nondimensional_potential_stiffness_reference + \
                 parameters. \
-                nondimensional_potential_stiffness_scale*(0.5 - np.random.rand())
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
             temperature = \
                 parameters.temperature_reference + \
                 parameters.temperature_scale*(0.5 - np.random.rand())
@@ -213,12 +215,14 @@ class Nondimensional(unittest.TestCase):
                 parameters. \
                 nondimensional_potential_distance_reference + \
                 parameters. \
-                nondimensional_potential_distance_scale*(0.5 - np.random.rand())
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
             nondimensional_potential_stiffness = \
                 parameters. \
                 nondimensional_potential_stiffness_reference + \
                 parameters. \
-                nondimensional_potential_stiffness_scale*(0.5 - np.random.rand())
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
             temperature = \
                 parameters.temperature_reference + \
                 parameters.temperature_scale*(0.5 - np.random.rand())
@@ -282,12 +286,14 @@ class Nondimensional(unittest.TestCase):
                 parameters. \
                 nondimensional_potential_distance_reference + \
                 parameters. \
-                nondimensional_potential_distance_scale*(0.5 - np.random.rand())
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
             nondimensional_potential_stiffness = \
                 parameters. \
                 nondimensional_potential_stiffness_reference + \
                 parameters. \
-                nondimensional_potential_stiffness_scale*(0.5 - np.random.rand())
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
             temperature = \
                 parameters.temperature_reference + \
                 parameters.temperature_scale*(0.5 - np.random.rand())
@@ -315,6 +321,292 @@ class Nondimensional(unittest.TestCase):
             residual_rel = \
                 residual_abs / \
                 nondimensional_force
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_gibbs_free_energy(self):
+        """Function to test the nondimensionalization
+        of the Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_reference + \
+                parameters. \
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy = \
+                model.nondimensional_gibbs_free_energy(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            gibbs_free_energy = \
+                model.gibbs_free_energy(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_gibbs_free_energy
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_gibbs_free_energy_per_link(self):
+        """Function to test the nondimensionalization
+        of the Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_reference + \
+                parameters. \
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy_per_link = \
+                model.nondimensional_gibbs_free_energy_per_link(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            gibbs_free_energy_per_link = \
+                model.gibbs_free_energy_per_link(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy_per_link / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy(self):
+        """Function to test the nondimensionalization
+        of the relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_reference + \
+                parameters. \
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_relative_gibbs_free_energy = \
+                model.nondimensional_relative_gibbs_free_energy(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness
+                )
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            relative_gibbs_free_energy = \
+                model.relative_gibbs_free_energy(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                relative_gibbs_free_energy / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_relative_gibbs_free_energy
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy_per_link(self):
+        """Function to test the nondimensionalization
+        of the relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_reference + \
+                parameters. \
+                nondimensional_potential_distance_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_relative_gibbs_free_energy_per_link = \
+                model.nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness
+                )
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            relative_gibbs_free_energy_per_link = \
+                model.relative_gibbs_free_energy_per_link(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                relative_gibbs_free_energy_per_link / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_relative_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy_per_link
             self.assertLessEqual(
                 np.abs(residual_abs),
                 parameters.abs_tol
