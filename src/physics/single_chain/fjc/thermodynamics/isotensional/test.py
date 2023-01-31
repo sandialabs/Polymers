@@ -157,18 +157,18 @@ class Nondimensional(unittest.TestCase):
                     temperature
                 )
             residual_abs = \
-                end_to_end_length / \
-                parameters.boltzmann_constant/temperature \
+                end_to_end_length \
+                / link_length \
                 - nondimensional_end_to_end_length
             residual_rel = \
                 residual_abs / \
                 nondimensional_end_to_end_length
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -212,18 +212,18 @@ class Nondimensional(unittest.TestCase):
                     temperature
                 )
             residual_abs = \
-                end_to_end_length_per_link / \
-                parameters.boltzmann_constant/temperature \
+                end_to_end_length_per_link \
+                / link_length \
                 - nondimensional_end_to_end_length_per_link
             residual_rel = \
                 residual_abs / \
                 nondimensional_end_to_end_length_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -275,11 +275,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -331,11 +331,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -386,11 +386,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -441,11 +441,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -502,11 +502,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 end_to_end_length_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -551,11 +551,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 nondimensional_end_to_end_length_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -607,11 +607,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 gibbs_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -663,11 +663,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 relative_gibbs_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -717,11 +717,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -766,11 +766,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 nondimensional_relative_gibbs_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
