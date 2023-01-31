@@ -835,12 +835,12 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 gibbs_free_energy_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol *
                 parameters.boltzmann_constant*temperature/link_length
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -900,12 +900,12 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 gibbs_free_energy_per_link_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol *
                 parameters.boltzmann_constant*temperature/link_length
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -959,11 +959,11 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -1017,11 +1017,11 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 nondimensional_gibbs_free_energy_per_link_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -1366,7 +1366,7 @@ class Connection(unittest.TestCase):
                 end_to_end_length \
                 - end_to_end_length_from_derivative
             self.assertLessEqual(
-                residual_abs, h_step
+                np.abs(residual_abs), h_step
             )
 
     def test_end_to_end_length_per_link(self):
@@ -1419,7 +1419,7 @@ class Connection(unittest.TestCase):
                 end_to_end_length_per_link \
                 - end_to_end_length_per_link_from_derivative
             self.assertLessEqual(
-                residual_abs, h_step
+                np.abs(residual_abs), h_step
             )
 
     def test_nondimensional_end_to_end_length(self):
@@ -1463,7 +1463,7 @@ class Connection(unittest.TestCase):
                 nondimensional_end_to_end_length \
                 - nondimensional_end_to_end_length_from_derivative
             self.assertLessEqual(
-                residual_abs, h_step
+                np.abs(residual_abs), h_step
             )
 
     def test_nondimensional_end_to_end_length_per_link(self):
@@ -1507,5 +1507,5 @@ class Connection(unittest.TestCase):
                 nondimensional_end_to_end_length_per_link \
                 - nondimensional_end_to_end_length_per_link_from_derivative
             self.assertLessEqual(
-                residual_abs, h_step
+                np.abs(residual_abs), h_step
             )

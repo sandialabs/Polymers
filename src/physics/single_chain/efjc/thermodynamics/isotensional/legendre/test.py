@@ -199,11 +199,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -259,11 +259,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -319,11 +319,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -379,11 +379,11 @@ class Nondimensional(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -444,11 +444,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 helmholtz_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -504,11 +504,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 relative_helmholtz_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -562,11 +562,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -620,11 +620,11 @@ class PerLink(unittest.TestCase):
                 residual_abs / \
                 nondimensional_relative_helmholtz_free_energy_per_link
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -693,12 +693,12 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 helmholtz_free_energy_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol *
                 parameters.boltzmann_constant*temperature/link_length
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -762,12 +762,12 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 helmholtz_free_energy_per_link_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol *
                 parameters.boltzmann_constant*temperature/link_length
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -826,11 +826,11 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
@@ -889,11 +889,11 @@ class Relative(unittest.TestCase):
                 residual_abs / \
                 nondimensional_helmholtz_free_energy_per_link_0
             self.assertLessEqual(
-                residual_abs,
+                np.abs(residual_abs),
                 parameters.abs_tol
             )
             self.assertLessEqual(
-                residual_rel,
+                np.abs(residual_rel),
                 parameters.rel_tol
             )
 
