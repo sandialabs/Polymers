@@ -1546,7 +1546,7 @@ class FjcIdeal(unittest.TestCase):
             )
 
 
-class EFjcIdeal(unittest.TestCase):
+class EfjcIdeal(unittest.TestCase):
     """Class for EFJC becoming Ideal tests.
 
     """
@@ -1785,7 +1785,7 @@ class EFjcIdeal(unittest.TestCase):
             )
 
 
-class SwjcIdeal(unittest.TestCase):
+class SwfjcIdeal(unittest.TestCase):
     """Class for SWFJC becoming Ideal tests.
 
     """
