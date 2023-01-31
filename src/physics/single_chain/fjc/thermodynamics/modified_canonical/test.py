@@ -5,6 +5,7 @@ import unittest
 import numpy as np
 from polymers import physics
 from ..test import Parameters
+from ....test import integrate
 
 parameters = Parameters()
 FJC = physics.single_chain.fjc.thermodynamics.modified_canonical.FJC
@@ -1788,4 +1789,2376 @@ class Connection(unittest.TestCase):
                 nondimensional_end_to_end_length_per_link
             self.assertLessEqual(
                 np.abs(residual_rel), h_step
+            )
+
+
+class StrongPotential(unittest.TestCase):
+    """Class for the modified canonical ensemble asymptotics
+    under strong potential tests.
+
+    """
+    def test_force(self):
+        """Function to test the behavior
+        of the force.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(end_to_end_length):
+                    return (
+                        model.asymptotic.strong_potential.
+                        force(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        force(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(end_to_end_length):
+                    return (
+                        model.
+                        force(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_force(self):
+        """Function to test the behavior
+        of the nondimensional force.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.asymptotic.strong_potential.
+                        nondimensional_force(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_force(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                def integrand_denominator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.
+                        nondimensional_force(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_helmholtz_free_energy(self):
+        """Function to test the behavior
+        of the Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(end_to_end_length):
+                    return (
+                        model.asymptotic.strong_potential.
+                        helmholtz_free_energy(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.strong_potential.
+                        helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        helmholtz_free_energy(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) +
+                        model.
+                        helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(end_to_end_length):
+                    return (
+                        model.
+                        helmholtz_free_energy(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_helmholtz_free_energy_per_link(self):
+        """Function to test the behavior
+        of the Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(end_to_end_length):
+                    return (
+                        model.asymptotic.strong_potential.
+                        helmholtz_free_energy_per_link(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.strong_potential.
+                        helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        helmholtz_free_energy_per_link(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) +
+                        model.
+                        helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(end_to_end_length):
+                    return (
+                        model.
+                        helmholtz_free_energy_per_link(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_relative_helmholtz_free_energy(self):
+        """Function to test the behavior
+        of the relative Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(end_to_end_length):
+                    return (
+                        model.asymptotic.strong_potential.
+                        relative_helmholtz_free_energy(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.strong_potential.
+                        relative_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_helmholtz_free_energy(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) +
+                        model.
+                        relative_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(end_to_end_length):
+                    return (
+                        model.
+                        relative_helmholtz_free_energy(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_relative_helmholtz_free_energy_per_link(self):
+        """Function to test the behavior
+        of the relative Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(end_to_end_length):
+                    return (
+                        model.asymptotic.strong_potential.
+                        relative_helmholtz_free_energy_per_link(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.strong_potential.
+                        relative_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_helmholtz_free_energy_per_link(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) +
+                        model.
+                        relative_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(end_to_end_length):
+                    return (
+                        model.
+                        relative_helmholtz_free_energy_per_link(
+                            end_to_end_length,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small *
+                                number_of_links*link_length
+                            ),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero*number_of_links*link_length,
+                    parameters.nondimensional_potential_distance_small *
+                    number_of_links*link_length,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy(self):
+        """Function to test the behavior
+        of the nondimensional Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.asymptotic.strong_potential.
+                        nondimensional_helmholtz_free_energy(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.strong_potential.
+                        nondimensional_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_helmholtz_free_energy(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) +
+                        model.
+                        nondimensional_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.
+                        nondimensional_helmholtz_free_energy(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy_per_link(self):
+        """Function to test the behavior
+        of the nondimensional Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.asymptotic.strong_potential.
+                        nondimensional_helmholtz_free_energy_per_link(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.strong_potential.
+                        nondimensional_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_helmholtz_free_energy_per_link(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) +
+                        model.
+                        nondimensional_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.
+                        nondimensional_helmholtz_free_energy_per_link(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_relative_helmholtz_free_energy(self):
+        """Function to test the behavior
+        of the nondimensional relative Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.asymptotic.strong_potential.
+                        nondimensional_relative_helmholtz_free_energy(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.asymptotic.strong_potential.
+                        nondimensional_relative_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_helmholtz_free_energy(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) +
+                        model.
+                        nondimensional_relative_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                def integrand_denominator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.
+                        nondimensional_relative_helmholtz_free_energy(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_helmholtz_free_energy(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_relative_helmholtz_free_energy_per_link(self):
+        """Function to test the behavior
+        of the nondimensional relative Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.asymptotic.strong_potential.
+                        nondimensional_relative_helmholtz_free_energy_per_link(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.asymptotic.strong_potential.
+                        nondimensional_relative_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_helmholtz_free_energy_per_link(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) +
+                        model.
+                        nondimensional_relative_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                def integrand_denominator(
+                    nondimensional_end_to_end_length_per_link
+                ):
+                    return (
+                        model.
+                        nondimensional_relative_helmholtz_free_energy_per_link(
+                            nondimensional_end_to_end_length_per_link,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_helmholtz_free_energy_per_link(
+                            np.array(
+                                parameters.
+                                nondimensional_potential_distance_small
+                            ),
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    parameters.nondimensional_potential_distance_small,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(log_log_slope/2.0 + 1.0),
+                parameters.log_log_tol
+            )
+
+class WeakPotential(unittest.TestCase):
+    """Class for the modified canonical ensemble asymptotics
+    under weak potential tests.
+
+    """
+    def test_end_to_end_length(self):
+        """Function to test the behavior
+        of the end-to-end length.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    force = model.modified_canonical. \
+                        asymptotic.weak_potential. \
+                        force(
+                            potential_distance,
+                            potential_stiffness
+                        )
+                    return (
+                        model.
+                        end_to_end_length(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        end_to_end_length(
+                            force,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    return (
+                        model.
+                        end_to_end_length(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_end_to_end_length_per_link(self):
+        """Function to test the behavior
+        of the end-to-end length per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    force = model.modified_canonical. \
+                        asymptotic.weak_potential. \
+                        force(
+                            potential_distance,
+                            potential_stiffness
+                        )
+                    return (
+                        model.
+                        end_to_end_length_per_link(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        end_to_end_length_per_link(
+                            force,
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    return (
+                        model.
+                        end_to_end_length_per_link(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_end_to_end_length(self):
+        """Function to test the behavior
+        of the nondimensional end-to-end length.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    nondimensional_force = \
+                        model. \
+                        nondimensional_force(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        )
+                    return (
+                        model.
+                        nondimensional_end_to_end_length(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.asymptotic.weak_potential.
+                        nondimensional_end_to_end_length(
+                            nondimensional_force
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    return (
+                        model.
+                        nondimensional_end_to_end_length(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness,
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_end_to_end_length_per_link(self):
+        """Function to test the behavior
+        of the nondimensional end-to-end length per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+
+            def residual_rel(nondimensional_potential_stiffness):
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    nondimensional_force = \
+                        model. \
+                        nondimensional_force(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        )
+                    return (
+                        model.
+                        nondimensional_end_to_end_length_per_link(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.asymptotic.weak_potential.
+                        nondimensional_end_to_end_length_per_link(
+                            nondimensional_force
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    return (
+                        model.
+                        nondimensional_end_to_end_length_per_link(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness,
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_gibbs_free_energy(self):
+        """Function to test the behavior
+        of the Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )*number_of_links*link_length
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+                force_ref = model.modified_canonical. \
+                    asymptotic.weak_potential. \
+                    force(
+                        np.array(potential_distance_ref),
+                        potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    force = model.modified_canonical. \
+                        asymptotic.weak_potential. \
+                        force(
+                            potential_distance,
+                            potential_stiffness
+                        )
+                    return (
+                        model.
+                        gibbs_free_energy(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        gibbs_free_energy(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        gibbs_free_energy(
+                            force,
+                            temperature
+                        ) +
+                        model.asymptotic.weak_potential.
+                        gibbs_free_energy(
+                            np.array(force_ref),
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    return (
+                        model.
+                        gibbs_free_energy(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        gibbs_free_energy(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_gibbs_free_energy_per_link(self):
+        """Function to test the behavior
+        of the Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )*number_of_links*link_length
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+                force_ref = model.modified_canonical. \
+                    asymptotic.weak_potential. \
+                    force(
+                        np.array(potential_distance_ref),
+                        potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    force = model.modified_canonical. \
+                        asymptotic.weak_potential. \
+                        force(
+                            potential_distance,
+                            potential_stiffness
+                        )
+                    return (
+                        model.
+                        gibbs_free_energy_per_link(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        gibbs_free_energy_per_link(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        gibbs_free_energy_per_link(
+                            force,
+                            temperature
+                        ) +
+                        model.asymptotic.weak_potential.
+                        gibbs_free_energy_per_link(
+                            np.array(force_ref),
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    return (
+                        model.
+                        gibbs_free_energy_per_link(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        gibbs_free_energy_per_link(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_relative_gibbs_free_energy(self):
+        """Function to test the behavior
+        of the relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )*number_of_links*link_length
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+                force_ref = model.modified_canonical. \
+                    asymptotic.weak_potential. \
+                    force(
+                        np.array(potential_distance_ref),
+                        potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    force = model.modified_canonical. \
+                        asymptotic.weak_potential. \
+                        force(
+                            potential_distance,
+                            potential_stiffness
+                        )
+                    return (
+                        model.
+                        relative_gibbs_free_energy(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_gibbs_free_energy(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        relative_gibbs_free_energy(
+                            force,
+                            temperature
+                        ) +
+                        model.asymptotic.weak_potential.
+                        relative_gibbs_free_energy(
+                            np.array(force_ref),
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    return (
+                        model.
+                        relative_gibbs_free_energy(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_gibbs_free_energy(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_relative_gibbs_free_energy_per_link(self):
+        """Function to test the behavior
+        of the relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )*number_of_links*link_length
+
+            def residual_rel(nondimensional_potential_stiffness):
+                potential_stiffness = nondimensional_potential_stiffness / \
+                    (number_of_links*link_length)**2 * \
+                    parameters.boltzmann_constant*temperature
+                force_ref = model.modified_canonical. \
+                    asymptotic.weak_potential. \
+                    force(
+                        np.array(potential_distance_ref),
+                        potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    force = model.modified_canonical. \
+                        asymptotic.weak_potential. \
+                        force(
+                            potential_distance,
+                            potential_stiffness
+                        )
+                    return (
+                        model.
+                        relative_gibbs_free_energy_per_link(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_gibbs_free_energy_per_link(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        relative_gibbs_free_energy_per_link(
+                            force,
+                            temperature
+                        ) +
+                        model.asymptotic.weak_potential.
+                        relative_gibbs_free_energy_per_link(
+                            np.array(force_ref),
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    potential_distance = nondimensional_potential_distance * \
+                        number_of_links*link_length
+                    return (
+                        model.
+                        relative_gibbs_free_energy_per_link(
+                            potential_distance,
+                            potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        relative_gibbs_free_energy_per_link(
+                            np.array(potential_distance_ref),
+                            potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy(self):
+        """Function to test the behavior
+        of the nondimensional Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )
+
+            def residual_rel(nondimensional_potential_stiffness):
+                nondimensional_force_ref = \
+                    model. \
+                    nondimensional_force(
+                        np.array(nondimensional_potential_distance_ref),
+                        nondimensional_potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    nondimensional_force = \
+                        model. \
+                        nondimensional_force(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        )
+                    return (
+                        model.
+                        nondimensional_gibbs_free_energy(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_gibbs_free_energy(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        nondimensional_gibbs_free_energy(
+                            nondimensional_force,
+                            temperature
+                        ) +
+                        model.asymptotic.weak_potential.
+                        nondimensional_gibbs_free_energy(
+                            np.array(nondimensional_force_ref),
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    return (
+                        model.
+                        nondimensional_gibbs_free_energy(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_gibbs_free_energy(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy_per_link(self):
+        """Function to test the behavior
+        of the nondimensional Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )
+
+            def residual_rel(nondimensional_potential_stiffness):
+                nondimensional_force_ref = \
+                    model. \
+                    nondimensional_force(
+                        np.array(nondimensional_potential_distance_ref),
+                        nondimensional_potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    nondimensional_force = \
+                        model. \
+                        nondimensional_force(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        )
+                    return (
+                        model.
+                        nondimensional_gibbs_free_energy_per_link(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_gibbs_free_energy_per_link(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.asymptotic.weak_potential.
+                        nondimensional_gibbs_free_energy_per_link(
+                            nondimensional_force,
+                            temperature
+                        ) +
+                        model.asymptotic.weak_potential.
+                        nondimensional_gibbs_free_energy_per_link(
+                            np.array(nondimensional_force_ref),
+                            temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    return (
+                        model.
+                        nondimensional_gibbs_free_energy_per_link(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness,
+                            temperature
+                        ) -
+                        model.
+                        nondimensional_gibbs_free_energy_per_link(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness,
+                            temperature
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy(self):
+        """Function to test the behavior
+        of the nondimensional relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )
+
+            def residual_rel(nondimensional_potential_stiffness):
+                nondimensional_force_ref = \
+                    model. \
+                    nondimensional_force(
+                        np.array(nondimensional_potential_distance_ref),
+                        nondimensional_potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    nondimensional_force = \
+                        model. \
+                        nondimensional_force(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        )
+                    return (
+                        model.
+                        nondimensional_relative_gibbs_free_energy(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_gibbs_free_energy(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.asymptotic.weak_potential.
+                        nondimensional_relative_gibbs_free_energy(
+                            nondimensional_force
+                        ) +
+                        model.asymptotic.weak_potential.
+                        nondimensional_relative_gibbs_free_energy(
+                            np.array(nondimensional_force_ref)
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    return (
+                        model.
+                        nondimensional_relative_gibbs_free_energy(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_gibbs_free_energy(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy_per_link(self):
+        """Function to test the behavior
+        of the nondimensional relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                parameters.number_of_links_maximum - \
+                parameters.number_of_links_minimum
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance_ref = \
+                np.array(
+                    parameters.nondimensional_potential_distance_large_1
+                )
+
+            def residual_rel(nondimensional_potential_stiffness):
+                nondimensional_force_ref = \
+                    model. \
+                    nondimensional_force(
+                        np.array(nondimensional_potential_distance_ref),
+                        nondimensional_potential_stiffness
+                    )
+
+                def integrand_numerator(nondimensional_potential_distance):
+                    nondimensional_force = \
+                        model. \
+                        nondimensional_force(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        )
+                    return (
+                        model.
+                        nondimensional_relative_gibbs_free_energy_per_link(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_gibbs_free_energy_per_link(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.asymptotic.weak_potential.
+                        nondimensional_relative_gibbs_free_energy_per_link(
+                            nondimensional_force
+                        ) +
+                        model.asymptotic.weak_potential.
+                        nondimensional_relative_gibbs_free_energy_per_link(
+                            np.array(nondimensional_force_ref)
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_potential_distance):
+                    return (
+                        model.
+                        nondimensional_relative_gibbs_free_energy_per_link(
+                            nondimensional_potential_distance,
+                            nondimensional_potential_stiffness
+                        ) -
+                        model.
+                        nondimensional_relative_gibbs_free_energy_per_link(
+                            np.array(nondimensional_potential_distance_ref),
+                            nondimensional_potential_stiffness
+                        )
+                    )**2
+
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.nondimensional_potential_distance_large_1,
+                    parameters.nondimensional_potential_distance_large_2,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small
+            )
+            residual_rel_2 = residual_rel(
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                parameters.nondimensional_potential_stiffness_small
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                parameters.nondimensional_potential_stiffness_small /
+                parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
