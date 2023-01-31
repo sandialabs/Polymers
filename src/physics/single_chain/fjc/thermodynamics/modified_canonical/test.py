@@ -1014,6 +1014,251 @@ class PerLink(unittest.TestCase):
                 parameters.rel_tol
             )
 
+    def test_helmholtz_free_energy(self):
+        """Function to test the per-linkness
+        of the Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            helmholtz_free_energy = \
+                model.helmholtz_free_energy(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            helmholtz_free_energy_per_link = \
+                model.helmholtz_free_energy_per_link(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                helmholtz_free_energy \
+                / number_of_links \
+                - helmholtz_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_helmholtz_free_energy(self):
+        """Function to test the per-linkness
+        of the relative Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            relative_helmholtz_free_energy = \
+                model.relative_helmholtz_free_energy(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            relative_helmholtz_free_energy_per_link = \
+                model.relative_helmholtz_free_energy_per_link(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                relative_helmholtz_free_energy \
+                / number_of_links \
+                - relative_helmholtz_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                relative_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy(self):
+        """Function to test the per-linkness
+        of the nondimensional Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_helmholtz_free_energy = \
+                model.nondimensional_helmholtz_free_energy(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            nondimensional_helmholtz_free_energy_per_link = \
+                model.nondimensional_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                nondimensional_helmholtz_free_energy \
+                / number_of_links \
+                - nondimensional_helmholtz_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_relative_helmholtz_free_energy(self):
+        """Function to test the per-linkness
+        of the nondimensional Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_relative_helmholtz_free_energy = \
+                model.nondimensional_relative_helmholtz_free_energy(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness
+                )
+            nondimensional_relative_helmholtz_free_energy_per_link = \
+                model.nondimensional_relative_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness
+                )
+            residual_abs = \
+                nondimensional_relative_helmholtz_free_energy \
+                / number_of_links \
+                - nondimensional_relative_helmholtz_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
     def test_gibbs_free_energy(self):
         """Function to test the per-linkness
         of the Gibbs free energy.
@@ -1288,6 +1533,288 @@ class Relative(unittest.TestCase):
     """Class for relativeness tests.
 
     """
+    def test_helmholtz_free_energy(self):
+        """Function to test the relativeness
+        of the Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            helmholtz_free_energy = \
+                model.helmholtz_free_energy(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            helmholtz_free_energy_0 = \
+                model.helmholtz_free_energy(
+                    np.array(
+                        parameters.zero *
+                        number_of_links*link_length
+                    ),
+                    potential_stiffness,
+                    temperature
+                )
+            relative_helmholtz_free_energy = \
+                model.relative_helmholtz_free_energy(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                helmholtz_free_energy \
+                - helmholtz_free_energy_0 \
+                - relative_helmholtz_free_energy
+            residual_rel = \
+                residual_abs / \
+                helmholtz_free_energy_0
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_helmholtz_free_energy_per_link(self):
+        """Function to test the relativeness
+        of the Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            potential_distance = \
+                nondimensional_potential_distance * \
+                number_of_links*link_length
+            potential_stiffness = \
+                nondimensional_potential_stiffness * \
+                parameters.boltzmann_constant*temperature / \
+                (number_of_links*link_length)**2
+            helmholtz_free_energy_per_link = \
+                model.helmholtz_free_energy_per_link(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            helmholtz_free_energy_per_link_0 = \
+                model.helmholtz_free_energy_per_link(
+                    np.array(
+                        parameters.zero *
+                        number_of_links*link_length
+                    ),
+                    potential_stiffness,
+                    temperature
+                )
+            relative_helmholtz_free_energy_per_link = \
+                model.relative_helmholtz_free_energy_per_link(
+                    np.array(potential_distance),
+                    potential_stiffness,
+                    temperature
+                )
+            residual_abs = \
+                helmholtz_free_energy_per_link \
+                - helmholtz_free_energy_per_link_0 \
+                - relative_helmholtz_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                helmholtz_free_energy_per_link_0
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy(self):
+        """Function to test the relativeness
+        of the nondimensional Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_helmholtz_free_energy = \
+                model.nondimensional_helmholtz_free_energy(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            nondimensional_helmholtz_free_energy_0 = \
+                model.nondimensional_helmholtz_free_energy(
+                    np.array(
+                        parameters.zero
+                    ),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            nondimensional_relative_helmholtz_free_energy = \
+                model.nondimensional_relative_helmholtz_free_energy(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness
+                )
+            residual_abs = \
+                nondimensional_helmholtz_free_energy \
+                - nondimensional_helmholtz_free_energy_0 \
+                - nondimensional_relative_helmholtz_free_energy
+            residual_rel = \
+                residual_abs / \
+                nondimensional_helmholtz_free_energy_0
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy_per_link(self):
+        """Function to test the relativeness
+        of the nondimensional Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_potential_distance = \
+                parameters. \
+                nondimensional_potential_distance_small * \
+                (0.5 + (0.5 - np.random.rand()))
+            nondimensional_potential_stiffness = \
+                parameters. \
+                nondimensional_potential_stiffness_reference + \
+                parameters. \
+                nondimensional_potential_stiffness_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_helmholtz_free_energy_per_link = \
+                model.nondimensional_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            nondimensional_helmholtz_free_energy_per_link_0 = \
+                model.nondimensional_helmholtz_free_energy_per_link(
+                    np.array(
+                        parameters.zero
+                    ),
+                    nondimensional_potential_stiffness,
+                    temperature
+                )
+            nondimensional_relative_helmholtz_free_energy_per_link = \
+                model.nondimensional_relative_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_potential_distance),
+                    nondimensional_potential_stiffness
+                )
+            residual_abs = \
+                nondimensional_helmholtz_free_energy_per_link \
+                - nondimensional_helmholtz_free_energy_per_link_0 \
+                - nondimensional_relative_helmholtz_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_helmholtz_free_energy_per_link_0
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
     def test_gibbs_free_energy(self):
         """Function to test the relativeness
         of the Gibbs free energy.
