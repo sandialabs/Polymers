@@ -26,7 +26,7 @@ impl Default for Parameters
     {
         Self
         {
-            number_of_loops: 8888,
+            number_of_loops: 888,
             abs_tol: DefaultParameters::default().abs_tol,
             rel_tol: DefaultParameters::default().rel_tol,
             hinge_mass_reference: DefaultParameters::default().hinge_mass_reference,
@@ -110,7 +110,6 @@ mod nondimensional
     use super::*;
     use rand::Rng;
     #[test]
-    #[ignore]
     fn end_to_end_length()
     {
         let mut rng = rand::thread_rng();
@@ -135,7 +134,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn end_to_end_length_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -184,7 +182,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -209,7 +206,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -234,7 +230,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -259,7 +254,6 @@ mod nondimensional
         }
     }
     #[test]
-    #[ignore]
     fn relative_gibbs_free_energy_per_link()
     {
         let mut rng = rand::thread_rng();
@@ -358,7 +352,6 @@ mod per_link
         }
     }
     #[test]
-    #[ignore]
     fn relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();
@@ -405,7 +398,6 @@ mod per_link
         }
     }
     #[test]
-    #[ignore]
     fn nondimensional_relative_gibbs_free_energy()
     {
         let mut rng = rand::thread_rng();

@@ -40,10 +40,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: tree
+        run: $([[ $(cargo tree --edges normal | wc -l) -eq 1 ]])
       - name: build
         run: cargo build --verbose
       - name: clippy
-        run: cargo clippy --verbose
+        run: cargo clippy -- -D warnings
       - name: bench
         run: cargo bench --verbose
       - name: doc

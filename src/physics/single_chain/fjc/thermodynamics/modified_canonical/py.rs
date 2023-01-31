@@ -158,7 +158,7 @@ impl FJC
     ///
     pub fn helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, potential_distance: PyReadonlyArrayDyn<f64>, potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        potential_distance.as_array().mapv(|potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy(&potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
+        potential_distance.as_array().mapv(|potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).helmholtz_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
     }
     /// The relative helmholtz free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
