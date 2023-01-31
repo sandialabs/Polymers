@@ -31,5 +31,9 @@ testpaths = ["src"]
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = """
-    no-name-in-module
+    cell-var-from-loop,
+    duplicate-code,
+    no-name-in-module,
+    too-many-lines,
+    too-many-public-methods
 """

@@ -575,6 +575,240 @@ class Nondimensional(unittest.TestCase):
                 parameters.rel_tol
             )
 
+    def test_gibbs_free_energy(self):
+        """Function to test the nondimensionalization
+        of the Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy = \
+                model.nondimensional_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            gibbs_free_energy = \
+                model.gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_gibbs_free_energy
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_gibbs_free_energy_per_link(self):
+        """Function to test the nondimensionalization
+        of the Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy_per_link = \
+                model.nondimensional_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            gibbs_free_energy_per_link = \
+                model.gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy_per_link / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy(self):
+        """Function to test the nondimensionalization
+        of the relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_relative_gibbs_free_energy = \
+                model.nondimensional_relative_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            relative_gibbs_free_energy = \
+                model.relative_gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                relative_gibbs_free_energy / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_relative_gibbs_free_energy
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy_per_link(self):
+        """Function to test the nondimensionalization
+        of the relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_relative_gibbs_free_energy_per_link = \
+                model.nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            relative_gibbs_free_energy_per_link = \
+                model.relative_gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                relative_gibbs_free_energy_per_link / \
+                parameters.boltzmann_constant/temperature \
+                - nondimensional_relative_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
 
 class PerLink(unittest.TestCase):
     """Class for per-linkness tests.
@@ -798,6 +1032,233 @@ class PerLink(unittest.TestCase):
             residual_rel = \
                 residual_abs / \
                 nondimensional_relative_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_gibbs_free_energy(self):
+        """Function to test the per-linkness
+        of the Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            gibbs_free_energy = \
+                model.gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            gibbs_free_energy_per_link = \
+                model.gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy / \
+                number_of_links \
+                - gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy(self):
+        """Function to test the per-linkness
+        of the relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            relative_gibbs_free_energy = \
+                model.relative_gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            relative_gibbs_free_energy_per_link = \
+                model.relative_gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                relative_gibbs_free_energy / \
+                number_of_links \
+                - relative_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                relative_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy(self):
+        """Function to test the per-linkness
+        of the nondimensional Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy = \
+                model.nondimensional_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            nondimensional_gibbs_free_energy_per_link = \
+                model.nondimensional_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            residual_abs = \
+                nondimensional_gibbs_free_energy / \
+                number_of_links \
+                - nondimensional_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_abs,
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy(self):
+        """Function to test the per-linkness
+        of the nondimensional relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_relative_gibbs_free_energy = \
+                model.nondimensional_relative_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_relative_gibbs_free_energy_per_link = \
+                model.nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            residual_abs = \
+                nondimensional_relative_gibbs_free_energy / \
+                number_of_links \
+                - nondimensional_relative_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy_per_link
             self.assertLessEqual(
                 residual_abs,
                 parameters.abs_tol
@@ -1046,11 +1507,312 @@ class Relative(unittest.TestCase):
                 parameters.rel_tol
             )
 
+    def test_gibbs_free_energy(self):
+        """Function to test the relativeness
+        of the Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            gibbs_free_energy = \
+                model.gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            gibbs_free_energy_0 = \
+                model.gibbs_free_energy(
+                    np.array(parameters.zero*number_of_links*link_length),
+                    temperature
+                )
+            relative_gibbs_free_energy = \
+                model.relative_gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy \
+                - gibbs_free_energy_0 \
+                - relative_gibbs_free_energy
+            residual_rel = \
+                residual_abs / \
+                relative_gibbs_free_energy
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_gibbs_free_energy_per_link(self):
+        """Function to test the relativeness
+        of the Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            gibbs_free_energy_per_link = \
+                model.gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            gibbs_free_energy_per_link_0 = \
+                model.gibbs_free_energy_per_link(
+                    np.array(parameters.zero*number_of_links*link_length),
+                    temperature
+                )
+            relative_gibbs_free_energy_per_link = \
+                model.relative_gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            residual_abs = \
+                gibbs_free_energy_per_link \
+                - gibbs_free_energy_per_link_0 \
+                - relative_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                relative_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy(self):
+        """Function to test the relativeness
+        of the nondimensional Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy = \
+                model.nondimensional_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            nondimensional_gibbs_free_energy_0 = \
+                model.nondimensional_gibbs_free_energy(
+                    np.array(parameters.zero),
+                    temperature
+                )
+            nondimensional_relative_gibbs_free_energy = \
+                model.nondimensional_relative_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            residual_abs = \
+                nondimensional_gibbs_free_energy \
+                - nondimensional_gibbs_free_energy_0 \
+                - nondimensional_relative_gibbs_free_energy
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy_per_link(self):
+        """Function to test the relativeness
+        of the nondimensional Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_gibbs_free_energy_per_link = \
+                model.nondimensional_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            nondimensional_gibbs_free_energy_per_link_0 = \
+                model.nondimensional_gibbs_free_energy_per_link(
+                    np.array(parameters.zero),
+                    temperature
+                )
+            nondimensional_relative_gibbs_free_energy_per_link = \
+                model.nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            residual_abs = \
+                nondimensional_gibbs_free_energy_per_link \
+                - nondimensional_gibbs_free_energy_per_link_0 \
+                - nondimensional_relative_gibbs_free_energy_per_link
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                residual_rel,
+                parameters.rel_tol
+            )
+
 
 class Zero(unittest.TestCase):
     """Class for zero tests.
 
     """
+    def test_force(self):
+        """Function to test the zero
+        of the force.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            force_0 = \
+                model.force(
+                    np.array(parameters.zero*number_of_links*link_length),
+                    temperature
+                )
+            self.assertLessEqual(
+                np.abs(force_0),
+                3.0*parameters.boltzmann_constant*temperature /
+                link_length*parameters.zero
+            )
+
+    def test_nondimensional_force(self):
+        """Function to test the zero
+        of the nondimensional force.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_force_0 = \
+                model.nondimensional_force(
+                    np.array(parameters.zero)
+                )
+            self.assertLessEqual(
+                np.abs(nondimensional_force_0),
+                3.0*parameters.zero
+            )
+
     def test_relative_helmholtz_free_energy(self):
         """Function to test the zero
         of the relative Helmholtz free energy.
@@ -1183,6 +1945,141 @@ class Zero(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(
                     nondimensional_relative_helmholtz_free_energy_per_link_0
+                ), parameters.zero
+            )
+
+    def test_relative_gibbs_free_energy(self):
+        """Function to test the zero
+        of the relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            relative_gibbs_free_energy_0 = \
+                model.relative_gibbs_free_energy(
+                    np.array(parameters.zero*number_of_links*link_length),
+                    temperature
+                )
+            self.assertLessEqual(
+                np.abs(relative_gibbs_free_energy_0),
+                parameters.boltzmann_constant*temperature *
+                number_of_links*parameters.zero
+            )
+
+    def test_relative_gibbs_free_energy_per_link(self):
+        """Function to test the zero
+        of the relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            relative_gibbs_free_energy_per_link_0 = \
+                model.relative_gibbs_free_energy_per_link(
+                    np.array(parameters.zero*number_of_links*link_length),
+                    temperature
+                )
+            self.assertLessEqual(
+                np.abs(relative_gibbs_free_energy_per_link_0),
+                parameters.boltzmann_constant*temperature *
+                parameters.zero
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy(self):
+        """Function to test the zero
+        of the nondimensional relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_relative_gibbs_free_energy_0 = \
+                model.nondimensional_relative_gibbs_free_energy(
+                    np.array(parameters.zero*number_of_links*link_length)
+                )
+            self.assertLessEqual(
+                np.abs(nondimensional_relative_gibbs_free_energy_0),
+                number_of_links*parameters.zero
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy_per_link(self):
+        """Function to test the zero
+        of the nondimensional relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_relative_gibbs_free_energy_per_link_0 = \
+                model.nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(parameters.zero*number_of_links*link_length)
+                )
+            self.assertLessEqual(
+                np.abs(
+                    nondimensional_relative_gibbs_free_energy_per_link_0
                 ), parameters.zero
             )
 
