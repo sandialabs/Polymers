@@ -16,17 +16,51 @@ def integrate(function, lower_lim, upper_lim, num_points):
     ).sum()*d_x
 
 
-class BasicParameters:
-    """Class for basic testing parameters.
+class Parameters:
+    """Class for testing parameters.
 
     """
     def __init__(self):
         self.abs_tol = 1e-7
         self.rel_tol = 1e-5
+        self.rel_tol_thermodynamic_limit = 1e-1
+        self.log_log_tol = 5e-2
+        self.log_log_scale = 12e-1
         self.number_of_loops = 8
+        self.hinge_mass_reference = 1.0
+        self.hinge_mass_scale = 1.0
+        self.link_length_reference = 1.0
+        self.link_length_scale = 1.0
+        self.number_of_links_minimum = 5
+        self.number_of_links_maximum = 25
+        self.link_stiffness_reference = 5e5
+        self.link_stiffness_scale = 99e4
+        self.nondimensional_link_stiffness_large = 1e4
+        self.nondimensional_link_stiffness_medium = 1e1
+        self.well_width_reference = 99e-2
+        self.well_width_scale = 5e-1
+        self.nondimensional_end_to_end_length_per_link_reference = 5e-1
+        self.nondimensional_end_to_end_length_per_link_scale = 99e-2
+        self.nondimensional_end_to_end_length_per_link_small = 25e-2
+        self.nondimensional_force_reference = 5e1
+        self.nondimensional_force_scale = 1e2
+        self.nondimensional_force_small = 75e-2
+        self.nondimensional_potential_distance_reference = 1e0
+        self.nondimensional_potential_distance_scale = 2e0
+        self.nondimensional_potential_distance_small = 33e-2
+        self.nondimensional_potential_distance_large_1 = 1e1
+        self.nondimensional_potential_distance_large_2 = 1e1 + 25e-1
+        self.nondimensional_potential_stiffness_reference = 5e1
+        self.nondimensional_potential_stiffness_scale = 1e2
+        self.nondimensional_potential_stiffness_small = 1e-2
+        self.nondimensional_potential_stiffness_large = 1e2
+        self.nondimensional_well_width_small = 1e-2
+        self.temperature_reference = 3e2
+        self.temperature_scale = 1e2
         self.one = 1e0
         self.zero = 1e-6
         self.points = 100
+        self.boltzmann_constant = 8.314462618
 
     def dummy_1(self):
         """Dummy function to please pylint.
@@ -37,63 +71,6 @@ class BasicParameters:
         """Dummy function to please pylint.
 
         """
-
-
-class BasicPhysicsParameters(BasicParameters):
-    """Class for basic physics testing parameters.
-
-    """
-    def __init__(self):
-        super().__init__()
-        self.log_log_tol = 5e-2
-        self.log_log_scale = 12e-1
-        self.rel_tol_thermodynamic_limit = 1e-1
-        self.temperature_reference = 3e2
-        self.temperature_scale = 1e2
-        self.boltzmann_constant = 8.314462618
-
-
-class BasicSingleChainParameters(BasicPhysicsParameters):
-    """Class for basic single-chain testing parameters.
-
-    """
-    def __init__(self):
-        super().__init__()
-        self.number_of_links_minimum = 5
-        self.number_of_links_maximum = 25
-        self.link_length_reference = 1.0
-        self.link_length_scale = 1.0
-        self.hinge_mass_reference = 1.0
-        self.hinge_mass_scale = 1.0
-
-
-class ExtraSingleChainParameters(BasicSingleChainParameters):
-    """Class for extra single-chain testing parameters.
-
-    """
-    def __init__(self):
-        super().__init__()
-        self.link_stiffness_reference = 5e5
-        self.link_stiffness_scale = 99e4
-        self.nondimensional_link_stiffness_large = 1e4
-        self.nondimensional_link_stiffness_medium = 1e1
-        self.well_width_reference = 99e-2
-        self.well_width_scale = 5e-1
-        self.nondimensional_well_width_small = 1e-2
-
-
-class Parameters(ExtraSingleChainParameters):
-    """Class for testing parameters.
-
-    """
-    def __init__(self):
-        super().__init__()
-        self.nondimensional_end_to_end_length_per_link_reference = 5e-1
-        self.nondimensional_end_to_end_length_per_link_scale = 99e-2
-        self.nondimensional_end_to_end_length_per_link_small = 25e-2
-        self.nondimensional_force_reference = 5e1
-        self.nondimensional_force_scale = 1e2
-        self.nondimensional_force_small = 75e-2
 
 
 parameters = Parameters()

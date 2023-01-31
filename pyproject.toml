@@ -34,6 +34,7 @@ disable = """
     cell-var-from-loop,
     duplicate-code,
     no-name-in-module,
+    too-many-instance-attributes,
     too-many-lines,
     too-many-public-methods
 """
