@@ -28,7 +28,7 @@ jobs:
           mkdir -p _site/rust/docs/latest/
           cargo doc
           cp -r target/doc/* _site/rust/docs/
-          mv _site/rust/docs/polymers/ 
+          mv _site/rust/docs/polymers/ _site/rust/docs/latest/
       - name: add julia
         if: github.event_name != 'pull_request'
         run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
