@@ -21,13 +21,13 @@ nav_external_links:
     url: https://polymers.readthedocs.io/en/latest/
   - title: Juila docs (stable)
     hide_icon: true
-    url: https://sandialabs.github.io/Polymers/julia/docs/stable/polymers/
+    url: https://sandialabs.github.io/Polymers/julia/docs/stable/
   - title: Juila docs (latest)
     hide_icon: true
-    url: https://sandialabs.github.io/Polymers/julia/docs/latest/polymers/
+    url: https://sandialabs.github.io/Polymers/julia/docs/latest/
   - title: Rust docs (stable)
     hide_icon: true
     url: https://docs.rs/polymers/latest/polymers/
   - title: Rust docs (latest)
     hide_icon: true
-    url: https://sandialabs.github.io/Polymers/rust/docs/latest/polymers/
+    url: https://sandialabs.github.io/Polymers/rust/docs/latest/

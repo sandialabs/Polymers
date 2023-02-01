@@ -30,8 +30,8 @@ pip install target/wheels/*.whl
 
 ## Julia
 
-[![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable/polymers)
-[![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest/polymers)
+[![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable)
+[![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest)
 
 The latest edition of the library can be installed as a Julia package:
 
@@ -44,7 +44,7 @@ Pkg.build("Polymers")
 ## Rust
 
 [![docs (stable)](https://img.shields.io/badge/Docs-stable-e57300?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
-[![docs (latest)](https://img.shields.io/badge/Docs-latest-e57300?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest/polymers)
+[![docs (latest)](https://img.shields.io/badge/Docs-latest-e57300?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest)
 [![crates](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates&color=32592f)](https://crates.io/crates/polymers)
 
 The library can be used in an existing Rust project by adding the `polymers` crate to Cargo.toml:
