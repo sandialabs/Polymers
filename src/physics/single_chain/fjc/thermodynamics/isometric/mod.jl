@@ -56,56 +56,6 @@ mutable struct FJC
             end_to_end_length::Union{Float64,Union{Vector,Matrix}},
             temperature::Union{Float64,Union{Vector,Matrix}},
         )
-            if isa(end_to_end_length, Float64) && isa(temperature, Float64)
-                return ccall(
-                    (
-                        :physics_single_chain_fjc_thermodynamics_isometric_force,
-                        string(PROJECT_ROOT, "target/debug/libpolymers"),
-                    ),
-                    Float64,
-                    (UInt8, Float64, Float64, Float64, Float64),
-                    number_of_links,
-                    hinge_mass,
-                    link_length,
-                    end_to_end_length,
-                    temperature,
-                )
-            elseif isa(end_to_end_length, Union{Vector,Matrix}) && isa(temperature, Float64)
-                return broadcast(
-                    end_to_end_length_i -> ccall(
-                        (
-                            :physics_single_chain_fjc_thermodynamics_isometric_force,
-                            string(PROJECT_ROOT, "target/debug/libpolymers"),
-                        ),
-                        Float64,
-                        (UInt8, Float64, Float64, Float64, Float64),
-                        number_of_links,
-                        hinge_mass,
-                        link_length,
-                        end_to_end_length_i,
-                        temperature,
-                    ),
-                    end_to_end_length,
-                )
-            elseif isa(end_to_end_length, Float64) && isa(temperature, Union{Vector,Matrix})
-                return broadcast(
-                    temperature_i -> ccall(
-                        (
-                            :physics_single_chain_fjc_thermodynamics_isometric_force,
-                            string(PROJECT_ROOT, "target/debug/libpolymers"),
-                        ),
-                        Float64,
-                        (UInt8, Float64, Float64, Float64, Float64),
-                        number_of_links,
-                        hinge_mass,
-                        link_length,
-                        end_to_end_length,
-                        temperature_i,
-                    ),
-                    temperature,
-                )
-            elseif isa(end_to_end_length, Union{Vector,Matrix}) &&
-                   isa(temperature, Union{Vector,Matrix})
                 return broadcast(
                     (end_to_end_length_i, temperature_i) -> ccall(
                         (
@@ -123,7 +73,6 @@ mutable struct FJC
                     end_to_end_length,
                     temperature,
                 )
-            end
         end
         fjc.nondimensional_force =
             nondimensional_end_to_end_length_per_link -> ccall(
