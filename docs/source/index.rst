@@ -10,7 +10,7 @@ Installation
 
 |pypi|
 
-The library can be installed as a Python package using
+The library can be installed as a Python package:
 
 .. code-block:: sh
 

@@ -32,4 +32,4 @@ jobs:
       - name: test
         run: julia -e 'using Pkg; Pkg.test("Polymers")'
       - name: format
-        run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format("src/") == true; exit(0); else exit(1); end'
+        run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format("./") == true; exit(0); else exit(1); end'
