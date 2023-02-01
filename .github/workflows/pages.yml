@@ -24,7 +24,7 @@ jobs:
       - name: latest docs rust
         run: |
           sudo chmod -R 777 _site/
-          mkdir -p _site/rust/docs/latest/
+          mkdir -p _site/rust/docs/
           cargo doc
           grep -rl "../polymers/index.html" target/doc/ | xargs sed -i 's@../polymers/index.html@../latest/index.html@'
           cp -r target/doc/* _site/rust/docs/
