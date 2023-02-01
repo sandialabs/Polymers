@@ -1,7 +1,8 @@
 name: Pages
 on:
   push:
-    branches: [ "main" ]
+    # branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
 permissions:
@@ -26,7 +27,21 @@ jobs:
           sudo chmod -R 777 _site/
           mkdir -p _site/rust/docs/latest/
           cargo doc
-          cp -r target/doc/* _site/rust/docs/latest/
+          cp -r target/doc/* _site/rust/docs/
+          mv _site/rust/docs/polymers/ 
+      - name: add julia
+        if: github.event_name != 'pull_request'
+        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
+      - name: add julia
+        if: github.event_name == 'pull_request'
+        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_HEAD_REF##*/}'")'
+      - name: build julia
+        run: julia -e 'using Pkg; Pkg.build("Polymers")'
+      - name: latest docs julia
+        run: |
+          mkdir -p _site/julia/docs/latest/
+          julia docs/make.jl
+          cp -r docs/build/* _site/rust/docs/latest/
       - uses: actions/upload-pages-artifact@v1
   deploy:
     if: github.event_name != 'pull_request'

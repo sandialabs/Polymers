@@ -26,10 +26,3 @@ Michael R. Buche. Polymers Modeling Library. [Zenodo (2023)](https://doi.org/10.
 [![license](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/bsd3c.svg)](https://github.com/sandialabs/polymers/blob/main/LICENSE)
 
 Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS). Under the terms of Contract DE-NA0003525 with NTESS, the U.S. Government retains certain rights in this software.
-
-## Documentation
-
-
-```@autodocs
-Modules = [Polymers.Physics.SingleChain.Fjc.Thermodynamics.Isometric]
-```
