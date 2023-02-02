@@ -8,3 +8,4 @@
 **.vscode/
 **Cargo.lock
 **target/
+**.log
