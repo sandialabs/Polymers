@@ -160,15 +160,8 @@ impl FJC
     /// Initializes and returns an instance of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
-        let temporary_model = FJC
-        {
-            hinge_mass,
-            link_length,
-            number_of_links,
-            normalization_nondimensional_equilibrium_distribution: 1.0
-        };
         let dx = (ONE - ZERO)/(POINTS as f64);
-        let normalization = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| temporary_model.nondimensional_equilibrium_radial_distribution(&(ZERO + (0.5 + *index as f64)*dx))).sum::<f64>()*dx;
+        let normalization = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, &(ZERO + (0.5 + *index as f64)*dx))).sum::<f64>()*dx;
         FJC
         {
             hinge_mass,
