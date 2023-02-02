@@ -78,7 +78,7 @@ mod normalization
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let integrand = |end_to_end_length: f64| 4.0*PI*end_to_end_length.powi(2)*model.equilibrium_distribution(&end_to_end_length);
-            let integral = integrate(integrand, &ZERO, &(ONE*model.contour_length), &POINTS);
+            let integral = integrate(integrand, &ZERO, &(ONE*(number_of_links as f64)*link_length), &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -110,7 +110,7 @@ mod normalization
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let integrand = |end_to_end_length: f64| model.equilibrium_radial_distribution(&end_to_end_length);
-            let integral = integrate(integrand, &ZERO, &(ONE*model.contour_length), &POINTS);
+            let integral = integrate(integrand, &ZERO, &(ONE*(number_of_links as f64)*link_length), &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
