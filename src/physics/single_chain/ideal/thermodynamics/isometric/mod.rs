@@ -51,42 +51,42 @@ impl Ideal
     {
         3.0*nondimensional_end_to_end_length_per_link
     }
-    /// The helmholtz free energy as a function of the applied end-to-end length and temperature.
+    /// The Helmholtz free energy as a function of the applied end-to-end length and temperature.
     pub fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.helmholtz_free_energy_per_link(end_to_end_length, temperature)*self.number_of_links_f64
     }
-    /// The helmholtz free energy per link as a function of the applied end-to-end length and temperature.
+    /// The Helmholtz free energy per link as a function of the applied end-to-end length and temperature.
     pub fn helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy_per_link(&(end_to_end_length/self.contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
-    /// The relative helmholtz free energy as a function of the applied end-to-end length and temperature.
+    /// The relative Helmholtz free energy as a function of the applied end-to-end length and temperature.
     pub fn relative_helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.relative_helmholtz_free_energy_per_link(end_to_end_length, temperature)*self.number_of_links_f64
     }
-    /// The relative helmholtz free energy per link as a function of the applied end-to-end length and temperature.
+    /// The relative Helmholtz free energy per link as a function of the applied end-to-end length and temperature.
     pub fn relative_helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(&(end_to_end_length/self.contour_length))*BOLTZMANN_CONSTANT*temperature
     }
-    /// The nondimensional helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature.
+    /// The nondimensional Helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
         1.5*self.number_of_links_f64*nondimensional_end_to_end_length_per_link.powi(2) - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
-    /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
+    /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
         1.5*nondimensional_end_to_end_length_per_link.powi(2) - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
-    /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional end-to-end length per link.
+    /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         1.5*self.number_of_links_f64*nondimensional_end_to_end_length_per_link.powi(2)
     }
-    /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link.
+    /// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         1.5*nondimensional_end_to_end_length_per_link.powi(2)

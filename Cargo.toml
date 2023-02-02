@@ -10,7 +10,7 @@ keywords = ["julia", "polymers", "python", "rust"]
 crate-type = ["cdylib", "rlib", "staticlib"]
 
 [features]
-julia = []
+extern = []
 python = ["dep:numpy", "dep:pyo3"]
 
 [dependencies]
