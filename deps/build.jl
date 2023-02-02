@@ -1,2 +1,2 @@
 cd("../")
-run(`cargo build --features julia`)
+run(`cargo build --features extern`)

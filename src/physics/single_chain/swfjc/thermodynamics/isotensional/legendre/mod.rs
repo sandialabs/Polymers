@@ -47,42 +47,42 @@ impl SWFJC
             nondimensional_well_parameter: 1.0 + well_width/link_length
         }
     }
-    /// The helmholtz free energy as a function of the applied force and temperature.
+    /// The Helmholtz free energy as a function of the applied force and temperature.
     pub fn helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
-    /// The helmholtz free energy per link as a function of the applied force and temperature.
+    /// The Helmholtz free energy per link as a function of the applied force and temperature.
     pub fn helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
-    /// The relative helmholtz free energy as a function of the applied force and temperature.
+    /// The relative Helmholtz free energy as a function of the applied force and temperature.
     pub fn relative_helmholtz_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
-    /// The relative helmholtz free energy per link as a function of the applied force and temperature.
+    /// The relative Helmholtz free energy per link as a function of the applied force and temperature.
     pub fn relative_helmholtz_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(&(*force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
     }
-    /// The nondimensional helmholtz free energy as a function of the applied nondimensional force and temperature.
+    /// The nondimensional Helmholtz free energy as a function of the applied nondimensional force and temperature.
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
         self.number_of_links_f64*self.nondimensional_helmholtz_free_energy_per_link(nondimensional_force, temperature)
     }
-    /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional force and temperature.
+    /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional force and temperature.
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
     (self.nondimensional_well_parameter.powi(2)*nondimensional_force.powi(2)*(self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force.powi(2)*nondimensional_force.sinh())/(self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0 + 3.0*nondimensional_force.ln() - (self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln() - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
-    /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional force.
+    /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional force.
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_force: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy(nondimensional_force, &300.0) - self.nondimensional_helmholtz_free_energy(&ZERO, &300.0)
     }
-    /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional force.
+    /// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional force.
     pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy_per_link(nondimensional_force, &300.0) - self.nondimensional_helmholtz_free_energy_per_link(&ZERO, &300.0)

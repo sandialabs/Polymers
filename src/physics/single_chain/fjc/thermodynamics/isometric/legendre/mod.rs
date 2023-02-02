@@ -1,5 +1,5 @@
-#[cfg(feature = "julia")]
-pub mod jl;
+#[cfg(feature = "extern")]
+pub mod ex;
 
 #[cfg(feature = "python")]
 pub mod py;
@@ -76,42 +76,42 @@ impl FJC
     {
         (2.14234*nondimensional_end_to_end_length_per_link.powi(3) - 4.22785*nondimensional_end_to_end_length_per_link.powi(2) + 3.0*nondimensional_end_to_end_length_per_link)/(1.0 - nondimensional_end_to_end_length_per_link)/(0.71716*nondimensional_end_to_end_length_per_link.powi(3) - 0.41103*nondimensional_end_to_end_length_per_link.powi(2) - 0.39165*nondimensional_end_to_end_length_per_link + 1.0)
     }
-    /// The helmholtz free energy as a function of the applied end-to-end length and temperature.
+    /// The Helmholtz free energy as a function of the applied end-to-end length and temperature.
     pub fn helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.helmholtz_free_energy_per_link(end_to_end_length, temperature)*self.number_of_links_f64
     }
-    /// The helmholtz free energy per link as a function of the applied end-to-end length and temperature.
+    /// The Helmholtz free energy per link as a function of the applied end-to-end length and temperature.
     pub fn helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_helmholtz_free_energy_per_link(&(end_to_end_length/self.contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
-    /// The relative helmholtz free energy as a function of the applied end-to-end length and temperature.
+    /// The relative Helmholtz free energy as a function of the applied end-to-end length and temperature.
     pub fn relative_helmholtz_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.relative_helmholtz_free_energy_per_link(end_to_end_length, temperature)*self.number_of_links_f64
     }
-    /// The relative helmholtz free energy per link as a function of the applied end-to-end length and temperature.
+    /// The relative Helmholtz free energy per link as a function of the applied end-to-end length and temperature.
     pub fn relative_helmholtz_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(&(end_to_end_length/self.contour_length))*BOLTZMANN_CONSTANT*temperature
     }
-    /// The nondimensional helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature.
+    /// The nondimensional Helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy(nondimensional_end_to_end_length_per_link) - (self.number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
-    /// The nondimensional helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
+    /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link) - (self.number_of_links_f64 - 1.0)/self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
-    /// The nondimensional relative helmholtz free energy as a function of the applied nondimensional end-to-end length per link.
+    /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         self.nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link)*self.number_of_links_f64
     }
-    /// The nondimensional relative helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link.
+    /// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         let nondimensional_force = self.nondimensional_force(nondimensional_end_to_end_length_per_link);
@@ -138,27 +138,27 @@ impl FJC
     {
         4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*self.nondimensional_equilibrium_distribution(nondimensional_end_to_end_length_per_link)
     }
-    /// The gibbs free energy as a function of the applied end-to-end length and temperature.
+    /// The Gibbs free energy as a function of the applied end-to-end length and temperature.
     pub fn gibbs_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_gibbs_free_energy(&(end_to_end_length/self.contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
-    /// The gibbs free energy per link as a function of the applied end-to-end length and temperature.
+    /// The Gibbs free energy per link as a function of the applied end-to-end length and temperature.
     pub fn gibbs_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_gibbs_free_energy_per_link(&(end_to_end_length/self.contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
     }
-    /// The relative gibbs free energy as a function of the applied end-to-end length and temperature.
+    /// The relative Gibbs free energy as a function of the applied end-to-end length and temperature.
     pub fn relative_gibbs_free_energy(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.relative_gibbs_free_energy_per_link(end_to_end_length, temperature)*self.number_of_links_f64
     }
-    /// The relative gibbs free energy per link as a function of the applied end-to-end length and temperature.
+    /// The relative Gibbs free energy per link as a function of the applied end-to-end length and temperature.
     pub fn relative_gibbs_free_energy_per_link(&self, end_to_end_length: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_relative_gibbs_free_energy_per_link(&(end_to_end_length/self.contour_length))*BOLTZMANN_CONSTANT*temperature
     }
-    /// The nondimensional gibbs free energy as a function of the applied nondimensional end-to-end length per link and temperature.
+    /// The nondimensional Gibbs free energy as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
         let n = self.number_of_links as u128;
@@ -168,17 +168,17 @@ impl FJC
         let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/self.number_of_links_f64).powi(p)).sum();
         -(nondimensional_end_to_end_length_per_link*self.number_of_links_f64)*self.nondimensional_force(nondimensional_end_to_end_length_per_link) - (0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum/self.contour_length.powi(3)).ln() - (self.number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
     }
-    /// The nondimensional gibbs free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
+    /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
         self.nondimensional_gibbs_free_energy(nondimensional_end_to_end_length_per_link, temperature)/self.number_of_links_f64
     }
-    /// The nondimensional relative gibbs free energy as a function of the applied nondimensional end-to-end length per link.
+    /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         self.nondimensional_gibbs_free_energy(nondimensional_end_to_end_length_per_link, &300.0) - self.nondimensional_gibbs_free_energy(&ZERO, &300.0)
     }
-    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional end-to-end length per link.
+    /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64
     {
         self.nondimensional_relative_gibbs_free_energy(nondimensional_end_to_end_length_per_link)/self.number_of_links_f64

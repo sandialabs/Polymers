@@ -89,7 +89,7 @@ impl FJC
     {
         nondimensional_potential_distance.as_array().mapv(|nondimensional_potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness)).into_pyarray(py)
     }
-    /// The gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
+    /// The Gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
     ///     potential_distance (numpy.ndarray): The potential distance.
@@ -97,7 +97,7 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The gibbs free energy :math:`\varphi`.
+    ///     numpy.ndarray: The Gibbs free energy :math:`\varphi`.
     ///
     /// The expected force as a function of the applied potential distance, and potential stiffness.
     ///
@@ -139,7 +139,7 @@ impl FJC
     {
         potential_distance.as_array().mapv(|potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The gibbs free energy epr link as a function of the applied potential distance, potential stiffness, and temperature.
+    /// The Gibbs free energy epr link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
     ///     potential_distance (numpy.ndarray): The potential distance.
@@ -147,13 +147,13 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The gibbs free energy per link :math:`\varphi/N_b`.
+    ///     numpy.ndarray: The Gibbs free energy per link :math:`\varphi/N_b`.
     ///
     pub fn gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, potential_distance: PyReadonlyArrayDyn<f64>, potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         potential_distance.as_array().mapv(|potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The relative gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
+    /// The relative Gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
     ///     potential_distance (numpy.ndarray): The potential distance.
@@ -161,13 +161,13 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The relative gibbs free energy :math:`\Delta\varphi`.
+    ///     numpy.ndarray: The relative Gibbs free energy :math:`\Delta\varphi`.
     ///
     pub fn relative_gibbs_free_energy<'py>(&self, py: Python<'py>, potential_distance: PyReadonlyArrayDyn<f64>, potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         potential_distance.as_array().mapv(|potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The relative gibbs free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
+    /// The relative Gibbs free energy per link as a function of the applied potential distance, potential stiffness, and temperature.
     ///
     /// Args:
     ///     potential_distance (numpy.ndarray): The potential distance.
@@ -175,13 +175,13 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The relative gibbs free energy per link :math:`\Delta\varphi/N_b`.
+    ///     numpy.ndarray: The relative Gibbs free energy per link :math:`\Delta\varphi/N_b`.
     ///
     pub fn relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, potential_distance: PyReadonlyArrayDyn<f64>, potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         potential_distance.as_array().mapv(|potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional gibbs free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
+    /// The nondimensional Gibbs free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     ///
     /// Args:
     ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
@@ -189,13 +189,13 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The nondimensional gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///     numpy.ndarray: The nondimensional Gibbs free energy :math:`\beta\varphi=N_b\varrho`.
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_potential_distance: PyReadonlyArrayDyn<f64>, nondimensional_potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         nondimensional_potential_distance.as_array().mapv(|nondimensional_potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional gibbs free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
+    /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature.
     ///
     /// Args:
     ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
@@ -203,33 +203,33 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The nondimensional gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
+    ///     numpy.ndarray: The nondimensional Gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
     ///
     pub fn nondimensional_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_potential_distance: PyReadonlyArrayDyn<f64>, nondimensional_potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         nondimensional_potential_distance.as_array().mapv(|nondimensional_potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional relative gibbs free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
+    /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
     ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     ///
     /// Returns:
-    ///     numpy.ndarray: The nondimensional relative gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
+    ///     numpy.ndarray: The nondimensional relative Gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_potential_distance: PyReadonlyArrayDyn<f64>, nondimensional_potential_stiffness: f64) -> &'py PyArrayDyn<f64>
     {
         nondimensional_potential_distance.as_array().mapv(|nondimensional_potential_distance: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness)).into_pyarray(py)
     }
-    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
+    /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
     ///
     /// Args:
     ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
     ///     nondimensional_potential_stiffness (float): The nondimensional potential stiffness.
     ///
     /// Returns:
-    ///     numpy.ndarray: The nondimensional relative gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative Gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_potential_distance: PyReadonlyArrayDyn<f64>, nondimensional_potential_stiffness: f64) -> &'py PyArrayDyn<f64>
     {

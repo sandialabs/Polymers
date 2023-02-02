@@ -101,7 +101,7 @@ impl Ideal
     {
         nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length_per_link(&nondimensional_force)).into_pyarray(py)
     }
-    /// The gibbs free energy as a function of the applied force and temperature,
+    /// The Gibbs free energy as a function of the applied force and temperature,
     ///
     /// .. math::
     ///     \varphi(f, T) = -kT\ln Z(f, T).
@@ -111,26 +111,26 @@ impl Ideal
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The gibbs free energy :math:`\varphi`.
+    ///     numpy.ndarray: The Gibbs free energy :math:`\varphi`.
     ///
     pub fn gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy(&force, &temperature)).into_pyarray(py)
     }
-    /// The gibbs free energy per link as a function of the applied force and temperature.
+    /// The Gibbs free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
     ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The gibbs free energy per link :math:`\varphi/N_b`.
+    ///     numpy.ndarray: The Gibbs free energy per link :math:`\varphi/N_b`.
     ///
     pub fn gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
     }
-    /// The relative gibbs free energy as a function of the applied force and temperature,
+    /// The relative Gibbs free energy as a function of the applied force and temperature,
     ///
     /// .. math::
     ///     \Delta\varphi(f, T) = -\frac{N_b\ell_b^2f^2}{6kT}.
@@ -140,64 +140,64 @@ impl Ideal
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The relative gibbs free energy :math:`\Delta\varphi\equiv\varphi(f,T)-\varphi(0,T)`.
+    ///     numpy.ndarray: The relative Gibbs free energy :math:`\Delta\varphi\equiv\varphi(f,T)-\varphi(0,T)`.
     ///
     pub fn relative_gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy(&force, &temperature)).into_pyarray(py)
     }
-    /// The relative gibbs free energy per link as a function of the applied force and temperature.
+    /// The relative Gibbs free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
     ///     force (numpy.ndarray): The force :math:`f`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The relative gibbs free energy per link :math:`\Delta\varphi/N_b`.
+    ///     numpy.ndarray: The relative Gibbs free energy per link :math:`\Delta\varphi/N_b`.
     ///
     pub fn relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional gibbs free energy as a function of the applied nondimensional force and temperature.
+    /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature.
     ///
     /// Args:
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///     numpy.ndarray: The nondimensional Gibbs free energy :math:`\beta\varphi=N_b\varrho`.
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional gibbs free energy per link as a function of the applied nondimensional force and temperature.
+    /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature.
     ///
     /// Args:
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
+    ///     numpy.ndarray: The nondimensional Gibbs free energy per link :math:`\varrho\equiv\beta\varphi/N_b`.
     ///
     pub fn nondimensional_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional relative gibbs free energy as a function of the applied nondimensional force.
+    /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     ///
     /// Args:
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional relative gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
+    ///     numpy.ndarray: The nondimensional relative Gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
         nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy(&nondimensional_force)).into_pyarray(py)
     }
-    /// The nondimensional relative gibbs free energy per link as a function of the applied nondimensional force,
+    /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force,
     ///
     /// .. math::
     ///     \Delta\varrho(\eta) = -\frac{\eta^2}{6}.
@@ -206,7 +206,7 @@ impl Ideal
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional relative gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
+    ///     numpy.ndarray: The nondimensional relative Gibbs free energy per link :math:`\Delta\varrho\equiv\beta\Delta\varphi/N_b`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
