@@ -42,31 +42,20 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_force(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
-    link_length::Union{Float64,Vector,Matrix,Array},
-    hinge_mass::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (
-            number_of_links_i,
-            link_length_i,
-            hinge_mass_i,
-            nondimensional_end_to_end_length_per_link_i,
-        ) -> ccall(
+        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_isometric_nondimensional_force,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64),
+            (UInt8, Float64),
             number_of_links_i,
-            hinge_mass_i,
-            link_length_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
-        hinge_mass,
-        link_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -520,8 +509,6 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
             force(number_of_links, link_length, end_to_end_length, temperature),
         (nondimensional_end_to_end_length_per_link) -> nondimensional_force(
             number_of_links,
-            link_length,
-            hinge_mass,
             nondimensional_end_to_end_length_per_link,
         ),
         (end_to_end_length, temperature) -> helmholtz_free_energy(
