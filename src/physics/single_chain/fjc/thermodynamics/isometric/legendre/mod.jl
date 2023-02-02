@@ -781,12 +781,18 @@ Initializes and returns an instance of the thermodynamics of the FJC model in th
 
 $(TYPEDSIGNATURES)
 """
-function FJC(
-    number_of_links::UInt8,
-    link_length::Float64,
-    hinge_mass::Float64,
-)
-    normalization_nondimensional_equilibrium_distribution = sum(map(index -> nondimensional_equilibrium_radial_distribution(number_of_links, 1.0, 1e-6 + (0.5 + index)*0.00999999), collect(0.0:99.0)))*0.00999999
+function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
+    normalization_nondimensional_equilibrium_distribution =
+        sum(
+            map(
+                index -> nondimensional_equilibrium_radial_distribution(
+                    number_of_links,
+                    1.0,
+                    1e-6 + (0.5 + index) * 0.00999999,
+                ),
+                collect(0.0:99.0),
+            ),
+        ) * 0.00999999
     return FJC(
         number_of_links,
         link_length,
