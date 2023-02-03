@@ -21,6 +21,18 @@ def pytest_collection_finish(session):
     run(
         ['sed', '-i', 's@: test@@', '__pycache__/cargo.tests']
     )
+    f = open("__pycache__/julia.tests", "w")
+    run(
+        ['grep', '-r', '@testset', 'src/'],
+        stdout=f, stderr=0
+    )
+    f.close()
+    run(
+        ['sed', '-i', 's@^.*testset "@@', '__pycache__/julia.tests']
+    )
+    run(
+        ['sed', '-i', 's@".*$@@', '__pycache__/julia.tests']
+    )
     stdout = open('__pycache__/pytest.tests', 'w')
     if session.config.option.compare is not None:
         for item in session.items:
