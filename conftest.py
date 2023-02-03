@@ -69,6 +69,10 @@ def pytest_collection_finish(session):
             ['cmp', '-s', '__pycache__/cargo.tests',
              '__pycache__/pytest.tests']
         ).returncode
+        code += run(
+            ['cmp', '-s', '__pycache__/cargo.tests',
+             '__pycache__/julia.tests']
+        ).returncode
         if code == 0:
             pytest.exit('tests match across languages', code)
         else:
