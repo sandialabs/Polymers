@@ -9,6 +9,87 @@ using ......Polymers: PROJECT_ROOT
 include("./legendre/mod.jl")
 
 """
+The structure of the thermodynamics of the FJC model in the isometric ensemble.
+
+$(FIELDS)
+"""
+struct FJC
+    """
+    The number of links in the chain.
+    """
+    number_of_links::UInt8
+    """
+    The length of each link in the chain in units of nm.
+    """
+    link_length::Float64
+    """
+    The number of links in the chain.
+    """
+    hinge_mass::Float64
+    """
+    The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
+    """
+    legendre::Any
+    """
+    The expected force ``f`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
+    """
+    force::Function
+    """
+    The expected nondimensional force ``\\eta`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``.
+    """
+    nondimensional_force::Function
+    """
+    The Helmholtz free energy ``\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
+    """
+    helmholtz_free_energy::Function
+    """
+    The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
+
+    """
+    helmholtz_free_energy_per_link::Function
+    """
+    The relative Helmholtz free energy ``\\Delta\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
+    """
+    relative_helmholtz_free_energy::Function
+    """
+    The relative Helmholtz free energy per link ``\\Delta\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
+    """
+    relative_helmholtz_free_energy_per_link::Function
+    """
+    The nondimensional Helmholtz free energy ``N_b\\vartheta=\\beta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``.
+    """
+    nondimensional_helmholtz_free_energy::Function
+    """
+    The nondimensional Helmholtz free energy per link ``\\vartheta\\equiv\\beta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``.
+    """
+    nondimensional_helmholtz_free_energy_per_link::Function
+    """
+    The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``.
+    """
+    nondimensional_relative_helmholtz_free_energy::Function
+    """
+    The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``
+    """
+    nondimensional_relative_helmholtz_free_energy_per_link::Function
+    """
+    The equilibrium probability density of end-to-end vectors ``P_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``.
+    """
+    equilibrium_distribution::Function
+    """
+    The nondimensional equilibrium probability density of end-to-end vectors ``\\mathscr{P}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``.
+    """
+    nondimensional_equilibrium_distribution::Function
+    """
+    The equilibrium probability density of end-to-end lengths ``g_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``.
+    """
+    equilibrium_radial_distribution::Function
+    """
+    The nondimensional equilibrium probability density of end-to-end lengths ``\\mathscr{g}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``.
+    """
+    nondimensional_equilibrium_radial_distribution::Function
+end
+
+"""
 $(TYPEDSIGNATURES)
 """
 function force(
@@ -412,86 +493,6 @@ function nondimensional_equilibrium_radial_distribution(
         number_of_links,
         nondimensional_end_to_end_length_per_link,
     )
-end
-
-"""
-The structure of the thermodynamics of the FJC model in the isometric ensemble.
-
-$(FIELDS)
-"""
-struct FJC
-    """
-    The number of links in the chain.
-    """
-    number_of_links::UInt8
-    """
-    The length of each link in the chain in units of nm.
-    """
-    link_length::Float64
-    """
-    The number of links in the chain.
-    """
-    hinge_mass::Float64
-    """
-    The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
-    """
-    legendre::Any
-    """
-    The expected force ``f`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
-    """
-    force::Function
-    """
-    The expected nondimensional force ``\\eta`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``.
-    """
-    nondimensional_force::Function
-    """
-    The Helmholtz free energy ``\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
-    """
-    helmholtz_free_energy::Function
-    """
-    The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
-    """
-    helmholtz_free_energy_per_link::Function
-    """
-    The relative Helmholtz free energy ``\\Delta\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
-    """
-    relative_helmholtz_free_energy::Function
-    """
-    The relative Helmholtz free energy per link ``\\Delta\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
-    """
-    relative_helmholtz_free_energy_per_link::Function
-    """
-    The nondimensional Helmholtz free energy ``N_b\\vartheta=\\beta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``.
-    """
-    nondimensional_helmholtz_free_energy::Function
-    """
-    The nondimensional Helmholtz free energy per link ``\\vartheta\\equiv\\beta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``.
-    """
-    nondimensional_helmholtz_free_energy_per_link::Function
-    """
-    The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``.
-    """
-    nondimensional_relative_helmholtz_free_energy::Function
-    """
-    The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``
-    """
-    nondimensional_relative_helmholtz_free_energy_per_link::Function
-    """
-    The equilibrium probability density of end-to-end vectors ``P_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``.
-    """
-    equilibrium_distribution::Function
-    """
-    The nondimensional equilibrium probability density of end-to-end vectors ``\\mathscr{P}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``.
-    """
-    nondimensional_equilibrium_distribution::Function
-    """
-    The equilibrium probability density of end-to-end lengths ``g_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``.
-    """
-    equilibrium_radial_distribution::Function
-    """
-    The nondimensional equilibrium probability density of end-to-end lengths ``\\mathscr{g}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``.
-    """
-    nondimensional_equilibrium_radial_distribution::Function
 end
 
 """
