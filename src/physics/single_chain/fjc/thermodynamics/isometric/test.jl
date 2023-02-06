@@ -79,6 +79,20 @@ end
             number_of_links_list,
             link_length_list,
             hinge_mass_list,
-        ) == number_of_links_list,
+        ) == number_of_links_list .&&
+        map(
+            (number_of_links_i, link_length_i, hinge_mass_i) ->
+                FJC(number_of_links_i, link_length_i, hinge_mass_i).link_length,
+            number_of_links_list,
+            link_length_list,
+            hinge_mass_list,
+        ) == link_length_list .&&
+        map(
+            (number_of_links_i, link_length_i, hinge_mass_i) ->
+                FJC(number_of_links_i, link_length_i, hinge_mass_i).hinge_mass,
+            number_of_links_list,
+            link_length_list,
+            hinge_mass_list,
+        ) == hinge_mass_list,
     )
 end
