@@ -759,18 +759,21 @@ end
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy_per_link(
+    number_of_links::Union{UInt8,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        nondimensional_end_to_end_length_per_link_i -> ccall(
+        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_isometric_legendre_nondimensional_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64,),
+            (UInt8, Float64),
+            number_of_links_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
+        number_of_links,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -850,7 +853,6 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
             ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_relative_helmholtz_free_energy_per_link(
-                number_of_links,
                 nondimensional_end_to_end_length_per_link,
             ),
         (end_to_end_length) -> equilibrium_distribution(
@@ -926,6 +928,7 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
             ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_relative_gibbs_free_energy_per_link(
+                number_of_links,
                 nondimensional_end_to_end_length_per_link,
             ),
     )

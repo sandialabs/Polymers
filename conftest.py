@@ -65,6 +65,10 @@ def pytest_collection_finish(session):
             ['sort', '__pycache__/pytest.tests',
              '-o', '__pycache__/pytest.tests']
         )
+        run(
+            ['sort', '__pycache__/julia.tests',
+             '-o', '__pycache__/julia.tests']
+        )
         code = run(
             ['cmp', '-s', '__pycache__/cargo.tests',
              '__pycache__/pytest.tests']
