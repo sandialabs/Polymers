@@ -19,7 +19,19 @@ def pytest_collection_finish(session):
     )
     f.close()
     run(
-        ['sed', '-i', 's@: test@@', '__pycache__/cargo.tests']
+        ['/bin/sed', '-i', 's@: test@@', '__pycache__/cargo.tests']
+    )
+    f = open("__pycache__/julia.tests", "w")
+    run(
+        ['grep', '-r', '@testset', 'src/'],
+        stdout=f, stderr=0
+    )
+    f.close()
+    run(
+        ['/bin/sed', '-i', 's@^.*testset "@@', '__pycache__/julia.tests']
+    )
+    run(
+        ['/bin/sed', '-i', 's@".*$@@', '__pycache__/julia.tests']
     )
     stdout = open('__pycache__/pytest.tests', 'w')
     if session.config.option.compare is not None:
@@ -34,28 +46,36 @@ def pytest_collection_finish(session):
             )
         stdout.close()
         run(
-            ['sed', '-i', 's@.py::@::@', '__pycache__/pytest.tests']
+            ['/bin/sed', '-i', 's@.py::@::@', '__pycache__/pytest.tests']
         )
         run(
-            ['sed', '-i', 's@test_@@', '__pycache__/pytest.tests']
+            ['/bin/sed', '-i', 's@test_@@', '__pycache__/pytest.tests']
         )
         run(
-            ['sed', '-i', 's@^.*src/@@', '__pycache__/pytest.tests']
+            ['/bin/sed', '-i', 's@^.*src/@@', '__pycache__/pytest.tests']
         )
         run(
-            ['sed', '-i', 's@/@::@g', '__pycache__/pytest.tests']
+            ['/bin/sed', '-i', 's@/@::@g', '__pycache__/pytest.tests']
         )
         run(
-            ['sort', '__pycache__/cargo.tests',
+            ['/bin/sort', '__pycache__/cargo.tests',
              '-o', '__pycache__/cargo.tests']
         )
         run(
-            ['sort', '__pycache__/pytest.tests',
+            ['/bin/sort', '__pycache__/pytest.tests',
              '-o', '__pycache__/pytest.tests']
         )
+        run(
+            ['/bin/sort', '__pycache__/julia.tests',
+             '-o', '__pycache__/julia.tests']
+        )
         code = run(
-            ['cmp', '-s', '__pycache__/cargo.tests',
+            ['/bin/cmp', '-s', '__pycache__/cargo.tests',
              '__pycache__/pytest.tests']
+        ).returncode
+        code += run(
+            ['/bin/cmp', '-s', '__pycache__/cargo.tests',
+             '__pycache__/julia.tests']
         ).returncode
         if code == 0:
             pytest.exit('tests match across languages', code)
