@@ -41,7 +41,7 @@ struct FJC
     """
     helmholtz_free_energy_per_link::Function
     """
-    The relative Helmholtz free energy ``\\Delta\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
+    The relative Helmholtz free energy ``\\Delta\\psi\\equiv\\psi(\\xi,T)-\\psi(0,T)`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
     """
     relative_helmholtz_free_energy::Function
     """
@@ -115,6 +115,15 @@ struct FJC
 end
 
 """
+The expected force as a function ``f`` of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+
+```math
+f(\\xi, T) \\sim \\frac{kT}{\\ell_b}\\,\\mathcal{L}^{-1}\\left(\\frac{\\xi}{N_b\\ell_b}\\right) \\quad \\text{for } N_b\\gg 1,
+```
+
+where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function.
+
 $(TYPEDSIGNATURES)
 """
 function force(
@@ -144,6 +153,15 @@ function force(
 end
 
 """
+The expected nondimensional force as a function ``\\eta`` of the applied nondimensional end-to-end length per link ``\\gamma``,
+parameterized by the number of links ``N_b``,
+
+```math
+\\eta(\\gamma) \\sim \\mathcal{L}^{-1}(\\gamma) \\quad \\text{for } N_b\\gg 1,
+```
+
+where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_force(
@@ -164,6 +182,15 @@ function nondimensional_force(
 end
 
 """
+The Helmholtz free energy ``\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``,
+
+```math
+\\psi(\\xi, T) \\sim \\varphi\\left[f(\\xi, T)\\right] + \\xi f(\\xi, T) \\quad \\text{for } N_b\\gg 1,
+```
+
+where ``f(\\xi, T)`` is given by the Legendre transformation approximation above.
+
 $(TYPEDSIGNATURES)
 """
 function helmholtz_free_energy(
@@ -202,6 +229,9 @@ function helmholtz_free_energy(
 end
 
 """
+The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
 $(TYPEDSIGNATURES)
 """
 function helmholtz_free_energy_per_link(
@@ -240,6 +270,9 @@ function helmholtz_free_energy_per_link(
 end
 
 """
+The relative Helmholtz free energy ``\\Delta\\psi\\equiv\\psi(\\xi,T)-\\psi(0,T)`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+
 $(TYPEDSIGNATURES)
 """
 function relative_helmholtz_free_energy(
@@ -269,6 +302,9 @@ function relative_helmholtz_free_energy(
 end
 
 """
+The relative Helmholtz free energy per link ``\\Delta\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+
 $(TYPEDSIGNATURES)
 """
 function relative_helmholtz_free_energy_per_link(
@@ -298,6 +334,9 @@ function relative_helmholtz_free_energy_per_link(
 end
 
 """
+The nondimensional Helmholtz free energy ``N_b\\vartheta=\\beta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_helmholtz_free_energy(
@@ -336,6 +375,16 @@ function nondimensional_helmholtz_free_energy(
 end
 
 """
+The nondimensional Helmholtz free energy per link ``\\vartheta\\equiv\\beta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``,
+given by [Buche and Silberstein](https://doi.org/10.1103/PhysRevE.102.012501) as
+
+```math
+\\vartheta(\\gamma, T) \\sim \\varphi\\left[\\mathcal{L}^{-1}(\\gamma), T\\right] + \\gamma\\mathcal{L}^{-1}(\\gamma) \\quad \\text{for } N_b\\gg 1,
+```
+
+where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_helmholtz_free_energy_per_link(
@@ -374,6 +423,9 @@ function nondimensional_helmholtz_free_energy_per_link(
 end
 
 """
+The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_helmholtz_free_energy(
@@ -397,6 +449,16 @@ function nondimensional_relative_helmholtz_free_energy(
 end
 
 """
+The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``,
+given by [Buche and Silberstein](https://doi.org/10.1016/j.jmps.2021.104593) as
+
+```math
+\\Delta\\vartheta(\\gamma) \\sim \\gamma\\mathcal{L}^{-1}(\\gamma) + \\ln\\left\\{\\frac{\\mathcal{L}^{-1}(\\gamma)}{\\sinh[\\mathcal{L}^{-1}(\\gamma)]}\\right\\} \\quad \\text{for } N_b\\gg 1,
+```
+
+where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_helmholtz_free_energy_per_link(
@@ -417,6 +479,13 @@ function nondimensional_relative_helmholtz_free_energy_per_link(
 end
 
 """
+The equilibrium probability density of end-to-end vectors ``P_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+
+```math
+P_\\mathrm{eq}(\\xi) = \\frac{e^{-\\beta\\psi(\\xi, T)}}{4\\pi\\int e^{-\\beta\\psi(\\xi', T)} \\,{\\xi'}{}^2 d\\xi'}.
+```
+
 $(TYPEDSIGNATURES)
 """
 function equilibrium_distribution(
@@ -445,6 +514,13 @@ function equilibrium_distribution(
 end
 
 """
+The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link ``\\mathscr{P}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``,
+parameterized by the number of links ``N_b``,
+
+```math
+\\mathscr{P}_\\mathrm{eq}(\\gamma) = \\frac{e^{-\\Delta\\vartheta(\\gamma)}}{4\\pi\\int e^{-\\Delta\\vartheta(\\gamma')} \\,{\\gamma'}{}^2 d\\gamma'}.
+```
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_equilibrium_distribution(
@@ -470,6 +546,13 @@ function nondimensional_equilibrium_distribution(
 end
 
 """
+The equilibrium probability density of end-to-end lengths ``g_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+
+```math
+g_\\mathrm{eq}(\\xi) = 4\\pi\\xi^2 P_\\mathrm{eq}(\\xi).
+```
+
 $(TYPEDSIGNATURES)
 """
 function equilibrium_radial_distribution(
@@ -498,6 +581,13 @@ function equilibrium_radial_distribution(
 end
 
 """
+The nondimensional equilibrium probability density of nondimensional end-to-end lenghts per link ``\\mathscr{g}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``,
+parameterized by the number of links ``N_b``,
+
+```math
+\\mathscr{g}_\\mathrm{eq}(\\gamma) = 4\\pi\\gamma^2 \\mathscr{P}_\\mathrm{eq}(\\gamma).
+```
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_equilibrium_radial_distribution(
@@ -523,6 +613,15 @@ function nondimensional_equilibrium_radial_distribution(
 end
 
 """
+The Gibbs free energy ``\\varphi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``,
+
+```math
+\\varphi(\\xi, T) \\sim \\psi(\\xi, T) - \\xi f(\\xi, T) \\quad \\text{for } N_b\\gg 1,
+```
+
+where ``f(\\xi, T)`` is given by the Legendre transformation approximation above.
+
 $(TYPEDSIGNATURES)
 """
 function gibbs_free_energy(
@@ -561,6 +660,9 @@ function gibbs_free_energy(
 end
 
 """
+The Gibbs free energy per link ``\\varphi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
 $(TYPEDSIGNATURES)
 """
 function gibbs_free_energy_per_link(
@@ -599,6 +701,9 @@ function gibbs_free_energy_per_link(
 end
 
 """
+The relative Helmholtz free energy ``\\Delta\\varphi\\equiv\\varphi(\\xi,T)-\\varphi(0,T)`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+
 $(TYPEDSIGNATURES)
 """
 function relative_gibbs_free_energy(
@@ -628,6 +733,9 @@ function relative_gibbs_free_energy(
 end
 
 """
+The relative Gibbs free energy per link ``\\Delta\\varphi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+
 $(TYPEDSIGNATURES)
 """
 function relative_gibbs_free_energy_per_link(
@@ -657,6 +765,9 @@ function relative_gibbs_free_energy_per_link(
 end
 
 """
+The nondimensional Gibbs free energy ``N_b\\varrho=\\beta\\varphi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_gibbs_free_energy(
@@ -695,6 +806,9 @@ function nondimensional_gibbs_free_energy(
 end
 
 """
+The nondimensional Gibbs free energy per link ``\\varrho\\equiv\\beta\\varphi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_gibbs_free_energy_per_link(
@@ -733,6 +847,9 @@ function nondimensional_gibbs_free_energy_per_link(
 end
 
 """
+The nondimensional relative Gibbs free energy ``N_b\\Delta\\varrho=\\beta\\Delta\\varphi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy(
@@ -756,6 +873,9 @@ function nondimensional_relative_gibbs_free_energy(
 end
 
 """
+The nondimensional relative Helmholtz free energy per link ``\\Delta\\varrho\\equiv\\beta\\Delta\\varphi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+parameterized by the number of links ``N_b``.
+
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy_per_link(

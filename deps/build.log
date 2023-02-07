@@ -1,17 +1,1 @@
-   Compiling polymers v0.0.13 (/mnt/c/Users/mrbuche/home/github/sandialabs/Polymers)
-ERROR: LoadError: failed process: Process(`cargo build --features extern`, ProcessSignaled(2)) [0]
-
-Stacktrace:
- [1] pipeline_error
-   @ ./process.jl:565 [inlined]
- [2] run(::Cmd; wait::Bool)
-   @ Base ./process.jl:480
- [3] run(::Cmd)
-   @ Base ./process.jl:477
- [4] top-level scope
-   @ /mnt/c/Users/mrbuche/home/github/sandialabs/Polymers/deps/build.jl:2
- [5] include(fname::String)
-   @ Base.MainInclude ./client.jl:476
- [6] top-level scope
-   @ none:5
-in expression starting at /mnt/c/Users/mrbuche/home/github/sandialabs/Polymers/deps/build.jl:2
+    Finished dev [unoptimized + debuginfo] target(s) in 0.06s

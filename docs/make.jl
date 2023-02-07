@@ -7,7 +7,7 @@ makedocs(
     modules = [Polymers],
     pages = [
         "Home" => "index.md",
-        "Modules" => [],
+        "Modules" => ["Physics" => "physics.md"],
         "Examples" => [],
         "Indices and Tables" =>
             ["General Index" => "genindex.md", "Module Index" => "modindex.md"],

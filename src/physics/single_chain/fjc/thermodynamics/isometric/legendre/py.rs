@@ -161,7 +161,7 @@ impl FJC
     {
         nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::nondimensional_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &nondimensional_end_to_end_length_per_link, &temperature)).into_pyarray(py)
     }
-    /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature, given by :footcite:t:`buche2021statistical` as
+    /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature, given by :footcite:t:`buche2020statistical` as
     ///
     /// .. math::
     ///     \vartheta(\gamma, T) \sim \varphi\left[\mathcal{L}^{-1}(\gamma), T\right] + \gamma\mathcal{L}^{-1}(\gamma) \quad \text{for } N_b\gg 1,
@@ -271,7 +271,9 @@ impl FJC
     /// The Gibbs free energy as a function of the applied end-to-end length and temperature,
     ///
     /// .. math::
-    ///     \varphi(\xi, T) \sim \psi(\xi, T) - \xi f(\xi, T) \quad \text{for } N_b\gg 1.
+    ///     \varphi(\xi, T) \sim \psi(\xi, T) - \xi f(\xi, T) \quad \text{for } N_b\gg 1,
+    ///
+    /// where :math:`f(\xi, T)` is given by the Legendre transformation approximation above.
     ///
     /// Args:
     ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.
@@ -330,7 +332,7 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional Gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///     numpy.ndarray: The nondimensional Gibbs free energy :math:`N_b\varrho=\beta\varphi`.
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {

@@ -1,3 +1,6 @@
+"""
+Single-chain models for polymer physics.
+"""
 module SingleChain
 
 include("./test.jl")

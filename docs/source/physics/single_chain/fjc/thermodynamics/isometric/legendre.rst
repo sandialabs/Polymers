@@ -28,3 +28,10 @@ FJC model thermodynamics (isometric/legendre)
    .. automethod:: nondimensional_gibbs_free_energy_per_link(nondimensional_end_to_end_length_per_link, temperature)
    .. automethod:: nondimensional_relative_gibbs_free_energy(nondimensional_end_to_end_length_per_link)
    .. automethod:: nondimensional_relative_gibbs_free_energy_per_link(nondimensional_end_to_end_length_per_link)
+
+.. raw::
+ html
+
+   <hr>
+
+.. footbibliography::

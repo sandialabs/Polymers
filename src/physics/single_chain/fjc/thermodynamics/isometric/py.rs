@@ -151,7 +151,7 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional Helmholtz free energy :math:`\beta\psi=N_b\vartheta`.
+    ///     numpy.ndarray: The nondimensional Helmholtz free energy :math:`N_b\vartheta=\beta\psi`.
     ///
     pub fn nondimensional_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
@@ -179,7 +179,7 @@ impl FJC
     ///     nondimensional_end_to_end_length_per_link (numpy.ndarray): The nondimensional end-to-end length per link :math:`\gamma\equiv \xi/N_b\ell_b`.
     /// 
     /// Returns:
-    ///     numpy.ndarray: The nondimensional relative Helmholtz free energy :math:`\beta\Delta\psi=N_b\Delta\vartheta`.
+    ///     numpy.ndarray: The nondimensional relative Helmholtz free energy :math:`N_b\Delta\vartheta=\beta\Delta\psi`.
     ///
     pub fn nondimensional_relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_end_to_end_length_per_link: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
@@ -200,7 +200,7 @@ impl FJC
     {
         nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::nondimensional_relative_helmholtz_free_energy_per_link(&self.number_of_links, &nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
-    /// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link,
+    /// The equilibrium probability density of end-to-end vectors as a function of the end-to-end length,
     ///
     /// .. math::
     ///     P_\mathrm{eq}(\xi) = \frac{e^{-\beta\psi(\xi, T)}}{4\pi\int e^{-\beta\psi(\xi', T)} \,{\xi'}{}^2 d\xi'} = \frac{1}{8\pi\ell_b^2\xi}\frac{N_b^{N_b - 2}}{(N_b - 2)!}\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2},
