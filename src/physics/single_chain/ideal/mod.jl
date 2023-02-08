@@ -1,18 +1,18 @@
 """
-The freely-jointed chain (FJC) single-chain model.
+The ideal single-chain model.
 """
-module Fjc
+module Ideal
 
 using DocStringExtensions
 
 include("./thermodynamics/mod.jl")
 
 """
-The structure of the FJC model.
+The structure of the ideal chain model.
 
 $(FIELDS)
 """
-struct FJC
+struct IDEAL
     """
     The number of links in the chain.
     """
@@ -32,16 +32,16 @@ struct FJC
 end
 
 """
-Initializes and returns an instance of the FJC model.
+Initializes and returns an instance of the ideal chain model.
 
 $(TYPEDSIGNATURES)
 """
-function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
-    return FJC(
+function IDEAL(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
+    return IDEAL(
         number_of_links,
         link_length,
         hinge_mass,
-        Thermodynamics.FJC(number_of_links, link_length, hinge_mass),
+        Thermodynamics.IDEAL(number_of_links, link_length, hinge_mass),
     )
 end
 
