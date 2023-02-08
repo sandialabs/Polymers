@@ -4,6 +4,7 @@ Single-chain models for polymer physics.
 module SingleChain
 
 include("./test.jl")
+include("./ideal/mod.jl")
 include("./fjc/mod.jl")
 
 ONE::Float64 = 1.0
