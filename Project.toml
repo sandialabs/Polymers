@@ -9,6 +9,8 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 
 [compat]
 julia = "1.8"
+DocStringExtensions = "0.9"
+Documenter = "0.27"
 
 [extras]
 JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
