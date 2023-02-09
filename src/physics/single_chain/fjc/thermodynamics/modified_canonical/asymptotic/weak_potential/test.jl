@@ -2,7 +2,8 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Fjc.Thermodynamics.ModifiedCanonical.Asymptotic.WeakPotential: FJC
+using Polymers.Physics.SingleChain.Fjc.Thermodynamics.ModifiedCanonical.Asymptotic.WeakPotential:
+    FJC
 
 @testset "physics::single_chain::fjc::thermodynamics::modified_canonical::asymptotic::weak_potential::test::base::init" begin
     @test isa(

@@ -40,7 +40,12 @@ Initializes and returns an instance of the thermodynamics of the EFJC model.
 
 $(TYPEDSIGNATURES)
 """
-function EFJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64, link_stiffness::Float64)
+function EFJC(
+    number_of_links::UInt8,
+    link_length::Float64,
+    hinge_mass::Float64,
+    link_stiffness::Float64,
+)
     return EFJC(
         number_of_links,
         link_length,

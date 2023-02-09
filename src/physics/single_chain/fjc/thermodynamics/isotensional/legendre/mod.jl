@@ -31,11 +31,7 @@ Initializes and returns an instance of the thermodynamics of the FJC model in th
 $(TYPEDSIGNATURES)
 """
 function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
-    return FJC(
-        number_of_links,
-        link_length,
-        hinge_mass,
-    )
+    return FJC(number_of_links, link_length, hinge_mass)
 end
 
 end

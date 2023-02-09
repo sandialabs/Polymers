@@ -81,9 +81,12 @@ end
         @test all(
             SWFJC(number_of_links, link_length, hinge_mass, well_width).number_of_links ==
             number_of_links &&
-            SWFJC(number_of_links, link_length, hinge_mass, well_width).link_length == link_length &&
-            SWFJC(number_of_links, link_length, hinge_mass, well_width).hinge_mass == hinge_mass &&
-            SWFJC(number_of_links, link_length, hinge_mass, well_width).well_width == well_width,
+            SWFJC(number_of_links, link_length, hinge_mass, well_width).link_length ==
+            link_length &&
+            SWFJC(number_of_links, link_length, hinge_mass, well_width).hinge_mass ==
+            hinge_mass &&
+            SWFJC(number_of_links, link_length, hinge_mass, well_width).well_width ==
+            well_width,
         )
     end
 end

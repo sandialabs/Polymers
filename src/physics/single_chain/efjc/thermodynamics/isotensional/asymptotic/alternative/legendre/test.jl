@@ -2,7 +2,8 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Efjc.Thermodynamics.Isotensional.Asymptotic.Alternative.Legendre: EFJC
+using Polymers.Physics.SingleChain.Efjc.Thermodynamics.Isotensional.Asymptotic.Alternative.Legendre:
+    EFJC
 
 @testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::legendre::test::base::init" begin
     @test isa(
@@ -58,7 +59,8 @@ end
 @testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::legendre::test::base::link_stiffness" begin
     for _ = 1:parameters.number_of_loops
         link_stiffness =
-            parameters.link_stiffness_reference + parameters.link_stiffness_scale * (0.5 - rand())
+            parameters.link_stiffness_reference +
+            parameters.link_stiffness_scale * (0.5 - rand())
         @test EFJC(
             parameters.number_of_links_minimum,
             parameters.link_length_reference,
@@ -77,13 +79,21 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
-            parameters.link_stiffness_reference + parameters.link_stiffness_scale * (0.5 - rand())
+            parameters.link_stiffness_reference +
+            parameters.link_stiffness_scale * (0.5 - rand())
         @test all(
-            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).number_of_links ==
-            number_of_links &&
-            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).link_length == link_length &&
-            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).hinge_mass == hinge_mass &&
-            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).link_stiffness == link_stiffness,
+            EFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                link_stiffness,
+            ).number_of_links == number_of_links &&
+            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).link_length ==
+            link_length &&
+            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).hinge_mass ==
+            hinge_mass &&
+            EFJC(number_of_links, link_length, hinge_mass, link_stiffness).link_stiffness ==
+            link_stiffness,
         )
     end
 end
