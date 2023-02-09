@@ -6,6 +6,7 @@ module SingleChain
 include("./test.jl")
 include("./ideal/mod.jl")
 include("./fjc/mod.jl")
+include("./efjc/mod.jl")
 include("./swfjc/mod.jl")
 
 ONE::Float64 = 1.0
