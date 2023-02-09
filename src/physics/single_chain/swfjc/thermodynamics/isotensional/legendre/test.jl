@@ -2,7 +2,7 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Swfjc.Thermodynamics: SWFJC
+using Polymers.Physics.SingleChain.Swfjc.Thermodynamics.Isotensional.Legendre: SWFJC
 
 @testset "physics::single_chain::fjc::test::base::init" begin
     @test isa(
