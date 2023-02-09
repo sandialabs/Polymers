@@ -6,6 +6,8 @@ module Thermodynamics
 using DocStringExtensions
 
 include("./isometric/mod.jl")
+include("./isotensional/mod.jl")
+include("./modified_canonical/mod.jl")
 
 """
 The structure of the thermodynamics of the FJC model.
@@ -29,6 +31,14 @@ struct FJC
     The thermodynamic functions of the model in the isometric ensemble.
     """
     isometric::Any
+    """
+    The thermodynamic functions of the model in the isotensional ensemble.
+    """
+    isotensional::Any
+    """
+    The thermodynamic functions of the model in the modified canonical ensemble.
+    """
+    modified_canonical::Any
 end
 
 """
@@ -42,6 +52,8 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
         link_length,
         hinge_mass,
         Isometric.FJC(number_of_links, link_length, hinge_mass),
+        Isotensional.FJC(number_of_links, link_length, hinge_mass),
+        ModifiedCanonical.FJC(number_of_links, link_length, hinge_mass),
     )
 end
 
