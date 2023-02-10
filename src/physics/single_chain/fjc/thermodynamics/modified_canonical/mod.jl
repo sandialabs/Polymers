@@ -27,7 +27,7 @@ struct FJC
     """
     hinge_mass::Float64
     """
-    The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach.
+    The thermodynamic functions of the model in the modified canonical ensemble approximated using an asymptotic approach.
     """
     asymptotic::Any
 end

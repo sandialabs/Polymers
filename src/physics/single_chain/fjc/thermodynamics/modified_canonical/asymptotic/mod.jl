@@ -28,11 +28,11 @@ struct FJC
     """
     hinge_mass::Float64
     """
-    The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach approximated using an asymptotic approach valid for strong potentials.
+    The thermodynamic functions of the model in the modified canonical ensemble approximated using an asymptotic approach approximated using an asymptotic approach valid for strong potentials.
     """
     strong_potential::Any
     """
-    The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach approximated using an asymptotic approach valid for weak potentials.
+    The thermodynamic functions of the model in the modified canonical ensemble approximated using an asymptotic approach approximated using an asymptotic approach valid for weak potentials.
     """
     weak_potential::Any
 end

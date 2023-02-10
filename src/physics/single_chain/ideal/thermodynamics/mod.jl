@@ -6,6 +6,7 @@ module Thermodynamics
 using DocStringExtensions
 
 include("./isometric/mod.jl")
+include("./isotensional/mod.jl")
 
 """
 The structure of the thermodynamics of the ideal chain model.
@@ -29,6 +30,10 @@ struct IDEAL
     The thermodynamic functions of the model in the isometric ensemble.
     """
     isometric::Any
+    """
+    The thermodynamic functions of the model in the isotensional ensemble.
+    """
+    isotensional::Any
 end
 
 """
@@ -42,6 +47,7 @@ function IDEAL(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64
         link_length,
         hinge_mass,
         Isometric.IDEAL(number_of_links, link_length, hinge_mass),
+        Isotensional.IDEAL(number_of_links, link_length, hinge_mass),
     )
 end
 
