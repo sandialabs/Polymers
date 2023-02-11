@@ -92,7 +92,7 @@ impl FJC
     ///
     pub fn nondimensional_end_to_end_length<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length(&self.number_of_links, &nondimensional_force)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2021statistical` as
     ///
@@ -109,7 +109,7 @@ impl FJC
     ///
     pub fn nondimensional_end_to_end_length_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::FJC::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length_per_link(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length_per_link(&nondimensional_force)).into_pyarray(py)
     }
     /// The Gibbs free energy as a function of the applied force and temperature,
     ///

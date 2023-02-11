@@ -48,6 +48,18 @@ pub fn end_to_end_length_per_link(link_length: &f64, force: &f64, temperature: &
     (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*link_length
 }
 
+/// The expected nondimensional end-to-end length as a function of the applied nondimensional force, parameterized by the number of links.
+pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_force: &f64) -> f64
+{
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(*number_of_links as f64)
+}
+
+/// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force.
+pub fn nondimensional_end_to_end_length_per_link(nondimensional_force: &f64) -> f64
+{
+    1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
+}
+
 /// The implemented functionality of the thermodynamics of the FJC model in the isotensional ensemble.
 impl FJC
 {
