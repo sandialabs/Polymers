@@ -46,6 +46,14 @@ struct FJC
     The expected nondimensional end-to-end length per link ``\\gamma\\equiv\\xi/N_b\\ell_b`` as a function of the applied nondimensional force ``\\eta``.
     """
     nondimensional_end_to_end_length_per_link::Function
+    """
+    The nondimensional relative Gibbs free energy ``\\beta\\Delta\\varphi=N_b\\Delta\\varrho`` as a function of the applied nondimensional force ``\\eta``.
+    """
+    nondimensional_relative_gibbs_free_energy::Function
+    """
+    The nondimensional relative Gibbs free energy per link ``\\Delta\\varrho\\equiv\\beta\\Delta\\varphi/N_b`` as a function of the applied nondimensional force ``\\eta``.
+    """
+    nondimensional_relative_gibbs_free_energy_per_link::Function
 end
 
 """
@@ -165,6 +173,54 @@ function nondimensional_end_to_end_length_per_link(
 end
 
 """
+The nondimensional relative Gibbs free energy ``\\beta\\Delta\\varphi=N_b\\Delta\\varrho`` as a function of the applied nondimensional force ``\\eta``,
+parameterized by the number of links ``N_b``.
+
+$(TYPEDSIGNATURES)
+"""
+function nondimensional_relative_gibbs_free_energy(
+    number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_force::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (number_of_links_i, nondimensional_force_i) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (UInt8, Float64),
+            number_of_links_i,
+            nondimensional_force_i,
+        ),
+        number_of_links,
+        nondimensional_force,
+    )
+end
+
+"""
+The nondimensional relative Gibbs free energy per link ``\\Delta\\varrho\\equiv\\beta\\Delta\\varphi/N_b`` as a function of the applied nondimensional force ``\\eta``.
+
+$(TYPEDSIGNATURES)
+"""
+function nondimensional_relative_gibbs_free_energy_per_link(
+    nondimensional_force::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        nondimensional_force_i -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy_per_link,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (Float64,),
+            nondimensional_force_i,
+        ),
+        nondimensional_force,
+    )
+end
+
+"""
 Initializes and returns an instance of the thermodynamics of the FJC model in the isotensional ensemble.
 
 $(TYPEDSIGNATURES)
@@ -182,6 +238,12 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
             nondimensional_end_to_end_length(number_of_links, nondimensional_force),
         nondimensional_force ->
             nondimensional_end_to_end_length_per_link(nondimensional_force),
+        nondimensional_force -> nondimensional_relative_gibbs_free_energy(
+            number_of_links,
+            nondimensional_force,
+        ),
+        nondimensional_force ->
+            nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force),
     )
 end
 

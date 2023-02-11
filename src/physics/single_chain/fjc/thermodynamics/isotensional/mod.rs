@@ -60,6 +60,20 @@ pub fn nondimensional_end_to_end_length_per_link(nondimensional_force: &f64) -> 
     1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
 }
 
+
+
+
+/// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links.
+pub fn nondimensional_relative_gibbs_free_energy(number_of_links: &u8, nondimensional_force: &f64) -> f64
+{
+    -(*number_of_links as f64)*(nondimensional_force.sinh()/nondimensional_force).ln()
+}
+/// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force.
+pub fn nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force: &f64) -> f64
+{
+    -(nondimensional_force.sinh()/nondimensional_force).ln()
+}
+
 /// The implemented functionality of the thermodynamics of the FJC model in the isotensional ensemble.
 impl FJC
 {
@@ -88,12 +102,12 @@ impl FJC
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64
     {
-        (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*self.number_of_links_f64
+        nondimensional_end_to_end_length(&self.number_of_links, nondimensional_force)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
+        nondimensional_end_to_end_length_per_link(nondimensional_force)
     }
     /// The Gibbs free energy as a function of the applied force and temperature.
     pub fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
@@ -128,11 +142,11 @@ impl FJC
     /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64
     {
-        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln()
+        nondimensional_relative_gibbs_free_energy(&self.number_of_links, nondimensional_force)
     }
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force.
     pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        -(nondimensional_force.sinh()/nondimensional_force).ln()
+        nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)
     }
 }

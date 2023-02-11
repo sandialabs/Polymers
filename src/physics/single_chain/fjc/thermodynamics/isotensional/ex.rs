@@ -18,3 +18,16 @@ pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensiona
 {
     super::nondimensional_end_to_end_length_per_link(&nondimensional_force)
 }
+
+
+
+#[no_mangle]
+pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy(number_of_links: u8, nondimensional_force: f64) -> f64
+{
+    super::nondimensional_relative_gibbs_free_energy(&number_of_links, &nondimensional_force)
+}
+#[no_mangle]
+pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force: f64) -> f64
+{
+    super::nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force)
+}
