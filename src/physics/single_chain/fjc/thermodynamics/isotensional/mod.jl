@@ -177,8 +177,7 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
         Legendre.FJC(number_of_links, link_length, hinge_mass),
         (force, temperature) ->
             end_to_end_length(number_of_links, link_length, force, temperature),
-        (force, temperature) ->
-            end_to_end_length_per_link(link_length, force, temperature),
+        (force, temperature) -> end_to_end_length_per_link(link_length, force, temperature),
         nondimensional_force ->
             nondimensional_end_to_end_length(number_of_links, nondimensional_force),
         nondimensional_force ->
