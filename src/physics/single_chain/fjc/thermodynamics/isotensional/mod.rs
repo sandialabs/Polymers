@@ -1,3 +1,6 @@
+#[cfg(feature = "extern")]
+pub mod ex;
+
 #[cfg(feature = "python")]
 pub mod py;
 
@@ -31,6 +34,20 @@ pub struct FJC
     number_of_links_f64: f64
 }
 
+/// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links and link length.
+pub fn end_to_end_length(number_of_links: &u8, link_length: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(*number_of_links as f64)*link_length
+}
+
+/// The expected end-to-end length per link as a function of the applied force and temperature, parameterized by the number of links and link length.
+pub fn end_to_end_length_per_link(link_length: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*link_length
+}
+
 /// The implemented functionality of the thermodynamics of the FJC model in the isotensional ensemble.
 impl FJC
 {
@@ -49,12 +66,12 @@ impl FJC
     /// The expected end-to-end length as a function of the applied force and temperature.
     pub fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_end_to_end_length(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length
+        end_to_end_length(&self.number_of_links, &self.link_length, force, temperature)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     pub fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_end_to_end_length_per_link(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length
+        end_to_end_length_per_link(&self.link_length, force, temperature)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64
