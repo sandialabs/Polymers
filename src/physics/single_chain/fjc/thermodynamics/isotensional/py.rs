@@ -176,7 +176,7 @@ impl FJC
     ///     temperature (float): The temperature :math:`T`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The nondimensional Gibbs free energy :math:`\beta\varphi=N_b\varrho`.
+    ///     numpy.ndarray: The nondimensional Gibbs free energy :math:`N_b\varrho=\beta\varphi`.
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
@@ -201,7 +201,7 @@ impl FJC
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
     ///
     /// Returns:
-    ///     numpy.ndarray: The nondimensional relative Gibbs free energy :math:`\beta\Delta\varphi=N_b\Delta\varrho`.
+    ///     numpy.ndarray: The nondimensional relative Gibbs free energy :math:`N_b\Delta\varrho=\beta\Delta\varphi`.
     ///
     pub fn nondimensional_relative_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {

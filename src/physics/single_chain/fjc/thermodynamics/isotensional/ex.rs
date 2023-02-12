@@ -26,7 +26,7 @@ pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_gibbs_free_en
 #[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_gibbs_free_energy_per_link(link_length: f64, hinge_mass: f64, force: f64, temperature: f64) -> f64
 {
-    super::gibbs_free_energy_per_link(&number_of_links, &link_length, &hinge_mass, &force, &temperature)
+    super::gibbs_free_energy_per_link(&link_length, &hinge_mass, &force, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_relative_gibbs_free_energy(number_of_links: u8, link_length: f64, force: f64, temperature: f64) -> f64
@@ -36,7 +36,7 @@ pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_relative_gibb
 #[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_relative_gibbs_free_energy_per_link(link_length: f64, force: f64, temperature: f64) -> f64
 {
-    super::relative_gibbs_free_energy_per_link(&number_of_links, &link_length, &force, &temperature)
+    super::relative_gibbs_free_energy_per_link(&link_length, &force, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy(number_of_links: u8, link_length: f64, hinge_mass: f64, nondimensional_force: f64, temperature: f64) -> f64
@@ -46,7 +46,7 @@ pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensiona
 #[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy_per_link(link_length: f64, hinge_mass: f64, nondimensional_force: f64, temperature: f64) -> f64
 {
-    super::nondimensional_gibbs_free_energy_per_link(&number_of_links, &link_length, &hinge_mass, &nondimensional_force, &temperature)
+    super::nondimensional_gibbs_free_energy_per_link(&link_length, &hinge_mass, &nondimensional_force, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy(number_of_links: u8, nondimensional_force: f64) -> f64

@@ -47,7 +47,31 @@ struct FJC
     """
     nondimensional_end_to_end_length_per_link::Function
     """
-    The nondimensional relative Gibbs free energy ``\\beta\\Delta\\varphi=N_b\\Delta\\varrho`` as a function of the applied nondimensional force ``\\eta``.
+    The Gibbs free energy ``\\varphi`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    gibbs_free_energy::Function
+    """
+    The Gibbs free energy per link ``\\varphi/N_b`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    gibbs_free_energy_per_link::Function
+    """
+    The relative Gibbs free energy ``\\Delta\\varphi\\equiv\\varphi(f,T)-\\varphi(0,T)`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    relative_gibbs_free_energy::Function
+    """
+    The relative Gibbs free energy per link ``\\Delta\\varphi/N_b`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    relative_gibbs_free_energy_per_link::Function
+    """
+    The nondimensional Gibbs free energy ``N_b\\varrho=\\beta\\varphi`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``.
+    """
+    nondimensional_gibbs_free_energy::Function
+    """
+    The nondimensional Gibbs free energy per link ``\\varrho\\equiv\\beta\\varphi/N_b`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``.
+    """
+    nondimensional_gibbs_free_energy_per_link::Function
+    """
+    The nondimensional relative Gibbs free energy ``N_b\\Delta\\varrho=\\beta\\Delta\\varphi`` as a function of the applied nondimensional force ``\\eta``.
     """
     nondimensional_relative_gibbs_free_energy::Function
     """
@@ -173,6 +197,207 @@ function nondimensional_end_to_end_length_per_link(
 end
 
 """
+The Gibbs free energy ``\\varphi`` as a function of the applied force ``f`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
+$(TYPEDSIGNATURES)
+"""
+function nondimensional_gibbs_free_energy(
+    number_of_links::Union{UInt8,Vector,Matrix,Array},
+    link_length::Union{Float64,Vector,Matrix,Array},
+    hinge_mass::Union{Float64,Vector,Matrix,Array},
+    force::Union{Float64,Vector,Matrix,Array},
+    temperature::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (number_of_links_i, link_length_i, hinge_mass_i, force_i, temperature_i) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_gibbs_free_energy,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (UInt8, Float64, Float64, Float64, Float64),
+            number_of_links_i,
+            link_length_i,
+            hinge_mass_i,
+            force_i,
+            temperature_i,
+        ),
+        number_of_links,
+        link_length,
+        hinge_mass,
+        force,
+        temperature,
+    )
+end
+
+"""
+The Gibbs free energy per link ``\\varphi/N_b`` as a function of the applied force ``f`` and temperature ``T``,
+parameterized by the link length ``\\ell_b`` and hinge mass ``m``.
+
+$(TYPEDSIGNATURES)
+"""
+function nondimensional_gibbs_free_energy_per_link(
+    link_length::Union{Float64,Vector,Matrix,Array},
+    hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_force::Union{Float64,Vector,Matrix,Array},
+    temperature::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (link_length_i, hinge_mass_i, force_i, temperature_i) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_gibbs_free_energy_per_link,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (Float64, Float64, Float64, Float64),
+            link_length_i,
+            hinge_mass_i,
+            force_i,
+            temperature_i,
+        ),
+        link_length,
+        hinge_mass,
+        force,
+        temperature,
+    )
+end
+
+"""
+The relative Gibbs free energy ``\\Delta\\varphi\\equiv\\varphi(f,T)-\\varphi(0,T)`` as a function of the applied force ``f`` and temperature ``T``,
+parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+
+$(TYPEDSIGNATURES)
+"""
+function relative_gibbs_free_energy(
+    number_of_links::Union{UInt8,Vector,Matrix,Array},
+    link_length::Union{Float64,Vector,Matrix,Array},
+    force::Union{Float64,Vector,Matrix,Array},
+    temperature::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (number_of_links_i, link_length_i, force_i, temperature_i) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_relative_gibbs_free_energy,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (UInt8, Float64, Float64, Float64),
+            number_of_links_i,
+            link_length_i,
+            force_i,
+            temperature_i,
+        ),
+        number_of_links,
+        link_length,
+        force,
+        temperature,
+    )
+end
+
+"""
+The relative Gibbs free energy per link ``\\Delta\\varphi/N_b`` as a function of the applied force ``f`` and temperature ``T``,
+parameterized by the link length ``\\ell_b``.
+
+$(TYPEDSIGNATURES)
+"""
+function relative_gibbs_free_energy_per_link(
+    link_length::Union{Float64,Vector,Matrix,Array},
+    force::Union{Float64,Vector,Matrix,Array},
+    temperature::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (link_length_i, force_i, temperature_i) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_relative_gibbs_free_energy_per_link,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (Float64, Float64, Float64),
+            link_length_i,
+            force_i,
+            temperature_i,
+        ),
+        link_length,
+        force,
+        temperature,
+    )
+end
+
+"""
+The nondimensional Gibbs free energy ``N_b\\varrho=\\beta\\varphi`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+
+$(TYPEDSIGNATURES)
+"""
+function nondimensional_gibbs_free_energy(
+    number_of_links::Union{UInt8,Vector,Matrix,Array},
+    link_length::Union{Float64,Vector,Matrix,Array},
+    hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_force::Union{Float64,Vector,Matrix,Array},
+    temperature::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (
+            number_of_links_i,
+            link_length_i,
+            hinge_mass_i,
+            nondimensional_force_i,
+            temperature_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (UInt8, Float64, Float64, Float64, Float64),
+            number_of_links_i,
+            link_length_i,
+            hinge_mass_i,
+            nondimensional_force_i,
+            temperature_i,
+        ),
+        number_of_links,
+        link_length,
+        hinge_mass,
+        nondimensional_force,
+        temperature,
+    )
+end
+
+"""
+The nondimensional Gibbs free energy per link ``\\varrho\\equiv\\beta\\varphi/N_b`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``,
+parameterized by the link length ``\\ell_b`` and hinge mass ``m``.
+
+$(TYPEDSIGNATURES)
+"""
+function nondimensional_gibbs_free_energy_per_link(
+    link_length::Union{Float64,Vector,Matrix,Array},
+    hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_force::Union{Float64,Vector,Matrix,Array},
+    temperature::Union{Float64,Vector,Matrix,Array},
+)::Union{Float64,Vector,Matrix,Array}
+    return broadcast(
+        (link_length_i, hinge_mass_i, nondimensional_force_i, temperature_i) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy_per_link,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
+            ),
+            Float64,
+            (Float64, Float64, Float64, Float64),
+            link_length_i,
+            hinge_mass_i,
+            nondimensional_force_i,
+            temperature_i,
+        ),
+        link_length,
+        hinge_mass,
+        nondimensional_force,
+        temperature,
+    )
+end
+
+"""
 The nondimensional relative Gibbs free energy ``\\beta\\Delta\\varphi=N_b\\Delta\\varrho`` as a function of the applied nondimensional force ``\\eta``,
 parameterized by the number of links ``N_b``.
 
@@ -238,6 +463,27 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
             nondimensional_end_to_end_length(number_of_links, nondimensional_force),
         nondimensional_force ->
             nondimensional_end_to_end_length_per_link(nondimensional_force),
+        (force, temperature) ->
+            gibbs_free_energy(number_of_links, link_length, hinge_mass, force, temperature),
+        (force, temperature) ->
+            gibbs_free_energy_per_link(link_length, hinge_mass, force, temperature),
+        (force, temperature) ->
+            relative_gibbs_free_energy(number_of_links, link_length, force, temperature),
+        (force, temperature) ->
+            relative_gibbs_free_energy_per_link(link_length, force, temperature),
+        (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            nondimensional_force,
+            temperature,
+        ),
+        (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy_per_link(
+            link_length,
+            hinge_mass,
+            nondimensional_force,
+            temperature,
+        ),
         nondimensional_force -> nondimensional_relative_gibbs_free_energy(
             number_of_links,
             nondimensional_force,
