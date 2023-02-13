@@ -12,19 +12,19 @@ $(FIELDS)
 """
 struct SWFJC
     """
-    The number of links in the chain.
+    The number of links in the chain ``N_b``.
     """
     number_of_links::UInt8
     """
-    The length of each link in the chain in units of nm.
+    The length of each link in the chain ``\\ell_b`` in units of nm.
     """
     link_length::Float64
     """
-    The mass of each hinge in the chain in units of kg/mol.
+    The mass of each hinge in the chain ``m`` in units of kg/mol.
     """
     hinge_mass::Float64
     """
-    The width of the well in units of nm.
+    The width of the well ``w`` in units of nm.
     """
     well_width::Float64
     """
@@ -63,7 +63,7 @@ end
 
 """
 The Helmholtz free energy ``\\psi`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and well width ``w``.
 
 ```math
 \\psi(f, T) \\sim \\varphi(f, T) + f \\xi(f, T) \\quad \\text{for } N_b\\gg 1.
@@ -112,7 +112,7 @@ end
 
 """
 The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the link length ``\\ell_b`` and hinge mass ``m``.
+parameterized by the link length ``\\ell_b``, hinge mass ``m``, and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -147,7 +147,7 @@ end
 
 """
 The relative Helmholtz free energy ``\\Delta\\psi\\equiv\\psi(f,T)-\\psi(0,T)`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -182,7 +182,7 @@ end
 
 """
 The relative Helmholtz free energy per link ``\\Delta\\psi/N_b`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the link length ``\\ell_b``.
+parameterized by the link length ``\\ell_b`` and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -214,7 +214,7 @@ end
 
 """
 The nondimensional Helmholtz free energy ``N_b\\vartheta=\\beta\\psi`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -259,7 +259,7 @@ end
 
 """
 The nondimensional Helmholtz free energy per link ``\\vartheta\\equiv\\beta\\psi/N_b`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``,
-parameterized by the link length ``\\ell_b`` and hinge mass ``m``.
+parameterized by the link length ``\\ell_b``, hinge mass ``m``, and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -300,7 +300,7 @@ end
 
 """
 The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional force ``\\eta``,
-parameterized by the number of links ``N_b``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -331,7 +331,8 @@ function nondimensional_relative_helmholtz_free_energy(
 end
 
 """
-The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional force ``\\eta``.
+The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional force ``\\eta``
+parameterized by the link length ``\\ell_b`` and well width ``w``.
 
 $(TYPEDSIGNATURES)
 """
@@ -341,7 +342,7 @@ function nondimensional_relative_helmholtz_free_energy_per_link(
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (nondimensional_force_i, link_length_i, well_width_i) -> ccall(
+        (link_length_i, well_width_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_nondimensional_relative_helmholtz_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),

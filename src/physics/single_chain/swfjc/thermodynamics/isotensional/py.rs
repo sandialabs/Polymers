@@ -70,7 +70,7 @@ impl SWFJC
     ///
     pub fn end_to_end_length<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).end_to_end_length(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length(&self.number_of_links, &self.link_length, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     ///
@@ -83,7 +83,7 @@ impl SWFJC
     ///
     pub fn end_to_end_length_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).end_to_end_length_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length_per_link(&self.link_length, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     ///
@@ -95,14 +95,15 @@ impl SWFJC
     ///
     pub fn nondimensional_end_to_end_length<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_end_to_end_length(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length(&self.number_of_links, &self.link_length, &self.well_width, &nondimensional_force)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
-    ///     \gamma(\eta) = -\frac{\partial\varrho}{\partial\eta} = \frac{\varsigma^2\eta\sinh(\varsigma\eta) - \eta\sinh(\eta)}{w(\eta,\varsigma) - w(\eta,1)},
+    ///     \gamma(\eta) = -\frac{\partial\varrho}{\partial\eta} = \frac{\varsigma^2\eta\sinh(\varsigma\eta) - \eta\sinh(\eta)}{y(\eta,\varsigma) - y(\eta,1)},
     ///
-    /// where :math:`w(\eta,\varsigma)\equiv\varsigma\eta\cosh(\varsigma\eta)-\sinh(\varsigma\eta)`.
+    /// where :math:`\varsigma\equiv 1+w/\ell_b` is the nondimensional well width parameter,
+    /// and where :math:`y(\eta,\varsigma)\equiv\varsigma\eta\cosh(\varsigma\eta)-\sinh(\varsigma\eta)`.
     ///
     /// Args:
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
@@ -112,7 +113,7 @@ impl SWFJC
     ///
     pub fn nondimensional_end_to_end_length_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_end_to_end_length_per_link(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length_per_link(&self.link_length, &self.well_width, &nondimensional_force)).into_pyarray(py)
     }
     /// The Gibbs free energy as a function of the applied force and temperature,
     ///
@@ -128,7 +129,7 @@ impl SWFJC
     ///
     pub fn gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).gibbs_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The Gibbs free energy per link as a function of the applied force and temperature.
     ///
@@ -141,7 +142,7 @@ impl SWFJC
     ///
     pub fn gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Gibbs free energy as a function of the applied force and temperature.
     ///
@@ -154,7 +155,7 @@ impl SWFJC
     ///
     pub fn relative_gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).relative_gibbs_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Gibbs free energy per link as a function of the applied force and temperature.
     ///
@@ -167,7 +168,7 @@ impl SWFJC
     ///
     pub fn relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).relative_gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_gibbs_free_energy_per_link(&self.link_length, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature.
     ///
@@ -180,7 +181,7 @@ impl SWFJC
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature.
     ///
@@ -193,7 +194,7 @@ impl SWFJC
     ///
     pub fn nondimensional_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.well_width, &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     ///
@@ -205,14 +206,15 @@ impl SWFJC
     ///
     pub fn nondimensional_relative_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_relative_gibbs_free_energy(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.well_width, &nondimensional_force)).into_pyarray(py)
     }
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
-    ///     \Delta\varrho(\eta) = 3\ln(\eta) - \ln\left[w(\eta,\varsigma) - w(\eta,1)\right],
+    ///     \Delta\varrho(\eta) = 3\ln(\eta) - \ln\left[y(\eta,\varsigma) - y(\eta,1)\right],
     ///
-    /// where :math:`w(\eta,\varsigma)\equiv\varsigma\eta\cosh(\varsigma\eta)-\sinh(\varsigma\eta)`.
+    /// where :math:`\varsigma\equiv 1+w/\ell_b` is the nondimensional well width parameter,
+    /// and where :math:`y(\eta,\varsigma)\equiv\varsigma\eta\cosh(\varsigma\eta)-\sinh(\varsigma\eta)`.
     ///
     /// Args:
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.
@@ -222,6 +224,6 @@ impl SWFJC
     ///
     pub fn nondimensional_relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_gibbs_free_energy_per_link(&self.link_length, &self.well_width, &nondimensional_force)).into_pyarray(py)
     }
 }

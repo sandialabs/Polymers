@@ -14,19 +14,19 @@ $(FIELDS)
 """
 struct SWFJC
     """
-    The number of links in the chain.
+    The number of links in the chain ``N_b``.
     """
     number_of_links::UInt8
     """
-    The length of each link in the chain in units of nm.
+    The length of each link in the chain ``\\ell_b`` in units of nm.
     """
     link_length::Float64
     """
-    The mass of each hinge in the chain in units of kg/mol.
+    The mass of each hinge in the chain ``m`` in units of kg/mol.
     """
     hinge_mass::Float64
     """
-    The width of the well in units of nm.
+    The width of the well ``w`` in units of nm.
     """
     well_width::Float64
     """
