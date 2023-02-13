@@ -198,7 +198,11 @@ end
 
 """
 The Gibbs free energy ``\\varphi`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``,
+
+```math
+\\varphi(f, T) = -kT\\ln Z(f, T).
+```
 
 $(TYPEDSIGNATURES)
 """

@@ -59,7 +59,7 @@ impl Ideal
     ///
     pub fn end_to_end_length<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).end_to_end_length(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length(&self.number_of_links, &self.link_length, &force, &temperature)).into_pyarray(py)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     ///
@@ -72,7 +72,7 @@ impl Ideal
     ///
     pub fn end_to_end_length_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).end_to_end_length_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length_per_link(&self.link_length, &force, &temperature)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     ///
@@ -84,7 +84,7 @@ impl Ideal
     ///
     pub fn nondimensional_end_to_end_length<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length(&self.number_of_links, &nondimensional_force)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force,
     ///
@@ -99,7 +99,7 @@ impl Ideal
     ///
     pub fn nondimensional_end_to_end_length_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_end_to_end_length_per_link(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length_per_link(&nondimensional_force)).into_pyarray(py)
     }
     /// The Gibbs free energy as a function of the applied force and temperature,
     ///
@@ -115,7 +115,7 @@ impl Ideal
     ///
     pub fn gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &force, &temperature)).into_pyarray(py)
     }
     /// The Gibbs free energy per link as a function of the applied force and temperature.
     ///
@@ -128,7 +128,7 @@ impl Ideal
     ///
     pub fn gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Gibbs free energy as a function of the applied force and temperature,
     ///
@@ -144,7 +144,7 @@ impl Ideal
     ///
     pub fn relative_gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_gibbs_free_energy(&self.number_of_links, &self.link_length, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Gibbs free energy per link as a function of the applied force and temperature.
     ///
@@ -157,7 +157,7 @@ impl Ideal
     ///
     pub fn relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).relative_gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_gibbs_free_energy_per_link(&self.link_length, &force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature.
     ///
@@ -170,7 +170,7 @@ impl Ideal
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature.
     ///
@@ -183,7 +183,7 @@ impl Ideal
     ///
     pub fn nondimensional_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     ///
@@ -195,7 +195,7 @@ impl Ideal
     ///
     pub fn nondimensional_relative_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_gibbs_free_energy(&self.number_of_links, &nondimensional_force)).into_pyarray(py)
     }
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force,
     ///
@@ -210,6 +210,6 @@ impl Ideal
     ///
     pub fn nondimensional_relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::Ideal::init(self.number_of_links, self.link_length, self.hinge_mass).nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force)).into_pyarray(py)
     }
 }
