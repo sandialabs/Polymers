@@ -25,7 +25,7 @@ struct EFJC
     """
     link_length::Float64
     """
-    The number of links in the chain.
+    The mass of each hinge in the chain in units of kg/mol.
     """
     hinge_mass::Float64
     """
