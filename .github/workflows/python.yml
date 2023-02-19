@@ -92,7 +92,7 @@ jobs:
         run: |
           pip install maturin
           maturin build --features python
-          pip install target/wheels/*.whl
+          pip install ./target/wheels/*.whl
       - name: pytest
         run: |
           pip install pytest
@@ -104,4 +104,4 @@ jobs:
       - name: pylint
         run: |
           pip install pylint
-          pylint --verbose src/
+          pylint --verbose src
