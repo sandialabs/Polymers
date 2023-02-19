@@ -19,7 +19,7 @@ def pytest_collection_finish(session):
     )
     f.close()
     run(
-        ['/bin/sed', '-i', 's@: test@@', '__pycache__/cargo.tests']
+        ['sed', '-i', 's@: test@@', '__pycache__/cargo.tests']
     )
     f = open("__pycache__/julia.tests", "w")
     run(
@@ -28,10 +28,10 @@ def pytest_collection_finish(session):
     )
     f.close()
     run(
-        ['/bin/sed', '-i', 's@^.*testset "@@', '__pycache__/julia.tests']
+        ['sed', '-i', 's@^.*testset "@@', '__pycache__/julia.tests']
     )
     run(
-        ['/bin/sed', '-i', 's@".*$@@', '__pycache__/julia.tests']
+        ['sed', '-i', 's@".*$@@', '__pycache__/julia.tests']
     )
     stdout = open('__pycache__/pytest.tests', 'w')
     if session.config.option.compare is not None:
@@ -46,35 +46,35 @@ def pytest_collection_finish(session):
             )
         stdout.close()
         run(
-            ['/bin/sed', '-i', 's@.py::@::@', '__pycache__/pytest.tests']
+            ['sed', '-i', 's@.py::@::@', '__pycache__/pytest.tests']
         )
         run(
-            ['/bin/sed', '-i', 's@test_@@', '__pycache__/pytest.tests']
+            ['sed', '-i', 's@test_@@', '__pycache__/pytest.tests']
         )
         run(
-            ['/bin/sed', '-i', 's@^.*src/@@', '__pycache__/pytest.tests']
+            ['sed', '-i', 's@^.*src/@@', '__pycache__/pytest.tests']
         )
         run(
-            ['/bin/sed', '-i', 's@/@::@g', '__pycache__/pytest.tests']
+            ['sed', '-i', 's@/@::@g', '__pycache__/pytest.tests']
         )
         run(
-            ['/bin/sort', '__pycache__/cargo.tests',
+            ['sort', '__pycache__/cargo.tests',
              '-o', '__pycache__/cargo.tests']
         )
         run(
-            ['/bin/sort', '__pycache__/pytest.tests',
+            ['sort', '__pycache__/pytest.tests',
              '-o', '__pycache__/pytest.tests']
         )
         run(
-            ['/bin/sort', '__pycache__/julia.tests',
+            ['sort', '__pycache__/julia.tests',
              '-o', '__pycache__/julia.tests']
         )
         code = run(
-            ['/bin/cmp', '-s', '__pycache__/cargo.tests',
+            ['cmp', '-s', '__pycache__/cargo.tests',
              '__pycache__/pytest.tests']
         ).returncode
         code += run(
-            ['/bin/cmp', '-s', '__pycache__/cargo.tests',
+            ['cmp', '-s', '__pycache__/cargo.tests',
              '__pycache__/julia.tests']
         ).returncode
         if code == 0:
