@@ -94,7 +94,7 @@ jobs:
         run: |
           pip install maturin
           maturin build --features python --out .
-          pip install polymers*.whl
+          pip install --find-links=. polymers
       - name: pytest
         run: |
           pip install pytest
