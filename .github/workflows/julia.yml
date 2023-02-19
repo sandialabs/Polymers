@@ -1,5 +1,7 @@
 name: Julia
 on:
+  push:
+    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -9,6 +11,7 @@ env:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
