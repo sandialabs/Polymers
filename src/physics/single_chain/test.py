@@ -28,9 +28,9 @@ class Parameters:
         self.log_log_scale = 12e-1
         self.number_of_loops = 8
         self.hinge_mass_reference = 1.0
-        self.hinge_mass_scale = 1.0
+        self.hinge_mass_scale = 1e-1
         self.link_length_reference = 1.0
-        self.link_length_scale = 1.0
+        self.link_length_scale = 1e-1
         self.number_of_links_minimum = 5
         self.number_of_links_maximum = 25
         self.link_stiffness_reference = 5e5
