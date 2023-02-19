@@ -93,11 +93,10 @@ jobs:
       - name: maturin
         run: |
           pip install maturin
-          maturin build --features python
-          pip install ./target/wheels/*.whl
+          maturin build --features python --out .
+          pip install polymers*.whl
       - name: pytest
         run: |
-          rm conftest.py
           pip install pytest
           pytest --verbose .
       - name: pycodestyle
