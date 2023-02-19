@@ -27,13 +27,12 @@ jobs:
         uses: julia-actions/setup-julia@v1
         with:
           version: 1.8
-      - name: add
-        if: runner.os == 'Windows'
-        run: julia -e 'using Pkg; Pkg.add(path=\".\")'
-      - name: add
-        if: runner.os != 'Windows'
-        run: julia -e 'using Pkg; Pkg.add(path=".")'
       - name: test
-        run: julia -e 'using Pkg; Pkg.test("Polymers")'
+        if: runner.os == 'Windows'
+        run: julia -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
+      - name: test
+        if: runner.os != 'Windows'
+        run: julia -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
       - name: format
+        if: runner.os == 'Linux'
         run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format("./") == true; exit(0); else exit(1); end'
