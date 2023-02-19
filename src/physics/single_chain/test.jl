@@ -38,8 +38,8 @@ struct Parameters
 end
 
 parameters = Parameters(
-    1e-6,
-    1e-4,
+    1e-7,
+    1e-5,
     1e-1,
     5e-1,
     12e-1,

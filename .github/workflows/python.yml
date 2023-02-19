@@ -95,6 +95,7 @@ jobs:
           pip install ./target/wheels/*.whl
       - name: pytest
         run: |
+          rm conftest.py
           pip install pytest
           pytest --verbose .
       - name: pycodestyle

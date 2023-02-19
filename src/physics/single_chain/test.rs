@@ -57,16 +57,16 @@ impl Default for Parameters
     {
         Self
         {
-            abs_tol: 1e-6,
-            rel_tol: 1e-4,
+            abs_tol: 1e-7,
+            rel_tol: 1e-5,
             rel_tol_thermodynamic_limit: 1e-1,
             log_log_tol: 5e-1,
             log_log_scale: 12e-1,
             number_of_loops: 8,
             hinge_mass_reference: 1e0,
-            hinge_mass_scale: 1e0,
+            hinge_mass_scale: 1e-1,
             link_length_reference: 1e0,
-            link_length_scale: 1e0,
+            link_length_scale: 1e-1,
             number_of_links_minimum: 5,
             number_of_links_maximum: 25,
             link_stiffness_reference: 5e5,
