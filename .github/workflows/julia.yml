@@ -1,7 +1,9 @@
 name: Julia
 on:
-  pull_request:
+  push:
     branches: [ "dev" ]
+  pull_request:
+    branches: [ "main" ]
   release:
     types: [ published ]
 env:

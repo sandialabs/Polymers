@@ -1,5 +1,7 @@
 name: Python
 on:
+  push:
+    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -75,7 +77,10 @@ jobs:
         run: twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} wheelhouse/*.whl
   test:
     if: github.event_name != 'release'
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3

@@ -1,5 +1,7 @@
 name: Rust
 on:
+  push:
+    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -9,7 +11,10 @@ env:
 jobs:
   test:
     if: github.event_name != 'release'
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -36,7 +41,10 @@ jobs:
           verbose: true
   checks:
     if: github.event_name != 'release'
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
