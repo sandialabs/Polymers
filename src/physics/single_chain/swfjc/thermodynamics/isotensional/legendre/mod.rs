@@ -57,7 +57,7 @@ pub fn relative_helmholtz_free_energy_per_link(link_length: &f64, well_width: &f
 /// The nondimensional Helmholtz free energy as a function of the applied nondimensional force and temperature, parameterized by the number of links, link length, hinge mass, and well width.
 pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, well_width: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
 {
-    (*number_of_links as f64)*nondimensional_helmholtz_free_energy_per_link(&link_length, &hinge_mass, &well_width, nondimensional_force, temperature)
+    (*number_of_links as f64)*nondimensional_helmholtz_free_energy_per_link(link_length, hinge_mass, well_width, nondimensional_force, temperature)
 }
 
 /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length, hinge mass, and well width.
