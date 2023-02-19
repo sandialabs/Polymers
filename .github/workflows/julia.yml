@@ -28,6 +28,10 @@ jobs:
         with:
           version: 1.8
       - name: add
+        if: runner.os == 'Windows'
+        run: julia -e 'using Pkg; Pkg.add(path=\".\")'
+      - name: add
+        if: runner.os != 'Windows'
         run: julia -e 'using Pkg; Pkg.add(path=".")'
       - name: build
         run: julia -e 'using Pkg; Pkg.build("Polymers")'
