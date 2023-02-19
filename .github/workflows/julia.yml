@@ -33,8 +33,6 @@ jobs:
       - name: add
         if: runner.os != 'Windows'
         run: julia -e 'using Pkg; Pkg.add(path=".")'
-      - name: build
-        run: julia -e 'using Pkg; Pkg.build("Polymers")'
       - name: test
         run: julia -e 'using Pkg; Pkg.test("Polymers")'
       - name: format
