@@ -1,7 +1,5 @@
 name: Julia
 on:
-  push:
-    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
   release:
