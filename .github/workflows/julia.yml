@@ -1,14 +1,17 @@
 name: Julia
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   release:
     types: [ published ]
 env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
