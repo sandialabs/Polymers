@@ -4,7 +4,7 @@ The freely-jointed chain (FJC) model thermodynamics in the modified canonical en
 module Asymptotic
 
 using DocStringExtensions
-using .......Polymers: PROJECT_ROOT
+using .......Polymers: PROJECT_ROOT, PATHSEP
 
 include("./strong_potential/mod.jl")
 include("./weak_potential/mod.jl")

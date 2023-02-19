@@ -4,7 +4,7 @@ The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensio
 module Alternative
 
 using DocStringExtensions
-using ........Polymers: PROJECT_ROOT
+using ........Polymers: PROJECT_ROOT, PATHSEP
 
 include("./legendre/mod.jl")
 

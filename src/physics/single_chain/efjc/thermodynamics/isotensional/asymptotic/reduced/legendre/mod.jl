@@ -4,7 +4,7 @@ The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensio
 module Legendre
 
 using DocStringExtensions
-using .........Polymers: PROJECT_ROOT
+using .........Polymers: PROJECT_ROOT, PATHSEP
 
 """
 The structure of the thermodynamics of the EFJC model in the isotensional ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
