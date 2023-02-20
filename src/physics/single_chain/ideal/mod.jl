@@ -4,8 +4,9 @@ The ideal single-chain model.
 module Ideal
 
 using DocStringExtensions
+using ....Polymers: PATHSEP
 
-include("./thermodynamics/mod.jl")
+include(string("thermodynamics", PATHSEP, "mod.jl"))
 
 """
 The structure of the ideal chain model.

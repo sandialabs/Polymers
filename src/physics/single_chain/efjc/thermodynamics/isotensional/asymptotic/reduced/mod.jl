@@ -6,7 +6,7 @@ module Reduced
 using DocStringExtensions
 using ........Polymers: PROJECT_ROOT, PATHSEP
 
-include("./legendre/mod.jl")
+include(string("legendre", PATHSEP, "mod.jl"))
 
 """
 The structure of the thermodynamics of the EFJC model in the isotensional ensemble approximated using an reduced asymptotic approach.

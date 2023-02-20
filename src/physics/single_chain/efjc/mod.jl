@@ -4,8 +4,9 @@ The extensible freely-jointed chain (EFJC) single-chain model.
 module Efjc
 
 using DocStringExtensions
+using ....Polymers: PATHSEP
 
-include("./thermodynamics/mod.jl")
+include(string("thermodynamics", PATHSEP, "mod.jl"))
 
 """
 The structure of the EFJC model.

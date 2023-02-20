@@ -1,6 +1,8 @@
 module Physics
 
-include("./single_chain/mod.jl")
+using ...Polymers: PATHSEP
+
+include(string("single_chain", PATHSEP, "mod.jl"))
 
 """
 The Boltzmann constant in units of J/(mol⋅K).

@@ -4,10 +4,11 @@ The freely-jointed chain (FJC) model thermodynamics.
 module Thermodynamics
 
 using DocStringExtensions
+using .....Polymers: PATHSEP
 
-include("./isometric/mod.jl")
-include("./isotensional/mod.jl")
-include("./modified_canonical/mod.jl")
+include(string("isometric", PATHSEP, "mod.jl"))
+include(string("isotensional", PATHSEP, "mod.jl"))
+include(string("modified_canonical", PATHSEP, "mod.jl"))
 
 """
 The structure of the thermodynamics of the FJC model.

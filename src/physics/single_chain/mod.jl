@@ -3,11 +3,13 @@ Single-chain models for polymer physics.
 """
 module SingleChain
 
-include("./test.jl")
-include("./ideal/mod.jl")
-include("./fjc/mod.jl")
-include("./efjc/mod.jl")
-include("./swfjc/mod.jl")
+using ...Polymers: PATHSEP
+
+include("test.jl")
+include(string("ideal", PATHSEP, "mod.jl"))
+include(string("fjc", PATHSEP, "mod.jl"))
+include(string("efjc", PATHSEP, "mod.jl"))
+include(string("swfjc", PATHSEP, "mod.jl"))
 
 ONE::Float64 = 1.0
 ZERO::Float64 = 1e-6

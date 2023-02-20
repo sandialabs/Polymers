@@ -6,7 +6,7 @@ module ModifiedCanonical
 using DocStringExtensions
 using ......Polymers: PROJECT_ROOT, PATHSEP
 
-include("./asymptotic/mod.jl")
+include(string("asymptotic", PATHSEP, "mod.jl"))
 
 """
 The structure of the thermodynamics of the FJC model in the modified canonical ensemble.

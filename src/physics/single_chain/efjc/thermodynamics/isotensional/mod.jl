@@ -6,8 +6,8 @@ module Isotensional
 using DocStringExtensions
 using ......Polymers: PROJECT_ROOT, PATHSEP
 
-include("./asymptotic/mod.jl")
-include("./legendre/mod.jl")
+include(string("asymptotic", PATHSEP, "mod.jl"))
+include(string("legendre", PATHSEP, "mod.jl"))
 
 """
 The structure of the thermodynamics of the EFJC model in the isotensional ensemble.

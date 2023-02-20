@@ -8,6 +8,6 @@ end
 
 const PROJECT_ROOT = string(dirname(@__FILE__), PATHSEP, "..", PATHSEP)
 
-include("./physics/mod.jl")
+include(string("physics", PATHSEP, "mod.jl"))
 
 end

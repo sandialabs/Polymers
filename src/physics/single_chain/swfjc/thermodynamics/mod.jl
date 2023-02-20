@@ -4,8 +4,9 @@ The square-well freely-jointed chain (SWFJC) model thermodynamics.
 module Thermodynamics
 
 using DocStringExtensions
+using .....Polymers: PATHSEP
 
-include("./isotensional/mod.jl")
+include(string("isotensional", PATHSEP, "mod.jl"))
 
 """
 The structure of the thermodynamics of the SWFJC model.

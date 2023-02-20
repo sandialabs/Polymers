@@ -4,8 +4,9 @@ The freely-jointed chain (FJC) single-chain model.
 module Fjc
 
 using DocStringExtensions
+using ....Polymers: PATHSEP
 
-include("./thermodynamics/mod.jl")
+include(string("thermodynamics", PATHSEP, "mod.jl"))
 
 """
 The structure of the FJC model.
