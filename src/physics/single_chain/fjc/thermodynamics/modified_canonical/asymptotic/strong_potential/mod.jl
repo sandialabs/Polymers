@@ -4,7 +4,7 @@ The freely-jointed chain (FJC) model thermodynamics in the modified canonical en
 module StrongPotential
 
 using DocStringExtensions
-using ........Polymers: PROJECT_ROOT, PATHSEP
+using ........Polymers: PROJECT_ROOT
 
 """
 The structure of the thermodynamics of the FJC model in the modified canonical ensemble approximated using an asymptotic approach valid for strong potentials.

@@ -4,10 +4,10 @@ The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensio
 module Isotensional
 
 using DocStringExtensions
-using ......Polymers: PROJECT_ROOT, PATHSEP
+using ......Polymers: PROJECT_ROOT
 
-include(string("asymptotic", PATHSEP, "mod.jl"))
-include(string("legendre", PATHSEP, "mod.jl"))
+include("asymptotic/mod.jl")
+include("legendre/mod.jl")
 
 """
 The structure of the thermodynamics of the EFJC model in the isotensional ensemble.

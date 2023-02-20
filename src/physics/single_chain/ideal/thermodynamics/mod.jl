@@ -4,10 +4,9 @@ The ideal chain model thermodynamics.
 module Thermodynamics
 
 using DocStringExtensions
-using .....Polymers: PATHSEP
 
-include(string("isometric", PATHSEP, "mod.jl"))
-include(string("isotensional", PATHSEP, "mod.jl"))
+include("isometric/mod.jl")
+include("isotensional/mod.jl")
 
 """
 The structure of the thermodynamics of the ideal chain model.

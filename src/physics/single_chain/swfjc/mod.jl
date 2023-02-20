@@ -4,9 +4,8 @@ The square-well freely-jointed chain (SWFJC) single-chain model.
 module Swfjc
 
 using DocStringExtensions
-using ....Polymers: PATHSEP
 
-include(string("thermodynamics", PATHSEP, "mod.jl"))
+include("thermodynamics/mod.jl")
 
 """
 The structure of the SWFJC model.

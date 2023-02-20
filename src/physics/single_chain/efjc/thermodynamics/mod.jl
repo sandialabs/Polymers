@@ -4,9 +4,8 @@ The extensible freely-jointed chain (EFJC) model thermodynamics.
 module Thermodynamics
 
 using DocStringExtensions
-using .....Polymers: PATHSEP
 
-include(string("isotensional", PATHSEP, "mod.jl"))
+include("isotensional/mod.jl")
 
 """
 The structure of the thermodynamics of the EFJC model.
