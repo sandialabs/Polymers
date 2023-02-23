@@ -150,7 +150,7 @@ class Normalization(unittest.TestCase):
             integral = integrate(
                 integrand,
                 parameters.zero*number_of_links*link_length,
-                1e1*number_of_links*link_length,
+                5e0*number_of_links*link_length,
                 parameters.points
             )
             self.assertLessEqual(
@@ -191,7 +191,7 @@ class Normalization(unittest.TestCase):
             integral = integrate(
                 integrand,
                 parameters.zero,
-                1e1,
+                5e0,
                 parameters.points
             )
             self.assertLessEqual(
@@ -230,7 +230,7 @@ class Normalization(unittest.TestCase):
             integral = integrate(
                 integrand,
                 parameters.zero*number_of_links*link_length,
-                1e1*number_of_links*link_length,
+                5e0*number_of_links*link_length,
                 parameters.points
             )
             self.assertLessEqual(
@@ -269,7 +269,7 @@ class Normalization(unittest.TestCase):
             integral = integrate(
                 integrand,
                 parameters.zero,
-                1e1,
+                5e0,
                 parameters.points
             )
             self.assertLessEqual(
