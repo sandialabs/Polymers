@@ -59,7 +59,7 @@ class Parameters:
         self.temperature_scale = 1e2
         self.one = 1e0
         self.zero = 1e-6
-        self.points = 100
+        self.points = 64
         self.boltzmann_constant = 8.314462618
 
     def dummy_1(self):

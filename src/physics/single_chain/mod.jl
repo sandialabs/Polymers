@@ -11,7 +11,7 @@ include("swfjc/mod.jl")
 
 ONE::Float64 = 1.0
 ZERO::Float64 = 1e-6
-POINTS::UInt128 = 100
+POINTS::UInt128 = 64
 
 function integrate(
     fun::Function,
