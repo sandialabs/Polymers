@@ -39,8 +39,7 @@ jobs:
           mv _site/rust/docs/polymers/ _site/rust/docs/latest/
       - name: stable docs julia
         run: |
-          export LATEST_VERSION=$(echo ${{ steps.last_release.outputs.tag_name }} | cut -d v -f 2)
-          julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${LATEST_VERSION}'")'
+          julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${{ steps.last_release.outputs.tag_name }}'")'
           mkdir -p _site/julia/docs/stable/
           julia -e 'using Pkg; Pkg.add(["DocStringExtensions", "Documenter"])'
           julia docs/make.jl
