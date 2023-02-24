@@ -76,7 +76,7 @@ impl EFJC
     ///
     pub fn end_to_end_length<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).end_to_end_length(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length(&self.number_of_links, &self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     ///
@@ -89,7 +89,7 @@ impl EFJC
     ///
     pub fn end_to_end_length_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).end_to_end_length_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length_per_link(&self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     ///
