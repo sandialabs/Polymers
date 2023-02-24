@@ -4,6 +4,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  release:
+    types: [ "published" ]
 permissions:
   contents: read
   pages: write
@@ -21,6 +23,12 @@ jobs:
         with:
           source: ./pages/
           destination: ./_site
+      - name: get
+        id: last_release
+        uses: InsonusK/get-latest-release@v1.0.1
+        with:
+          myToken: ${{ github.token }}
+          view_top: 1
       - name: latest docs rust
         run: |
           sudo chmod -R 777 _site/
@@ -29,14 +37,21 @@ jobs:
           grep -rl "polymers/index.html" target/ | xargs sed -i 's@polymers/index.html@latest/index.html@'
           cp -r target/doc/* _site/rust/docs/
           mv _site/rust/docs/polymers/ _site/rust/docs/latest/
-      - name: add julia
+      - name: stable docs julia
+        run: |
+          export LATEST_VERSION=$(echo ${{ steps.last_release.outputs.tag_name }} | cut -d v -f 2)
+          julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${LATEST_VERSION}'")'
+          mkdir -p _site/julia/docs/stable/
+          julia -e 'using Pkg; Pkg.add(["DocStringExtensions", "Documenter"])'
+          julia docs/make.jl
+          grep -rl "footer-message" docs/build/ | xargs sed -i 's@<p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p>@<footer><a href="http://sandia.gov/" rel="noopener noreferrer" target="_blank" style="text-decoration: none"><img alt="Sandia National Laboratories" longdesc="http://sandia.gov" src="https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/SNL_Horizontal_White.png" style="height:37px"></a>\&nbsp;\&nbsp;\&nbsp;<a href="http://energy.gov" rel="noopener noreferrer" target="_blank" style="text-decoration: none"><img alt="U.S. Department of Energy" longdesc="http://energy.gov" src="https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/New_DOE_Logo_White.png" style="height:37px"></a>\&nbsp;\&nbsp;\&nbsp;<a href="http://nnsa.energy.gov/" rel="noopener noreferrer" target="_blank" style="text-decoration: none"><img alt="National Nuclear Security Administration" longdesc="http://nnsa.gov" src="https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/NNSA Logo_White.png" style="height:37px"></a><br><br><div style="font-size: 0.8em">Sandia National Laboratories is a multimission laboratory managed and operated by National Technology and Engineering Solutions of Sandia, LLC., a wholly owned subsidiary of Honeywell International, Inc., for the U.S. Department of Energy\x27s National Nuclear Security Administration under contract DE-NA-0003525.</div></footer>@'
+          cp -r docs/build/* _site/julia/docs/stable/
+      - name: add latest julia
         if: github.event_name != 'pull_request'
         run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
-      - name: add julia
+      - name: add latest julia
         if: github.event_name == 'pull_request'
         run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_HEAD_REF##*/}'")'
-      - name: build julia
-        run: julia -e 'using Pkg; Pkg.build("Polymers")'
       - name: latest docs julia
         run: |
           mkdir -p _site/julia/docs/latest/
