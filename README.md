@@ -35,6 +35,15 @@ pip install target/wheels/*.whl
 
 The latest edition of the library can be installed as a Julia package:
 
+The library can be installed as a Julia package:
+
+```julia
+using Pkg
+Pkg.add("Polymers")
+```
+
+If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
+
 ```julia
 using Pkg
 Pkg.add(url="https://github.com/sandialabs/Polymers")
