@@ -32,6 +32,7 @@ pip install target/wheels/*.whl
 
 [![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable)
 [![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest)
+[![Pkg](https://img.shields.io/github/v/release/sandialabs/Polymers?color=cb3c33&label=Pkg&logo=Julia&logoColor=cb3c33)](https://juliapackages.com/p/polymers)
 
 The library can be installed as a Julia package:
 
