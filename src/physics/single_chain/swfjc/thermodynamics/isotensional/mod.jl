@@ -86,7 +86,11 @@ end
 
 """
 The expected end-to-end length ``N_b\\gamma=\\xi/\\ell_b`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and well width ``w``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and well width ``w``,
+
+```math
+\\xi(f, T) = -\\frac{\\partial\\varphi}{\\partial f}.
+```
 
 $(TYPEDSIGNATURES)
 """
@@ -217,55 +221,6 @@ function nondimensional_end_to_end_length_per_link(
         link_length,
         well_width,
         nondimensional_force,
-    )
-end
-
-"""
-The expected end-to-end length  ``\\xi`` as a function of the applied force ``f`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and well width ``w``.
-
-```math
-\\varphi(f, T) = -kT\\ln Z(f, T).
-```
-
-$(TYPEDSIGNATURES)
-"""
-function gibbs_free_energy(
-    number_of_links::Union{UInt8,Vector,Matrix,Array},
-    link_length::Union{Float64,Vector,Matrix,Array},
-    hinge_mass::Union{Float64,Vector,Matrix,Array},
-    well_width::Union{Float64,Vector,Matrix,Array},
-    force::Union{Float64,Vector,Matrix,Array},
-    temperature::Union{Float64,Vector,Matrix,Array},
-)::Union{Float64,Vector,Matrix,Array}
-    return broadcast(
-        (
-            number_of_links_i,
-            link_length_i,
-            hinge_mass_i,
-            well_width_i,
-            force_i,
-            temperature_i,
-        ) -> ccall(
-            (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
-            ),
-            Float64,
-            (UInt8, Float64, Float64, Float64, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            hinge_mass_i,
-            well_width_i,
-            force_i,
-            temperature_i,
-        ),
-        number_of_links,
-        link_length,
-        hinge_mass,
-        well_width,
-        force,
-        temperature,
     )
 end
 

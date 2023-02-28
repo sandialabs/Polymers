@@ -131,7 +131,10 @@ impl SWFJC
     {
         force.as_array().mapv(|force: f64| super::gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
-    /// The Gibbs free energy per link as a function of the applied force and temperature.
+    /// The Gibbs free energy per link as a function of the applied force and temperature,
+    ///
+    /// .. math::
+    ///     \varphi(f, T) = -kT\ln Z(f, T).
     ///
     /// Args:
     ///     force (numpy.ndarray): The force :math:`f`.
