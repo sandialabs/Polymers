@@ -560,11 +560,11 @@ function EFJC(
             end_to_end_length_per_link(link_length, link_stiffness, force, temperature),
         nondimensional_force -> nondimensional_end_to_end_length(
             number_of_links,
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
         ),
         nondimensional_force -> nondimensional_end_to_end_length_per_link(
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
         ),
         (force, temperature) -> gibbs_free_energy(
@@ -599,24 +599,24 @@ function EFJC(
             number_of_links,
             link_length,
             hinge_mass,
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
             temperature,
         ),
         (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy_per_link(
             link_length,
             hinge_mass,
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
             temperature,
         ),
         nondimensional_force -> nondimensional_relative_gibbs_free_energy(
             number_of_links,
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
         ),
         nondimensional_force -> nondimensional_relative_gibbs_free_energy_per_link(
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
         ),
     )
