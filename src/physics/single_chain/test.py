@@ -27,10 +27,10 @@ class Parameters:
         self.log_log_tol = 5e-2
         self.log_log_scale = 12e-1
         self.number_of_loops = 8
-        self.hinge_mass_reference = 1.0
-        self.hinge_mass_scale = 1.0
-        self.link_length_reference = 1.0
-        self.link_length_scale = 1.0
+        self.hinge_mass_reference = 1e0
+        self.hinge_mass_scale = 1e0
+        self.link_length_reference = 1e0
+        self.link_length_scale = 1e0
         self.number_of_links_minimum = 5
         self.number_of_links_maximum = 25
         self.link_stiffness_reference = 5e5
@@ -59,7 +59,7 @@ class Parameters:
         self.temperature_scale = 1e2
         self.one = 1e0
         self.zero = 1e-6
-        self.points = 100
+        self.points = 64
         self.boltzmann_constant = 8.314462618
 
     def dummy_1(self):

@@ -23,6 +23,7 @@ jobs:
   osx-wheels:
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
     steps:
@@ -75,15 +76,23 @@ jobs:
         run: twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} wheelhouse/*.whl
   test:
     if: github.event_name != 'release'
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: maturin
         run: |
           pip install maturin
-          maturin build --features python
-          pip install target/wheels/*.whl
+          maturin build --features python --out .
+          pip install --find-links=. polymers
       - name: pytest
         run: |
           pip install pytest
@@ -95,4 +104,4 @@ jobs:
       - name: pylint
         run: |
           pip install pylint
-          pylint --verbose src/
+          pylint --verbose src

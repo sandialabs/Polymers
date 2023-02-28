@@ -26,73 +26,87 @@ pub struct Ideal
     pub number_of_links: u8
 }
 
-fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
+/// The expected force as a function of the applied end-to-end length and temperature, parameterized by the number of links and link length.
+pub fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
     3.0*end_to_end_length*BOLTZMANN_CONSTANT*temperature/(*number_of_links as f64)/link_length.powi(2)
 }
 
-fn nondimensional_force(nondimensional_end_to_end_length_per_link: &f64) -> f64
+/// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link.
+pub fn nondimensional_force(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     3.0*nondimensional_end_to_end_length_per_link
 }
 
-fn helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
+/// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and hinge mass.
+pub fn helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
     (*number_of_links as f64)*BOLTZMANN_CONSTANT*temperature*(1.5*(end_to_end_length/((*number_of_links as f64)*link_length)).powi(2) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
 }
 
-fn helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
+/// The Helmholtz free energy per link as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and hinge mass.
+pub fn helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
     BOLTZMANN_CONSTANT*temperature*(1.5*(end_to_end_length/((*number_of_links as f64)*link_length)).powi(2) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
 }
 
-fn relative_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
+/// The relative Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links and link length.
+pub fn relative_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
     nondimensional_relative_helmholtz_free_energy(number_of_links, &(end_to_end_length/((*number_of_links as f64)*link_length)))*BOLTZMANN_CONSTANT*temperature
 }
 
-fn relative_helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
+/// The relative Helmholtz free energy per link as a function of the applied end-to-end length and temperature, parameterized by the number of links and link length.
+pub fn relative_helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
     nondimensional_relative_helmholtz_free_energy_per_link(&(end_to_end_length/((*number_of_links as f64)*link_length)))*BOLTZMANN_CONSTANT*temperature
 }
 
-fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
+/// The nondimensional Helmholtz free energy as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass.
+pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     (*number_of_links as f64)*(1.5*nondimensional_end_to_end_length_per_link.powi(2) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
 }
 
-fn nondimensional_helmholtz_free_energy_per_link(link_length: &f64, hinge_mass: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
+/// The nondimensional Helmholtz free energy per link as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass.
+pub fn nondimensional_helmholtz_free_energy_per_link(link_length: &f64, hinge_mass: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     1.5*nondimensional_end_to_end_length_per_link.powi(2) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
-fn nondimensional_relative_helmholtz_free_energy(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
+/// The nondimensional relative Helmholtz free energy as a function of the nondimensional end-to-end length per link, parameterized by the number of links.
+pub fn nondimensional_relative_helmholtz_free_energy(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     1.5*(*number_of_links as f64)*nondimensional_end_to_end_length_per_link.powi(2)
 }
 
-fn nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link: &f64) -> f64
+/// The nondimensional relative Helmholtz free energy per link as a function of the nondimensional end-to-end length per link.
+pub fn nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     1.5*nondimensional_end_to_end_length_per_link.powi(2)
 }
 
-fn equilibrium_distribution(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64) -> f64
+/// The equilibrium probability density of end-to-end vectors as a function of the end-to-end length, parameterized by the number of links and link length.
+pub fn equilibrium_distribution(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64) -> f64
 {
     (1.5/PI/(*number_of_links as f64)/link_length.powi(2)).powf(1.5)*(-1.5*(end_to_end_length/link_length).powi(2)/(*number_of_links as f64)).exp()
 }
 
-fn nondimensional_equilibrium_distribution(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
+/// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link, parameterized by the number of links.
+pub fn nondimensional_equilibrium_distribution(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     (1.5/PI*(*number_of_links as f64)).powf(1.5)*(-1.5*nondimensional_end_to_end_length_per_link.powi(2)*(*number_of_links as f64)).exp()
 }
 
-fn equilibrium_radial_distribution(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64) -> f64
+/// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length, parameterized by the number of links and link length.
+pub fn equilibrium_radial_distribution(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64) -> f64
 {
     let contour_length = (*number_of_links as f64)*link_length;
     4.0*PI*(end_to_end_length/contour_length).powi(2)*(1.5/PI*(*number_of_links as f64)).powf(1.5)*(-1.5*(end_to_end_length/contour_length).powi(2)*(*number_of_links as f64)).exp()/contour_length
 }
 
-fn nondimensional_equilibrium_radial_distribution(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
+/// The nondimensional equilibrium probability density of nondimensional end-to-end lengths per link as a function of the nondimensional end-to-end length per link, parameterized by the number of links.
+pub fn nondimensional_equilibrium_radial_distribution(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*(1.5/PI*(*number_of_links as f64)).powf(1.5)*(-1.5*nondimensional_end_to_end_length_per_link.powi(2)*(*number_of_links as f64)).exp()
 }

@@ -5,7 +5,7 @@ module Ideal
 
 using DocStringExtensions
 
-include("./thermodynamics/mod.jl")
+include("thermodynamics/mod.jl")
 
 """
 The structure of the ideal chain model.
@@ -14,15 +14,15 @@ $(FIELDS)
 """
 struct IDEAL
     """
-    The number of links in the chain.
+    The number of links in the chain ``N_b``.
     """
     number_of_links::UInt8
     """
-    The length of each link in the chain in units of nm.
+    The length of each link in the chain ``\\ell_b`` in units of nm.
     """
     link_length::Float64
     """
-    The number of links in the chain.
+    The mass of each hinge in the chain ``m`` in units of kg/mol.
     """
     hinge_mass::Float64
     """

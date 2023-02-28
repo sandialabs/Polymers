@@ -6,8 +6,8 @@ module Asymptotic
 using DocStringExtensions
 using .......Polymers: PROJECT_ROOT
 
-include("./strong_potential/mod.jl")
-include("./weak_potential/mod.jl")
+include("strong_potential/mod.jl")
+include("weak_potential/mod.jl")
 
 """
 The structure of the thermodynamics of the FJC model in the modified canonical ensemble approximated using an asymptotic approach.
@@ -16,15 +16,15 @@ $(FIELDS)
 """
 struct FJC
     """
-    The number of links in the chain.
+    The number of links in the chain ``N_b``.
     """
     number_of_links::UInt8
     """
-    The length of each link in the chain in units of nm.
+    The length of each link in the chain ``\\ell_b`` in units of nm.
     """
     link_length::Float64
     """
-    The number of links in the chain.
+    The mass of each hinge in the chain ``m`` in units of kg/mol.
     """
     hinge_mass::Float64
     """

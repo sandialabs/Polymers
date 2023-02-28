@@ -64,7 +64,7 @@ impl SWFJC
     ///
     pub fn helmholtz_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).helmholtz_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The Helmholtz free energy per link as a function of the applied force and temperature.
     ///
@@ -77,7 +77,7 @@ impl SWFJC
     ///
     pub fn helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).helmholtz_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::helmholtz_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Helmholtz free energy as a function of the applied force and temperature.
     ///
@@ -90,7 +90,7 @@ impl SWFJC
     ///
     pub fn relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).relative_helmholtz_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Helmholtz free energy per link as a function of the applied force and temperature.
     ///
@@ -103,7 +103,7 @@ impl SWFJC
     ///
     pub fn relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).relative_helmholtz_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_helmholtz_free_energy_per_link(&self.link_length, &self.well_width, &force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Helmholtz free energy as a function of the applied nondimensional force and temperature.
     ///
@@ -116,7 +116,7 @@ impl SWFJC
     ///
     pub fn nondimensional_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional force and temperature.
     ///
@@ -129,7 +129,7 @@ impl SWFJC
     ///
     pub fn nondimensional_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_helmholtz_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.well_width, &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional force.
     ///
@@ -141,7 +141,7 @@ impl SWFJC
     ///
     pub fn nondimensional_relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_relative_helmholtz_free_energy(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.well_width, &nondimensional_force)).into_pyarray(py)
     }
     /// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional force.
     ///
@@ -153,6 +153,6 @@ impl SWFJC
     ///
     pub fn nondimensional_relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::SWFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.well_width).nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_helmholtz_free_energy_per_link(&self.link_length, &self.well_width, &nondimensional_force)).into_pyarray(py)
     }
 }

@@ -1,3 +1,6 @@
+#[cfg(feature = "extern")]
+pub mod ex;
+
 #[cfg(feature = "python")]
 pub mod py;
 
@@ -26,9 +29,81 @@ pub struct FJC
     pub number_of_links: u8,
 
     /// The thermodynamic functions of the model in the isotensional ensemble approximated using a Legendre transformation.
-    pub legendre: legendre::FJC,
+    pub legendre: legendre::FJC
+}
 
-    number_of_links_f64: f64
+/// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links and link length.
+pub fn end_to_end_length(number_of_links: &u8, link_length: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(*number_of_links as f64)*link_length
+}
+
+/// The expected end-to-end length per link as a function of the applied force and temperature, parameterized by the number of links and link length.
+pub fn end_to_end_length_per_link(link_length: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_force = force/BOLTZMANN_CONSTANT/temperature*link_length;
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*link_length
+}
+
+/// The expected nondimensional end-to-end length as a function of the applied nondimensional force, parameterized by the number of links.
+pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_force: &f64) -> f64
+{
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(*number_of_links as f64)
+}
+
+/// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force.
+pub fn nondimensional_end_to_end_length_per_link(nondimensional_force: &f64) -> f64
+{
+    1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
+}
+
+/// The Gibbs free energy as a function of the applied nondimensional force and temperature, parameterized by the number of links and link length.
+pub fn gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, force: &f64, temperature: &f64) -> f64
+{
+    relative_gibbs_free_energy(number_of_links, link_length, force, temperature) - (*number_of_links as f64)*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+}
+
+/// The Gibbs free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length.
+pub fn gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, force: &f64, temperature: &f64) -> f64
+{
+    relative_gibbs_free_energy_per_link(link_length, force, temperature) - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+}
+
+/// The relative Gibbs free energy as a function of the applied nondimensional force and temperature, parameterized by the number of links and link length.
+pub fn relative_gibbs_free_energy(number_of_links: &u8, link_length: &f64, force: &f64, temperature: &f64) -> f64
+{
+    nondimensional_relative_gibbs_free_energy(number_of_links, &(force/BOLTZMANN_CONSTANT/temperature*link_length))*BOLTZMANN_CONSTANT*temperature
+}
+
+/// The relative Gibbs free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length.
+pub fn relative_gibbs_free_energy_per_link(link_length: &f64, force: &f64, temperature: &f64) -> f64
+{
+    nondimensional_relative_gibbs_free_energy_per_link(&(force/BOLTZMANN_CONSTANT/temperature*link_length))*BOLTZMANN_CONSTANT*temperature
+}
+
+/// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature, parameterized by the number of links, link length, and hinge mass.
+pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
+{
+    (*number_of_links as f64)*(-(nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
+}
+
+/// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length and hinge mass.
+pub fn nondimensional_gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
+{
+    -(nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+}
+
+/// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links.
+pub fn nondimensional_relative_gibbs_free_energy(number_of_links: &u8, nondimensional_force: &f64) -> f64
+{
+    -(*number_of_links as f64)*(nondimensional_force.sinh()/nondimensional_force).ln()
+}
+
+/// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force.
+pub fn nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force: &f64) -> f64
+{
+    -(nondimensional_force.sinh()/nondimensional_force).ln()
 }
 
 /// The implemented functionality of the thermodynamics of the FJC model in the isotensional ensemble.
@@ -42,68 +117,67 @@ impl FJC
             hinge_mass,
             link_length,
             number_of_links,
-            number_of_links_f64: number_of_links as f64,
             legendre: legendre::FJC::init(number_of_links, link_length, hinge_mass)
         }
     }
     /// The expected end-to-end length as a function of the applied force and temperature.
     pub fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_end_to_end_length(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length
+        end_to_end_length(&self.number_of_links, &self.link_length, force, temperature)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     pub fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_end_to_end_length_per_link(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*self.link_length
+        end_to_end_length_per_link(&self.link_length, force, temperature)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64
     {
-        (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*self.number_of_links_f64
+        nondimensional_end_to_end_length(&self.number_of_links, nondimensional_force)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
+        nondimensional_end_to_end_length_per_link(nondimensional_force)
     }
     /// The Gibbs free energy as a function of the applied force and temperature.
     pub fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.relative_gibbs_free_energy(force, temperature) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, force, temperature)
     }
     /// The Gibbs free energy per link as a function of the applied force and temperature.
     pub fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.relative_gibbs_free_energy_per_link(force, temperature) - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, force, temperature)
     }
     /// The relative Gibbs free energy as a function of the applied force and temperature.
     pub fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+        relative_gibbs_free_energy(&self.number_of_links, &self.link_length, force, temperature)
     }
     /// The relative Gibbs free energy per link as a function of the applied force and temperature.
     pub fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.nondimensional_relative_gibbs_free_energy_per_link(&(force/BOLTZMANN_CONSTANT/temperature*self.link_length))*BOLTZMANN_CONSTANT*temperature
+        relative_gibbs_free_energy_per_link(&self.link_length, force, temperature)
     }
     /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature.
     pub fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln() - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        nondimensional_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, nondimensional_force, temperature)
     }
     /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature.
     pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        -(nondimensional_force.sinh()/nondimensional_force).ln() - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        nondimensional_gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, nondimensional_force, temperature)
     }
     /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64
     {
-        -self.number_of_links_f64*(nondimensional_force.sinh()/nondimensional_force).ln()
+        nondimensional_relative_gibbs_free_energy(&self.number_of_links, nondimensional_force)
     }
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force.
     pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        -(nondimensional_force.sinh()/nondimensional_force).ln()
+        nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)
     }
 }

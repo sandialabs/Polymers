@@ -5,6 +5,7 @@ use numpy::
     PyArrayDyn,
     PyReadonlyArrayDyn
 };
+use crate::physics::BOLTZMANN_CONSTANT;
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
@@ -64,7 +65,7 @@ impl EFJC
     ///
     pub fn helmholtz_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).helmholtz_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The Helmholtz free energy per link as a function of the applied force and temperature.
     ///
@@ -77,7 +78,7 @@ impl EFJC
     ///
     pub fn helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).helmholtz_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::helmholtz_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Helmholtz free energy as a function of the applied force and temperature.
     ///
@@ -90,7 +91,7 @@ impl EFJC
     ///
     pub fn relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).relative_helmholtz_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Helmholtz free energy per link as a function of the applied force and temperature.
     ///
@@ -103,7 +104,7 @@ impl EFJC
     ///
     pub fn relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).relative_helmholtz_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_helmholtz_free_energy_per_link(&self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Helmholtz free energy as a function of the applied nondimensional force and temperature.
     ///
@@ -116,7 +117,7 @@ impl EFJC
     ///
     pub fn nondimensional_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_helmholtz_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional force and temperature.
     ///
@@ -129,7 +130,7 @@ impl EFJC
     ///
     pub fn nondimensional_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_helmholtz_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_helmholtz_free_energy_per_link(&self.link_length, &self.hinge_mass, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional force.
     ///
@@ -142,7 +143,7 @@ impl EFJC
     ///
     pub fn nondimensional_relative_helmholtz_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_helmholtz_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_helmholtz_free_energy(&self.number_of_links, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force)).into_pyarray(py)
     }
     /// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional force.
     ///
@@ -155,6 +156,6 @@ impl EFJC
     ///
     pub fn nondimensional_relative_helmholtz_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_helmholtz_free_energy_per_link(&(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force)).into_pyarray(py)
     }
 }

@@ -85,7 +85,7 @@ end
                 end_to_end_length^2 *
                 model.equilibrium_distribution(end_to_end_length),
             ZERO,
-            ONE,
+            5e0 * number_of_links * link_length,
             POINTS,
         )
         @test normalization - 1.0 <= parameters.rel_tol
@@ -105,7 +105,7 @@ end
             end_to_end_length ->
                 model.equilibrium_radial_distribution(end_to_end_length),
             ZERO,
-            ONE,
+            5e0 * number_of_links * link_length,
             POINTS,
         )
         @test normalization - 1.0 <= parameters.rel_tol
@@ -130,7 +130,7 @@ end
                     nondimensional_end_to_end_length_per_link,
                 ),
             ZERO,
-            ONE,
+            5e0,
             POINTS,
         )
         @test normalization - 1.0 <= parameters.rel_tol
@@ -152,7 +152,7 @@ end
                     nondimensional_end_to_end_length_per_link,
                 ),
             ZERO,
-            ONE,
+            5e0,
             POINTS,
         )
         @test normalization - 1.0 <= parameters.rel_tol

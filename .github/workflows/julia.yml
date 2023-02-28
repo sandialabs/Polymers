@@ -8,7 +8,11 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -21,15 +25,12 @@ jobs:
         uses: julia-actions/setup-julia@v1
         with:
           version: 1.8
-      - name: add
-        if: github.event_name != 'pull_request'
-        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_REF##*/}'")'
-      - name: add
-        if: github.event_name == 'pull_request'
-        run: julia -e 'using Pkg; Pkg.add(url="https://github.com/sandialabs/Polymers", rev="'${GITHUB_HEAD_REF##*/}'")'
-      - name: build
-        run: julia -e 'using Pkg; Pkg.build("Polymers")'
       - name: test
-        run: julia -e 'using Pkg; Pkg.test("Polymers")'
+        if: runner.os == 'Windows'
+        run: julia -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
+      - name: test
+        if: runner.os != 'Windows'
+        run: julia -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
       - name: format
+        if: runner.os == 'Linux'
         run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format("./") == true; exit(0); else exit(1); end'

@@ -1,3 +1,6 @@
+#[cfg(feature = "extern")]
+pub mod ex;
+
 #[cfg(feature = "python")]
 pub mod py;
 
@@ -30,11 +33,95 @@ pub struct SWFJC
     pub well_width: f64,
 
     /// The thermodynamic functions of the model in the isotensional ensemble approximated using a Legendre transformation.
-    pub legendre: legendre::SWFJC,
+    pub legendre: legendre::SWFJC
+}
 
-    number_of_links_f64: f64,
+///
+/// use nondimensional_well_parameter as input for nondimensional functions, like efjc depending on nondimensionall link stiffness
+///
 
-    pub nondimensional_well_parameter: f64
+/// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links, link length, and well width.
+pub fn end_to_end_length(number_of_links: &u8, link_length: &f64, well_width: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    let nondimensional_force = force*link_length/BOLTZMANN_CONSTANT/temperature;
+    (*number_of_links as f64)*link_length*((nondimensional_well_parameter.powi(2)*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force)
+}
+
+/// The expected end-to-end length per link as a function of the applied force and temperature, parameterized by the link length and well width.
+pub fn end_to_end_length_per_link(link_length: &f64, well_width: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    let nondimensional_force = force*link_length/BOLTZMANN_CONSTANT/temperature;
+    link_length*((nondimensional_well_parameter.powi(2)*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force)
+}
+
+/// The expected nondimensional end-to-end length as a function of the applied nondimensional force, parameterized by the number of links, link length, and well width.
+pub fn nondimensional_end_to_end_length(number_of_links: &u8, link_length: &f64, well_width: &f64, nondimensional_force: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    (*number_of_links as f64)*((nondimensional_well_parameter.powi(2)*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force)
+}
+
+/// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, parameterized by the link length and well width.
+pub fn nondimensional_end_to_end_length_per_link(link_length: &f64, well_width: &f64, nondimensional_force: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    (nondimensional_well_parameter.powi(2)*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force
+}
+
+/// The Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, and well width.
+pub fn gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, well_width: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    let nondimensional_force = force*link_length/BOLTZMANN_CONSTANT/temperature;
+    (*number_of_links as f64)*BOLTZMANN_CONSTANT*temperature*((3.0*nondimensional_force.ln() - (nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln()) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
+}
+
+/// The Gibbs free energy per link as a function of the applied force and temperature, parameterized by the link length, hinge mass, and well width.
+pub fn gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, well_width: &f64, force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    let nondimensional_force = force*link_length/BOLTZMANN_CONSTANT/temperature;
+    BOLTZMANN_CONSTANT*temperature*((3.0*nondimensional_force.ln() - (nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln()) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
+}
+
+/// The relative Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, and well width.
+pub fn relative_gibbs_free_energy(number_of_links: &u8, link_length: &f64, well_width: &f64, force: &f64, temperature: &f64) -> f64
+{
+    gibbs_free_energy(number_of_links, link_length, &1.0, well_width, force, temperature) - gibbs_free_energy(number_of_links, link_length, &1.0, well_width, &(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), temperature)
+}
+
+/// The relative Gibbs free energy per link as a function of the applied force and temperature, parameterized by the link length and well width.
+pub fn relative_gibbs_free_energy_per_link(link_length: &f64, well_width: &f64,force: &f64, temperature: &f64) -> f64
+{
+    gibbs_free_energy_per_link(link_length, &1.0, well_width, force, temperature) - gibbs_free_energy_per_link(link_length, &1.0, well_width, &(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), temperature)
+}
+
+/// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature, parameterized by the number of links, link length, hinge mass, and well width.
+pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, well_width: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    (*number_of_links as f64)*((3.0*nondimensional_force.ln() - (nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln()) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
+}
+
+/// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length, hinge mass, and well width.
+pub fn nondimensional_gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, well_width: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
+{
+    let nondimensional_well_parameter = 1.0 + well_width/link_length;
+    3.0*nondimensional_force.ln() - (nondimensional_well_parameter*nondimensional_force*(nondimensional_well_parameter*nondimensional_force).cosh() - (nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+}
+
+/// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links, link length, and well width.
+pub fn nondimensional_relative_gibbs_free_energy(number_of_links: &u8, link_length: &f64, well_width: &f64, nondimensional_force: &f64) -> f64
+{
+    nondimensional_gibbs_free_energy(number_of_links, link_length, &1.0, well_width, nondimensional_force, &300.0) - nondimensional_gibbs_free_energy(number_of_links, link_length, &1.0, well_width, &ZERO, &300.0)
+}
+
+/// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force, parameterized by the link length and well width.
+pub fn nondimensional_relative_gibbs_free_energy_per_link(link_length: &f64, well_width: &f64, nondimensional_force: &f64) -> f64
+{
+    nondimensional_gibbs_free_energy_per_link(link_length, &1.0, well_width, nondimensional_force, &300.0) - nondimensional_gibbs_free_energy_per_link(link_length, &1.0, well_width, &ZERO, &300.0)
 }
 
 /// The implemented functionality of the thermodynamics of the SWFJC model in the isotensional ensemble.
@@ -49,73 +136,67 @@ impl SWFJC
             link_length,
             number_of_links,
             well_width,
-            number_of_links_f64: number_of_links as f64,
-            nondimensional_well_parameter: 1.0 + well_width/link_length,
             legendre: self::legendre::SWFJC::init(number_of_links, link_length, hinge_mass, well_width)
         }
     }
     /// The expected end-to-end length as a function of the applied force and temperature.
     pub fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64
     {
-        let nondimensional_force = force*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        self.number_of_links_f64*self.link_length*((self.nondimensional_well_parameter.powi(2)*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force)
+        end_to_end_length(&self.number_of_links, &self.link_length, &self.well_width, force, temperature)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     pub fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        let nondimensional_force = force*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        self.link_length*((self.nondimensional_well_parameter.powi(2)*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force)
+        end_to_end_length_per_link(&self.link_length, &self.well_width, force, temperature)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64) -> f64
     {
-        self.number_of_links_f64*((self.nondimensional_well_parameter.powi(2)*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force)
+        nondimensional_end_to_end_length(&self.number_of_links, &self.link_length, &self.well_width, nondimensional_force)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force.
     pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        (self.nondimensional_well_parameter.powi(2)*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.sinh())/(self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()) - 3.0/nondimensional_force
+        nondimensional_end_to_end_length_per_link(&self.link_length, &self.well_width, nondimensional_force)
     }
     /// The Gibbs free energy as a function of the applied force and temperature.
     pub fn gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        let nondimensional_force = force*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(3.0*nondimensional_force.ln() - (self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln()) - self.number_of_links_f64*BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, force, temperature)
     }
     /// The Gibbs free energy per link as a function of the applied force and temperature.
     pub fn gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        let nondimensional_force = force*self.link_length/BOLTZMANN_CONSTANT/temperature;
-        BOLTZMANN_CONSTANT*temperature*(3.0*nondimensional_force.ln() - (self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln()) - BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.well_width, force, temperature)
     }
     /// The relative Gibbs free energy as a function of the applied force and temperature.
     pub fn relative_gibbs_free_energy(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.gibbs_free_energy(force, temperature) - self.gibbs_free_energy(&(ZERO*BOLTZMANN_CONSTANT*temperature/self.link_length), temperature)
+        relative_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.well_width, force, temperature)
     }
     /// The relative Gibbs free energy per link as a function of the applied force and temperature.
     pub fn relative_gibbs_free_energy_per_link(&self, force: &f64, temperature: &f64) -> f64
     {
-        self.gibbs_free_energy_per_link(force, temperature) - self.gibbs_free_energy_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/self.link_length), temperature)
+        relative_gibbs_free_energy_per_link(&self.link_length, &self.well_width, force, temperature)
     }
     /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature.
     pub fn nondimensional_gibbs_free_energy(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        self.number_of_links_f64*(3.0*nondimensional_force.ln() - (self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln()) - self.number_of_links_f64*(8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        nondimensional_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.well_width, nondimensional_force, temperature)
     }
     /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature.
     pub fn nondimensional_gibbs_free_energy_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
     {
-        3.0*nondimensional_force.ln() - (self.nondimensional_well_parameter*nondimensional_force*(self.nondimensional_well_parameter*nondimensional_force).cosh() - (self.nondimensional_well_parameter*nondimensional_force).sinh() - nondimensional_force*nondimensional_force.cosh() + nondimensional_force.sinh()).ln() - (8.0*PI.powi(2)*self.hinge_mass*self.link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+        nondimensional_gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.well_width, nondimensional_force, temperature)
     }
     /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     pub fn nondimensional_relative_gibbs_free_energy(&self, nondimensional_force: &f64) -> f64
     {
-        self.nondimensional_gibbs_free_energy(nondimensional_force, &300.0) - self.nondimensional_gibbs_free_energy(&ZERO, &300.0)
+        nondimensional_relative_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.well_width, nondimensional_force)
     }
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force.
     pub fn nondimensional_relative_gibbs_free_energy_per_link(&self, nondimensional_force: &f64) -> f64
     {
-        self.nondimensional_gibbs_free_energy_per_link(nondimensional_force, &300.0) - self.nondimensional_gibbs_free_energy_per_link(&ZERO, &300.0)
+        nondimensional_relative_gibbs_free_energy_per_link(&self.link_length, &self.well_width, nondimensional_force)
     }
 }

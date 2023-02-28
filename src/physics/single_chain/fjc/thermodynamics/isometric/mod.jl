@@ -6,7 +6,7 @@ module Isometric
 using DocStringExtensions
 using ......Polymers: PROJECT_ROOT
 
-include("./legendre/mod.jl")
+include("legendre/mod.jl")
 
 """
 The structure of the thermodynamics of the FJC model in the isometric ensemble.
@@ -15,15 +15,15 @@ $(FIELDS)
 """
 struct FJC
     """
-    The number of links in the chain.
+    The number of links in the chain ``N_b``.
     """
     number_of_links::UInt8
     """
-    The length of each link in the chain in units of nm.
+    The length of each link in the chain ``\\ell_b`` in units of nm.
     """
     link_length::Float64
     """
-    The number of links in the chain.
+    The mass of each hinge in the chain ``m`` in units of kg/mol.
     """
     hinge_mass::Float64
     """
@@ -96,6 +96,7 @@ parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
 ```math
 f(\\xi, T) = \\frac{\\partial \\psi}{\\partial\\xi} = \\frac{kT}{\\xi} + \\frac{kT}{\\ell_b}\\left(\\frac{1}{2} - \\frac{1}{N_b}\\right)\\frac{\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 3}}{\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2}},
 ```
+
 where ``m\\equiv(1 - \\xi/N_b\\ell_b)/2`` and ``s_\\mathrm{max}/N_b\\leq m\\leq (s_\\mathrm{max}+1)/N_b``.
 
 $(TYPEDSIGNATURES)
@@ -133,6 +134,7 @@ parameterized by the number of links ``N_b``,
 ```math
 \\eta(\\gamma) = \\frac{\\partial\\vartheta}{\\partial\\gamma} = \\frac{1}{N_b\\gamma} + \\left(\\frac{1}{2} - \\frac{1}{N_b}\\right)\\frac{\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 3}}{\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2}},
 ```
+
 where ``m\\equiv(1 - \\gamma)/2`` and ``s_\\mathrm{max}/N_b\\leq m\\leq (s_\\mathrm{max}+1)/N_b``.
 
 $(TYPEDSIGNATURES)
@@ -460,6 +462,7 @@ parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
 ```math
 P_\\mathrm{eq}(\\xi) = \\frac{e^{-\\beta\\psi(\\xi, T)}}{4\\pi\\int e^{-\\beta\\psi(\\xi', T)} \\,{\\xi'}{}^2 d\\xi'} = \\frac{1}{8\\pi\\ell_b^2\\xi}\\frac{N_b^{N_b - 2}}{(N_b - 2)!}\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2},
 ```
+
 where ``m\\equiv(1 - \\xi/N_b\\ell_b)/2`` and ``s_\\mathrm{max}/N_b\\leq m\\leq (s_\\mathrm{max}+1)/N_b``.
 
 $(TYPEDSIGNATURES)
@@ -494,6 +497,7 @@ parameterized by the number of links ``N_b``,
 ```math
 \\mathscr{P}_\\mathrm{eq}(\\gamma) = \\frac{e^{-\\Delta\\vartheta(\\gamma)}}{4\\pi\\int e^{-\\Delta\\vartheta(\\gamma')} \\,{\\gamma'}{}^2 d\\gamma'} = \\frac{1}{8\\pi\\gamma}\\frac{N_b^{N_b}}{(N_b - 2)!}\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2},
 ```
+
 where ``m\\equiv(1 - \\gamma)/2`` and ``s_\\mathrm{max}/N_b\\leq m\\leq (s_\\mathrm{max}+1)/N_b``.
 
 $(TYPEDSIGNATURES)
@@ -526,6 +530,7 @@ given by [Treloar](https://global.oup.com/academic/product/the-physics-of-rubber
 ```math
 g_\\mathrm{eq}(\\xi) = 4\\pi\\xi^2 P_\\mathrm{eq}(\\xi) = \\frac{\\xi}{2\\ell_b^2}\\frac{N_b^{N_b-2}}{(N_b - 2)!}\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2},
 ```
+
 where ``m\\equiv(1 - \\xi/N_b\\ell_b)/2`` and ``s_\\mathrm{max}/N_b\\leq m\\leq (s_\\mathrm{max}+1)/N_b``.
 
 $(TYPEDSIGNATURES)
@@ -560,6 +565,7 @@ parameterized by the number of links ``N_b``,
 ```math
 \\mathscr{g}_\\mathrm{eq}(\\gamma) = 4\\pi\\gamma^2 \\mathscr{P}_\\mathrm{eq}(\\gamma) = \\frac{\\gamma}{2}\\frac{N_b^{N_b}}{(N_b - 2)!}\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2},
 ```
+
 where ``m\\equiv(1 - \\gamma)/2`` and ``s_\\mathrm{max}/N_b\\leq m\\leq (s_\\mathrm{max}+1)/N_b``.
 
 $(TYPEDSIGNATURES)

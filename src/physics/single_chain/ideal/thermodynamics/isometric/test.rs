@@ -1,44 +1,6 @@
 #![cfg(test)]
 use super::*;
-use crate::physics::single_chain::test::Parameters as DefaultParameters;
-pub struct Parameters
-{
-    pub abs_tol: f64,
-    pub rel_tol: f64,
-    pub number_of_loops: u32,
-    pub hinge_mass_reference: f64,
-    pub hinge_mass_scale: f64,
-    pub link_length_reference: f64,
-    pub link_length_scale: f64,
-    pub number_of_links_minimum: u8,
-    pub number_of_links_maximum: u8,
-    pub nondimensional_end_to_end_length_per_link_reference: f64,
-    pub nondimensional_end_to_end_length_per_link_scale: f64,
-    pub temperature_reference: f64,
-    pub temperature_scale: f64,
-}
-impl Default for Parameters
-{
-    fn default() -> Self
-    {
-        Self
-        {
-            number_of_loops: 8888,
-            abs_tol: DefaultParameters::default().abs_tol,
-            rel_tol: DefaultParameters::default().rel_tol,
-            hinge_mass_reference: DefaultParameters::default().hinge_mass_reference,
-            hinge_mass_scale: DefaultParameters::default().hinge_mass_scale,
-            link_length_reference: DefaultParameters::default().link_length_reference,
-            link_length_scale: DefaultParameters::default().link_length_scale,
-            number_of_links_minimum: DefaultParameters::default().number_of_links_minimum,
-            number_of_links_maximum: DefaultParameters::default().number_of_links_maximum,
-            nondimensional_end_to_end_length_per_link_reference: DefaultParameters::default().nondimensional_end_to_end_length_per_link_reference,
-            nondimensional_end_to_end_length_per_link_scale: DefaultParameters::default().nondimensional_end_to_end_length_per_link_scale,
-            temperature_reference: DefaultParameters::default().temperature_reference,
-            temperature_scale: DefaultParameters::default().temperature_scale,
-        }
-    }
-}
+use crate::physics::single_chain::test::Parameters;
 mod base
 {
     use super::*;
@@ -117,7 +79,7 @@ mod normalization
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = Ideal::init(number_of_links, link_length, hinge_mass);
             let integrand = |end_to_end_length: f64| 4.0*PI*end_to_end_length.powi(2)*model.equilibrium_distribution(&end_to_end_length);
-            let integral = integrate(integrand, &0.0, &(1e1*(number_of_links as f64)*link_length), &POINTS);
+            let integral = integrate(integrand, &0.0, &(5e0*(number_of_links as f64)*link_length), &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -133,7 +95,7 @@ mod normalization
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = Ideal::init(number_of_links, link_length, hinge_mass);
             let integrand = |nondimensional_end_to_end_length_per_link_per_link: f64| 4.0*PI*nondimensional_end_to_end_length_per_link_per_link.powi(2)*model.nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link_per_link);
-            let integral = integrate(integrand, &0.0, &1e1, &POINTS);
+            let integral = integrate(integrand, &0.0, &5e0, &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -149,7 +111,7 @@ mod normalization
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = Ideal::init(number_of_links, link_length, hinge_mass);
             let integrand = |end_to_end_length: f64| model.equilibrium_radial_distribution(&end_to_end_length);
-            let integral = integrate(integrand, &0.0, &(1e1*(number_of_links as f64)*link_length), &POINTS);
+            let integral = integrate(integrand, &0.0, &(5e0*(number_of_links as f64)*link_length), &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -165,7 +127,7 @@ mod normalization
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = Ideal::init(number_of_links, link_length, hinge_mass);
             let integrand = |nondimensional_end_to_end_length_per_link_per_link: f64| model.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link_per_link);
-            let integral = integrate(integrand, &0.0, &1e1, &POINTS);
+            let integral = integrate(integrand, &0.0, &5e0, &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }

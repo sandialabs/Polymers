@@ -5,7 +5,7 @@ module Efjc
 
 using DocStringExtensions
 
-include("./thermodynamics/mod.jl")
+include("thermodynamics/mod.jl")
 
 """
 The structure of the EFJC model.
@@ -14,19 +14,19 @@ $(FIELDS)
 """
 struct EFJC
     """
-    The number of links in the chain.
+    The number of links in the chain ``N_b``.
     """
     number_of_links::UInt8
     """
-    The length of each link in the chain in units of nm.
+    The length of each link in the chain ``\\ell_b`` in units of nm.
     """
     link_length::Float64
     """
-    The number of links in the chain.
+    The mass of each hinge in the chain ``m`` in units of kg/mol.
     """
     hinge_mass::Float64
     """
-    The stiffness of each link in the chain in units of J/(mol⋅nm^2).
+    The stiffness of each link in the chain ``k_0`` in units of J/(mol⋅nm^2).
     """
     link_stiffness::Float64
     """
