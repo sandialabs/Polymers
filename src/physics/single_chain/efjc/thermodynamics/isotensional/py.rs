@@ -142,7 +142,6 @@ impl EFJC
     {
         force.as_array().mapv(|force: f64| super::gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
-    }
     /// The Gibbs free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
