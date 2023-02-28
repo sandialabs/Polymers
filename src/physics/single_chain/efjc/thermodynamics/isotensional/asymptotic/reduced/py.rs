@@ -102,7 +102,9 @@ impl EFJC
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
-    ///     \gamma(\eta) \sim \mathcal{L}(\eta) + \frac{\eta}{\kappa} \quad \text{for } \kappa\gg 1.
+    ///     \gamma(\eta) \sim \mathcal{L}(\eta) + \frac{\eta}{\kappa} \quad \text{for } \kappa\gg 1,
+    ///
+    /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function.
     ///
     /// Args:
     ///     nondimensional_force (numpy.ndarray): The nondimensional force :math:`\eta\equiv\beta f\ell_b`.

@@ -9,9 +9,9 @@ include("fjc/mod.jl")
 include("efjc/mod.jl")
 include("swfjc/mod.jl")
 
-ONE::Float64 = 1.0
-ZERO::Float64 = 1e-6
-POINTS::UInt128 = 64
+const ONE::Float64 = 1.0
+const ZERO::Float64 = 1e-6
+const POINTS::UInt128 = 64
 
 function integrate(
     fun::Function,

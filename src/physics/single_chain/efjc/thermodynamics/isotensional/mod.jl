@@ -6,6 +6,8 @@ module Isotensional
 using DocStringExtensions
 using ......Polymers: PROJECT_ROOT
 
+import .....Physics: BOLTZMANN_CONSTANT
+
 include("asymptotic/mod.jl")
 include("legendre/mod.jl")
 
@@ -107,19 +109,20 @@ function end_to_end_length(
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
-            (
-                :physics_single_chain_efjc_thermodynamics_isotensional_end_to_end_length,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) ->
+            ccall(
+                (
+                    :physics_single_chain_efjc_thermodynamics_isotensional_end_to_end_length,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64, Float64, Float64),
+                number_of_links_i,
+                link_length_i,
+                link_stiffness_i,
+                force_i,
+                temperature_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            link_stiffness_i,
-            force_i,
-            temperature_i,
-        ),
         number_of_links,
         link_length,
         link_stiffness,
@@ -168,26 +171,24 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_end_to_end_length(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
-    link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
-            (
-                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_end_to_end_length,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, nondimensional_link_stiffness_i, nondimensional_force_i) ->
+            ccall(
+                (
+                    :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_end_to_end_length,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64),
+                number_of_links_i,
+                nondimensional_link_stiffness_i,
+                nondimensional_force_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            link_stiffness_i,
-            nondimensional_force_i,
-        ),
         number_of_links,
-        link_length,
-        link_stiffness,
+        nondimensional_link_stiffness,
         nondimensional_force,
     )
 end
@@ -210,24 +211,21 @@ g(\\eta) \\equiv \\frac{e^{\\eta}\\left(\\frac{\\eta}{\\kappa} + 1\\right) \\,\\
 $(TYPEDSIGNATURES)
 """
 function nondimensional_end_to_end_length_per_link(
-    link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
+        (nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_end_to_end_length_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64, Float64),
-            link_length_i,
-            link_stiffness_i,
+            (Float64, Float64),
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
         ),
-        link_length,
-        link_stiffness,
+        nondimensional_link_stiffness,
         nondimensional_force,
     )
 end
@@ -330,19 +328,20 @@ function relative_gibbs_free_energy(
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
-            (
-                :physics_single_chain_efjc_thermodynamics_isotensional_relative_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) ->
+            ccall(
+                (
+                    :physics_single_chain_efjc_thermodynamics_isotensional_relative_gibbs_free_energy,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64, Float64, Float64),
+                number_of_links_i,
+                link_length_i,
+                link_stiffness_i,
+                force_i,
+                temperature_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            link_stiffness_i,
-            force_i,
-            temperature_i,
-        ),
         number_of_links,
         link_length,
         link_stiffness,
@@ -393,7 +392,7 @@ function nondimensional_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -402,7 +401,7 @@ function nondimensional_gibbs_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i,
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
             temperature_i,
         ) -> ccall(
@@ -415,14 +414,14 @@ function nondimensional_gibbs_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i,
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
-        link_stiffness,
+        nondimensional_link_stiffness,
         nondimensional_force,
         temperature,
     )
@@ -437,7 +436,7 @@ $(TYPEDSIGNATURES)
 function nondimensional_gibbs_free_energy_per_link(
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -445,7 +444,7 @@ function nondimensional_gibbs_free_energy_per_link(
         (
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i,
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
             temperature_i,
         ) -> ccall(
@@ -457,13 +456,13 @@ function nondimensional_gibbs_free_energy_per_link(
             (Float64, Float64, Float64, Float64, Float64),
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i,
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
             temperature_i,
         ),
         link_length,
         hinge_mass,
-        link_stiffness,
+        nondimensional_link_stiffness,
         nondimensional_force,
         temperature,
     )
@@ -477,26 +476,24 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
-    link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
-            (
-                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, nondimensional_link_stiffness_i, nondimensional_force_i) ->
+            ccall(
+                (
+                    :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64),
+                number_of_links_i,
+                nondimensional_link_stiffness_i,
+                nondimensional_force_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            link_stiffness_i,
-            nondimensional_force_i,
-        ),
         number_of_links,
-        link_length,
-        link_stiffness,
+        nondimensional_link_stiffness,
         nondimensional_force,
     )
 end
@@ -519,24 +516,21 @@ w^\\pm(\\eta) \\equiv e^{\\pm\\eta}\\left(\\frac{1}{\\kappa} \\pm \\frac{1}{\\et
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy_per_link(
-    link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
+        (nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64, Float64),
-            link_length_i,
-            link_stiffness_i,
+            (Float64, Float64),
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
         ),
-        link_length,
-        link_stiffness,
+        nondimensional_link_stiffness,
         nondimensional_force,
     )
 end
@@ -552,83 +546,84 @@ function EFJC(
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
-return EFJC(
-    number_of_links,
-    link_length,
-    hinge_mass,
-    link_stiffness,
-    Asymptotic.EFJC(number_of_links, link_length, hinge_mass, link_stiffness),
-    Legendre.EFJC(number_of_links, link_length, hinge_mass, link_stiffness),
-    (force, temperature) ->
-        end_to_end_length(number_of_links, link_length, link_stiffness, force, temperature),
-    (force, temperature) ->
-        end_to_end_length_per_link(link_length, link_stiffness, force, temperature),
-    nondimensional_force -> nondimensional_end_to_end_length(
-        number_of_links,
-        link_length,
-        link_stiffness,
-        nondimensional_force,
-    ),
-    nondimensional_force -> nondimensional_end_to_end_length_per_link(
-        link_length,
-        link_stiffness,
-        nondimensional_force,
-    ),
-    (force, temperature) -> gibbs_free_energy(
+    return EFJC(
         number_of_links,
         link_length,
         hinge_mass,
         link_stiffness,
-        force,
-        temperature,
-    ),
-    (force, temperature) -> gibbs_free_energy_per_link(
-        link_length,
-        link_stiffness,
-        hinge_mass,
-        force,
-        temperature,
-    ),
-    (force, temperature) -> relative_gibbs_free_energy(
-        number_of_links,
-        link_length,
-        link_stiffness,
-        force,
-        temperature,
-    ),
-    (force, temperature) -> relative_gibbs_free_energy_per_link(
-        link_length,
-        link_stiffness,
-        force,
-        temperature,
-    ),
-    (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy(
-        number_of_links,
-        link_length,
-        hinge_mass,
-        link_stiffness,
-        nondimensional_force,
-        temperature,
-    ),
-    (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy_per_link(
-        link_length,
-        hinge_mass,
-        link_stiffness,
-        nondimensional_force,
-        temperature,
-    ),
-    nondimensional_force -> nondimensional_relative_gibbs_free_energy(
-        number_of_links,
-        link_length,
-        link_stiffness,
-        nondimensional_force,
-    ),
-    nondimensional_force -> nondimensional_relative_gibbs_free_energy_per_link(
-        link_length,
-        link_stiffness,
-        nondimensional_force,
-    ),
-)
+        Asymptotic.EFJC(number_of_links, link_length, hinge_mass, link_stiffness),
+        Legendre.EFJC(number_of_links, link_length, hinge_mass, link_stiffness),
+        (force, temperature) -> end_to_end_length(
+            number_of_links,
+            link_length,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (force, temperature) ->
+            end_to_end_length_per_link(link_length, link_stiffness, force, temperature),
+        nondimensional_force -> nondimensional_end_to_end_length(
+            number_of_links,
+            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            nondimensional_force,
+        ),
+        nondimensional_force -> nondimensional_end_to_end_length_per_link(
+            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            nondimensional_force,
+        ),
+        (force, temperature) -> gibbs_free_energy(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (force, temperature) -> gibbs_free_energy_per_link(
+            link_length,
+            link_stiffness,
+            hinge_mass,
+            force,
+            temperature,
+        ),
+        (force, temperature) -> relative_gibbs_free_energy(
+            number_of_links,
+            link_length,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (force, temperature) -> relative_gibbs_free_energy_per_link(
+            link_length,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            nondimensional_force,
+            temperature,
+        ),
+        (nondimensional_force, temperature) -> nondimensional_gibbs_free_energy_per_link(
+            link_length,
+            hinge_mass,
+            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            nondimensional_force,
+            temperature,
+        ),
+        nondimensional_force -> nondimensional_relative_gibbs_free_energy(
+            number_of_links,
+            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            nondimensional_force,
+        ),
+        nondimensional_force -> nondimensional_relative_gibbs_free_energy_per_link(
+            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            nondimensional_force,
+        ),
+    )
 end
 
 end
