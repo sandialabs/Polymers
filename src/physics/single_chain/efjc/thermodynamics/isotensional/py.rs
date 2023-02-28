@@ -110,7 +110,7 @@ impl EFJC
     /// .. math::
     ///     \gamma(\eta) = -\frac{\partial\varrho}{\partial\eta} = \mathcal{L}(\eta) + \frac{\eta}{\kappa}\left[1 + \frac{1 - \mathcal{L}(\eta)\coth(\eta)}{1 + (\eta/\kappa)\coth(\eta)}\right] + \frac{\partial}{\partial\eta}\,\ln\left[1+g(\eta)\right],
     ///
-    /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function, :math:`\kappa\equiv\beta k_0\ell_b^2` is the nondimensional link stiffness, and :math:`g(\eta)` is defined as
+    /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function, and :math:`g(\eta)` is defined as
     ///
     /// .. math::
     ///     g(\eta) \equiv \frac{e^{\eta}\left(\frac{\eta}{\kappa} + 1\right) \,\mathrm{erf}\left(\frac{\eta+\kappa}{\sqrt{2\kappa}}\right) - e^{-\eta}\left(\frac{\eta}{\kappa} - 1\right) \,\mathrm{erf}\left(\frac{\eta-\kappa}{\sqrt{2\kappa}}\right)}{4\sinh(\eta)\left[1 + (\eta/\kappa)\coth(\eta)\right]} - \frac{1}{2}.
@@ -143,10 +143,7 @@ impl EFJC
         force.as_array().mapv(|force: f64| super::gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     }
-    /// The Gibbs free energy per link as a function of the applied force and temperature,
-    ///
-    /// .. math::
-    ///     \varphi(f, T) = -kT\ln Z(f, T).
+    /// The Gibbs free energy per link as a function of the applied force and temperature.
     ///
     /// Args:
     ///     force (numpy.ndarray): The force :math:`f`.

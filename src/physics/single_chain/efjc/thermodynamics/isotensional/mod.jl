@@ -32,6 +32,10 @@ struct EFJC
     """
     link_stiffness::Float64
     """
+    The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach.
+    """
+    asymptotic::Any
+    """
     The thermodynamic functions of the model in the isotensional ensemble approximated using a Legendre transformation.
     """
     legendre::Any
@@ -139,7 +143,7 @@ function end_to_end_length_per_link(
     return broadcast(
         (link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_end_to_end_length_per_link,
+                :physics_single_chain_efjc_thermodynamics_isotensional_end_to_end_length_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -171,7 +175,7 @@ function nondimensional_end_to_end_length(
     return broadcast(
         (number_of_links_i, link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_nondimensional_end_to_end_length,
+                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_end_to_end_length,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -197,7 +201,7 @@ calculated from [Balabaev and Khazanovich](https://doi.org/10.1134/S199079310902
 \\gamma(\\eta) = -\\frac{\\partial\\varrho}{\\partial\\eta} = \\mathcal{L}(\\eta) + \\frac{\\eta}{\\kappa}\\left[1 + \\frac{1 - \\mathcal{L}(\\eta)\\coth(\\eta)}{1 + (\\eta/\\kappa)\\coth(\\eta)}\\right] + \\frac{\\partial}{\\partial\\eta}\\,\\ln\\left[1+g(\\eta)\\right],
 ```
 
-where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function, ``\\kappa\\equiv\\beta k_0\\ell_b^2`` is the nondimensional link stiffness, and ``g(\\eta)`` is defined as
+where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function, and ``g(\\eta)`` is defined as
 
 ```math
 g(\\eta) \\equiv \\frac{e^{\\eta}\\left(\\frac{\\eta}{\\kappa} + 1\\right) \\,\\mathrm{erf}\\left(\\frac{\\eta+\\kappa}{\\sqrt{2\\kappa}}\\right) - e^{-\\eta}\\left(\\frac{\\eta}{\\kappa} - 1\\right) \\,\\mathrm{erf}\\left(\\frac{\\eta-\\kappa}{\\sqrt{2\\kappa}}\\right)}{4\\sinh(\\eta)\\left[1 + (\\eta/\\kappa)\\coth(\\eta)\\right]} - \\frac{1}{2}.
@@ -213,7 +217,7 @@ function nondimensional_end_to_end_length_per_link(
     return broadcast(
         (link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_nondimensional_end_to_end_length_per_link,
+                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_end_to_end_length_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -256,7 +260,7 @@ function gibbs_free_energy(
             temperature_i,
         ) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_gibbs_free_energy,
+                :physics_single_chain_efjc_thermodynamics_isotensional_gibbs_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -293,7 +297,7 @@ function gibbs_free_energy_per_link(
     return broadcast(
         (link_length_i, hinge_mass_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_gibbs_free_energy_per_link,
+                :physics_single_chain_efjc_thermodynamics_isotensional_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -328,7 +332,7 @@ function relative_gibbs_free_energy(
     return broadcast(
         (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_relative_gibbs_free_energy,
+                :physics_single_chain_efjc_thermodynamics_isotensional_relative_gibbs_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -362,7 +366,7 @@ function relative_gibbs_free_energy_per_link(
     return broadcast(
         (link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_relative_gibbs_free_energy_per_link,
+                :physics_single_chain_efjc_thermodynamics_isotensional_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -403,7 +407,7 @@ function nondimensional_gibbs_free_energy(
             temperature_i,
         ) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy,
+                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -446,7 +450,7 @@ function nondimensional_gibbs_free_energy_per_link(
             temperature_i,
         ) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy_per_link,
+                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -480,7 +484,7 @@ function nondimensional_relative_gibbs_free_energy(
     return broadcast(
         (number_of_links_i, link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy,
+                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -522,7 +526,7 @@ function nondimensional_relative_gibbs_free_energy_per_link(
     return broadcast(
         (link_length_i, link_stiffness_i, nondimensional_force_i) -> ccall(
             (
-                :physics_single_chain_swfjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy_per_link,
+                :physics_single_chain_efjc_thermodynamics_isotensional_nondimensional_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
@@ -553,6 +557,7 @@ return EFJC(
     link_length,
     hinge_mass,
     link_stiffness,
+    Asymptotic.EFJC(number_of_links, link_length, hinge_mass, link_stiffness),
     Legendre.EFJC(number_of_links, link_length, hinge_mass, link_stiffness),
     (force, temperature) ->
         end_to_end_length(number_of_links, link_length, link_stiffness, force, temperature),
