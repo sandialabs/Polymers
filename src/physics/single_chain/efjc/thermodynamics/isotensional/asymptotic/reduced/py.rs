@@ -5,6 +5,7 @@ use numpy::
     PyArrayDyn,
     PyReadonlyArrayDyn
 };
+use crate::physics::BOLTZMANN_CONSTANT;
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
@@ -70,7 +71,7 @@ impl EFJC
     ///
     pub fn end_to_end_length<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).end_to_end_length(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length(&self.number_of_links, &self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The expected end-to-end length per link as a function of the applied force and temperature.
     ///
@@ -83,7 +84,7 @@ impl EFJC
     ///
     pub fn end_to_end_length_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).end_to_end_length_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::end_to_end_length_per_link(&self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
     ///
@@ -96,7 +97,7 @@ impl EFJC
     ///
     pub fn nondimensional_end_to_end_length<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_end_to_end_length(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length(&self.number_of_links, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force)).into_pyarray(py)
     }
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
@@ -112,7 +113,7 @@ impl EFJC
     ///
     pub fn nondimensional_end_to_end_length_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_end_to_end_length_per_link(&(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force)).into_pyarray(py)
     }
     /// The Gibbs free energy as a function of the applied force and temperature,
     ///
@@ -128,7 +129,7 @@ impl EFJC
     ///
     pub fn gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).gibbs_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The Gibbs free energy per link as a function of the applied force and temperature.
     ///
@@ -141,7 +142,7 @@ impl EFJC
     ///
     pub fn gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Gibbs free energy as a function of the applied force and temperature.
     ///
@@ -154,7 +155,7 @@ impl EFJC
     ///
     pub fn relative_gibbs_free_energy<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).relative_gibbs_free_energy(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The relative Gibbs free energy per link as a function of the applied force and temperature.
     ///
@@ -167,7 +168,7 @@ impl EFJC
     ///
     pub fn relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        force.as_array().mapv(|force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).relative_gibbs_free_energy_per_link(&force, &temperature)).into_pyarray(py)
+        force.as_array().mapv(|force: f64| super::relative_gibbs_free_energy_per_link(&self.link_length, &self.link_stiffness, &force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature.
     ///
@@ -180,7 +181,7 @@ impl EFJC
     ///
     pub fn nondimensional_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_gibbs_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_gibbs_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature.
     ///
@@ -193,7 +194,7 @@ impl EFJC
     ///
     pub fn nondimensional_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_gibbs_free_energy_per_link(&self.link_length, &self.hinge_mass, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force, &temperature)).into_pyarray(py)
     }
     /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force.
     ///
@@ -206,7 +207,7 @@ impl EFJC
     ///
     pub fn nondimensional_relative_gibbs_free_energy<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_gibbs_free_energy(&self.number_of_links, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force)).into_pyarray(py)
     }
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
@@ -222,6 +223,6 @@ impl EFJC
     ///
     pub fn nondimensional_relative_gibbs_free_energy_per_link<'py>(&self, py: Python<'py>, nondimensional_force: PyReadonlyArrayDyn<f64>, temperature: f64) -> &'py PyArrayDyn<f64>
     {
-        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::EFJC::init(self.number_of_links, self.link_length, self.hinge_mass, self.link_stiffness).nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature)).into_pyarray(py)
+        nondimensional_force.as_array().mapv(|nondimensional_force: f64| super::nondimensional_relative_gibbs_free_energy_per_link(&(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &nondimensional_force)).into_pyarray(py)
     }
 }

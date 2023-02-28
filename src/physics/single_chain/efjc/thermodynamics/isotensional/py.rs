@@ -7,7 +7,6 @@ use numpy::
 };
 use crate::physics::BOLTZMANN_CONSTANT;
 
-
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
     let isotensional = PyModule::new(py, "isotensional")?;
