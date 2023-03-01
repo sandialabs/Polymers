@@ -44,7 +44,6 @@ struct FJC
     helmholtz_free_energy::Function
     """
     The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
-
     """
     helmholtz_free_energy_per_link::Function
     """
@@ -68,7 +67,7 @@ struct FJC
     """
     nondimensional_relative_helmholtz_free_energy::Function
     """
-    The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``
+    The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``.
     """
     nondimensional_relative_helmholtz_free_energy_per_link::Function
     """
@@ -396,7 +395,7 @@ function nondimensional_helmholtz_free_energy_per_link(
 end
 
 """
-The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``,
 parameterized by the number of links ``N_b``,
 
 ```math
@@ -426,7 +425,7 @@ function nondimensional_relative_helmholtz_free_energy(
 end
 
 """
-The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
+The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``,
 parameterized by the number of links ``N_b``,
 
 ```math

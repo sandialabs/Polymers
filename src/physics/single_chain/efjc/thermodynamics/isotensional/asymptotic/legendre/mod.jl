@@ -129,19 +129,20 @@ function relative_helmholtz_free_energy(
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
-            (
-                :physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_legendre_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) ->
+            ccall(
+                (
+                    :physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_legendre_relative_helmholtz_free_energy,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64, Float64, Float64),
+                number_of_links_i,
+                link_length_i,
+                link_stiffness_i,
+                force_i,
+                temperature_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            link_stiffness_i,
-            force_i,
-            temperature_i,
-        ),
         number_of_links,
         link_length,
         link_stiffness,
@@ -280,17 +281,18 @@ function nondimensional_relative_helmholtz_free_energy(
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
-            (
-                :physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_legendre_nondimensional_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, nondimensional_link_stiffness_i, nondimensional_force_i) ->
+            ccall(
+                (
+                    :physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_legendre_nondimensional_relative_helmholtz_free_energy,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64),
+                number_of_links_i,
+                nondimensional_link_stiffness_i,
+                nondimensional_force_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64),
-            number_of_links_i,
-            nondimensional_link_stiffness_i,
-            nondimensional_force_i,
-        ),
         number_of_links,
         link_length,
         nondimensional_link_stiffness,
@@ -335,65 +337,65 @@ function EFJC(
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
-return EFJC(
-    number_of_links,
-    link_length,
-    hinge_mass,
-    link_stiffness,
-    (force, temperature) -> helmholtz_free_energy(
+    return EFJC(
         number_of_links,
         link_length,
         hinge_mass,
         link_stiffness,
-        force,
-        temperature,
-    ),
-    (force, temperature) -> helmholtz_free_energy_per_link(
-        link_length,
-        link_stiffness,
-        hinge_mass,
-        force,
-        temperature,
-    ),
-    (force, temperature) -> relative_helmholtz_free_energy(
-        number_of_links,
-        link_length,
-        link_stiffness,
-        force,
-        temperature,
-    ),
-    (force, temperature) -> relative_helmholtz_free_energy_per_link(
-        link_length,
-        link_stiffness,
-        force,
-        temperature,
-    ),
-    (nondimensional_force, temperature) -> nondimensional_helmholtz_free_energy(
-        number_of_links,
-        link_length,
-        hinge_mass,
-        link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
-        nondimensional_force,
-        temperature,
-    ),
-    (nondimensional_force, temperature) ->
-        nondimensional_helmholtz_free_energy_per_link(
+        (force, temperature) -> helmholtz_free_energy(
+            number_of_links,
             link_length,
             hinge_mass,
-            link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (force, temperature) -> helmholtz_free_energy_per_link(
+            link_length,
+            link_stiffness,
+            hinge_mass,
+            force,
+            temperature,
+        ),
+        (force, temperature) -> relative_helmholtz_free_energy(
+            number_of_links,
+            link_length,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (force, temperature) -> relative_helmholtz_free_energy_per_link(
+            link_length,
+            link_stiffness,
+            force,
+            temperature,
+        ),
+        (nondimensional_force, temperature) -> nondimensional_helmholtz_free_energy(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
             nondimensional_force,
             temperature,
         ),
-    nondimensional_force -> nondimensional_relative_helmholtz_free_energy(
-        number_of_links,
-        link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
-        nondimensional_force,
-    ),
-    nondimensional_force -> nondimensional_relative_helmholtz_free_energy_per_link(
-        link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature,
-        nondimensional_force,
-    ),
-)
+        (nondimensional_force, temperature) ->
+            nondimensional_helmholtz_free_energy_per_link(
+                link_length,
+                hinge_mass,
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                nondimensional_force,
+                temperature,
+            ),
+        nondimensional_force -> nondimensional_relative_helmholtz_free_energy(
+            number_of_links,
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+            nondimensional_force,
+        ),
+        nondimensional_force -> nondimensional_relative_helmholtz_free_energy_per_link(
+            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+            nondimensional_force,
+        ),
+    )
 end
 
 end

@@ -120,7 +120,7 @@ function end_to_end_length(
 end
 
 """
-The expected end-to-end length ``\\xi`` as a function of the applied force ``f`` and temperature ``T``,
+The expected end-to-end length per link ``\\xi/N_b=\\ell_b\\gamma`` as a function of the applied force ``f`` and temperature ``T``,
 parameterized by the link length ``\\ell_b``.
 
 $(TYPEDSIGNATURES)
@@ -149,7 +149,7 @@ function end_to_end_length_per_link(
 end
 
 """
-The expected nondimensional end-to-end length ``\\gamma\\equiv\\xi/N_b\\ell_b`` as a function of the applied nondimensional force ``\\eta``,
+The expected nondimensional end-to-end length ``N_b\\gamma\\equiv\\xi/\\ell_b`` as a function of the applied nondimensional force ``\\eta``,
 parameterized by the number of links ``N_b``.
 
 $(TYPEDSIGNATURES)

@@ -2,7 +2,6 @@
 
 [![website](https://img.shields.io/badge/GitHub-website-6e5494?logo=github)](https://sandialabs.github.io/Polymers)
 [![examples](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/binder.svg)](https://mybinder.org/v2/gh/sandialabs/Polymers/main)
-[![chat](https://img.shields.io/badge/Discord-chat-%237289da.svg?logo=discord&color=5865F2&logoColor=FFFFFF)](https://discord.gg/9gy8tTktD5)
 
 The library is implemented entirely in Rust, including the Python API. The Julia API calls the Rust library.
 
@@ -32,7 +31,7 @@ pip install target/wheels/*.whl
 
 [![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable)
 [![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest)
-[![Pkg](https://img.shields.io/github/v/release/sandialabs/Polymers?color=cb3c33&label=Pkg&logo=Julia&logoColor=cb3c33)](https://juliapackages.com/p/polymers)
+[![Pkg](https://img.shields.io/github/v/release/sandialabs/Polymers?color=cb3c33&label=Pkg&logo=Julia&logoColor=cb3c33)](#)
 
 The library can be installed as a Julia package:
 
