@@ -525,8 +525,7 @@ end
             ZERO * BOLTZMANN_CONSTANT * temperature / link_length,
             temperature,
         )
-        @test abs(end_to_end_length_0) <=
-              ZERO * number_of_links * link_length
+        @test abs(end_to_end_length_0) <= ZERO * number_of_links * link_length
     end
 end
 
@@ -545,8 +544,7 @@ end
             ZERO * BOLTZMANN_CONSTANT * temperature / link_length,
             temperature,
         )
-        @test abs(end_to_end_length_per_link_0) <=
-              ZERO * link_length
+        @test abs(end_to_end_length_per_link_0) <= ZERO * link_length
     end
 end
 
@@ -559,8 +557,7 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_end_to_end_length_0 =
-            model.nondimensional_end_to_end_length(ZERO)
+        nondimensional_end_to_end_length_0 = model.nondimensional_end_to_end_length(ZERO)
         @test abs(nondimensional_end_to_end_length_0) <= ZERO * number_of_links
     end
 end

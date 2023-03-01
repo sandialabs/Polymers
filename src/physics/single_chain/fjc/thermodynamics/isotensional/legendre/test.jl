@@ -185,7 +185,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::per_link::helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::per_link::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -211,7 +211,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::per_link::relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::per_link::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -239,7 +239,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::per_link::nondimensional_helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::per_link::nondimensional_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -269,7 +269,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::per_link::nondimensional_relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::per_link::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -296,7 +296,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::relative::helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::relative::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -327,7 +327,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::relative::helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::relative::helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -359,7 +359,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::relative::nondimensional_helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::relative::nondimensional_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -388,7 +388,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::relative::nondimensional_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::relative::nondimensional_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -423,7 +423,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::zero::relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::zero::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -443,7 +443,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::zero::relative_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::zero::relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -464,7 +464,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::zero::nondimensional_relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::zero::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -479,7 +479,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::thermodynamics::isotensional::test::zero::nondimensional_relative_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::fjc::thermodynamics::isotensional::legendre::test::zero::nondimensional_relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)

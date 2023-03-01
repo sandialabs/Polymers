@@ -29,6 +29,38 @@ struct EFJC
     The stiffness of each link in the chain ``k_0`` in units of J/(mol⋅nm^2).
     """
     link_stiffness::Float64
+    """
+    The Helmholtz free energy ``\\psi`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    helmholtz_free_energy::Function
+    """
+    The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    helmholtz_free_energy_per_link::Function
+    """
+    The relative helmholtz free energy ``\\Delta\\psi\\equiv\\psi(f,T)-\\psi(0,T)`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    relative_helmholtz_free_energy::Function
+    """
+    The relative helmholtz free energy per link ``\\Delta\\psi/N_b`` as a function of the applied force ``f`` and temperature ``T``.
+    """
+    relative_helmholtz_free_energy_per_link::Function
+    """
+    The nondimensional helmholtz free energy ``N_b\\vartheta=\\beta\\psi`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``.
+    """
+    nondimensional_helmholtz_free_energy::Function
+    """
+    The nondimensional helmholtz free energy per link ``\\vartheta\\equiv\\beta\\psi/N_b`` as a function of the applied nondimensional force ``\\eta`` and temperature ``T``.
+    """
+    nondimensional_helmholtz_free_energy_per_link::Function
+    """
+    The nondimensional relative helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional force ``\\eta``.
+    """
+    nondimensional_relative_helmholtz_free_energy::Function
+    """
+    The nondimensional relative helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional force ``\\eta``.
+    """
+    nondimensional_relative_helmholtz_free_energy_per_link::Function
 end
 
 """
@@ -294,7 +326,6 @@ function nondimensional_relative_helmholtz_free_energy(
                 nondimensional_force_i,
             ),
         number_of_links,
-        link_length,
         nondimensional_link_stiffness,
         nondimensional_force,
     )
@@ -337,6 +368,7 @@ function EFJC(
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
+    BOLTZMANN_CONSTANT::Float64 = 8.314462618
     return EFJC(
         number_of_links,
         link_length,
@@ -386,15 +418,17 @@ function EFJC(
                 nondimensional_force,
                 temperature,
             ),
-        nondimensional_force -> nondimensional_relative_helmholtz_free_energy(
-            number_of_links,
-            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
-            nondimensional_force,
-        ),
-        nondimensional_force -> nondimensional_relative_helmholtz_free_energy_per_link(
-            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
-            nondimensional_force,
-        ),
+        (nondimensional_force, temperature) ->
+            nondimensional_relative_helmholtz_free_energy(
+                number_of_links,
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                nondimensional_force,
+            ),
+        (nondimensional_force, temperature) ->
+            nondimensional_relative_helmholtz_free_energy_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                nondimensional_force,
+            ),
     )
 end
 
