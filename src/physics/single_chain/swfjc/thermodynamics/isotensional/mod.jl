@@ -572,8 +572,8 @@ function SWFJC(
         ),
         (force, temperature) -> gibbs_free_energy_per_link(
             link_length,
-            well_width,
             hinge_mass,
+            well_width,
             force,
             temperature,
         ),

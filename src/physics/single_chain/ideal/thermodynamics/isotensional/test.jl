@@ -1,7 +1,7 @@
 module Test
 
 using Test
-using Polymers.Physics: BOLTZMANN_CONSTANT, PLANCK_CONSTANT
+using Polymers.Physics: BOLTZMANN_CONSTANT
 using Polymers.Physics.SingleChain: parameters
 using Polymers.Physics.SingleChain.Ideal.Thermodynamics.Isotensional: IDEAL
 

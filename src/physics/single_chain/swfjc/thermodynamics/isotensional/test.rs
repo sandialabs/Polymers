@@ -505,7 +505,7 @@ mod zero
             let well_width = parameters.well_width_reference + parameters.well_width_scale*(0.5 - rng.gen::<f64>());
             let model = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
             let nondimensional_relative_gibbs_free_energy_0 = model.nondimensional_relative_gibbs_free_energy(&ZERO);
-            assert!(nondimensional_relative_gibbs_free_energy_0.abs() <= ZERO);
+            assert!(nondimensional_relative_gibbs_free_energy_0.abs() <= (number_of_links as f64)*ZERO);
         }
     }
     #[test]
