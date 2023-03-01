@@ -4,7 +4,7 @@ using Test
 using Polymers.Physics.SingleChain: parameters
 using Polymers.Physics.SingleChain.Swfjc: SWFJC
 
-@testset "physics::single_chain::fjc::test::base::init" begin
+@testset "physics::single_chain::swfjc::test::base::init" begin
     @test isa(
         SWFJC(
             parameters.number_of_links_minimum,
@@ -16,7 +16,7 @@ using Polymers.Physics.SingleChain.Swfjc: SWFJC
     )
 end
 
-@testset "physics::single_chain::fjc::test::base::number_of_links" begin
+@testset "physics::single_chain::swfjc::test::base::number_of_links" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -29,7 +29,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::test::base::link_length" begin
+@testset "physics::single_chain::swfjc::test::base::link_length" begin
     for _ = 1:parameters.number_of_loops
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
@@ -42,7 +42,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::test::base::hinge_mass" begin
+@testset "physics::single_chain::swfjc::test::base::hinge_mass" begin
     for _ = 1:parameters.number_of_loops
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
@@ -55,7 +55,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::test::base::well_width" begin
+@testset "physics::single_chain::swfjc::test::base::well_width" begin
     for _ = 1:parameters.number_of_loops
         well_width =
             parameters.well_width_reference + parameters.well_width_scale * (0.5 - rand())
@@ -68,7 +68,7 @@ end
     end
 end
 
-@testset "physics::single_chain::fjc::test::base::all_parameters" begin
+@testset "physics::single_chain::swfjc::test::base::all_parameters" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
