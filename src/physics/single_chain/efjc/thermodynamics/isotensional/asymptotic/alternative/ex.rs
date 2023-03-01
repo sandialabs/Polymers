@@ -34,7 +34,7 @@ pub extern fn physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_a
     super::relative_gibbs_free_energy(&number_of_links, &link_length, &link_stiffness, &force, &temperature)
 }
 #[no_mangle]
-pub extern fn physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_alternative_relative_gibbs_free_energy_per_link(link_length: f64, force: f64, link_stiffness: f64, temperature: f64) -> f64
+pub extern fn physics_single_chain_efjc_thermodynamics_isotensional_asymptotic_alternative_relative_gibbs_free_energy_per_link(link_length: f64, link_stiffness: f64, force: f64, temperature: f64) -> f64
 {
     super::relative_gibbs_free_energy_per_link(&link_length, &link_stiffness, &force, &temperature)
 }

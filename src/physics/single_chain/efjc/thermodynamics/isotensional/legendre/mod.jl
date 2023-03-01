@@ -326,7 +326,6 @@ function nondimensional_relative_helmholtz_free_energy(
                 nondimensional_force_i,
             ),
         number_of_links,
-        link_length,
         nondimensional_link_stiffness,
         nondimensional_force,
     )
@@ -369,6 +368,7 @@ function EFJC(
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
+    BOLTZMANN_CONSTANT::Float64 = 8.314462618
     return EFJC(
         number_of_links,
         link_length,
@@ -384,8 +384,8 @@ function EFJC(
         ),
         (force, temperature) -> helmholtz_free_energy_per_link(
             link_length,
-            link_stiffness,
             hinge_mass,
+            link_stiffness,
             force,
             temperature,
         ),
@@ -418,15 +418,17 @@ function EFJC(
                 nondimensional_force,
                 temperature,
             ),
-        nondimensional_force -> nondimensional_relative_helmholtz_free_energy(
-            number_of_links,
-            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
-            nondimensional_force,
-        ),
-        nondimensional_force -> nondimensional_relative_helmholtz_free_energy_per_link(
-            link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
-            nondimensional_force,
-        ),
+        (nondimensional_force, temperature) ->
+            nondimensional_relative_helmholtz_free_energy(
+                number_of_links,
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                nondimensional_force,
+            ),
+        (nondimensional_force, temperature) ->
+            nondimensional_relative_helmholtz_free_energy_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                nondimensional_force,
+            ),
     )
 end
 
