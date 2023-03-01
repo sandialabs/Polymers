@@ -1,6 +1,7 @@
 using Test
 using Polymers
 
+include("../src/physics/single_chain/test.jl")
 include("../src/physics/single_chain/ideal/test.jl")
 include("../src/physics/single_chain/ideal/thermodynamics/test.jl")
 include("../src/physics/single_chain/ideal/thermodynamics/isometric/test.jl")
