@@ -44,7 +44,7 @@ jobs:
         with:
           script: |
             github.rest.commit.createComment({
-              commit_sha: ${GITHUB_SHA},
+              commit_sha: context.commit.sha,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: '@JuliaRegistratorASDF register'
