@@ -565,8 +565,8 @@ function EFJC(
         ),
         (force, temperature) -> gibbs_free_energy_per_link(
             link_length,
-            link_stiffness,
             hinge_mass,
+            link_stiffness,
             force,
             temperature,
         ),

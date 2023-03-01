@@ -453,7 +453,10 @@ end
             parameters.nondimensional_force_scale * (0.5 - rand())
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         gibbs_free_energy = model.gibbs_free_energy(force, temperature)
-        gibbs_free_energy_0 = model.gibbs_free_energy(ZERO*BOLTZMANN_CONSTANT*temperature/link_length, temperature)
+        gibbs_free_energy_0 = model.gibbs_free_energy(
+            ZERO * BOLTZMANN_CONSTANT * temperature / link_length,
+            temperature,
+        )
         relative_gibbs_free_energy = model.relative_gibbs_free_energy(force, temperature)
         residual_abs = gibbs_free_energy - gibbs_free_energy_0 - relative_gibbs_free_energy
         residual_rel = residual_abs / gibbs_free_energy_0
@@ -481,7 +484,10 @@ end
             parameters.nondimensional_force_scale * (0.5 - rand())
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(force, temperature)
-        gibbs_free_energy_per_link_0 = model.gibbs_free_energy_per_link(ZERO*BOLTZMANN_CONSTANT*temperature/link_length, temperature)
+        gibbs_free_energy_per_link_0 = model.gibbs_free_energy_per_link(
+            ZERO * BOLTZMANN_CONSTANT * temperature / link_length,
+            temperature,
+        )
         relative_gibbs_free_energy_per_link =
             model.relative_gibbs_free_energy_per_link(force, temperature)
         residual_abs =
@@ -572,8 +578,12 @@ end
         model = SWFJC(number_of_links, link_length, hinge_mass, well_width)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(ZERO*BOLTZMANN_CONSTANT*temperature/link_length, temperature)
-        @test abs(relative_gibbs_free_energy_0) <= ZERO*BOLTZMANN_CONSTANT*temperature*number_of_links
+        relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(
+            ZERO * BOLTZMANN_CONSTANT * temperature / link_length,
+            temperature,
+        )
+        @test abs(relative_gibbs_free_energy_0) <=
+              ZERO * BOLTZMANN_CONSTANT * temperature * number_of_links
     end
 end
 
@@ -590,9 +600,12 @@ end
         model = SWFJC(number_of_links, link_length, hinge_mass, well_width)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        relative_gibbs_free_energy_per_link_0 =
-            model.relative_gibbs_free_energy_per_link(ZERO*BOLTZMANN_CONSTANT*temperature/link_length, temperature)
-        @test abs(relative_gibbs_free_energy_per_link_0) <= ZERO*BOLTZMANN_CONSTANT*temperature
+        relative_gibbs_free_energy_per_link_0 = model.relative_gibbs_free_energy_per_link(
+            ZERO * BOLTZMANN_CONSTANT * temperature / link_length,
+            temperature,
+        )
+        @test abs(relative_gibbs_free_energy_per_link_0) <=
+              ZERO * BOLTZMANN_CONSTANT * temperature
     end
 end
 
@@ -609,7 +622,7 @@ end
         model = SWFJC(number_of_links, link_length, hinge_mass, well_width)
         nondimensional_relative_gibbs_free_energy_0 =
             model.nondimensional_relative_gibbs_free_energy(ZERO)
-        @test abs(nondimensional_relative_gibbs_free_energy_0) <= ZERO*number_of_links
+        @test abs(nondimensional_relative_gibbs_free_energy_0) <= ZERO * number_of_links
     end
 end
 
