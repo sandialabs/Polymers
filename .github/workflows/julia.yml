@@ -1,7 +1,5 @@
 name: Julia
 on:
-  push:
-    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
   release:
@@ -10,7 +8,6 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
-    if: github.event_name == 'release'
     strategy:
       fail-fast: false
       matrix:
@@ -38,6 +35,7 @@ jobs:
         if: runner.os == 'Linux'
         run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format("./") == true; exit(0); else exit(1); end'
   register:
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -47,5 +45,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               commit_sha: context.sha,
-              body: '@JuliaRegistratorASDF register'
+              body: '@JuliaRegistrator register'
             })
