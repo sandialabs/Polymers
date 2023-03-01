@@ -201,7 +201,7 @@ parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge
 
 $(TYPEDSIGNATURES)
 """
-function nondimensional_gibbs_free_energy(
+function gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
@@ -236,10 +236,10 @@ parameterized by the link length ``\\ell_b`` and hinge mass ``m``.
 
 $(TYPEDSIGNATURES)
 """
-function nondimensional_gibbs_free_energy_per_link(
+function gibbs_free_energy_per_link(
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    nondimensional_force::Union{Float64,Vector,Matrix,Array},
+    force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
