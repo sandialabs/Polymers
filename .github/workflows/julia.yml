@@ -46,6 +46,6 @@ jobs:
             github.rest.repos.createCommitComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              commit_sha: "$GITHUB_SHA",
+              commit_sha: context.repo.commit_sha,
               body: '@JuliaRegistratorASDF register'
             })
