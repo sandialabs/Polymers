@@ -1,13 +1,24 @@
 name: Julia
 on:
-  pull_request:
+
+
+  push:
     branches: [ "dev" ]
+    
+    
+  pull_request:
+    branches: [ "main" ]
   release:
     types: [ published ]
 env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
+  
+  
+    if: github.event_name == 'release'
+    
+    
     strategy:
       fail-fast: false
       matrix:
