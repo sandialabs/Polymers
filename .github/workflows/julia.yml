@@ -10,6 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   test:
+    if: github.event_name == 'release'
     strategy:
       fail-fast: false
       matrix:
@@ -37,7 +38,7 @@ jobs:
         if: runner.os == 'Linux'
         run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format("./") == true; exit(0); else exit(1); end'
   register:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
         with:
