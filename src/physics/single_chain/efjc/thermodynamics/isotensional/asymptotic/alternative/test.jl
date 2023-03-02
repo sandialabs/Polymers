@@ -99,7 +99,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::nondimensional::end_to_end_length" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::nondimensional::end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -127,7 +127,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::nondimensional::end_to_end_length_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::nondimensional::end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -160,7 +160,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::nondimensional::gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::nondimensional::gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -190,7 +190,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::nondimensional::gibbs_free_energy_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::nondimensional::gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -223,7 +223,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::nondimensional::relative_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::nondimensional::relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -256,7 +256,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::nondimensional::relative_gibbs_free_energy_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::nondimensional::relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -290,7 +290,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::per_link::end_to_end_length" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::per_link::end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -317,7 +317,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::per_link::nondimensional_end_to_end_length" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::per_link::nondimensional_end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -350,7 +350,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::per_link::gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::per_link::gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -377,7 +377,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::per_link::relative_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::per_link::relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -407,7 +407,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::per_link::nondimensional_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::per_link::nondimensional_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -440,7 +440,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::per_link::nondimensional_relative_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::per_link::nondimensional_relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -476,7 +476,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::relative::gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::relative::gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -508,7 +508,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::relative::gibbs_free_energy_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::relative::gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -542,7 +542,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::relative::nondimensional_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::relative::nondimensional_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -577,7 +577,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::relative::nondimensional_gibbs_free_energy_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::relative::nondimensional_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -616,7 +616,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::zero::relative_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::zero::relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -639,7 +639,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::zero::relative_gibbs_free_energy_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::zero::relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -662,7 +662,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::zero::nondimensional_relative_gibbs_free_energy" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::zero::nondimensional_relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -682,7 +682,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::zero::nondimensional_relative_gibbs_free_energy_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::zero::nondimensional_relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -702,7 +702,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::connection::end_to_end_length" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::connection::end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -733,7 +733,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::connection::end_to_end_length_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::connection::end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -765,7 +765,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::connection::nondimensional_end_to_end_length" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::connection::nondimensional_end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -803,7 +803,7 @@ end
     end
 end
 
-@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::connection::nondimensional_end_to_end_length_per_link" begin
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::asymptotic::alternative::test::connection::nondimensional_end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
