@@ -886,7 +886,7 @@ mod swfjc_fjc
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let link_length = rng.gen::<f64>();
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let well_width = parameters.nondimensional_well_width_small*link_length;
             let fjc = FJC::init(number_of_links, link_length, hinge_mass);
             let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
@@ -908,7 +908,7 @@ mod swfjc_fjc
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let link_length = rng.gen::<f64>();
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let well_width = parameters.nondimensional_well_width_small*link_length;
             let fjc = FJC::init(number_of_links, link_length, hinge_mass);
             let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
@@ -930,7 +930,7 @@ mod swfjc_fjc
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let link_length = rng.gen::<f64>();
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let well_width = parameters.nondimensional_well_width_small*link_length;
             let fjc = FJC::init(number_of_links, link_length, hinge_mass);
             let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
@@ -950,7 +950,7 @@ mod swfjc_fjc
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let link_length = rng.gen::<f64>();
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let well_width = parameters.nondimensional_well_width_small*link_length;
             let fjc = FJC::init(number_of_links, link_length, hinge_mass);
             let swfjc = SWFJC::init(number_of_links, link_length, hinge_mass, well_width);
