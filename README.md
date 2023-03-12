@@ -45,7 +45,6 @@ If Rust is installed, the latest edition of the library can be installed from th
 ```julia
 using Pkg
 Pkg.add(url="https://github.com/sandialabs/Polymers")
-Pkg.build("Polymers")
 ```
 
 ## Rust
