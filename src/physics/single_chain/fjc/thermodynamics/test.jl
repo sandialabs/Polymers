@@ -698,7 +698,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_strong_potential_isometric::force" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -755,7 +756,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_strong_potential_isometric::nondimensional_force" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -803,7 +805,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_strong_potential_isometric::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -863,7 +866,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_strong_potential_isometric::relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -923,7 +927,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_strong_potential_isometric::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -971,7 +976,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_strong_potential_isometric::nondimensional_relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1020,7 +1026,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1083,7 +1090,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1146,7 +1154,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::nondimensional_end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1162,7 +1171,9 @@ end
                     model.modified_canonical.nondimensional_end_to_end_length(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_end_to_end_length(nondimensional_force)
+                    ) - model.isotensional.nondimensional_end_to_end_length(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -1197,7 +1208,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::nondimensional_end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1213,7 +1225,9 @@ end
                     model.modified_canonical.nondimensional_end_to_end_length_per_link(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_end_to_end_length_per_link(nondimensional_force)
+                    ) - model.isotensional.nondimensional_end_to_end_length_per_link(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -1248,20 +1262,28 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        potential_distance_ref = parameters.nondimensional_potential_distance_large_1*number_of_links*link_length
+        potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1 *
+            number_of_links *
+            link_length
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
                 BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
                 nondimensional_potential_stiffness
-            force_ref = model.modified_canonical.force(potential_distance_ref, potential_stiffness, temperature)
+            force_ref = model.modified_canonical.force(
+                potential_distance_ref,
+                potential_stiffness,
+                temperature,
+            )
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
@@ -1272,29 +1294,31 @@ end
                 )
                 return (
                     model.modified_canonical.gibbs_free_energy(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.gibbs_free_energy(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ) - model.isotensional.gibbs_free_energy(force, temperature)
-                +  model.isotensional.gibbs_free_energy(force_ref, temperature)
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.gibbs_free_energy(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.gibbs_free_energy(force, temperature) +
+                    model.isotensional.gibbs_free_energy(force_ref, temperature)
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
-                return (model.modified_canonical.gibbs_free_energy(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.gibbs_free_energy(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ))^2
+                return (
+                    model.modified_canonical.gibbs_free_energy(
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.gibbs_free_energy(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -1322,20 +1346,28 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        potential_distance_ref = parameters.nondimensional_potential_distance_large_1*number_of_links*link_length
+        potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1 *
+            number_of_links *
+            link_length
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
                 BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
                 nondimensional_potential_stiffness
-            force_ref = model.modified_canonical.force(potential_distance_ref, potential_stiffness, temperature)
+            force_ref = model.modified_canonical.force(
+                potential_distance_ref,
+                potential_stiffness,
+                temperature,
+            )
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
@@ -1346,29 +1378,31 @@ end
                 )
                 return (
                     model.modified_canonical.gibbs_free_energy_per_link(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.gibbs_free_energy_per_link(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ) - model.isotensional.gibbs_free_energy_per_link(force, temperature)
-                +  model.isotensional.gibbs_free_energy_per_link(force_ref, temperature)
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.gibbs_free_energy_per_link(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.gibbs_free_energy_per_link(force, temperature) +
+                    model.isotensional.gibbs_free_energy_per_link(force_ref, temperature)
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
-                return (model.modified_canonical.gibbs_free_energy_per_link(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.gibbs_free_energy_per_link(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ))^2
+                return (
+                    model.modified_canonical.gibbs_free_energy_per_link(
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.gibbs_free_energy_per_link(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -1396,7 +1430,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1459,7 +1494,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1484,7 +1520,10 @@ end
                         potential_distance,
                         potential_stiffness,
                         temperature,
-                    ) - model.isotensional.relative_gibbs_free_energy_per_link(force, temperature)
+                    ) - model.isotensional.relative_gibbs_free_energy_per_link(
+                        force,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -1522,17 +1561,22 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::nondimensional_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        nondimensional_potential_distance_ref = parameters.nondimensional_potential_distance_large_1
+        nondimensional_potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
-            nondimensional_force_ref = model.modified_canonical.nondimensional_force(nondimensional_potential_distance_ref, nondimensional_potential_stiffness)
+            nondimensional_force_ref = model.modified_canonical.nondimensional_force(
+                nondimensional_potential_distance_ref,
+                nondimensional_potential_stiffness,
+            )
             function integrand_numerator(nondimensional_potential_distance)
                 nondimensional_force = model.modified_canonical.nondimensional_force(
                     nondimensional_potential_distance,
@@ -1540,28 +1584,33 @@ end
                 )
                 return (
                     model.modified_canonical.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance_ref,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.isotensional.nondimensional_gibbs_free_energy(nondimensional_force, temperature)
-                + model.isotensional.nondimensional_gibbs_free_energy(nondimensional_force_ref, temperature)
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.nondimensional_gibbs_free_energy(
+                        nondimensional_force,
+                        temperature,
+                    ) + model.isotensional.nondimensional_gibbs_free_energy(
+                        nondimensional_force_ref,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 return (
-                model.modified_canonical.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance_ref,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                )
+                    model.modified_canonical.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             numerator = integrate(
@@ -1590,17 +1639,22 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::nondimensional_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        nondimensional_potential_distance_ref = parameters.nondimensional_potential_distance_large_1
+        nondimensional_potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
-            nondimensional_force_ref = model.modified_canonical.nondimensional_force(nondimensional_potential_distance_ref, nondimensional_potential_stiffness)
+            nondimensional_force_ref = model.modified_canonical.nondimensional_force(
+                nondimensional_potential_distance_ref,
+                nondimensional_potential_stiffness,
+            )
             function integrand_numerator(nondimensional_potential_distance)
                 nondimensional_force = model.modified_canonical.nondimensional_force(
                     nondimensional_potential_distance,
@@ -1608,28 +1662,34 @@ end
                 )
                 return (
                     model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance_ref,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.isotensional.nondimensional_gibbs_free_energy_per_link(nondimensional_force, temperature)
-                + model.isotensional.nondimensional_gibbs_free_energy_per_link(nondimensional_force_ref, temperature)
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_force,
+                        temperature,
+                    ) + model.isotensional.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_force_ref,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 return (
-                model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance_ref,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                )
+                    model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.modified_canonical.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             numerator = integrate(
@@ -1658,7 +1718,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::nondimensional_relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1674,7 +1735,9 @@ end
                     model.modified_canonical.nondimensional_relative_gibbs_free_energy(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(nondimensional_force)
+                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -1709,7 +1772,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_weak_potential_isotensional::nondimensional_relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1725,7 +1789,9 @@ end
                     model.modified_canonical.nondimensional_relative_gibbs_free_energy(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(nondimensional_force)
+                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -1760,7 +1826,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::force" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1814,7 +1881,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::nondimensional_force" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1862,7 +1930,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1876,24 +1945,37 @@ end
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
+                    model.isometric.helmholtz_free_energy(end_to_end_length, temperature) -
                     model.isometric.helmholtz_free_energy(
-                        end_to_end_length,
+                        parameters.nondimensional_potential_distance_small *
+                        number_of_links *
+                        link_length,
                         temperature,
                     ) -
-                    model.isometric.helmholtz_free_energy(parameters.nondimensional_potential_distance_small*number_of_links*link_length, temperature) -
                     model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(
                         end_to_end_length,
                         potential_stiffness,
                         temperature,
-                    ) + model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(parameters.nondimensional_potential_distance_small*number_of_links*link_length, potential_stiffness, temperature)
+                    ) +
+                    model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(
+                        parameters.nondimensional_potential_distance_small *
+                        number_of_links *
+                        link_length,
+                        potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(end_to_end_length)
-                return (model.isometric.helmholtz_free_energy(
-                    end_to_end_length,
-                    temperature,
-                ) -
-                model.isometric.helmholtz_free_energy(parameters.nondimensional_potential_distance_small*number_of_links*link_length, temperature))^2
+                return (
+                    model.isometric.helmholtz_free_energy(end_to_end_length, temperature) -
+                    model.isometric.helmholtz_free_energy(
+                        parameters.nondimensional_potential_distance_small *
+                        number_of_links *
+                        link_length,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -1924,7 +2006,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -1941,21 +2024,38 @@ end
                     model.isometric.helmholtz_free_energy_per_link(
                         end_to_end_length,
                         temperature,
+                    ) - model.isometric.helmholtz_free_energy_per_link(
+                        parameters.nondimensional_potential_distance_small *
+                        number_of_links *
+                        link_length,
+                        temperature,
                     ) -
-                    model.isometric.helmholtz_free_energy_per_link(parameters.nondimensional_potential_distance_small*number_of_links*link_length, temperature) -
                     model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(
                         end_to_end_length,
                         potential_stiffness,
                         temperature,
-                    ) + model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(parameters.nondimensional_potential_distance_small*number_of_links*link_length, potential_stiffness, temperature)
+                    ) +
+                    model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(
+                        parameters.nondimensional_potential_distance_small *
+                        number_of_links *
+                        link_length,
+                        potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(end_to_end_length)
-                return (model.isometric.helmholtz_free_energy_per_link(
-                    end_to_end_length,
-                    temperature,
-                ) -
-                model.isometric.helmholtz_free_energy_per_link(parameters.nondimensional_potential_distance_small*number_of_links*link_length, temperature))^2
+                return (
+                    model.isometric.helmholtz_free_energy_per_link(
+                        end_to_end_length,
+                        temperature,
+                    ) - model.isometric.helmholtz_free_energy_per_link(
+                        parameters.nondimensional_potential_distance_small *
+                        number_of_links *
+                        link_length,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -1986,7 +2086,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2046,7 +2147,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2106,7 +2208,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::nondimensional_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2120,19 +2223,32 @@ end
                     model.isometric.nondimensional_helmholtz_free_energy(
                         nondimensional_end_to_end_length_per_link,
                         temperature,
-                    ) - model.isometric.nondimensional_helmholtz_free_energy(parameters.nondimensional_potential_distance_small, temperature) -
+                    ) - model.isometric.nondimensional_helmholtz_free_energy(
+                        parameters.nondimensional_potential_distance_small,
+                        temperature,
+                    ) -
                     model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy(
                         nondimensional_end_to_end_length_per_link,
                         nondimensional_potential_stiffness,
                         temperature,
-                    ) + model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy(parameters.nondimensional_potential_distance_small, nondimensional_potential_stiffness, temperature)
+                    ) +
+                    model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy(
+                        parameters.nondimensional_potential_distance_small,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_end_to_end_length_per_link)
-                return (model.isometric.nondimensional_helmholtz_free_energy(
-                    nondimensional_end_to_end_length_per_link,
-                    temperature,
-                ) - model.isometric.nondimensional_helmholtz_free_energy(parameters.nondimensional_potential_distance_small, temperature))^2
+                return (
+                    model.isometric.nondimensional_helmholtz_free_energy(
+                        nondimensional_end_to_end_length_per_link,
+                        temperature,
+                    ) - model.isometric.nondimensional_helmholtz_free_energy(
+                        parameters.nondimensional_potential_distance_small,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -2159,7 +2275,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::nondimensional_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2173,19 +2290,32 @@ end
                     model.isometric.nondimensional_helmholtz_free_energy_per_link(
                         nondimensional_end_to_end_length_per_link,
                         temperature,
-                    ) - model.isometric.nondimensional_helmholtz_free_energy_per_link(parameters.nondimensional_potential_distance_small, temperature) -
+                    ) - model.isometric.nondimensional_helmholtz_free_energy_per_link(
+                        parameters.nondimensional_potential_distance_small,
+                        temperature,
+                    ) -
                     model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy_per_link(
                         nondimensional_end_to_end_length_per_link,
                         nondimensional_potential_stiffness,
                         temperature,
-                    ) + model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy_per_link(parameters.nondimensional_potential_distance_small, nondimensional_potential_stiffness, temperature)
+                    ) +
+                    model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy_per_link(
+                        parameters.nondimensional_potential_distance_small,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_end_to_end_length_per_link)
-                return (model.isometric.nondimensional_helmholtz_free_energy_per_link(
-                    nondimensional_end_to_end_length_per_link,
-                    temperature,
-                ) - model.isometric.nondimensional_helmholtz_free_energy_per_link(parameters.nondimensional_potential_distance_small, temperature))^2
+                return (
+                    model.isometric.nondimensional_helmholtz_free_energy_per_link(
+                        nondimensional_end_to_end_length_per_link,
+                        temperature,
+                    ) - model.isometric.nondimensional_helmholtz_free_energy_per_link(
+                        parameters.nondimensional_potential_distance_small,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -2212,7 +2342,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2260,7 +2391,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_strong_potential_isometric::nondimensional_relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2308,7 +2440,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2325,7 +2458,7 @@ end
                     number_of_links * link_length * nondimensional_potential_distance
                 force = model.modified_canonical.asymptotic.weak_potential.force(
                     potential_distance,
-                    potential_stiffness
+                    potential_stiffness,
                 )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.end_to_end_length(
@@ -2370,7 +2503,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2387,7 +2521,7 @@ end
                     number_of_links * link_length * nondimensional_potential_distance
                 force = model.modified_canonical.asymptotic.weak_potential.force(
                     potential_distance,
-                    potential_stiffness
+                    potential_stiffness,
                 )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.end_to_end_length_per_link(
@@ -2432,7 +2566,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::nondimensional_end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2440,15 +2575,18 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             function integrand_numerator(nondimensional_potential_distance)
-                nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                )
+                nondimensional_force =
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                    )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_end_to_end_length(nondimensional_force)
+                    ) - model.isotensional.nondimensional_end_to_end_length(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -2483,7 +2621,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::nondimensional_end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2491,15 +2630,18 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             function integrand_numerator(nondimensional_potential_distance)
-                nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                )
+                nondimensional_force =
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                    )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length_per_link(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_end_to_end_length_per_link(nondimensional_force)
+                    ) - model.isotensional.nondimensional_end_to_end_length_per_link(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -2534,20 +2676,27 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        potential_distance_ref = parameters.nondimensional_potential_distance_large_1*number_of_links*link_length
+        potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1 *
+            number_of_links *
+            link_length
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
                 BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
                 nondimensional_potential_stiffness
-            force_ref = model.modified_canonical.asymptotic.weak_potential.force(potential_distance_ref, potential_stiffness)
+            force_ref = model.modified_canonical.asymptotic.weak_potential.force(
+                potential_distance_ref,
+                potential_stiffness,
+            )
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
@@ -2557,29 +2706,33 @@ end
                 )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ) - model.isotensional.gibbs_free_energy(force, temperature)
-                +  model.isotensional.gibbs_free_energy(force_ref, temperature)
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.gibbs_free_energy(force, temperature) +
+                    model.isotensional.gibbs_free_energy(force_ref, temperature)
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
-                return (model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ))^2
+                return (
+                    model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -2607,20 +2760,27 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        potential_distance_ref = parameters.nondimensional_potential_distance_large_1*number_of_links*link_length
+        potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1 *
+            number_of_links *
+            link_length
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
                 BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
                 nondimensional_potential_stiffness
-            force_ref = model.modified_canonical.asymptotic.weak_potential.force(potential_distance_ref, potential_stiffness)
+            force_ref = model.modified_canonical.asymptotic.weak_potential.force(
+                potential_distance_ref,
+                potential_stiffness,
+            )
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
@@ -2630,29 +2790,33 @@ end
                 )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ) - model.isotensional.gibbs_free_energy_per_link(force, temperature)
-                +  model.isotensional.gibbs_free_energy_per_link(force_ref, temperature)
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.gibbs_free_energy_per_link(force, temperature) +
+                    model.isotensional.gibbs_free_energy_per_link(force_ref, temperature)
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 potential_distance =
                     number_of_links * link_length * nondimensional_potential_distance
-                return (model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
-                    potential_distance,
-                    potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
-                    potential_distance_ref,
-                    potential_stiffness,
-                    temperature,
-                ))^2
+                return (
+                    model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
+                        potential_distance,
+                        potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(
+                        potential_distance_ref,
+                        potential_stiffness,
+                        temperature,
+                    )
+                )^2
             end
             numerator = integrate(
                 integrand_numerator,
@@ -2680,7 +2844,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2742,7 +2907,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2766,7 +2932,10 @@ end
                         potential_distance,
                         potential_stiffness,
                         temperature,
-                    ) - model.isotensional.relative_gibbs_free_energy_per_link(force, temperature)
+                    ) - model.isotensional.relative_gibbs_free_energy_per_link(
+                        force,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -2804,46 +2973,60 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::nondimensional_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        nondimensional_potential_distance_ref = parameters.nondimensional_potential_distance_large_1
+        nondimensional_potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
-            nondimensional_force_ref = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(nondimensional_potential_distance_ref, nondimensional_potential_stiffness)
-            function integrand_numerator(nondimensional_potential_distance)
-                nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                )
-                return (
-                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
+            nondimensional_force_ref =
+                model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
                     nondimensional_potential_distance_ref,
                     nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.isotensional.nondimensional_gibbs_free_energy(nondimensional_force, temperature)
-                + model.isotensional.nondimensional_gibbs_free_energy(nondimensional_force_ref, temperature)
+                )
+            function integrand_numerator(nondimensional_potential_distance)
+                nondimensional_force =
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                    )
+                return (
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.nondimensional_gibbs_free_energy(
+                        nondimensional_force,
+                        temperature,
+                    ) + model.isotensional.nondimensional_gibbs_free_energy(
+                        nondimensional_force_ref,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 return (
-                model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
-                    nondimensional_potential_distance_ref,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                )
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             numerator = integrate(
@@ -2872,46 +3055,60 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::nondimensional_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        nondimensional_potential_distance_ref = parameters.nondimensional_potential_distance_large_1
+        nondimensional_potential_distance_ref =
+            parameters.nondimensional_potential_distance_large_1
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
-            nondimensional_force_ref = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(nondimensional_potential_distance_ref, nondimensional_potential_stiffness)
-            function integrand_numerator(nondimensional_potential_distance)
-                nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                )
-                return (
-                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
+            nondimensional_force_ref =
+                model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
                     nondimensional_potential_distance_ref,
                     nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.isotensional.nondimensional_gibbs_free_energy_per_link(nondimensional_force, temperature)
-                + model.isotensional.nondimensional_gibbs_free_energy_per_link(nondimensional_force_ref, temperature)
+                )
+            function integrand_numerator(nondimensional_potential_distance)
+                nondimensional_force =
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                    )
+                return (
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) - model.isotensional.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_force,
+                        temperature,
+                    ) + model.isotensional.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_force_ref,
+                        temperature,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
                 return (
-                model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                ) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
-                    nondimensional_potential_distance_ref,
-                    nondimensional_potential_stiffness,
-                    temperature,
-                )
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    ) -
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(
+                        nondimensional_potential_distance_ref,
+                        nondimensional_potential_stiffness,
+                        temperature,
+                    )
                 )^2
             end
             numerator = integrate(
@@ -2940,7 +3137,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::nondimensional_relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2948,15 +3146,18 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             function integrand_numerator(nondimensional_potential_distance)
-                nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                )
+                nondimensional_force =
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                    )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(nondimensional_force)
+                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
@@ -2991,7 +3192,8 @@ end
 
 @testset "physics::single_chain::fjc::thermodynamics::test::modified_canonical_asymptotic_weak_potential_isotensional::nondimensional_relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_maximum - parameters.number_of_links_minimum
+        number_of_links =
+            parameters.number_of_links_maximum - parameters.number_of_links_minimum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -2999,15 +3201,18 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             function integrand_numerator(nondimensional_potential_distance)
-                nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
-                    nondimensional_potential_distance,
-                    nondimensional_potential_stiffness,
-                )
+                nondimensional_force =
+                    model.modified_canonical.asymptotic.weak_potential.nondimensional_force(
+                        nondimensional_potential_distance,
+                        nondimensional_potential_stiffness,
+                    )
                 return (
                     model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(
                         nondimensional_potential_distance,
                         nondimensional_potential_stiffness,
-                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(nondimensional_force)
+                    ) - model.isotensional.nondimensional_relative_gibbs_free_energy(
+                        nondimensional_force,
+                    )
                 )^2
             end
             function integrand_denominator(nondimensional_potential_distance)
