@@ -137,20 +137,25 @@ function end_to_end_length_per_link(
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, potential_distance_i, potential_stiffness_i, temperature_i) ->
-            ccall(
-                (
-                    :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_end_to_end_length_per_link,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (UInt8, Float64, Float64, Float64, Float64),
-                number_of_links_i,
-                link_length_i,
-                potential_distance_i,
-                potential_stiffness_i,
-                temperature_i,
+        (
+            number_of_links_i,
+            link_length_i,
+            potential_distance_i,
+            potential_stiffness_i,
+            temperature_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_end_to_end_length_per_link,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
+            Float64,
+            (UInt8, Float64, Float64, Float64, Float64),
+            number_of_links_i,
+            link_length_i,
+            potential_distance_i,
+            potential_stiffness_i,
+            temperature_i,
+        ),
         number_of_links,
         link_length,
         potential_distance,
@@ -261,18 +266,21 @@ function nondimensional_force(
     nondimensional_potential_stiffness::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_potential_distance_i, nondimensional_potential_stiffness_i) ->
-            ccall(
-                (
-                    :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_force,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (UInt8, Float64, Float64),
-                number_of_links_i,
-                nondimensional_potential_distance_i,
-                nondimensional_potential_stiffness_i,
+        (
+            number_of_links_i,
+            nondimensional_potential_distance_i,
+            nondimensional_potential_stiffness_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_force,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
+            Float64,
+            (UInt8, Float64, Float64),
+            number_of_links_i,
+            nondimensional_potential_distance_i,
+            nondimensional_potential_stiffness_i,
+        ),
         number_of_links,
         nondimensional_potential_distance,
         nondimensional_potential_stiffness,
@@ -685,24 +693,30 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
                 potential_stiffness,
                 temperature,
             ),
-        (nondimensional_potential_distance, nondimensional_potential_stiffness, temperature) ->
-            nondimensional_gibbs_free_energy(
-                number_of_links,
-                link_length,
-                hinge_mass,
-                nondimensional_potential_distance,
-                nondimensional_potential_stiffness,
-                temperature,
-            ),
-        (nondimensional_potential_distance, nondimensional_potential_stiffness, temperature) ->
-            nondimensional_gibbs_free_energy_per_link(
-                number_of_links,
-                link_length,
-                hinge_mass,
-                nondimensional_potential_distance,
-                nondimensional_potential_stiffness,
-                temperature,
-            ),
+        (
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ) -> nondimensional_gibbs_free_energy(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ),
+        (
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ) -> nondimensional_gibbs_free_energy_per_link(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ),
         (nondimensional_potential_distance, nondimensional_potential_stiffness) ->
             nondimensional_relative_gibbs_free_energy(
                 number_of_links,
