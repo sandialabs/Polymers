@@ -19,6 +19,16 @@ pub extern fn physics_single_chain_fjc_thermodynamics_modified_canonical_asympto
     super::nondimensional_end_to_end_length_per_link(&number_of_links, &nondimensional_potential_distance, &nondimensional_potential_stiffness)
 }
 #[no_mangle]
+pub extern fn physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_force(potential_distance: f64, potential_stiffness: f64) -> f64
+{
+    super::force(&potential_distance, &potential_stiffness)
+}
+#[no_mangle]
+pub extern fn physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_force(number_of_links: u8, nondimensional_potential_distance: f64, nondimensional_potential_stiffness: f64) -> f64
+{
+    super::nondimensional_force(&number_of_links, &nondimensional_potential_distance, &nondimensional_potential_stiffness)
+}
+#[no_mangle]
 pub extern fn physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_gibbs_free_energy(number_of_links: u8, link_length: f64, hinge_mass: f64, potential_distance: f64, potential_stiffness: f64, temperature: f64) -> f64
 {
     super::gibbs_free_energy(&number_of_links, &link_length, &hinge_mass, &potential_distance, &potential_stiffness, &temperature)
