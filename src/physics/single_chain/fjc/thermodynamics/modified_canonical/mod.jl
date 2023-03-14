@@ -1082,24 +1082,30 @@ function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
                 potential_stiffness,
                 temperature,
             ),
-        (nondimensional_potential_distance, nondimensional_potential_stiffness) ->
-            nondimensional_helmholtz_free_energy(
-                number_of_links,
-                link_length,
-                hinge_mass,
-                nondimensional_potential_distance,
-                nondimensional_potential_stiffness,
-                temperature,
-            ),
-        (nondimensional_potential_distance, nondimensional_potential_stiffness) ->
-            nondimensional_helmholtz_free_energy_per_link(
-                number_of_links,
-                link_length,
-                hinge_mass,
-                nondimensional_potential_distance,
-                nondimensional_potential_stiffness,
-                temperature,
-            ),
+        (
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ) -> nondimensional_helmholtz_free_energy(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ),
+        (
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ) -> nondimensional_helmholtz_free_energy_per_link(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+            temperature,
+        ),
         (nondimensional_potential_distance, nondimensional_potential_stiffness) ->
             nondimensional_relative_helmholtz_free_energy(
                 number_of_links,
