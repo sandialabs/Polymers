@@ -753,7 +753,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ideal::thermodynamics::isometric::test::connection::relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::ideal::thermodynamics::isometric::test::connection::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)

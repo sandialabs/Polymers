@@ -12,7 +12,7 @@ pub mod fjc;
 /// The extensible freely-jointed chain (EFJC) single-chain model.
 pub mod efjc;
 
-/// The square-well freely-jointed chain (EFJC) single-chain model.
+/// The square-well freely-jointed chain (SWFJC) single-chain model.
 pub mod swfjc;
 
 static ONE: f64 = 1.0;

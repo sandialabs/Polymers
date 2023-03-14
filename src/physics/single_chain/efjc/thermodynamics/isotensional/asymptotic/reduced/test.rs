@@ -64,7 +64,7 @@ mod base
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
-            let link_length = rng.gen::<f64>();
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let link_stiffness = parameters.link_stiffness_reference + parameters.link_stiffness_scale*(0.5 - rng.gen::<f64>());
             let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             assert_eq!(number_of_links, model.number_of_links);

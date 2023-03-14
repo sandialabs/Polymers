@@ -134,7 +134,7 @@ end
     end
 end
 
-@testset "physics::single_chain::test::fjc_ideal::nodimensional_force" begin
+@testset "physics::single_chain::test::fjc_ideal::nondimensional_force" begin
     for _ = 1:parameters.number_of_loops
         number_of_links = parameters.number_of_links_maximum
         link_length =
