@@ -79,11 +79,17 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        nondimensional_force = model.nondimensional_force(nondimensional_potential_distance, nondimensional_potential_stiffness)
+        nondimensional_force = model.nondimensional_force(
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+        )
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
@@ -107,8 +113,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(
@@ -144,8 +153,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_helmholtz_free_energy_per_link =
@@ -182,8 +194,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy =
@@ -219,8 +234,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy_per_link =
@@ -257,8 +275,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_distance =
@@ -294,8 +315,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_distance =
@@ -333,8 +357,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(
@@ -366,8 +393,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy =
@@ -398,8 +428,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_distance =
@@ -413,8 +446,11 @@ end
             potential_stiffness,
             temperature,
         )
-        helmholtz_free_energy_0 =
-            model.helmholtz_free_energy(ZERO * number_of_links * link_length, potential_stiffness, temperature)
+        helmholtz_free_energy_0 = model.helmholtz_free_energy(
+            ZERO * number_of_links * link_length,
+            potential_stiffness,
+            temperature,
+        )
         relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(
             potential_distance,
             potential_stiffness,
@@ -436,8 +472,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_distance =
@@ -479,8 +518,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(
@@ -488,8 +530,11 @@ end
             nondimensional_potential_stiffness,
             temperature,
         )
-        nondimensional_helmholtz_free_energy_0 =
-            model.nondimensional_helmholtz_free_energy(ZERO, nondimensional_potential_stiffness, temperature)
+        nondimensional_helmholtz_free_energy_0 = model.nondimensional_helmholtz_free_energy(
+            ZERO,
+            nondimensional_potential_stiffness,
+            temperature,
+        )
         nondimensional_relative_helmholtz_free_energy =
             model.nondimensional_relative_helmholtz_free_energy(
                 nondimensional_potential_distance,
@@ -512,8 +557,11 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small*(1.0 - rand())
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small * (1.0 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_helmholtz_free_energy_per_link =
@@ -523,7 +571,11 @@ end
                 temperature,
             )
         nondimensional_helmholtz_free_energy_per_link_0 =
-            model.nondimensional_helmholtz_free_energy_per_link(ZERO, nondimensional_potential_stiffness, temperature)
+            model.nondimensional_helmholtz_free_energy_per_link(
+                ZERO,
+                nondimensional_potential_stiffness,
+                temperature,
+            )
         nondimensional_relative_helmholtz_free_energy_per_link =
             model.nondimensional_relative_helmholtz_free_energy_per_link(
                 nondimensional_potential_distance,
@@ -547,7 +599,9 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
@@ -573,7 +627,9 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
@@ -600,9 +656,14 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy_0 =
-            model.nondimensional_relative_helmholtz_free_energy(ZERO, nondimensional_potential_stiffness)
+            model.nondimensional_relative_helmholtz_free_energy(
+                ZERO,
+                nondimensional_potential_stiffness,
+            )
         @test abs(nondimensional_relative_helmholtz_free_energy_0) <= ZERO * number_of_links
     end
 end
@@ -616,9 +677,14 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference +
+            parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy_per_link_0 =
-            model.nondimensional_relative_helmholtz_free_energy_per_link(ZERO, nondimensional_potential_stiffness)
+            model.nondimensional_relative_helmholtz_free_energy_per_link(
+                ZERO,
+                nondimensional_potential_stiffness,
+            )
         @test abs(nondimensional_relative_helmholtz_free_energy_per_link_0) <= ZERO
     end
 end
@@ -632,8 +698,10 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_distance =
@@ -671,11 +739,16 @@ end
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
-        nondimensional_potential_distance = parameters.nondimensional_potential_distance_small
-        nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference
+        nondimensional_potential_distance =
+            parameters.nondimensional_potential_distance_small
+        nondimensional_potential_stiffness =
+            parameters.nondimensional_potential_stiffness_reference
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        nondimensional_force = model.nondimensional_force(nondimensional_potential_distance, nondimensional_potential_stiffness)
+        nondimensional_force = model.nondimensional_force(
+            nondimensional_potential_distance,
+            nondimensional_potential_stiffness,
+        )
         h = parameters.rel_tol
         nondimensional_force_from_derivative =
             (
