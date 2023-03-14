@@ -2,18 +2,25 @@
 
 [![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable)
 [![docs (latest)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-latest.svg)](https://sandialabs.github.io/Polymers/julia/docs/latest)
-[![Pkg](https://img.shields.io/github/v/release/sandialabs/Polymers?color=cb3c33&label=Pkg&logo=Julia&logoColor=cb3c33)](#)
 
 This is the documentation for Julia API, which calls the Rust library.
 
 ## Installation
 
-The latest edition of the library can be installed as a Julia package:
+[![Pkg](https://img.shields.io/github/v/release/sandialabs/Polymers?color=cb3c33&label=Pkg&logo=Julia&logoColor=cb3c33)](#)
+
+The library can be installed as a Julia package:
+
+```julia
+using Pkg
+Pkg.add("Polymers")
+```
+
+If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
 
 ```julia
 using Pkg
 Pkg.add(url="https://github.com/sandialabs/Polymers")
-Pkg.build("Polymers")
 ```
 
 ## Citation
