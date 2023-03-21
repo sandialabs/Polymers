@@ -1250,7 +1250,7 @@ class ModifiedCanonicalStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -1407,7 +1407,7 @@ class ModifiedCanonicalStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -1489,7 +1489,7 @@ class ModifiedCanonicalStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -1727,7 +1727,7 @@ class ModifiedCanonicalWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(nondimensional_potential_distance):
@@ -1816,7 +1816,7 @@ class ModifiedCanonicalWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(nondimensional_potential_distance):
@@ -2061,7 +2061,7 @@ class ModifiedCanonicalWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical.force(
                     np.array(potential_distance_ref),
@@ -2176,7 +2176,7 @@ class ModifiedCanonicalWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical.force(
                     np.array(potential_distance_ref),
@@ -2291,7 +2291,7 @@ class ModifiedCanonicalWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical.force(
                     np.array(potential_distance_ref),
@@ -2406,7 +2406,7 @@ class ModifiedCanonicalWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical.force(
                     np.array(potential_distance_ref),
@@ -2937,7 +2937,7 @@ class ModifiedCanonicalAsymptoticStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -3092,7 +3092,7 @@ class ModifiedCanonicalAsymptoticStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -3201,7 +3201,7 @@ class ModifiedCanonicalAsymptoticStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -3310,7 +3310,7 @@ class ModifiedCanonicalAsymptoticStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -3419,7 +3419,7 @@ class ModifiedCanonicalAsymptoticStrongPotentialIsometric(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(end_to_end_length):
@@ -3936,7 +3936,7 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(nondimensional_potential_distance):
@@ -4026,7 +4026,7 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
 
                 def integrand_numerator(nondimensional_potential_distance):
@@ -4274,7 +4274,7 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical. \
                     asymptotic.weak_potential. \
@@ -4391,7 +4391,7 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical. \
                     asymptotic.weak_potential. \
@@ -4508,7 +4508,7 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical. \
                     asymptotic.weak_potential. \
@@ -4625,7 +4625,7 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
 
             def residual_rel(nondimensional_potential_stiffness):
                 potential_stiffness = nondimensional_potential_stiffness / \
-                    (number_of_links*link_length)**2 * \
+                    link_length**2 * \
                     parameters.boltzmann_constant*temperature
                 force_ref = model.modified_canonical. \
                     asymptotic.weak_potential. \

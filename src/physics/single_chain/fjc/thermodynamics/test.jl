@@ -709,7 +709,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -816,7 +816,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -877,7 +877,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -1037,7 +1037,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -1101,7 +1101,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -1277,7 +1277,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             force_ref = model.modified_canonical.force(
                 potential_distance_ref,
@@ -1361,7 +1361,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             force_ref = model.modified_canonical.force(
                 potential_distance_ref,
@@ -1441,7 +1441,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -1505,7 +1505,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -1837,7 +1837,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -1941,7 +1941,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -2017,7 +2017,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -2097,7 +2097,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -2158,7 +2158,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -2451,7 +2451,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2514,7 +2514,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2691,7 +2691,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             force_ref = model.modified_canonical.asymptotic.weak_potential.force(
                 potential_distance_ref,
@@ -2775,7 +2775,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             force_ref = model.modified_canonical.asymptotic.weak_potential.force(
                 potential_distance_ref,
@@ -2855,7 +2855,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2918,7 +2918,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
