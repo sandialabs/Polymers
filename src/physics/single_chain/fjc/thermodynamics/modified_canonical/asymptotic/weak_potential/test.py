@@ -166,7 +166,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             end_to_end_length = \
                 model.end_to_end_length(
                     np.array(potential_distance),
@@ -237,7 +237,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             end_to_end_length_per_link = \
                 model.end_to_end_length_per_link(
                     np.array(potential_distance),
@@ -308,7 +308,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             force = \
                 model.force(
                     np.array(potential_distance),
@@ -379,7 +379,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             gibbs_free_energy = \
                 model.gibbs_free_energy(
                     np.array(potential_distance),
@@ -451,7 +451,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             gibbs_free_energy_per_link = \
                 model.gibbs_free_energy_per_link(
                     np.array(potential_distance),
@@ -522,7 +522,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_gibbs_free_energy = \
                 model.relative_gibbs_free_energy(
                     np.array(potential_distance),
@@ -593,7 +593,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_gibbs_free_energy_per_link = \
                 model.relative_gibbs_free_energy_per_link(
                     np.array(potential_distance),
@@ -664,7 +664,7 @@ class PerLink(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             end_to_end_length = \
                 model.end_to_end_length(
                     np.array(potential_distance),
@@ -796,7 +796,7 @@ class PerLink(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             gibbs_free_energy = \
                 model.gibbs_free_energy(
                     np.array(potential_distance),
@@ -868,7 +868,7 @@ class PerLink(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_gibbs_free_energy = \
                 model.relative_gibbs_free_energy(
                     np.array(potential_distance),
@@ -1070,7 +1070,7 @@ class Relative(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             gibbs_free_energy = \
                 model.gibbs_free_energy(
                     np.array(potential_distance),
@@ -1150,7 +1150,7 @@ class Relative(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             gibbs_free_energy_per_link = \
                 model.gibbs_free_energy_per_link(
                     np.array(potential_distance),
@@ -1232,9 +1232,7 @@ class Relative(unittest.TestCase):
                 )
             nondimensional_gibbs_free_energy_0 = \
                 model.nondimensional_gibbs_free_energy(
-                    np.array(
-                        parameters.zero*number_of_links*link_length
-                    ),
+                    np.array(parameters.zero),
                     nondimensional_potential_stiffness,
                     temperature
                 )
@@ -1304,9 +1302,7 @@ class Relative(unittest.TestCase):
                 )
             nondimensional_gibbs_free_energy_per_link_0 = \
                 model.nondimensional_gibbs_free_energy_per_link(
-                    np.array(
-                        parameters.zero*number_of_links*link_length
-                    ),
+                    np.array(parameters.zero),
                     nondimensional_potential_stiffness,
                     temperature
                 )
@@ -1370,7 +1366,7 @@ class Zero(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             force_0 = \
                 model.force(
                     np.array(
@@ -1421,6 +1417,7 @@ class Zero(unittest.TestCase):
                 )
             self.assertLessEqual(
                 np.abs(nondimensional_force_0),
+                number_of_links *
                 nondimensional_potential_stiffness *
                 parameters.zero
             )
@@ -1459,7 +1456,7 @@ class Zero(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_gibbs_free_energy_0 = \
                 model.relative_gibbs_free_energy(
                     np.array(
@@ -1508,7 +1505,7 @@ class Zero(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_gibbs_free_energy_per_link_0 = \
                 model.relative_gibbs_free_energy_per_link(
                     np.array(
@@ -1652,7 +1649,7 @@ class Connection(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             end_to_end_length = \
                 model.end_to_end_length(
                     np.array(potential_distance),
@@ -1730,7 +1727,7 @@ class Connection(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             end_to_end_length_per_link = \
                 model.end_to_end_length_per_link(
                     np.array(potential_distance),
@@ -1806,7 +1803,7 @@ class Connection(unittest.TestCase):
                 )
             h_step = parameters.rel_tol
             nondimensional_end_to_end_length_from_derivative = \
-                -number_of_links/nondimensional_potential_stiffness*(
+                -1.0/nondimensional_potential_stiffness/number_of_links*(
                     model.nondimensional_relative_gibbs_free_energy(
                         np.array(
                             nondimensional_potential_distance + 0.5*h_step
@@ -1871,7 +1868,7 @@ class Connection(unittest.TestCase):
                 )
             h_step = parameters.rel_tol
             nondimensional_end_to_end_length_per_link_from_derivative = \
-                -number_of_links/nondimensional_potential_stiffness*(
+                -1.0/nondimensional_potential_stiffness/number_of_links*(
                     model.nondimensional_relative_gibbs_free_energy_per_link(
                         np.array(
                             nondimensional_potential_distance + 0.5*h_step
