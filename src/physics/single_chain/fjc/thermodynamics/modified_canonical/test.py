@@ -4025,6 +4025,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4033,6 +4035,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_end_to_end_length_per_link(self):
@@ -4113,6 +4119,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4121,6 +4129,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_nondimensional_end_to_end_length(self):
@@ -4188,6 +4200,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4196,6 +4210,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_nondimensional_end_to_end_length_per_link(self):
@@ -4263,6 +4281,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4271,6 +4291,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_gibbs_free_energy(self):
@@ -4373,6 +4397,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4381,6 +4407,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_gibbs_free_energy_per_link(self):
@@ -4483,6 +4513,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4491,6 +4523,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_relative_gibbs_free_energy(self):
@@ -4593,6 +4629,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4601,6 +4639,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_relative_gibbs_free_energy_per_link(self):
@@ -4703,6 +4745,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4711,6 +4755,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_nondimensional_gibbs_free_energy(self):
@@ -4806,6 +4854,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4814,6 +4864,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_nondimensional_gibbs_free_energy_per_link(self):
@@ -4909,6 +4963,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -4917,6 +4973,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_nondimensional_relative_gibbs_free_energy(self):
@@ -5003,6 +5063,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -5011,6 +5073,10 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )
 
     def test_nondimensional_relative_gibbs_free_energy_per_link(self):
@@ -5097,6 +5163,8 @@ class WeakPotential(unittest.TestCase):
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
             )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
             self.assertLessEqual(
                 np.abs(residual_rel_1),
                 parameters.nondimensional_potential_stiffness_small
@@ -5105,4 +5173,8 @@ class WeakPotential(unittest.TestCase):
                 np.abs(residual_rel_2),
                 parameters.nondimensional_potential_stiffness_small /
                 parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )

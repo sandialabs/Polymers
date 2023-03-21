@@ -1350,7 +1350,8 @@ end
             potential_stiffness,
             temperature,
         )
-        @test abs(relative_gibbs_free_energy_0) <= ZERO
+        @test abs(relative_gibbs_free_energy_0) <=
+              ZERO * number_of_links * BOLTZMANN_CONSTANT * temperature
     end
 end
 
@@ -1377,7 +1378,8 @@ end
             potential_stiffness,
             temperature,
         )
-        @test abs(relative_gibbs_free_energy_per_link_0) <= ZERO
+        @test abs(relative_gibbs_free_energy_per_link_0) <=
+              ZERO * BOLTZMANN_CONSTANT * temperature
     end
 end
 
@@ -1398,7 +1400,7 @@ end
                 ZERO,
                 nondimensional_potential_stiffness,
             )
-        @test abs(nondimensional_relative_gibbs_free_energy_0) <= ZERO
+        @test abs(nondimensional_relative_gibbs_free_energy_0) <= ZERO * number_of_links
     end
 end
 
@@ -2429,12 +2431,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2495,12 +2497,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2549,12 +2551,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2603,12 +2605,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2689,12 +2691,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2775,12 +2777,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2861,12 +2863,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2948,12 +2950,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3021,12 +3023,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3101,12 +3103,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3167,12 +3169,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3233,12 +3235,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
