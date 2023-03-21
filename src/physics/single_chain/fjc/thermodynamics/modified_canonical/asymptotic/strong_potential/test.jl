@@ -93,7 +93,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         force = model.force(potential_distance, potential_stiffness, temperature)
@@ -128,7 +128,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy = model.helmholtz_free_energy(
@@ -169,7 +169,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(
@@ -209,7 +209,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(
@@ -249,7 +249,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy_per_link =
@@ -285,7 +285,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy = model.helmholtz_free_energy(
@@ -325,7 +325,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(
@@ -438,7 +438,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy = model.helmholtz_free_energy(
@@ -482,7 +482,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(
@@ -605,7 +605,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(
@@ -633,7 +633,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy_per_link_0 =
@@ -707,7 +707,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         force = model.force(potential_distance, potential_stiffness, temperature)

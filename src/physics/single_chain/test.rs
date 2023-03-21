@@ -95,6 +95,7 @@ impl Default for Parameters
             nondimensional_potential_distance_reference: 1e0,
             nondimensional_potential_distance_scale: 2e0,
             nondimensional_potential_distance_small: 33e-2,
+<<<<<<< HEAD
             nondimensional_potential_distance_large_1: 1e1,
             nondimensional_potential_distance_large_2: 1e1 + 25e-1,
             nondimensional_potential_stiffness_reference: 5e1,
@@ -111,6 +112,14 @@ impl Default for Parameters
             bond_scission_energy_scale: 1e1,
             bond_attempt_frequency_reference: 1e0,
             bond_attempt_frequency_scale: 1e-1,
+=======
+            nondimensional_potential_distance_large_1: 1e0,
+            nondimensional_potential_distance_large_2: 1e0 + 25e-1,
+            nondimensional_potential_stiffness_reference: 1e0,
+            nondimensional_potential_stiffness_scale: 2e0,
+            nondimensional_potential_stiffness_small: 1e-3,
+            nondimensional_potential_stiffness_large: 1e1,
+>>>>>>> main
             temperature_reference: 3e2,
             temperature_scale: 1e2,
         }

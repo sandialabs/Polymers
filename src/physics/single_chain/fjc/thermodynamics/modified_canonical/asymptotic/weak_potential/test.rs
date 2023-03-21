@@ -81,7 +81,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let end_to_end_length = model.end_to_end_length(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = &end_to_end_length/link_length - &nondimensional_end_to_end_length;
             let residual_rel = &residual_abs/&nondimensional_end_to_end_length;
@@ -105,7 +105,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let end_to_end_length = model.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = &end_to_end_length/link_length - &nondimensional_end_to_end_length;
             let residual_rel = &residual_abs/&nondimensional_end_to_end_length;
@@ -129,7 +129,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force = model.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let force = model.force(&potential_distance, &potential_stiffness);
             let residual_abs = &force/BOLTZMANN_CONSTANT/temperature*link_length - &nondimensional_force;
             let residual_rel = &residual_abs/&nondimensional_force;
@@ -153,7 +153,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let gibbs_free_energy = model.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = gibbs_free_energy/BOLTZMANN_CONSTANT/temperature - nondimensional_gibbs_free_energy;
             let residual_rel = residual_abs/nondimensional_gibbs_free_energy;
@@ -177,7 +177,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = gibbs_free_energy_per_link/BOLTZMANN_CONSTANT/temperature - nondimensional_gibbs_free_energy_per_link;
             let residual_rel = residual_abs/nondimensional_gibbs_free_energy_per_link;
@@ -201,7 +201,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = relative_gibbs_free_energy/BOLTZMANN_CONSTANT/temperature - nondimensional_relative_gibbs_free_energy;
             let residual_rel = residual_abs/nondimensional_relative_gibbs_free_energy;
@@ -225,7 +225,7 @@ mod nondimensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = relative_gibbs_free_energy_per_link/BOLTZMANN_CONSTANT/temperature - nondimensional_relative_gibbs_free_energy_per_link;
             let residual_rel = residual_abs/nondimensional_relative_gibbs_free_energy_per_link;
@@ -253,7 +253,7 @@ mod per_link
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let end_to_end_length = model.end_to_end_length(&potential_distance, &potential_stiffness, &temperature);
             let end_to_end_length_per_link = model.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = end_to_end_length/(number_of_links as f64) - end_to_end_length_per_link;
@@ -298,7 +298,7 @@ mod per_link
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let gibbs_free_energy = model.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = gibbs_free_energy/(number_of_links as f64) - gibbs_free_energy_per_link;
@@ -322,7 +322,7 @@ mod per_link
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let residual_abs = relative_gibbs_free_energy/(number_of_links as f64) - relative_gibbs_free_energy_per_link;
@@ -395,7 +395,7 @@ mod relative
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let gibbs_free_energy = model.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature);
             let gibbs_free_energy_0 = model.gibbs_free_energy(&(ZERO*(number_of_links as f64)*link_length), &potential_stiffness, &temperature);
             let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature);
@@ -420,7 +420,7 @@ mod relative
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
             let gibbs_free_energy_per_link_0 = model.gibbs_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &potential_stiffness, &temperature);
             let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature);
@@ -495,7 +495,7 @@ mod zero
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let force_0 = model.force(&ZERO, &potential_stiffness);
             assert!(force_0.abs() <= potential_stiffness*ZERO);
         }
@@ -513,7 +513,7 @@ mod zero
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force_0 = model.nondimensional_force(&ZERO, &nondimensional_potential_stiffness);
-            assert!(nondimensional_force_0.abs() <= nondimensional_potential_stiffness*ZERO);
+            assert!(nondimensional_force_0.abs() <= (number_of_links as f64)*nondimensional_potential_stiffness*ZERO);
         }
     }
     #[test]
@@ -602,7 +602,7 @@ mod connection
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + 0.5*parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let end_to_end_length = model.end_to_end_length(&potential_distance, &potential_stiffness, &temperature);
             let h = parameters.rel_tol*(number_of_links as f64)*link_length;
             let end_to_end_length_from_derivative = -1.0/potential_stiffness*(model.relative_gibbs_free_energy(&(potential_distance + 0.5*h), &potential_stiffness, &temperature) - model.relative_gibbs_free_energy(&(potential_distance - 0.5*h), &potential_stiffness, &temperature))/h;
@@ -626,7 +626,7 @@ mod connection
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + 0.5*parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let potential_distance = nondimensional_potential_distance*(number_of_links as f64)*link_length;
-            let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+            let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
             let end_to_end_length_per_link = model.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature);
             let h = parameters.rel_tol*(number_of_links as f64)*link_length;
             let end_to_end_length_per_link_from_derivative = -1.0/potential_stiffness*(model.relative_gibbs_free_energy_per_link(&(potential_distance + 0.5*h), &potential_stiffness, &temperature) - model.relative_gibbs_free_energy_per_link(&(potential_distance - 0.5*h), &potential_stiffness, &temperature))/h;
@@ -650,7 +650,7 @@ mod connection
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + 0.5*parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let h = parameters.rel_tol;
-            let nondimensional_end_to_end_length_from_derivative = -(number_of_links as f64)/nondimensional_potential_stiffness*(model.nondimensional_relative_gibbs_free_energy(&(nondimensional_potential_distance + 0.5*h), &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy(&(nondimensional_potential_distance - 0.5*h), &nondimensional_potential_stiffness))/h;
+            let nondimensional_end_to_end_length_from_derivative = -1.0/nondimensional_potential_stiffness/(number_of_links as f64)*(model.nondimensional_relative_gibbs_free_energy(&(nondimensional_potential_distance + 0.5*h), &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy(&(nondimensional_potential_distance - 0.5*h), &nondimensional_potential_stiffness))/h;
             let residual_abs = &nondimensional_end_to_end_length - &nondimensional_end_to_end_length_from_derivative;
             let residual_rel = &residual_abs/&nondimensional_end_to_end_length;
             assert!(residual_rel.abs() <= h);
@@ -671,7 +671,7 @@ mod connection
             let nondimensional_potential_stiffness = parameters.nondimensional_potential_stiffness_reference + 0.5*parameters.nondimensional_potential_stiffness_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
             let h = parameters.rel_tol;
-            let nondimensional_end_to_end_length_per_link_from_derivative = -(number_of_links as f64)/nondimensional_potential_stiffness*(model.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_potential_distance + 0.5*h), &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_potential_distance - 0.5*h), &nondimensional_potential_stiffness))/h;
+            let nondimensional_end_to_end_length_per_link_from_derivative = -1.0/nondimensional_potential_stiffness/(number_of_links as f64)*(model.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_potential_distance + 0.5*h), &nondimensional_potential_stiffness) - model.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_potential_distance - 0.5*h), &nondimensional_potential_stiffness))/h;
             let residual_abs = &nondimensional_end_to_end_length_per_link - &nondimensional_end_to_end_length_per_link_from_derivative;
             let residual_rel = &residual_abs/&nondimensional_end_to_end_length_per_link;
             assert!(residual_rel.abs() <= h);

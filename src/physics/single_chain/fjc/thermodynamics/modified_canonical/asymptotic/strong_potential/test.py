@@ -164,7 +164,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             force = \
                 model.force(
                     np.array(potential_distance),
@@ -230,7 +230,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             helmholtz_free_energy = \
                 model.helmholtz_free_energy(
                     np.array(potential_distance),
@@ -296,7 +296,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             helmholtz_free_energy_per_link = \
                 model.helmholtz_free_energy_per_link(
                     np.array(potential_distance),
@@ -365,7 +365,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_helmholtz_free_energy = \
                 model.relative_helmholtz_free_energy(
                     np.array(potential_distance),
@@ -430,7 +430,7 @@ class Nondimensional(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_helmholtz_free_energy_per_link = \
                 model.relative_helmholtz_free_energy_per_link(
                     np.array(potential_distance),
@@ -495,7 +495,7 @@ class PerLink(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             helmholtz_free_energy = \
                 model.helmholtz_free_energy(
                     np.array(potential_distance),
@@ -561,7 +561,7 @@ class PerLink(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_helmholtz_free_energy = \
                 model.relative_helmholtz_free_energy(
                     np.array(potential_distance),
@@ -745,7 +745,7 @@ class Relative(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             helmholtz_free_energy = \
                 model.helmholtz_free_energy(
                     np.array(potential_distance),
@@ -820,7 +820,7 @@ class Relative(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             helmholtz_free_energy_per_link = \
                 model.helmholtz_free_energy_per_link(
                     np.array(potential_distance),
@@ -1025,7 +1025,7 @@ class Zero(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_helmholtz_free_energy_0 = \
                 model.relative_helmholtz_free_energy(
                     np.array(
@@ -1075,7 +1075,7 @@ class Zero(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             relative_helmholtz_free_energy_per_link_0 = \
                 model.relative_helmholtz_free_energy_per_link(
                     np.array(
@@ -1220,7 +1220,7 @@ class Connection(unittest.TestCase):
             potential_stiffness = \
                 nondimensional_potential_stiffness * \
                 parameters.boltzmann_constant*temperature / \
-                (number_of_links*link_length)**2
+                link_length**2
             force = \
                 model.force(
                     np.array(potential_distance),

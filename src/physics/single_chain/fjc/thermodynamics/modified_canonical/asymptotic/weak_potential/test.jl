@@ -94,7 +94,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length =
@@ -131,7 +131,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length_per_link = model.end_to_end_length_per_link(
@@ -172,7 +172,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         force = model.force(potential_distance, potential_stiffness)
@@ -209,7 +209,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy =
@@ -249,7 +249,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(
@@ -291,7 +291,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy = model.relative_gibbs_free_energy(
@@ -333,7 +333,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(
@@ -370,7 +370,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length =
@@ -440,7 +440,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy =
@@ -477,7 +477,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy = model.relative_gibbs_free_energy(
@@ -590,7 +590,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy =
@@ -632,7 +632,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(
@@ -759,7 +759,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         force_0 = model.force(ZERO, potential_stiffness)
@@ -781,7 +781,8 @@ end
             parameters.nondimensional_potential_stiffness_scale * (0.5 - rand())
         nondimensional_force_0 =
             model.nondimensional_force(ZERO, nondimensional_potential_stiffness)
-        @test abs(nondimensional_force_0) <= nondimensional_potential_stiffness * ZERO
+        @test abs(nondimensional_force_0) <=
+              number_of_links * nondimensional_potential_stiffness * ZERO
     end
 end
 
@@ -800,7 +801,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(
@@ -827,7 +828,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy_per_link_0 = model.relative_gibbs_free_energy_per_link(
@@ -901,7 +902,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length =
@@ -945,7 +946,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length_per_link = model.end_to_end_length_per_link(
@@ -994,7 +995,7 @@ end
         )
         h = parameters.rel_tol
         nondimensional_end_to_end_length_from_derivative =
-            -1.0 * number_of_links / nondimensional_potential_stiffness * (
+            -1.0 / nondimensional_potential_stiffness / number_of_links * (
                 model.nondimensional_relative_gibbs_free_energy(
                     nondimensional_potential_distance + 0.5 * h,
                     nondimensional_potential_stiffness,
@@ -1033,7 +1034,7 @@ end
             )
         h = parameters.rel_tol
         nondimensional_end_to_end_length_per_link_from_derivative =
-            -1.0 * number_of_links / nondimensional_potential_stiffness * (
+            -1.0 / nondimensional_potential_stiffness / number_of_links * (
                 model.nondimensional_relative_gibbs_free_energy_per_link(
                     nondimensional_potential_distance + 0.5 * h,
                     nondimensional_potential_stiffness,

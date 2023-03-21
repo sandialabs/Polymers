@@ -93,7 +93,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length =
@@ -130,7 +130,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length_per_link = model.end_to_end_length_per_link(
@@ -170,7 +170,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         force = model.force(potential_distance, potential_stiffness, temperature)
@@ -206,7 +206,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy = model.helmholtz_free_energy(
@@ -248,7 +248,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(
@@ -289,7 +289,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(
@@ -330,7 +330,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy_per_link =
@@ -373,7 +373,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy =
@@ -413,7 +413,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(
@@ -455,7 +455,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy = model.relative_gibbs_free_energy(
@@ -497,7 +497,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(
@@ -534,7 +534,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length =
@@ -603,7 +603,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy = model.helmholtz_free_energy(
@@ -643,7 +643,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(
@@ -757,7 +757,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy =
@@ -794,7 +794,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy = model.relative_gibbs_free_energy(
@@ -906,7 +906,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy = model.helmholtz_free_energy(
@@ -950,7 +950,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(
@@ -1078,7 +1078,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy =
@@ -1119,7 +1119,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(
@@ -1243,7 +1243,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(
@@ -1271,7 +1271,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_helmholtz_free_energy_per_link_0 =
@@ -1342,7 +1342,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy_0 = model.relative_gibbs_free_energy(
@@ -1350,7 +1350,8 @@ end
             potential_stiffness,
             temperature,
         )
-        @test abs(relative_gibbs_free_energy_0) <= ZERO
+        @test abs(relative_gibbs_free_energy_0) <=
+              ZERO * number_of_links * BOLTZMANN_CONSTANT * temperature
     end
 end
 
@@ -1369,7 +1370,7 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         relative_gibbs_free_energy_per_link_0 = model.relative_gibbs_free_energy_per_link(
@@ -1377,7 +1378,8 @@ end
             potential_stiffness,
             temperature,
         )
-        @test abs(relative_gibbs_free_energy_per_link_0) <= ZERO
+        @test abs(relative_gibbs_free_energy_per_link_0) <=
+              ZERO * BOLTZMANN_CONSTANT * temperature
     end
 end
 
@@ -1398,7 +1400,7 @@ end
                 ZERO,
                 nondimensional_potential_stiffness,
             )
-        @test abs(nondimensional_relative_gibbs_free_energy_0) <= ZERO
+        @test abs(nondimensional_relative_gibbs_free_energy_0) <= ZERO * number_of_links
     end
 end
 
@@ -1441,7 +1443,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         force = model.force(potential_distance, potential_stiffness, temperature)
@@ -1520,7 +1522,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length =
@@ -1564,7 +1566,7 @@ end
         potential_distance =
             nondimensional_potential_distance * number_of_links * link_length
         potential_stiffness =
-            nondimensional_potential_stiffness / (number_of_links * link_length)^2 *
+            nondimensional_potential_stiffness / link_length^2 *
             BOLTZMANN_CONSTANT *
             temperature
         end_to_end_length_per_link = model.end_to_end_length_per_link(
@@ -1613,7 +1615,7 @@ end
         )
         h = parameters.rel_tol
         nondimensional_end_to_end_length_from_derivative =
-            -1.0 * number_of_links / nondimensional_potential_stiffness * (
+            -1.0 / number_of_links / nondimensional_potential_stiffness * (
                 model.nondimensional_relative_gibbs_free_energy(
                     nondimensional_potential_distance + 0.5 * h,
                     nondimensional_potential_stiffness,
@@ -1652,7 +1654,7 @@ end
             )
         h = parameters.rel_tol
         nondimensional_end_to_end_length_per_link_from_derivative =
-            -1.0 * number_of_links / nondimensional_potential_stiffness * (
+            -1.0 / number_of_links / nondimensional_potential_stiffness * (
                 model.nondimensional_relative_gibbs_free_energy_per_link(
                     nondimensional_potential_distance + 0.5 * h,
                     nondimensional_potential_stiffness,
@@ -1682,7 +1684,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -1787,7 +1789,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -1869,7 +1871,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -1951,7 +1953,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -2033,7 +2035,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(end_to_end_length)
                 return (
@@ -2385,7 +2387,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2429,12 +2431,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2451,7 +2453,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2495,12 +2497,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2549,12 +2551,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2603,12 +2605,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2625,7 +2627,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2689,12 +2691,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2711,7 +2713,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2775,12 +2777,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2797,7 +2799,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2861,12 +2863,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -2883,7 +2885,7 @@ end
         model = FJC(number_of_links, link_length, hinge_mass)
         function residual_rel(nondimensional_potential_stiffness)
             potential_stiffness =
-                BOLTZMANN_CONSTANT * temperature / (number_of_links * link_length)^2 *
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_potential_stiffness
             function integrand_numerator(nondimensional_potential_distance)
                 potential_distance =
@@ -2948,12 +2950,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3021,12 +3023,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3101,12 +3103,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3167,12 +3169,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 
@@ -3233,12 +3235,12 @@ end
         residual_rel_2 = residual_rel(
             parameters.nondimensional_potential_stiffness_small * parameters.log_log_scale,
         )
-        @test abs(residual_rel_1) <=
-              parameters.nondimensional_potential_stiffness_small^2 &&
+        log_log_slope =
+            -log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(log_log_slope + 1.0) <= parameters.log_log_tol &&
+              abs(residual_rel_1) <= parameters.nondimensional_potential_stiffness_small &&
               abs(residual_rel_2) <=
-              (
-            parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
-        )^2
+              parameters.nondimensional_potential_stiffness_small / parameters.log_log_scale
     end
 end
 

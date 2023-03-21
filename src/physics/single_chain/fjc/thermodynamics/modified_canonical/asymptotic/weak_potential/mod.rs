@@ -44,15 +44,15 @@ pub fn end_to_end_length_per_link(number_of_links: &u8, link_length: &f64, poten
 /// The expected nondimensional end-to-end length as a function of the applied nondimensional potential distance and nondimensional potential stiffness, parameterized by the number of links.
 pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
 {
-    let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/(*number_of_links as f64);
-    (*number_of_links as f64)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - nondimensional_potential_stiffness/(*number_of_links as f64)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
+    let nondimensional_force = (*number_of_links as f64)*nondimensional_potential_stiffness*nondimensional_potential_distance;
+    (*number_of_links as f64)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - (*number_of_links as f64)*nondimensional_potential_stiffness*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
 }
 
 /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness, parameterized by the number of links.
 pub fn nondimensional_end_to_end_length_per_link(number_of_links: &u8, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
 {
-    let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/(*number_of_links as f64);
-    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - nondimensional_potential_stiffness/(*number_of_links as f64)*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
+    let nondimensional_force = (*number_of_links as f64)*nondimensional_potential_stiffness*nondimensional_potential_distance;
+    (1.0/nondimensional_force.tanh() - 1.0/nondimensional_force)*(1.0 - (*number_of_links as f64)*nondimensional_potential_stiffness*(nondimensional_force.powi(-2) - (nondimensional_force.sinh()).powi(-2)))
 }
 
 /// The expected force as a function of the applied potential distance, potential stiffness, and temperature.
@@ -64,7 +64,7 @@ pub fn force(potential_distance: &f64, potential_stiffness: &f64) -> f64
 /// The expected nondimensional force as a function of the applied nondimensional potential distance and nondimensional potential stiffness, parameterized by the number of links.
 pub fn nondimensional_force(number_of_links: &u8, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64) -> f64
 {
-    nondimensional_potential_stiffness*nondimensional_potential_distance/(*number_of_links as f64)
+    (*number_of_links as f64)*nondimensional_potential_stiffness*nondimensional_potential_distance
 }
 
 /// The Gibbs free energy as a function of the applied potential distance, potential stiffness, and temperature, parameterized by the number of links, link length, and hinge mass.
@@ -96,15 +96,15 @@ pub fn relative_gibbs_free_energy_per_link(number_of_links: &u8, link_length: &f
 /// The nondimensional Gibbs free energy as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature, parameterized by the number of links, link length, and hinge mass.
 pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
 {
-    let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/(*number_of_links as f64);
-    -(*number_of_links as f64)*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - (*number_of_links as f64)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    let nondimensional_force = (*number_of_links as f64)*nondimensional_potential_stiffness*nondimensional_potential_distance;
+    -(*number_of_links as f64)*(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness*(*number_of_links as f64).powi(2)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - (*number_of_links as f64)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional potential distance, nondimensional potential stiffness, and temperature, parameterized by the number of links, link length, and hinge mass.
 pub fn nondimensional_gibbs_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_potential_distance: &f64, nondimensional_potential_stiffness: &f64, temperature: &f64) -> f64
 {
-    let nondimensional_force = nondimensional_potential_stiffness*nondimensional_potential_distance/(*number_of_links as f64);
-    -(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness/(*number_of_links as f64)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    let nondimensional_force = (*number_of_links as f64)*nondimensional_potential_stiffness*nondimensional_potential_distance;
+    -(nondimensional_force.sinh()/nondimensional_force).ln() + 0.5*nondimensional_potential_stiffness*(*number_of_links as f64)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force).powi(2) - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional potential distance and nondimensional potential stiffness, parameterized by the number of links.
