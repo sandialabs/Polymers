@@ -50,10 +50,10 @@ class Parameters:
         self.nondimensional_potential_distance_small = 33e-2
         self.nondimensional_potential_distance_large_1 = 1e1
         self.nondimensional_potential_distance_large_2 = 1e1 + 25e-1
-        self.nondimensional_potential_stiffness_reference = 5e0
-        self.nondimensional_potential_stiffness_scale = 1e1
+        self.nondimensional_potential_stiffness_reference = 1e0
+        self.nondimensional_potential_stiffness_scale = 2e0
         self.nondimensional_potential_stiffness_small = 1e-3
-        self.nondimensional_potential_stiffness_large = 1e2
+        self.nondimensional_potential_stiffness_large = 1e1
         self.nondimensional_well_width_small = 1e-2
         self.temperature_reference = 3e2
         self.temperature_scale = 1e2

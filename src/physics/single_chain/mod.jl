@@ -92,10 +92,10 @@ parameters = Parameters(
     33e-2,
     1e1,
     1e1 + 25e-1,
-    5e0,
-    1e1,
+    1e0,
+    2e0,
     1e-3,
-    1e2,
+    1e1,
     3e2,
     1e2,
 )
