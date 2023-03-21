@@ -561,7 +561,7 @@ mod modified_canonical_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.modified_canonical.force(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.force(&end_to_end_length, &temperature)).powi(2)
@@ -625,7 +625,7 @@ mod modified_canonical_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.modified_canonical.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.relative_helmholtz_free_energy(&end_to_end_length, &temperature)).powi(2)
@@ -658,7 +658,7 @@ mod modified_canonical_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.modified_canonical.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature)).powi(2)
@@ -760,7 +760,7 @@ mod modified_canonical_weak_potential_isotensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
@@ -779,8 +779,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -798,7 +796,7 @@ mod modified_canonical_weak_potential_isotensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
@@ -817,8 +815,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -851,8 +847,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -885,8 +879,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -905,7 +897,7 @@ mod modified_canonical_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -925,8 +917,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -945,7 +935,7 @@ mod modified_canonical_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -965,8 +955,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -985,7 +973,7 @@ mod modified_canonical_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -1005,8 +993,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1025,7 +1011,7 @@ mod modified_canonical_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -1045,8 +1031,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1082,8 +1066,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1119,8 +1101,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1155,8 +1135,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1191,8 +1169,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1221,7 +1197,7 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.isometric.force(&end_to_end_length, &temperature) - model.modified_canonical.asymptotic.strong_potential.force(&end_to_end_length, &potential_stiffness, &temperature)).powi(2)
@@ -1285,7 +1261,7 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.isometric.helmholtz_free_energy(&end_to_end_length, &temperature) - model.isometric.helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
@@ -1318,7 +1294,7 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.isometric.helmholtz_free_energy_per_link(&end_to_end_length, &temperature) - model.isometric.helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
@@ -1351,7 +1327,7 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.isometric.relative_helmholtz_free_energy(&end_to_end_length, &temperature) - model.isometric.relative_helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
@@ -1384,7 +1360,7 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |end_to_end_length: f64|
                 {
                     (model.isometric.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature) - model.isometric.relative_helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
@@ -1550,7 +1526,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
@@ -1569,8 +1545,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1588,7 +1562,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
@@ -1607,8 +1581,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1641,8 +1613,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1675,8 +1645,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1695,7 +1663,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -1716,8 +1684,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1736,7 +1702,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -1757,8 +1723,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1777,7 +1741,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -1798,8 +1762,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1818,7 +1780,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let potential_distance_ref = parameters.nondimensional_potential_distance_large_1*(number_of_links as f64)*link_length;
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let potential_stiffness = nondimensional_potential_stiffness/((number_of_links as f64)*link_length).powi(2)*BOLTZMANN_CONSTANT*temperature;
+                let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
                 let integrand_numerator = |nondimensional_potential_distance: f64|
                 {
@@ -1839,8 +1801,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1877,8 +1837,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1915,8 +1873,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1952,8 +1908,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1989,8 +1943,6 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
