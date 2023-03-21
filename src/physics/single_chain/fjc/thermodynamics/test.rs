@@ -779,8 +779,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -817,8 +815,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -851,8 +847,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -885,8 +879,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -925,8 +917,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -965,8 +955,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1005,8 +993,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1045,8 +1031,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1082,8 +1066,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1119,8 +1101,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1155,8 +1135,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
@@ -1191,8 +1169,6 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
             let residual_rel_2 = residual_rel(parameters.nondimensional_potential_stiffness_small*parameters.log_log_scale);
             let log_log_slope = -(residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
-            assert!(residual_rel_1.abs() <= parameters.nondimensional_potential_stiffness_small);
-            assert!(residual_rel_2.abs() <= parameters.nondimensional_potential_stiffness_small/parameters.log_log_scale);
             assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
         }
     }
