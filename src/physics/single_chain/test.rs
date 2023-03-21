@@ -89,7 +89,7 @@ impl Default for Parameters
             nondimensional_potential_distance_large_2: 1e1 + 25e-1,
             nondimensional_potential_stiffness_reference: 5e0,
             nondimensional_potential_stiffness_scale: 1e1,
-            nondimensional_potential_stiffness_small: 1e-2,
+            nondimensional_potential_stiffness_small: 1e-3,
             nondimensional_potential_stiffness_large: 1e2,
             temperature_reference: 3e2,
             temperature_scale: 1e2,

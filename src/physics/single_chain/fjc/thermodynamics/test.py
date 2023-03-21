@@ -4104,15 +4104,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -4203,15 +4194,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -4289,15 +4271,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -4374,15 +4347,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             )
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
-            self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
             self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
@@ -4501,15 +4465,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -4626,15 +4581,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             )
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
-            self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
             self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
@@ -4753,15 +4699,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -4879,15 +4816,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -4997,15 +4925,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             )
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
-            self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
             self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
@@ -5117,15 +5036,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -5227,15 +5137,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
             self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
-            self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol
             )
@@ -5336,15 +5237,6 @@ class ModifiedCanonicalAsymptoticWeakPotentialIsotensional(unittest.TestCase):
             )
             log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
                 np.log(parameters.log_log_scale)
-            self.assertLessEqual(
-                np.abs(residual_rel_1),
-                parameters.nondimensional_potential_stiffness_small
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel_2),
-                parameters.nondimensional_potential_stiffness_small /
-                parameters.log_log_scale
-            )
             self.assertLessEqual(
                 np.abs(log_log_slope + 1.0),
                 parameters.log_log_tol

@@ -94,7 +94,7 @@ parameters = Parameters(
     1e1 + 25e-1,
     5e0,
     1e1,
-    1e-2,
+    1e-3,
     1e2,
     3e2,
     1e2,
