@@ -9,6 +9,14 @@ pub mod reduced;
 /// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
+use std::f64::consts::PI;
+use crate::physics::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT,
+    single_chain::ZERO
+};
+
 /// The structure of the Morse-FJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
 pub struct MORSEFJC
 {
@@ -34,6 +42,30 @@ pub struct MORSEFJC
     pub legendre: self::legendre::MORSEFJC
 }
 
+/// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links, link length,, link stiffness, and link energy.
+pub fn end_to_end_length(number_of_links: &u8, link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
+{
+    link_length*nondimensional_end_to_end_length(number_of_links, &(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force*link_length/BOLTZMANN_CONSTANT/temperature))
+}
+
+/// The expected end-to-end length per link as a function of the applied force and temperature, parameterized by the link length, link stiffness, and link energy.
+pub fn end_to_end_length_per_link(link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
+{
+    link_length*nondimensional_end_to_end_length_per_link(&(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force*link_length/BOLTZMANN_CONSTANT/temperature))
+}
+
+/// The expected nondimensional end-to-end length as a function of the applied nondimensional force, parameterized by the number of links, the nondimensional link stiffness, and nondimensional link energy.
+pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_link_stiffness: &f64, nondimensional_link_energy: &f64, nondimensional_force: &f64) -> f64
+{
+    (*number_of_links as f64)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force + nondimensional_force/nondimensional_link_stiffness*((nondimensional_force.tanh() - 1.0/nondimensional_force.tanh() + 1.0/nondimensional_force)/(nondimensional_force.tanh() + nondimensional_force/nondimensional_link_stiffness)) + (2.0*nondimensional_link_energy/nondimensional_link_stiffness).sqrt()*(2.0/(1.0 + (1.0 - nondimensional_force/(nondimensional_link_energy*nondimensional_link_stiffness/8.0).sqrt()).sqrt())).ln())
+}
+
+/// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, parameterized by the nondimensional link stiffness and nondimensional link energy.
+pub fn nondimensional_end_to_end_length_per_link(nondimensional_link_stiffness: &f64, nondimensional_link_energy: &f64, nondimensional_force: &f64) -> f64
+{
+    1.0/nondimensional_force.tanh() - 1.0/nondimensional_force + nondimensional_force/nondimensional_link_stiffness*((nondimensional_force.tanh() - 1.0/nondimensional_force.tanh() + 1.0/nondimensional_force)/(nondimensional_force.tanh() + nondimensional_force/nondimensional_link_stiffness)) + (2.0*nondimensional_link_energy/nondimensional_link_stiffness).sqrt()*(2.0/(1.0 + (1.0 - nondimensional_force/(nondimensional_link_energy*nondimensional_link_stiffness/8.0).sqrt()).sqrt())).ln()
+}
+
 /// The implemented functionality of the Morse-FJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
 impl MORSEFJC
 {
@@ -50,5 +82,25 @@ impl MORSEFJC
             reduced: self::reduced::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
             legendre: self::legendre::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         }
+    }
+    /// The expected end-to-end length as a function of the applied force and temperature.
+    pub fn end_to_end_length(&self, force: &f64, temperature: &f64) -> f64
+    {
+        end_to_end_length(&self.number_of_links, &self.link_length, &self.link_stiffness, &self.link_energy, force, temperature)
+    }
+    /// The expected end-to-end length per link as a function of the applied force and temperature.
+    pub fn end_to_end_length_per_link(&self, force: &f64, temperature: &f64) -> f64
+    {
+        end_to_end_length_per_link(&self.link_length, &self.link_stiffness, &self.link_energy, force, temperature)
+    }
+    /// The expected nondimensional end-to-end length as a function of the applied nondimensional force.
+    pub fn nondimensional_end_to_end_length(&self, nondimensional_force: &f64, temperature: &f64) -> f64
+    {
+        nondimensional_end_to_end_length(&self.number_of_links, &(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(self.link_energy/BOLTZMANN_CONSTANT/temperature), nondimensional_force)
+    }
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force.
+    pub fn nondimensional_end_to_end_length_per_link(&self, nondimensional_force: &f64, temperature: &f64) -> f64
+    {
+        nondimensional_end_to_end_length_per_link(&(self.link_stiffness*self.link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(self.link_energy/BOLTZMANN_CONSTANT/temperature), nondimensional_force)
     }
 }
