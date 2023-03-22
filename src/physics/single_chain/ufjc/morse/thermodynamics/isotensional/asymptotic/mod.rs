@@ -3,9 +3,6 @@ pub mod py;
 
 mod test;
 
-/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isotensional ensemble approximated using an alternative asymptotic approach.
-pub mod alternative;
-
 /// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isotensional ensemble approximated using a reduced asymptotic approach.
 pub mod reduced;
 
@@ -30,9 +27,6 @@ pub struct MORSEFJC
     /// The energy of each link in the chain in units of J/mol.
     pub link_energy: f64,
 
-    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an alternative asymptotic approach.
-    pub alternative: self::alternative::MORSEFJC,
-
     /// The thermodynamic functions of the model in the isotensional ensemble approximated using a reduced asymptotic approach.
     pub reduced: self::reduced::MORSEFJC,
 
@@ -53,7 +47,6 @@ impl MORSEFJC
             number_of_links,
             link_stiffness,
             link_energy,
-            alternative: self::alternative::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
             reduced: self::reduced::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
             legendre: self::legendre::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         }
