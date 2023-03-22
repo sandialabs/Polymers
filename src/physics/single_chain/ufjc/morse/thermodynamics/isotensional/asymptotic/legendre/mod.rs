@@ -3,10 +3,7 @@ pub mod py;
 
 mod test;
 
-/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics.
-pub mod thermodynamics;
-
-/// The structure of the Morse-FJC model.
+/// The structure of the Morse-FJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
 pub struct MORSEFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
@@ -22,16 +19,13 @@ pub struct MORSEFJC
     pub link_stiffness: f64,
 
     /// The energy of each link in the chain in units of J/mol.
-    pub link_energy: f64,
-
-    /// The thermodynamic functions of the model.
-    pub thermodynamics: self::thermodynamics::MORSEFJC
+    pub link_energy: f64
 }
 
-/// The implemented functionality of the Morse-FJC model.
+/// The implemented functionality of the Morse-FJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
 impl MORSEFJC
 {
-    /// Initializes and returns an instance of the Morse-FJC model.
+    /// Initializes and returns an instance of the Morse-FJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, link_stiffness: f64, link_energy: f64) -> Self
     {
         MORSEFJC
@@ -40,8 +34,7 @@ impl MORSEFJC
             link_length,
             number_of_links,
             link_stiffness,
-            link_energy,
-            thermodynamics: self::thermodynamics::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
+            link_energy
         }
     }
 }
