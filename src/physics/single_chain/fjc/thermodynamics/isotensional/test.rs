@@ -648,6 +648,7 @@ mod connection
 mod legendre
 {
     use super::*;
+    use crate::physics::single_chain::ZERO;
     use rand::Rng;
     #[test]
     fn gibbs_free_energy()
@@ -710,8 +711,9 @@ mod legendre
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length = model.end_to_end_length(&force, &temperature);
+            let end_to_end_length_0 = model.end_to_end_length(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&force, &temperature);
-            let relative_gibbs_free_energy_legendre = model.legendre.relative_helmholtz_free_energy(&force, &temperature) - force*end_to_end_length;
+            let relative_gibbs_free_energy_legendre = model.legendre.relative_helmholtz_free_energy(&force, &temperature) - force*end_to_end_length + ZERO*BOLTZMANN_CONSTANT*temperature/link_length*end_to_end_length_0;
             let residual_abs = &relative_gibbs_free_energy - &relative_gibbs_free_energy_legendre;
             let residual_rel = &residual_abs/&relative_gibbs_free_energy;
             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -733,8 +735,9 @@ mod legendre
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, &temperature);
+            let end_to_end_length_per_link_0 = model.end_to_end_length_per_link(&(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), &temperature);
             let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&force, &temperature);
-            let relative_gibbs_free_energy_per_link_legendre = model.legendre.relative_helmholtz_free_energy_per_link(&force, &temperature) - force*end_to_end_length_per_link;
+            let relative_gibbs_free_energy_per_link_legendre = model.legendre.relative_helmholtz_free_energy_per_link(&force, &temperature) - force*end_to_end_length_per_link + ZERO*BOLTZMANN_CONSTANT*temperature/link_length*end_to_end_length_per_link_0;
             let residual_abs = &relative_gibbs_free_energy_per_link - &relative_gibbs_free_energy_per_link_legendre;
             let residual_rel = &residual_abs/&relative_gibbs_free_energy_per_link;
             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -798,8 +801,9 @@ mod legendre
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_force = parameters.nondimensional_force_reference + 0.5*parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force);
+            let nondimensional_end_to_end_length_0 = model.nondimensional_end_to_end_length(&ZERO);
             let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force);
-            let nondimensional_relative_gibbs_free_energy_legendre = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force) - nondimensional_force*nondimensional_end_to_end_length;
+            let nondimensional_relative_gibbs_free_energy_legendre = model.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_force) - nondimensional_force*nondimensional_end_to_end_length + ZERO*nondimensional_end_to_end_length_0;
             let residual_abs = &nondimensional_relative_gibbs_free_energy - &nondimensional_relative_gibbs_free_energy_legendre;
             let residual_rel = &residual_abs/&nondimensional_relative_gibbs_free_energy;
             assert!(residual_abs.abs() <= parameters.abs_tol);
@@ -819,8 +823,9 @@ mod legendre
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_force = parameters.nondimensional_force_reference + 0.5*parameters.nondimensional_force_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force);
+            let nondimensional_end_to_end_length_per_link_0 = model.nondimensional_end_to_end_length_per_link(&ZERO);
             let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force);
-            let nondimensional_relative_gibbs_free_energy_per_link_legendre = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force) - nondimensional_force*nondimensional_end_to_end_length_per_link;
+            let nondimensional_relative_gibbs_free_energy_per_link_legendre = model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_force) - nondimensional_force*nondimensional_end_to_end_length_per_link + ZERO*nondimensional_end_to_end_length_per_link_0;
             let residual_abs = &nondimensional_relative_gibbs_free_energy_per_link - &nondimensional_relative_gibbs_free_energy_per_link_legendre;
             let residual_rel = &residual_abs/&nondimensional_relative_gibbs_free_energy_per_link;
             assert!(residual_abs.abs() <= parameters.abs_tol);
