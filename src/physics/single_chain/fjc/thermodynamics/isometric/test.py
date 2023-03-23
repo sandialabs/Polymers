@@ -1469,7 +1469,7 @@ class Connection(unittest.TestCase):
 
 
 class Legendre(unittest.TestCase):
-    """Class for per-linkness tests.
+    """Class for Legendre tests.
 
     """
     def test_helmholtz_free_energy(self):
