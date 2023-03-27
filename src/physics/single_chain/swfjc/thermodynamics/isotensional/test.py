@@ -1494,3 +1494,694 @@ class Connection(unittest.TestCase):
             self.assertLessEqual(
                 np.abs(residual_abs), h_step
             )
+
+
+class Legendre(unittest.TestCase):
+    """Class for Legendre tests.
+
+    """
+    def test_gibbs_free_energy(self):
+        """Function to test the Legendre transformation
+        of the Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            force = nondimensional_force * \
+                parameters.boltzmann_constant*temperature/link_length
+            end_to_end_length = \
+                model.end_to_end_length(
+                    np.array(force),
+                    temperature
+                )
+            gibbs_free_energy = \
+                model.gibbs_free_energy(
+                    np.array(force),
+                    temperature
+                )
+            gibbs_free_energy_legendre = \
+                model.legendre.helmholtz_free_energy(
+                    np.array(force),
+                    temperature
+                ) - force*end_to_end_length
+            residual_abs = \
+                gibbs_free_energy \
+                - gibbs_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                gibbs_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_gibbs_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            force = nondimensional_force * \
+                parameters.boltzmann_constant*temperature/link_length
+            end_to_end_length_per_link = \
+                model.end_to_end_length_per_link(
+                    np.array(force),
+                    temperature
+                )
+            gibbs_free_energy_per_link = \
+                model.gibbs_free_energy_per_link(
+                    np.array(force),
+                    temperature
+                )
+            gibbs_free_energy_per_link_legendre = \
+                model.legendre.helmholtz_free_energy_per_link(
+                    np.array(force),
+                    temperature
+                ) - force*end_to_end_length_per_link
+            residual_abs = \
+                gibbs_free_energy_per_link \
+                - gibbs_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                gibbs_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy(self):
+        """Function to test the Legendre transformation
+        of the relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            force = nondimensional_force * \
+                parameters.boltzmann_constant*temperature/link_length
+            end_to_end_length = \
+                model.end_to_end_length(
+                    np.array(force),
+                    temperature
+                )
+            end_to_end_length_0 = \
+                model.end_to_end_length(
+                    np.array(
+                        parameters.boltzmann_constant*temperature/link_length
+                        * parameters.zero
+                    ),
+                    temperature
+                )
+            relative_gibbs_free_energy = \
+                model.relative_gibbs_free_energy(
+                    np.array(force),
+                    temperature
+                )
+            relative_gibbs_free_energy_legendre = \
+                model.legendre.relative_helmholtz_free_energy(
+                    np.array(force),
+                    temperature
+                ) - force*end_to_end_length \
+                + end_to_end_length_0 \
+                * parameters.boltzmann_constant*temperature/link_length \
+                * parameters.zero
+            residual_abs = \
+                relative_gibbs_free_energy \
+                - relative_gibbs_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                relative_gibbs_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_gibbs_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            force = nondimensional_force * \
+                parameters.boltzmann_constant*temperature/link_length
+            end_to_end_length_per_link = \
+                model.end_to_end_length_per_link(
+                    np.array(force),
+                    temperature
+                )
+            end_to_end_length_per_link_0 = \
+                model.end_to_end_length_per_link(
+                    np.array(
+                        parameters.boltzmann_constant*temperature/link_length
+                        * parameters.zero
+                    ),
+                    temperature
+                )
+            relative_gibbs_free_energy_per_link = \
+                model.relative_gibbs_free_energy_per_link(
+                    np.array(force),
+                    temperature
+                )
+            relative_gibbs_free_energy_per_link_legendre = \
+                model.legendre.relative_helmholtz_free_energy_per_link(
+                    np.array(force),
+                    temperature
+                ) - force*end_to_end_length_per_link \
+                + end_to_end_length_per_link_0 \
+                * parameters.boltzmann_constant*temperature/link_length \
+                * parameters.zero
+            residual_abs = \
+                relative_gibbs_free_energy_per_link \
+                - relative_gibbs_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                relative_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy(self):
+        """Function to test the Legendre transformation
+        of the nondimensional Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_end_to_end_length = \
+                model.nondimensional_end_to_end_length(
+                    np.array(nondimensional_force)
+                )
+            nondimensional_gibbs_free_energy = \
+                model.nondimensional_gibbs_free_energy(
+                    np.array(nondimensional_force),
+                    temperature
+                )
+            nondimensional_gibbs_free_energy_legendre = \
+                model.legendre.nondimensional_helmholtz_free_energy(
+                    np.array(nondimensional_force),
+                    temperature
+                ) - nondimensional_force*nondimensional_end_to_end_length
+            residual_abs = \
+                nondimensional_gibbs_free_energy \
+                - nondimensional_gibbs_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_gibbs_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the nondimensional Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_end_to_end_length_per_link = \
+                model.nondimensional_end_to_end_length_per_link(
+                    np.array(nondimensional_force)
+                )
+            nondimensional_gibbs_free_energy_per_link = \
+                model.nondimensional_gibbs_free_energy_per_link(
+                    np.array(nondimensional_force),
+                    temperature
+                )
+            nondimensional_gibbs_free_energy_per_link_legendre = \
+                model.legendre.nondimensional_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_force),
+                    temperature
+                ) - nondimensional_force * \
+                nondimensional_end_to_end_length_per_link
+            residual_abs = \
+                nondimensional_gibbs_free_energy_per_link \
+                - nondimensional_gibbs_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy(self):
+        """Function to test the Legendre transformation
+        of the nondimensional relative Gibbs free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_end_to_end_length = \
+                model.nondimensional_end_to_end_length(
+                    np.array(nondimensional_force)
+                )
+            nondimensional_end_to_end_length_0 = \
+                model.nondimensional_end_to_end_length(
+                    np.array(parameters.zero)
+                )
+            nondimensional_relative_gibbs_free_energy = \
+                model.nondimensional_relative_gibbs_free_energy(
+                    np.array(nondimensional_force)
+                )
+            nondimensional_relative_gibbs_free_energy_legendre = \
+                model.legendre.nondimensional_relative_helmholtz_free_energy(
+                    np.array(nondimensional_force)
+                ) - nondimensional_force*nondimensional_end_to_end_length \
+                + parameters.zero*nondimensional_end_to_end_length_0
+            residual_abs = \
+                nondimensional_relative_gibbs_free_energy \
+                - nondimensional_relative_gibbs_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_relative_gibbs_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the nondimensional relative Gibbs free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_end_to_end_length_per_link = \
+                model.nondimensional_end_to_end_length_per_link(
+                    np.array(nondimensional_force)
+                )
+            nondimensional_end_to_end_length_per_link_0 = \
+                model.nondimensional_end_to_end_length_per_link(
+                    np.array(parameters.zero)
+                )
+            nondimensional_relative_gibbs_free_energy_per_link = \
+                model.nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(nondimensional_force)
+                )
+            nondimensional_relative_gibbs_free_energy_per_link_legendre = \
+                model.legendre.\
+                nondimensional_relative_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_force)
+                ) - nondimensional_force * \
+                nondimensional_end_to_end_length_per_link \
+                + parameters.zero*nondimensional_end_to_end_length_per_link_0
+            residual_abs = \
+                nondimensional_relative_gibbs_free_energy_per_link \
+                - nondimensional_relative_gibbs_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_gibbs_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+
+class LegendreConnection(unittest.TestCase):
+    """Class for Legendre connection tests.
+
+    """
+    def test_force(self):
+        """Function to test the Legendre transformation connection
+        of the force.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            force = nondimensional_force * \
+                parameters.boltzmann_constant*temperature/link_length
+            h_step = parameters.rel_tol * \
+                parameters.boltzmann_constant*temperature/link_length
+            force_from_derivative = (
+                model.legendre.relative_helmholtz_free_energy(
+                    np.array(
+                        force + 0.5*h_step
+                    ), temperature
+                )
+                - model.legendre.relative_helmholtz_free_energy(
+                    np.array(
+                        force - 0.5*h_step
+                    ), temperature
+                ))/(
+                model.end_to_end_length(
+                    np.array(
+                        force + 0.5*h_step
+                    ), temperature
+                )
+                - model.end_to_end_length(
+                    np.array(
+                        force - 0.5*h_step
+                    ), temperature
+                ))
+            residual_abs = \
+                force \
+                - force_from_derivative
+            residual_rel = residual_abs/force
+            self.assertLessEqual(
+                np.abs(residual_rel), h_step
+            )
+
+    def test_nondimensional_force(self):
+        """Function to test the Legendre transformation connection
+        of the nondimensional force.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            well_width = \
+                parameters.well_width_reference + \
+                parameters.well_width_scale*(0.5 - np.random.rand())
+            model = SWFJC(
+                number_of_links,
+                link_length,
+                hinge_mass,
+                well_width
+            )
+            nondimensional_force = \
+                parameters. \
+                nondimensional_force_reference + \
+                parameters. \
+                nondimensional_force_scale * \
+                (0.5 - np.random.rand())
+            h_step = parameters.rel_tol
+            nondimensional_force_from_derivative = (
+                model.legendre.
+                nondimensional_relative_helmholtz_free_energy_per_link(
+                    np.array(
+                        nondimensional_force + 0.5*h_step
+                    )
+                )
+                - model.legendre.
+                nondimensional_relative_helmholtz_free_energy_per_link(
+                    np.array(
+                        nondimensional_force - 0.5*h_step
+                    )
+                ))/(
+                model.nondimensional_end_to_end_length_per_link(
+                    np.array(
+                        nondimensional_force + 0.5*h_step
+                    )
+                )
+                - model.nondimensional_end_to_end_length_per_link(
+                    np.array(
+                        nondimensional_force - 0.5*h_step
+                    )
+                ))
+            residual_abs = \
+                nondimensional_force \
+                - nondimensional_force_from_derivative
+            residual_rel = residual_abs/nondimensional_force
+            self.assertLessEqual(
+                np.abs(residual_rel), h_step
+            )
