@@ -681,3 +681,19 @@ mod connection
         }
     }
 }
+mod legendre
+{
+    #[test]
+    fn dummy()
+    {
+        assert!(0.0 == 1.0);
+    }
+}
+mod legendre_connection
+{
+    #[test]
+    fn dummy()
+    {
+        assert!(0.0 == 1.0);
+    }
+}
