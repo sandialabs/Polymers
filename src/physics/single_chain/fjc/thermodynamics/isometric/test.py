@@ -1468,6 +1468,786 @@ class Connection(unittest.TestCase):
             )
 
 
+class Legendre(unittest.TestCase):
+    """Class for Legendre tests.
+
+    """
+    def test_helmholtz_free_energy(self):
+        """Function to test the Legendre transformation
+        of the Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            force = \
+                model.force(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            helmholtz_free_energy = \
+                model.helmholtz_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            helmholtz_free_energy_legendre = \
+                model.legendre.gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                ) + force*end_to_end_length
+            residual_abs = \
+                helmholtz_free_energy \
+                - helmholtz_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                helmholtz_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_helmholtz_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            end_to_end_length_per_link = end_to_end_length/number_of_links
+            force = \
+                model.force(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            helmholtz_free_energy_per_link = \
+                model.helmholtz_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            helmholtz_free_energy_per_link_legendre = \
+                model.legendre.gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                ) + force*end_to_end_length_per_link
+            residual_abs = \
+                helmholtz_free_energy_per_link \
+                - helmholtz_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_helmholtz_free_energy(self):
+        """Function to test the Legendre transformation
+        of the relative Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            force = \
+                model.force(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            force_0 = \
+                model.force(
+                    np.array(number_of_links*link_length*parameters.zero),
+                    temperature
+                )
+            relative_helmholtz_free_energy = \
+                model.relative_helmholtz_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            relative_helmholtz_free_energy_legendre = \
+                model.legendre.relative_gibbs_free_energy(
+                    np.array(end_to_end_length),
+                    temperature
+                ) + force*end_to_end_length \
+                - force_0*number_of_links*link_length*parameters.zero
+            residual_abs = \
+                relative_helmholtz_free_energy \
+                - relative_helmholtz_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                relative_helmholtz_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_relative_helmholtz_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the relative Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            end_to_end_length_per_link = end_to_end_length/number_of_links
+            force = \
+                model.force(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            force_0 = \
+                model.force(
+                    np.array(number_of_links*link_length*parameters.zero),
+                    temperature
+                )
+            relative_helmholtz_free_energy_per_link = \
+                model.relative_helmholtz_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                )
+            relative_helmholtz_free_energy_per_link_legendre = \
+                model.legendre.relative_gibbs_free_energy_per_link(
+                    np.array(end_to_end_length),
+                    temperature
+                ) + force*end_to_end_length_per_link \
+                - force_0*link_length*parameters.zero
+            residual_abs = \
+                relative_helmholtz_free_energy_per_link \
+                - relative_helmholtz_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                relative_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy(self):
+        """Function to test the Legendre transformation
+        of the nondimensional Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_end_to_end_length = \
+                nondimensional_end_to_end_length_per_link * \
+                number_of_links
+            nondimensional_force = \
+                model.nondimensional_force(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_helmholtz_free_energy = \
+                model.nondimensional_helmholtz_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            nondimensional_helmholtz_free_energy_legendre = \
+                model.legendre.nondimensional_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                ) + nondimensional_force * \
+                nondimensional_end_to_end_length
+            residual_abs = \
+                nondimensional_helmholtz_free_energy \
+                - nondimensional_helmholtz_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_helmholtz_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_helmholtz_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the nondimensional Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            nondimensional_force = \
+                model.nondimensional_force(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_helmholtz_free_energy_per_link = \
+                model.nondimensional_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                )
+            nondimensional_helmholtz_free_energy_per_link_legendre = \
+                model.legendre.nondimensional_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link),
+                    temperature
+                ) + nondimensional_force * \
+                nondimensional_end_to_end_length_per_link
+            residual_abs = \
+                nondimensional_helmholtz_free_energy_per_link \
+                - nondimensional_helmholtz_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_relative_helmholtz_free_energy(self):
+        """Function to test the Legendre transformation
+        of the nondimensional relative Helmholtz free energy.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_end_to_end_length = \
+                nondimensional_end_to_end_length_per_link * \
+                number_of_links
+            nondimensional_force = \
+                model.nondimensional_force(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_force_0 = \
+                model.nondimensional_force(
+                    np.array(parameters.zero)
+                )
+            nondimensional_relative_helmholtz_free_energy = \
+                model.nondimensional_relative_helmholtz_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_relative_helmholtz_free_energy_legendre = \
+                model.legendre.nondimensional_relative_gibbs_free_energy(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                ) + nondimensional_force * \
+                nondimensional_end_to_end_length \
+                - nondimensional_force_0*parameters.zero*number_of_links
+            residual_abs = \
+                nondimensional_relative_helmholtz_free_energy \
+                - nondimensional_relative_helmholtz_free_energy_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_helmholtz_free_energy
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+    def test_nondimensional_relative_helmholtz_free_energy_per_link(self):
+        """Function to test the Legendre transformation
+        of the nondimensional relative Helmholtz free energy per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_force = \
+                model.nondimensional_force(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_force_0 = \
+                model.nondimensional_force(
+                    np.array(parameters.zero)
+                )
+            nondimensional_relative_helmholtz_free_energy_per_link = \
+                model.nondimensional_relative_helmholtz_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                )
+            nondimensional_relative_helmholtz_free_energy_per_link_legendre = \
+                model.legendre. \
+                nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(nondimensional_end_to_end_length_per_link)
+                ) + nondimensional_force * \
+                nondimensional_end_to_end_length_per_link \
+                - nondimensional_force_0*parameters.zero
+            residual_abs = \
+                nondimensional_relative_helmholtz_free_energy_per_link - \
+                nondimensional_relative_helmholtz_free_energy_per_link_legendre
+            residual_rel = \
+                residual_abs / \
+                nondimensional_relative_helmholtz_free_energy_per_link
+            self.assertLessEqual(
+                np.abs(residual_abs),
+                parameters.abs_tol
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel),
+                parameters.rel_tol
+            )
+
+
+class LegendreConnection(unittest.TestCase):
+    """Class for Legendre connection tests.
+
+    """
+    def test_end_to_end_length(self):
+        """Function to test the Legendre transformation connection
+        of the end-to-end length.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            h_step = parameters.rel_tol * \
+                number_of_links*link_length
+            end_to_end_length_from_derivative = -(
+                model.legendre.relative_gibbs_free_energy(
+                    np.array(
+                        end_to_end_length + 0.5*h_step
+                    ), temperature
+                )
+                - model.legendre.relative_gibbs_free_energy(
+                    np.array(
+                        end_to_end_length - 0.5*h_step
+                    ), temperature
+                ))/(
+                model.force(
+                    np.array(
+                        end_to_end_length + 0.5*h_step
+                    ), temperature
+                )
+                - model.force(
+                    np.array(
+                        end_to_end_length - 0.5*h_step
+                    ), temperature
+                ))
+            residual_abs = \
+                end_to_end_length \
+                - end_to_end_length_from_derivative
+            residual_rel = residual_abs/end_to_end_length
+            self.assertLessEqual(
+                np.abs(residual_rel), h_step
+            )
+
+    def test_end_to_end_length_per_link(self):
+        """Function to test the Legendre transformation connection
+        of the end-to-end length per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+            end_to_end_length = nondimensional_end_to_end_length_per_link * \
+                number_of_links*link_length
+            end_to_end_length_per_link = \
+                nondimensional_end_to_end_length_per_link * \
+                link_length
+            h_step = parameters.rel_tol * \
+                number_of_links*link_length
+            end_to_end_length_per_link_from_derivative = -(
+                model.legendre.relative_gibbs_free_energy_per_link(
+                    np.array(
+                        end_to_end_length + 0.5*h_step
+                    ), temperature
+                )
+                - model.legendre.relative_gibbs_free_energy_per_link(
+                    np.array(
+                        end_to_end_length - 0.5*h_step
+                    ), temperature
+                ))/(
+                model.force(
+                    np.array(
+                        end_to_end_length + 0.5*h_step
+                    ), temperature
+                )
+                - model.force(
+                    np.array(
+                        end_to_end_length - 0.5*h_step
+                    ), temperature
+                ))
+            residual_abs = \
+                end_to_end_length_per_link \
+                - end_to_end_length_per_link_from_derivative
+            residual_rel = residual_abs/end_to_end_length_per_link
+            self.assertLessEqual(
+                np.abs(residual_rel), h_step
+            )
+
+    def test_nondimensional_end_to_end_length(self):
+        """Function to test the Legendre transformation connection
+        of the nondimensional end-to-end length.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            nondimensional_end_to_end_length = \
+                nondimensional_end_to_end_length_per_link * \
+                number_of_links
+            h_step = parameters.rel_tol
+            nondimensional_end_to_end_length_from_derivative = -(
+                model.legendre.nondimensional_relative_gibbs_free_energy(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link + 0.5*h_step
+                    )
+                )
+                - model.legendre.nondimensional_relative_gibbs_free_energy(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link - 0.5*h_step
+                    )
+                ))/(
+                model.nondimensional_force(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link + 0.5*h_step
+                    )
+                )
+                - model.nondimensional_force(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link - 0.5*h_step
+                    )
+                ))
+            residual_abs = \
+                nondimensional_end_to_end_length \
+                - nondimensional_end_to_end_length_from_derivative
+            residual_rel = residual_abs/nondimensional_end_to_end_length
+            self.assertLessEqual(
+                np.abs(residual_rel), h_step
+            )
+
+    def test_nondimensional_end_to_end_length_per_link(self):
+        """Function to test the Legendre transformation connection
+        of the nondimensional end-to-end length per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            model = FJC(
+                number_of_links,
+                link_length,
+                hinge_mass
+            )
+            nondimensional_end_to_end_length_per_link = \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_reference + \
+                parameters. \
+                nondimensional_end_to_end_length_per_link_scale * \
+                (0.5 - np.random.rand())
+            h_step = parameters.rel_tol
+            nondimensional_end_to_end_length_per_link_from_derivative = -(
+                model.legendre.
+                nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link + 0.5*h_step
+                    )
+                )
+                - model.legendre.
+                nondimensional_relative_gibbs_free_energy_per_link(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link - 0.5*h_step
+                    )
+                ))/(
+                model.nondimensional_force(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link + 0.5*h_step
+                    )
+                )
+                - model.nondimensional_force(
+                    np.array(
+                        nondimensional_end_to_end_length_per_link - 0.5*h_step
+                    )
+                ))
+            residual_abs = \
+                nondimensional_end_to_end_length_per_link \
+                - nondimensional_end_to_end_length_per_link_from_derivative
+            residual_rel = residual_abs / \
+                nondimensional_end_to_end_length_per_link
+            self.assertLessEqual(
+                np.abs(residual_rel), h_step
+            )
+
+
 class ThermodynamicLimit(unittest.TestCase):
     """Class for thermodynamic limit tests.
 
