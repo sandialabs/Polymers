@@ -87,3 +87,11 @@ mod base
         }
     }
 }
+mod asymptotic
+{
+    #[test]
+    fn dummy()
+    {
+        // dont forget to verify asymptotic
+    }
+}
