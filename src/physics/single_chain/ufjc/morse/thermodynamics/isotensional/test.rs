@@ -953,7 +953,7 @@ mod asymptotic
     fn dummy()
     {
         assert_eq!(0.0, 1.0);
-        // dont forget to verify asymptotic (slope -2)
+        // dont forget to verify (slope -2)
     }
 }
 mod asymptotic_reduced
@@ -962,6 +962,6 @@ mod asymptotic_reduced
     fn dummy()
     {
         assert_eq!(0.0, 1.0);
-        // dont forget to verify reduced (slope -1)
+        // dont forget to verify (slope -1)
     }
 }

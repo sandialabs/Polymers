@@ -38,6 +38,7 @@ struct Parameters
     link_stiffness_reference::Float64
     link_stiffness_scale::Float64
     nondimensional_link_stiffness_large::Float64
+    nondimensional_link_stiffness_big::Float64
     nondimensional_link_stiffness_medium::Float64
     well_width_reference::Float64
     well_width_scale::Float64
@@ -77,6 +78,7 @@ parameters = Parameters(
     5e5,
     99e4,
     1e4,
+    1e3,
     1e1,
     99e-2,
     5e-1,

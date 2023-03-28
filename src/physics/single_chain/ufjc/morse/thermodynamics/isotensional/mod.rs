@@ -14,7 +14,12 @@ use crate::physics::
 {
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT,
-    single_chain::ZERO
+    single_chain::
+    {
+        ONE,
+        ZERO,
+        POINTS
+    }
 };
 
 /// The structure of the Morse-FJC model thermodynamics in the isotensional ensemble.
@@ -63,7 +68,25 @@ pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_lin
 /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, parameterized by the nondimensional link stiffness and nondimensional link energy.
 pub fn nondimensional_end_to_end_length_per_link(nondimensional_link_stiffness: &f64, nondimensional_link_energy: &f64, nondimensional_force: &f64) -> f64
 {
-    *nondimensional_force
+    let nondimensional_morse_parameter = (nondimensional_link_stiffness/nondimensional_link_energy/2.0).sqrt();
+    let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+    let rescaled_partition_function_integrand = |nondimensional_link_stretch: f64|
+    {
+        let exponent_1 = nondimensional_force*nondimensional_link_stretch - nondimensional_link_energy*(1.0 - (-nondimensional_morse_parameter*(nondimensional_link_stretch - 1.0)).exp()).powi(2) + nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_2 = exponent_1 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        exponent_1.exp() - exponent_2.exp()
+    };
+    let dx = (ONE*nondimensional_link_stretch_max - ZERO)/(POINTS as f64);
+    let rescaled_partition_function = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| rescaled_partition_function_integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>();
+    let nondimensional_end_to_end_length_per_link_integrand = |nondimensional_link_stretch: f64|
+    {
+        let exponent_1 = nondimensional_force*nondimensional_link_stretch - nondimensional_link_energy*(1.0 - (-nondimensional_morse_parameter*(nondimensional_link_stretch - 1.0)).exp()).powi(2) + 2.0*nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_2 = exponent_1 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        let exponent_3 = exponent_1 - nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_4 = exponent_3 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        (exponent_1.exp() + exponent_2.exp() - exponent_3.exp() + exponent_4.exp())/rescaled_partition_function
+    };
+    (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| nondimensional_end_to_end_length_per_link_integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()
 }
 
 /// The Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, link stiffness, and link stiffness.
@@ -99,7 +122,17 @@ pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64,
 /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length, hinge mass, nondimensional link stiffness, and nondimensional link energy.
 pub fn nondimensional_gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, nondimensional_link_stiffness: &f64, nondimensional_link_energy: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
 {
-    *nondimensional_force
+    let nondimensional_morse_parameter = (nondimensional_link_stiffness/nondimensional_link_energy/2.0).sqrt();
+    let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+    let rescaled_partition_function_integrand = |nondimensional_link_stretch: f64|
+    {
+        let exponent_1 = nondimensional_force*nondimensional_link_stretch - nondimensional_link_energy*(1.0 - (-nondimensional_morse_parameter*(nondimensional_link_stretch - 1.0)).exp()).powi(2) + nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_2 = exponent_1 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        exponent_1.exp() - exponent_2.exp()
+    };
+    let dx = (ONE*nondimensional_link_stretch_max - ZERO)/(POINTS as f64);
+    let rescaled_partition_function = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| rescaled_partition_function_integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>();
+    -rescaled_partition_function.ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links and nondimensional link stiffness and nondimensional link energy.
