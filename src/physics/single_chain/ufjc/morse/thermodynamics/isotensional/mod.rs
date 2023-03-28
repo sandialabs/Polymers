@@ -47,7 +47,7 @@ pub struct MORSEFJC
     pub legendre: self::legendre::MORSEFJC
 }
 
-/// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links, link length,, link stiffness, and link energy.
+/// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links, link length, link stiffness, and link energy.
 pub fn end_to_end_length(number_of_links: &u8, link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     link_length*nondimensional_end_to_end_length(number_of_links, &(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force*link_length/BOLTZMANN_CONSTANT/temperature))
@@ -89,25 +89,25 @@ pub fn nondimensional_end_to_end_length_per_link(nondimensional_link_stiffness: 
     (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| nondimensional_end_to_end_length_per_link_integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()
 }
 
-/// The Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, link stiffness, and link stiffness.
+/// The Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, link stiffness, and link energy.
 pub fn gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     BOLTZMANN_CONSTANT*temperature*nondimensional_gibbs_free_energy(number_of_links, link_length, hinge_mass, &(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force*link_length/BOLTZMANN_CONSTANT/temperature), temperature)
 }
 
-/// The Gibbs free energy per link as a function of the applied force and temperature, parameterized by the link length, hinge mass, link stiffness, and link stiffness.
+/// The Gibbs free energy per link as a function of the applied force and temperature, parameterized by the link length, hinge mass, link stiffness, and link energy.
 pub fn gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     BOLTZMANN_CONSTANT*temperature*nondimensional_gibbs_free_energy_per_link(link_length, hinge_mass, &(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force*link_length/BOLTZMANN_CONSTANT/temperature), temperature)
 }
 
-/// The relative Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, link stiffness, and link stiffness.
+/// The relative Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, link stiffness, and link energy.
 pub fn relative_gibbs_free_energy(number_of_links: &u8, link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     gibbs_free_energy(number_of_links, link_length, &1.0, link_stiffness, link_energy, force, temperature) - gibbs_free_energy(number_of_links, link_length, &1.0, link_stiffness, link_energy, &(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), temperature)
 }
 
-/// The relative Gibbs free energy per link as a function of the applied force and temperature, parameterized by the link length link stiffness, and link stiffness.
+/// The relative Gibbs free energy per link as a function of the applied force and temperature, parameterized by the link length, link stiffness, and link energy.
 pub fn relative_gibbs_free_energy_per_link(link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     gibbs_free_energy_per_link(link_length, &1.0, link_stiffness, link_energy, force, temperature) - gibbs_free_energy_per_link(link_length, &1.0, link_stiffness, link_energy, &(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), temperature)
@@ -135,7 +135,7 @@ pub fn nondimensional_gibbs_free_energy_per_link(link_length: &f64, hinge_mass: 
     -rescaled_partition_function.ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
-/// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links and nondimensional link stiffness and nondimensional link energy.
+/// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links, nondimensional link stiffness, and nondimensional link energy.
 pub fn nondimensional_relative_gibbs_free_energy(number_of_links: &u8, nondimensional_link_stiffness: &f64, nondimensional_link_energy: &f64, nondimensional_force: &f64) -> f64
 {
     nondimensional_gibbs_free_energy(number_of_links, &1.0, &1.0, nondimensional_link_stiffness, nondimensional_link_energy, nondimensional_force, &300.0) - nondimensional_gibbs_free_energy(number_of_links, &1.0, &1.0, nondimensional_link_stiffness, nondimensional_link_energy, &ZERO, &300.0)

@@ -35,25 +35,25 @@ pub struct MORSEFJC
     pub link_energy: f64
 }
 
-/// The Helmholtz free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, link stiffness, and link stiffness.
+/// The Helmholtz free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, link stiffness, and link energy.
 pub fn helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     BOLTZMANN_CONSTANT*temperature*nondimensional_helmholtz_free_energy(number_of_links, link_length, hinge_mass, &(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force/BOLTZMANN_CONSTANT/temperature*link_length), temperature)
 }
 
-/// The Helmholtz free energy per link as a function of the applied force and temperature, parameterized by the link length, hinge mass, link stiffness, and link stiffness.
+/// The Helmholtz free energy per link as a function of the applied force and temperature, parameterized by the link length, hinge mass, link stiffness, and link energy.
 pub fn helmholtz_free_energy_per_link(link_length: &f64, hinge_mass: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     BOLTZMANN_CONSTANT*temperature*nondimensional_helmholtz_free_energy_per_link(link_length, hinge_mass, &(link_stiffness*link_length.powi(2)/BOLTZMANN_CONSTANT/temperature), &(link_energy/BOLTZMANN_CONSTANT/temperature), &(force/BOLTZMANN_CONSTANT/temperature*link_length), temperature)
 }
 
-/// The relative Helmholtz free energy as a function of the applied force and temperature, parameterized by the number of links, link length, link stiffness, and link stiffness.
+/// The relative Helmholtz free energy as a function of the applied force and temperature, parameterized by the number of links, link length, link stiffness, and link energy.
 pub fn relative_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     helmholtz_free_energy(number_of_links, link_length, &1.0, link_stiffness, link_energy, force, temperature) - helmholtz_free_energy(number_of_links, link_length, &1.0, link_stiffness, link_energy, &(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), temperature)
 }
 
-/// The relative Helmholtz free energy per link as a function of the applied force and temperature, parameterized by the link length link stiffness, and link stiffness.
+/// The relative Helmholtz free energy per link as a function of the applied force and temperature, parameterized by the link length, link stiffness, and link energy.
 pub fn relative_helmholtz_free_energy_per_link(link_length: &f64, link_stiffness: &f64, link_energy: &f64, force: &f64, temperature: &f64) -> f64
 {
     helmholtz_free_energy_per_link(link_length, &1.0, link_stiffness, link_energy, force, temperature) - helmholtz_free_energy_per_link(link_length, &1.0, link_stiffness, link_energy, &(ZERO*BOLTZMANN_CONSTANT*temperature/link_length), temperature)
@@ -90,7 +90,7 @@ pub fn nondimensional_helmholtz_free_energy_per_link(link_length: &f64, hinge_ma
     -rescaled_partition_function.ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln() + nondimensional_force*nondimensional_end_to_end_length_per_link
 }
 
-/// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional force, parameterized by the number of links and nondimensional link stiffness and nondimensional link energy.
+/// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional force, parameterized by the number of links, nondimensional link stiffness, and nondimensional link energy.
 pub fn nondimensional_relative_helmholtz_free_energy(number_of_links: &u8, nondimensional_link_stiffness: &f64, nondimensional_link_energy: &f64, nondimensional_force: &f64) -> f64
 {
     nondimensional_helmholtz_free_energy(number_of_links, &1.0, &1.0, nondimensional_link_stiffness, nondimensional_link_energy, nondimensional_force, &300.0) - nondimensional_helmholtz_free_energy(number_of_links, &1.0, &1.0, nondimensional_link_stiffness, nondimensional_link_energy, &ZERO, &300.0)
