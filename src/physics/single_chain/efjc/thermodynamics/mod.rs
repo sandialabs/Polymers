@@ -41,14 +41,17 @@ impl EFJC
         }
     }
 }
+
 fn erf(x: &f64) -> f64
 {
     1.0 - erfc(x)
 }
+
 fn erfc(x: &f64) -> f64
 {
     erfcx(x)/(x.powi(2)).exp()
 }
+
 fn erfcx(x: &f64) -> f64
 {
     if x >= &0.0
@@ -82,6 +85,7 @@ fn erfcx(x: &f64) -> f64
         2.0*(x.powi(2)).exp() - erfcx_helper(&(400.0/(4.0 - x)))
     }
 }
+
 fn erfcx_helper(z: &f64) -> f64
 {
     let zi = *z as u8;
