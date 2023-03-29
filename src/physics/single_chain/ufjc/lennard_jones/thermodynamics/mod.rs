@@ -41,3 +41,17 @@ impl LENNARDJONESFJC
         }
     }
 }
+
+fn nondimensional_bond_stretch(nondimensional_link_stiffness: &f64, nondimensional_force: &f64) -> f64
+{
+    let p = -1.0/13.0;
+    let s = 6.0*nondimensional_force/nondimensional_link_stiffness;
+    let mut lambda: f64 = 1.1;
+    let mut residual_rel = 1.0;
+    while residual_rel > 1e-5
+    {
+        lambda = (lambda.powi(-7) - s).powf(p);
+        residual_rel = (1.0 - (lambda.powi(-7) - lambda.powi(-13))/s).abs();
+    }
+    lambda
+}

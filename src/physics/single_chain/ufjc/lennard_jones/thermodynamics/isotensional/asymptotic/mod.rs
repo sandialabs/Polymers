@@ -9,6 +9,7 @@ pub mod reduced;
 /// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
+use super::nondimensional_bond_stretch;
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -54,18 +55,13 @@ pub fn end_to_end_length_per_link(link_length: &f64, link_stiffness: &f64, force
 /// The expected nondimensional end-to-end length as a function of the applied nondimensional force, parameterized by the number of links and nondimensional link stiffness.
 pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_link_stiffness: &f64, nondimensional_force: &f64) -> f64
 {
-    (*number_of_links as f64)*(1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
-    // dont forget extra part with c
-    // + ???
-)
+    (*number_of_links as f64)*nondimensional_end_to_end_length_per_link(nondimensional_link_stiffness, nondimensional_force)
 }
 
 /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, parameterized by the nondimensional link stiffness.
 pub fn nondimensional_end_to_end_length_per_link(nondimensional_link_stiffness: &f64, nondimensional_force: &f64) -> f64
 {
-    1.0/nondimensional_force.tanh() - 1.0/nondimensional_force
-    // dont forget extra part with c
-    // + ???
+    1.0/nondimensional_force.tanh() - 1.0/nondimensional_force + nondimensional_force/nondimensional_link_stiffness*((nondimensional_force.tanh() - 1.0/nondimensional_force.tanh() + 1.0/nondimensional_force)/(2.0/23.0*nondimensional_force.tanh() + nondimensional_force/nondimensional_link_stiffness)) + nondimensional_bond_stretch(nondimensional_link_stiffness, nondimensional_force) - 1.0
 }
 
 /// The Gibbs free energy as a function of the applied force and temperature, parameterized by the number of links, link length, hinge mass, and link stiffness.
@@ -95,21 +91,14 @@ pub fn relative_gibbs_free_energy_per_link(link_length: &f64, link_stiffness: &f
 /// The nondimensional Gibbs free energy as a function of the applied nondimensional force and temperature, parameterized by the number of links, link length, hinge mass, and nondimensional link stiffness.
 pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_link_stiffness: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
 {
-    (*number_of_links as f64)*(-(nondimensional_force.sinh()/nondimensional_force).ln()
-    // dont forget extra part with c
-    // + nondimensional energy as function of nondimensional_force
-    // - nondimensional_force*nondimensional_end_to_end_length_per_link
-    - 0.5*(2.0*PI*link_length.powi(2)/nondimensional_link_stiffness).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
+    (*number_of_links as f64)*nondimensional_gibbs_free_energy_per_link(link_length, hinge_mass, nondimensional_link_stiffness, nondimensional_force, temperature)
 }
 
 /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length, hinge mass, and nondimensional link stiffness.
 pub fn nondimensional_gibbs_free_energy_per_link(link_length: &f64, hinge_mass: &f64, nondimensional_link_stiffness: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
 {
-    -(nondimensional_force.sinh()/nondimensional_force).ln()
-    // dont forget extra part with c
-    // + nondimensional energy as function of nondimensional_force
-    // - nondimensional_force*nondimensional_end_to_end_length_per_link
-    - 0.5*(2.0*PI*link_length.powi(2)/nondimensional_link_stiffness).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    let lambda = nondimensional_bond_stretch(nondimensional_link_stiffness, nondimensional_force);
+    -(nondimensional_force.sinh()/nondimensional_force).ln() - (1.0 + 23.0/2.0*nondimensional_force/nondimensional_force.tanh()/nondimensional_link_stiffness).ln() + nondimensional_link_stiffness/72.0*(lambda.powi(-12) - 2.0*lambda.powi(-6)) - nondimensional_force*(lambda - 1.0) - 0.5*(2.0*PI*link_length.powi(2)/nondimensional_link_stiffness).ln() - 0.5*(2.0*PI*link_length.powi(2)/nondimensional_link_stiffness).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional relative Gibbs free energy as a function of the applied nondimensional force, parameterized by the number of links and nondimensional link stiffness.
