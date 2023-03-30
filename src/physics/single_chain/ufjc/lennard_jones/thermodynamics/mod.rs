@@ -42,7 +42,7 @@ impl LENNARDJONESFJC
     }
 }
 
-fn nondimensional_bond_stretch(nondimensional_link_stiffness: &f64, nondimensional_force: &f64) -> f64
+fn nondimensional_link_stretch(nondimensional_link_stiffness: &f64, nondimensional_force: &f64) -> f64
 {
     let p = -1.0/13.0;
     let s = 6.0*nondimensional_force/nondimensional_link_stiffness;

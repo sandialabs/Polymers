@@ -9,7 +9,7 @@ pub mod asymptotic;
 /// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
-use super::nondimensional_bond_stretch;
+use super::nondimensional_link_stretch;
 use std::f64::consts::PI;
 use crate::physics::
 {
