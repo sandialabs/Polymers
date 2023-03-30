@@ -15,7 +15,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
     Ok(())
 }
 
-/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isotensional ensemble approximated a Legendre transformation.
+/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct MORSEFJC

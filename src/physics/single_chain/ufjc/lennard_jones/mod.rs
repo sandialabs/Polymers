@@ -1,5 +1,5 @@
-// #[cfg(feature = "python")]
-// pub mod py;
+#[cfg(feature = "python")]
+pub mod py;
 
 mod test;
 
