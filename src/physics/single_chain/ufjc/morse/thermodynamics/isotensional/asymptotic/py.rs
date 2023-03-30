@@ -113,7 +113,7 @@ impl MORSEFJC
     /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
-    ///     \gamma(\eta) \sim \mathcal{L}(\eta) + \frac{\eta}{\kappa}\left[\frac{1 - \mathcal{L}(\eta)\coth(\eta)}{c + (\eta/\kappa)\coth(\eta)}\right] + \Delta\lambda(\eta) \quad \text{for } \kappa\gg 1,
+    ///     \gamma(\eta) \sim \mathcal{L}(\eta) + \frac{\eta}{\kappa}\left[\frac{1 - \mathcal{L}(\eta)\coth(\eta)}{c + (\eta/\kappa)\coth(\eta)}\right] + \Delta\lambda(\eta) \quad \text{for } \varepsilon,\kappa\gg 1,
     ///
     /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function, and :math:`\Delta\lambda(\eta)` is the incremental link stretch, given by :footcite:t:`buche2021chain` as
     ///
@@ -230,12 +230,12 @@ impl MORSEFJC
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
-    ///     \Delta\varrho(\eta) = \ln\left[\frac{\eta}{\sinh(\eta)}\right] - \ln\left[1 + \frac{\eta}{c\kappa}\,\coth(\eta)\right] - \frac{\eta^2}{2\kappa} \quad \text{for } \kappa\gg 1,
+    ///     \Delta\varrho(\eta) = \ln\left[\frac{\eta}{\sinh(\eta)}\right] - \ln\left[1 + \frac{\eta}{c\kappa}\,\coth(\eta)\right] + \beta u[\lambda(\eta)] - \eta\Delta\lambda(\eta) \quad \text{for } \varepsilon,\kappa\gg 1,
     ///
     /// where the nondimensional link potential :math:`\beta u` is given by :footcite:t:`morse1929diatomic` as
     ///
     /// .. math::
-    ///     \beta u(\lambda) = \varepsilon\left[1 - e^{\alpha(\lambda - 1)}\right],
+    ///     \beta u(\lambda) = \varepsilon\left[1 - e^{\alpha(\lambda - 1)}\right]^2,
     ///
     /// where :math:`\varepsilon\equiv\beta u_b` is the nondimensional potential energy scale,
     /// :math:`\alpha\equiv a\ell_b=\sqrt{\kappa/2\varepsilon}` is the nondimensional Morse parameter,
