@@ -12,7 +12,11 @@ use super::
     treloar_sum_0_with_prefactor
 };
 use std::f64::consts::PI;
-use crate::math::inverse_langevin;
+use crate::math::
+{
+    inverse_langevin,
+    integrate_1d
+};
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -184,8 +188,7 @@ impl FJC
     /// Initializes and returns an instance of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
-        let dx = (ONE - ZERO)/(POINTS as f64);
-        let normalization = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, &(ZERO + (0.5 + *index as f64)*dx))).sum::<f64>()*dx;
+        let normalization = integrate_1d(&|nondimensional_end_to_end_length_per_link| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, &nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
         FJC
         {
             hinge_mass,

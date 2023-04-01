@@ -19,9 +19,27 @@ pub fn inverse_langevin(y: &f64) -> f64
     inverse_newton_raphson(y, &|x: &f64| 1.0/x.tanh() - 1.0/x, &|x: &f64| 1.0/x.powi(2) - 1.0/x.sinh().powi(2), &((2.14234*y.powi(3) - 4.22785*y.powi(2) + 3.0*y)/(1.0 - y)/(0.71716*y.powi(3) - 0.41103*y.powi(2) - 0.39165*y + 1.0)), &1e-2, &100)
 }
 
-pub fn integrate_1d(f: &dyn Fn(&f64) -> f64) -> f64
+// for 1D and 2D
+// should make version that generate grid, and version that takes grid input
+// for example, will be more memory efficient if 2D references existing array as argument
+// so when integrating many times for constitutive model (attribte is grid?), wont keep regenerating it
+// should be faster, right?
+// consider similar idea for 1D integrals, ie calling modified_canonical functions many times!
+// would store grid as attribute?
+//
+// is this all really a big speed boost? try out and see!
+//
+// because if not, is a waste of memory
+
+pub fn integrate_1d(f: &dyn Fn(&f64) -> f64, x_min: &f64, x_max: &f64, num_points: &u128) -> f64
 {
-    1.0
+    let dx = (x_max - x_min)/(*num_points as f64);
+    (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| f(&(x_min + (0.5 + *index as f64)*dx))).sum::<f64>()*dx
+}
+
+pub fn integrate_1d_given_grid(f: &dyn Fn(&f64) -> f64, grid: &Vec<f64>) -> f64
+{
+    grid.iter().map(|x| f(x)).sum::<f64>()*(grid[1] - grid[0])
 }
 
 pub fn erf(x: &f64) -> f64
