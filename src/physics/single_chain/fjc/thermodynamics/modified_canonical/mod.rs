@@ -9,6 +9,7 @@ mod test;
 /// The freely-jointed chain (FJC) model thermodynamics in the modified canonical ensemble approximated using an asymptotic approach.
 pub mod asymptotic;
 
+use super::treloar_sum_0_with_prefactor;
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -73,21 +74,13 @@ pub fn nondimensional_force(number_of_links: &u8, nondimensional_potential_dista
 {
     let number_of_links_f64 = *number_of_links as f64;
     let number_of_links_squared_times_nondimensional_potential_stiffness = number_of_links_f64.powi(2)*nondimensional_potential_stiffness;
-    let n = *number_of_links as u128;
-    let p: i32 = (number_of_links - 2).into();
     let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
     {
-        let m = -nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-        let k = (number_of_links_f64*m).ceil() as u128;
-        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p)).sum();
-        0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum*((number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link) + ((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)*nondimensional_end_to_end_length_per_link))
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, &nondimensional_end_to_end_length_per_link)*((number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link) + ((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)*nondimensional_end_to_end_length_per_link))
     };
     let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
     {
-        let m = -nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-        let k = (number_of_links_f64*m).ceil() as u128;
-        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p)).sum();
-        0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, &nondimensional_end_to_end_length_per_link)*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
     };
     let dx = (ONE - ZERO)/(POINTS as f64);
     (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand_numerator(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()/(0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand_denominator(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()/number_of_links_f64
@@ -122,14 +115,9 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
 {
     let number_of_links_f64 = *number_of_links as f64;
     let number_of_links_squared_times_nondimensional_potential_stiffness = number_of_links_f64.powi(2)*nondimensional_potential_stiffness;
-    let n = *number_of_links as u128;
-    let p: i32 = (number_of_links - 2).into();
     let integrand = |nondimensional_end_to_end_length_per_link: f64|
     {
-        let m = -nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-        let k = (number_of_links_f64*m).ceil() as u128;
-        let sum: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p)).sum();
-        0.5*nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, &nondimensional_end_to_end_length_per_link)*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
     };
     let dx = (ONE - ZERO)/(POINTS as f64);
     let nondimensional_configurational_partition_function = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()*dx;
