@@ -37,7 +37,7 @@ pub fn integrate_1d(f: &dyn Fn(&f64) -> f64, x_min: &f64, x_max: &f64, num_point
     (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| f(&(x_min + (0.5 + *index as f64)*dx))).sum::<f64>()*dx
 }
 
-pub fn integrate_1d_given_grid(f: &dyn Fn(&f64) -> f64, grid: &Vec<f64>) -> f64
+pub fn integrate_1d_given_grid(f: &dyn Fn(&f64) -> f64, grid: &[f64]) -> f64
 {
     grid.iter().map(|x| f(x)).sum::<f64>()*(grid[1] - grid[0])
 }
