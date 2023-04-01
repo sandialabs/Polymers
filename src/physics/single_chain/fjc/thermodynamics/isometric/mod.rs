@@ -9,6 +9,7 @@ mod test;
 /// The freely-jointed chain (FJC) model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
+use super::treloar_sums;
 use std::f64::consts::PI;
 use crate::physics::
 {
@@ -42,14 +43,9 @@ pub fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, t
 /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links.
 pub fn nondimensional_force(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
+    let sums = treloar_sums(number_of_links, nondimensional_end_to_end_length_per_link, &vec![0, 1]);
     let number_of_links_f64 = *number_of_links as f64;
-    let n = *number_of_links as u128;
-    let p: i32 = (number_of_links - 2).into();
-    let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-    let k = (number_of_links_f64*m).ceil() as u128;
-    let sum_0: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p)).sum();
-    let sum_1: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p - 1)).sum();
-    (1.0/nondimensional_end_to_end_length_per_link + (0.5*number_of_links_f64 - 1.0)*sum_1/sum_0)/number_of_links_f64
+    (1.0/nondimensional_end_to_end_length_per_link + (0.5*number_of_links_f64 - 1.0)*sums[1]/sums[0])/number_of_links_f64
 }
 
 /// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and hinge mass.

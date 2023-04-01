@@ -51,3 +51,13 @@ impl FJC
         }
     }
 }
+
+fn treloar_sums(number_of_links: &u8, nondimensional_end_to_end_length_per_link: &f64, orders: &Vec<i32>) -> Vec<f64>
+{
+    let number_of_links_f64 = *number_of_links as f64;
+    let n = *number_of_links as u128;
+    let p: i32 = (number_of_links - 2).into();
+    let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
+    let k = (number_of_links_f64*m).ceil() as u128;
+    orders.iter().map(|order| (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p - order)).sum()).collect()
+}
