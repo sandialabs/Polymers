@@ -362,7 +362,7 @@ mod relative
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let helmholtz_free_energy = model.helmholtz_free_energy(&end_to_end_length, &temperature);
-            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&ZERO, &temperature);
+            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&end_to_end_length, &temperature);
             let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_0 - &relative_helmholtz_free_energy;
             let residual_rel = &residual_abs/&helmholtz_free_energy_0;
@@ -384,7 +384,7 @@ mod relative
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
-            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&ZERO, &temperature);
+            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
             let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_0 - &relative_helmholtz_free_energy_per_link;
             let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_0;

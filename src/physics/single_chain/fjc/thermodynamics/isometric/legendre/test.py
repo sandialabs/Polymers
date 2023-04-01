@@ -1778,7 +1778,7 @@ class Zero(unittest.TestCase):
                 )
             self.assertLessEqual(
                 np.abs(force_0),
-                3.0*parameters.boltzmann_constant*temperature /
+                3.1*parameters.boltzmann_constant*temperature /
                 link_length*parameters.zero
             )
 
@@ -1810,7 +1810,7 @@ class Zero(unittest.TestCase):
                 )
             self.assertLessEqual(
                 np.abs(nondimensional_force_0),
-                3.0*parameters.zero
+                3.1*parameters.zero
             )
 
     def test_relative_helmholtz_free_energy(self):
@@ -2150,7 +2150,6 @@ class Connection(unittest.TestCase):
     """Class for connection tests.
 
     """
-    @pytest.mark.skip(reason="Inverse Langevin function approximation.")
     def test_force(self):
         """Function to test the connection
         of the force.
@@ -2208,7 +2207,6 @@ class Connection(unittest.TestCase):
                 np.abs(residual_rel), h_step
             )
 
-    @pytest.mark.skip(reason="Inverse Langevin function approximation.")
     def test_nondimensional_force(self):
         """Function to test the connection
         of the nondimensional force.

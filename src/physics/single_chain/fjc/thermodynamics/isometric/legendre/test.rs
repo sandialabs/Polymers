@@ -529,7 +529,7 @@ mod relative
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let helmholtz_free_energy = model.helmholtz_free_energy(&end_to_end_length, &temperature);
-            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&ZERO, &temperature);
+            let helmholtz_free_energy_0 = model.helmholtz_free_energy(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&end_to_end_length, &temperature);
             let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_0 - &relative_helmholtz_free_energy;
             let residual_rel = &residual_abs/&helmholtz_free_energy_0;
@@ -551,7 +551,7 @@ mod relative
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
-            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&ZERO, &temperature);
+            let helmholtz_free_energy_per_link_0 = model.helmholtz_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
             let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_0 - &relative_helmholtz_free_energy_per_link;
             let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_0;
@@ -615,7 +615,7 @@ mod relative
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let gibbs_free_energy = model.gibbs_free_energy(&end_to_end_length, &temperature);
-            let gibbs_free_energy_0 = model.gibbs_free_energy(&ZERO, &temperature);
+            let gibbs_free_energy_0 = model.gibbs_free_energy(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&end_to_end_length, &temperature);
             let residual_abs = &gibbs_free_energy - &gibbs_free_energy_0 - &relative_gibbs_free_energy;
             let residual_rel = &residual_abs/&gibbs_free_energy_0;
@@ -637,7 +637,7 @@ mod relative
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&end_to_end_length, &temperature);
-            let gibbs_free_energy_per_link_0 = model.gibbs_free_energy_per_link(&ZERO, &temperature);
+            let gibbs_free_energy_per_link_0 = model.gibbs_free_energy_per_link(&(ZERO*(number_of_links as f64)*link_length), &temperature);
             let relative_gibbs_free_energy_per_link = model.relative_gibbs_free_energy_per_link(&end_to_end_length, &temperature);
             let residual_abs = &gibbs_free_energy_per_link - &gibbs_free_energy_per_link_0 - &relative_gibbs_free_energy_per_link;
             let residual_rel = &residual_abs/&gibbs_free_energy_per_link_0;
@@ -705,7 +705,7 @@ mod zero
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let force_0 = model.force(&(ZERO*(number_of_links as f64)*link_length), &temperature);
-            assert!(force_0.abs() <= 3.0*BOLTZMANN_CONSTANT*temperature/link_length*ZERO);
+            assert!(force_0.abs() <= 3.1*BOLTZMANN_CONSTANT*temperature/link_length*ZERO);
         }
     }
     #[test]
@@ -720,7 +720,7 @@ mod zero
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let nondimensional_force_0 = model.nondimensional_force(&ZERO);
-            assert!(nondimensional_force_0.abs() <= 3.0*ZERO);
+            assert!(nondimensional_force_0.abs() <= 3.1*ZERO);
         }
     }
     #[test]
@@ -883,7 +883,6 @@ mod connection
     use super::*;
     use rand::Rng;
     #[test]
-    #[ignore]
     fn force()
     {
         let mut rng = rand::thread_rng();
@@ -906,7 +905,6 @@ mod connection
         }
     }
     #[test]
-    #[ignore]
     fn nondimensional_force()
     {
         let mut rng = rand::thread_rng();

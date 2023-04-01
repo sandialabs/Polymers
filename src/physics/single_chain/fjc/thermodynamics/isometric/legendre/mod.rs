@@ -12,6 +12,7 @@ use super::
     treloar_sum_0_with_prefactor
 };
 use std::f64::consts::PI;
+use crate::math::inverse_langevin;
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -48,7 +49,7 @@ pub fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, t
 /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links.
 pub fn nondimensional_force(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
-    (2.14234*nondimensional_end_to_end_length_per_link.powi(3) - 4.22785*nondimensional_end_to_end_length_per_link.powi(2) + 3.0*nondimensional_end_to_end_length_per_link)/(1.0 - nondimensional_end_to_end_length_per_link)/(0.71716*nondimensional_end_to_end_length_per_link.powi(3) - 0.41103*nondimensional_end_to_end_length_per_link.powi(2) - 0.39165*nondimensional_end_to_end_length_per_link + 1.0)
+    inverse_langevin(nondimensional_end_to_end_length_per_link)
 }
 
 /// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and hinge mass.
