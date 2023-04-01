@@ -19,7 +19,7 @@ pub fn inverse_langevin(y: &f64) -> f64
     inverse_newton_raphson(y, &|x: &f64| 1.0/x.tanh() - 1.0/x, &|x: &f64| 1.0/x.powi(2) - 1.0/x.sinh().powi(2), &((2.14234*y.powi(3) - 4.22785*y.powi(2) + 3.0*y)/(1.0 - y)/(0.71716*y.powi(3) - 0.41103*y.powi(2) - 0.39165*y + 1.0)), &1e-2, &100)
 }
 
-pub fn integrate(f: &dyn Fn(&f64) -> f64) -> f64
+pub fn integrate_1d(f: &dyn Fn(&f64) -> f64) -> f64
 {
     1.0
 }
