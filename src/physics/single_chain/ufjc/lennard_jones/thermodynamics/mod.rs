@@ -47,10 +47,12 @@ fn nondimensional_link_stretch(nondimensional_link_stiffness: &f64, nondimension
     let p = -1.0/13.0;
     let s = 6.0*nondimensional_force/nondimensional_link_stiffness;
     let mut lambda: f64 = 1.1;
+    let mut lambda6: f64 = lambda.powi(6);
     let mut residual_rel = 1.0;
     while residual_rel > 1e-5
     {
-        lambda = (lambda.powi(-7) - s).powf(p);
+        lambda6 = lambda.powi(6);
+        lambda += lambda*(lambda6 - s*lambda.powi(13) - 1.0)/(7.0*lambda6 - 13.0);
         residual_rel = (1.0 - (lambda.powi(-7) - lambda.powi(-13))/s).abs();
     }
     lambda
