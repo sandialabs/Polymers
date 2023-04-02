@@ -934,7 +934,8 @@ end
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         force_0 = model.force(ZERO * number_of_links * link_length, temperature)
-        @test abs(force_0) <= ZERO * number_of_links * BOLTZMANN_CONSTANT * temperature
+        @test abs(force_0) <=
+              3.1 * ZERO * number_of_links * BOLTZMANN_CONSTANT * temperature
     end
 end
 
@@ -948,7 +949,7 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         model = FJC(number_of_links, link_length, hinge_mass)
         nondimensional_force_0 = model.nondimensional_force(ZERO)
-        @test abs(nondimensional_force_0) <= ZERO * number_of_links
+        @test abs(nondimensional_force_0) <= 3.1 * ZERO * number_of_links
     end
 end
 
@@ -1153,7 +1154,7 @@ end
             ) / h
         residual_abs = force - force_from_derivative
         residual_rel = residual_abs / force
-        @test abs(residual_rel) <= h skip = true
+        @test abs(residual_rel) <= h
     end
 end
 
@@ -1184,7 +1185,7 @@ end
             ) / h
         residual_abs = nondimensional_force - nondimensional_force_from_derivative
         residual_rel = residual_abs / nondimensional_force
-        @test abs(residual_rel) <= h skip = true
+        @test abs(residual_rel) <= h
     end
 end
 

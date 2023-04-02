@@ -12,7 +12,7 @@ pub mod asymptotic;
 /// The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
-use super::erf;
+use crate::math::erf;
 use std::f64::consts::PI;
 use crate::physics::
 {

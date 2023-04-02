@@ -12,6 +12,11 @@ use super::
     treloar_sum_0_with_prefactor
 };
 use std::f64::consts::PI;
+use crate::math::
+{
+    inverse_langevin,
+    integrate_1d
+};
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -48,7 +53,7 @@ pub fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, t
 /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links.
 pub fn nondimensional_force(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
-    (2.14234*nondimensional_end_to_end_length_per_link.powi(3) - 4.22785*nondimensional_end_to_end_length_per_link.powi(2) + 3.0*nondimensional_end_to_end_length_per_link)/(1.0 - nondimensional_end_to_end_length_per_link)/(0.71716*nondimensional_end_to_end_length_per_link.powi(3) - 0.41103*nondimensional_end_to_end_length_per_link.powi(2) - 0.39165*nondimensional_end_to_end_length_per_link + 1.0)
+    inverse_langevin(nondimensional_end_to_end_length_per_link)
 }
 
 /// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and hinge mass.
@@ -183,8 +188,7 @@ impl FJC
     /// Initializes and returns an instance of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
-        let dx = (ONE - ZERO)/(POINTS as f64);
-        let normalization = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, &(ZERO + (0.5 + *index as f64)*dx))).sum::<f64>()*dx;
+        let normalization = integrate_1d(&|nondimensional_end_to_end_length_per_link: &f64| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
         FJC
         {
             hinge_mass,

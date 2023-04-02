@@ -11,6 +11,7 @@ pub mod asymptotic;
 
 use super::treloar_sum_0_with_prefactor;
 use std::f64::consts::PI;
+use crate::math::integrate_1d;
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -74,16 +75,15 @@ pub fn nondimensional_force(number_of_links: &u8, nondimensional_potential_dista
 {
     let number_of_links_f64 = *number_of_links as f64;
     let number_of_links_squared_times_nondimensional_potential_stiffness = number_of_links_f64.powi(2)*nondimensional_potential_stiffness;
-    let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+    let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
     {
-        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, &nondimensional_end_to_end_length_per_link)*((number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link) + ((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)*nondimensional_end_to_end_length_per_link))
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, nondimensional_end_to_end_length_per_link)*((number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link)*(-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link) + ((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance.powi(2)*nondimensional_end_to_end_length_per_link))
     };
-    let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+    let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
     {
-        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, &nondimensional_end_to_end_length_per_link)*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, nondimensional_end_to_end_length_per_link)*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
     };
-    let dx = (ONE - ZERO)/(POINTS as f64);
-    (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand_numerator(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()/(0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand_denominator(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()/number_of_links_f64
+    integrate_1d(&integrand_numerator, &ZERO, &ONE, &POINTS)/integrate_1d(&integrand_denominator, &ZERO, &ONE, &POINTS)/number_of_links_f64
 }
 
 /// The Helmholtz free energy as a function of the applied potential distance, potential stiffness, and temperature, parameterized by the number of links, link length, and hinge mass.
@@ -115,12 +115,11 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
 {
     let number_of_links_f64 = *number_of_links as f64;
     let number_of_links_squared_times_nondimensional_potential_stiffness = number_of_links_f64.powi(2)*nondimensional_potential_stiffness;
-    let integrand = |nondimensional_end_to_end_length_per_link: f64|
+    let integrand = |nondimensional_end_to_end_length_per_link: &f64|
     {
-        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, &nondimensional_end_to_end_length_per_link)*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
+        4.0*PI*nondimensional_end_to_end_length_per_link.powi(2)*treloar_sum_0_with_prefactor(number_of_links, nondimensional_end_to_end_length_per_link)*((-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance - nondimensional_end_to_end_length_per_link).powi(2)).exp() - (-0.5*number_of_links_squared_times_nondimensional_potential_stiffness*(nondimensional_potential_distance + nondimensional_end_to_end_length_per_link).powi(2)).exp())/(2.0*number_of_links_squared_times_nondimensional_potential_stiffness*nondimensional_potential_distance*nondimensional_end_to_end_length_per_link)
     };
-    let dx = (ONE - ZERO)/(POINTS as f64);
-    let nondimensional_configurational_partition_function = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| integrand(ZERO + (0.5 + *index as f64)*dx)).sum::<f64>()*dx;
+    let nondimensional_configurational_partition_function = integrate_1d(&integrand, &ZERO, &ONE, &POINTS);
     -nondimensional_configurational_partition_function.ln() - (number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
