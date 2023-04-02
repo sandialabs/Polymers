@@ -12,6 +12,16 @@ const ONE::Float64 = 1.0
 const ZERO::Float64 = 1e-6
 const POINTS::UInt128 = 64
 
+function integrate(
+    fun::Function,
+    lower_lim::Float64,
+    upper_lim::Float64,
+    num_points::UInt128,
+)
+    dx = (upper_lim - lower_lim) / num_points
+    return sum(map(fun, lower_lim .+ (0.5 .+ collect(range(0, num_points - 1))) * dx)) * dx
+end
+
 struct Parameters
     abs_tol::Float64
     rel_tol::Float64

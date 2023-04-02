@@ -6,6 +6,16 @@ import numpy as np
 from polymers import physics
 
 
+def integrate(function, lower_lim, upper_lim, num_points):
+    """Function for integration.
+
+    """
+    d_x = (upper_lim - lower_lim)/num_points
+    return function(
+        lower_lim + (0.5 + np.arange(0, num_points))*d_x
+    ).sum()*d_x
+
+
 class Parameters:
     """Class for testing parameters.
 

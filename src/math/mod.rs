@@ -1,6 +1,3 @@
-#[cfg(feature = "python")]
-pub mod py;
-
 pub fn inverse_newton_raphson(y: &f64, f: &dyn Fn(&f64) -> f64, fp: &dyn Fn(&f64) -> f64, guess: &f64, &rel_tol: &f64, max_iters: &u8) -> f64
 {
     let mut x = *guess;
