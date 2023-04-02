@@ -1,3 +1,5 @@
+maybe put this in ufjc/composite ?
+
 mod test;
 
 /// The structure of the CUFJC model.
