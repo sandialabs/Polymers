@@ -6,7 +6,17 @@ pub mod py;
 
 mod test;
 
+use super::
+{
+    treloar_sums,
+    treloar_sum_0_with_prefactor
+};
 use std::f64::consts::PI;
+use crate::math::
+{
+    inverse_langevin,
+    integrate_1d
+};
 use crate::physics::
 {
     PLANCK_CONSTANT,
@@ -43,7 +53,7 @@ pub fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, t
 /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links.
 pub fn nondimensional_force(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
-    (2.14234*nondimensional_end_to_end_length_per_link.powi(3) - 4.22785*nondimensional_end_to_end_length_per_link.powi(2) + 3.0*nondimensional_end_to_end_length_per_link)/(1.0 - nondimensional_end_to_end_length_per_link)/(0.71716*nondimensional_end_to_end_length_per_link.powi(3) - 0.41103*nondimensional_end_to_end_length_per_link.powi(2) - 0.39165*nondimensional_end_to_end_length_per_link + 1.0)
+    inverse_langevin(nondimensional_end_to_end_length_per_link)
 }
 
 /// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and hinge mass.
@@ -149,14 +159,9 @@ pub fn relative_gibbs_free_energy_per_link(number_of_links: &u8, link_length: &f
 /// The nondimensional Gibbs free energy as a function of the applied nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass.
 pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
+    let sums = treloar_sums(number_of_links, nondimensional_end_to_end_length_per_link, &[0, 1]);
     let number_of_links_f64 = *number_of_links as f64;
-    let n = *number_of_links as u128;
-    let p: i32 = (number_of_links - 2).into();
-    let m = -*nondimensional_end_to_end_length_per_link*0.5 + 0.5;
-    let k = (number_of_links_f64*m).ceil() as u128;
-    let sum_0: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p)).sum();
-    let sum_1: f64 = (0..=k-1).collect::<Vec::<u128>>().iter().map(|s| (-1.0_f64).powf(*s as f64)*(((1..=n).product::<u128>()/(1..=*s).product::<u128>()/(1..=n-s).product::<u128>()) as f64)*(m - (*s as f64)/number_of_links_f64).powi(p - 1)).sum();
-    -(nondimensional_end_to_end_length_per_link*number_of_links_f64)*(1.0/nondimensional_end_to_end_length_per_link + (0.5*number_of_links_f64 - 1.0)*sum_1/sum_0)/number_of_links_f64 - (0.125/PI/nondimensional_end_to_end_length_per_link*(n.pow(n as u32) as f64)/((1..=n-2).product::<u128>() as f64)*sum_0/((*number_of_links as f64)*link_length).powi(3)).ln() - (number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    -(nondimensional_end_to_end_length_per_link*number_of_links_f64)*(1.0/nondimensional_end_to_end_length_per_link + (0.5*number_of_links_f64 - 1.0)*sums[1]/sums[0])/number_of_links_f64 - (treloar_sum_0_with_prefactor(number_of_links, nondimensional_end_to_end_length_per_link)/(number_of_links_f64*link_length).powi(3)).ln() - (number_of_links_f64 - 1.0)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional Gibbs free energy per link as a function of the applied nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass.
@@ -183,8 +188,7 @@ impl FJC
     /// Initializes and returns an instance of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
-        let dx = (ONE - ZERO)/(POINTS as f64);
-        let normalization = (0..=POINTS-1).collect::<Vec::<u128>>().iter().map(|index| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, &(ZERO + (0.5 + *index as f64)*dx))).sum::<f64>()*dx;
+        let normalization = integrate_1d(&|nondimensional_end_to_end_length_per_link: &f64| nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
         FJC
         {
             hinge_mass,
