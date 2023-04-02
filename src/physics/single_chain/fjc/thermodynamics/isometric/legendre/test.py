@@ -2,7 +2,6 @@
 
 """
 import unittest
-import pytest
 import numpy as np
 from polymers import physics
 from ..test import Parameters
