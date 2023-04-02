@@ -65,12 +65,12 @@ mod normalization
 {
     use super::*;
     use rand::Rng;
+    use crate::math::integrate_1d;
     use crate::physics::single_chain::
     {
         ONE,
         ZERO,
-        POINTS,
-        test::integrate
+        POINTS
     };
     #[test]
     fn equilibrium_distribution()
@@ -83,8 +83,8 @@ mod normalization
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let integrand = |end_to_end_length: f64| 4.0*PI*end_to_end_length.powi(2)*model.equilibrium_distribution(&end_to_end_length);
-            let integral = integrate(integrand, &(ZERO*(number_of_links as f64)*link_length), &(ONE*(number_of_links as f64)*link_length), &POINTS);
+            let integrand = |end_to_end_length: &f64| 4.0*PI*end_to_end_length.powi(2)*model.equilibrium_distribution(&end_to_end_length);
+            let integral = integrate_1d(&integrand, &(ZERO*(number_of_links as f64)*link_length), &(ONE*(number_of_links as f64)*link_length), &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -99,8 +99,8 @@ mod normalization
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let integrand = |nondimensional_end_to_end_length_per_link_per_link: f64| 4.0*PI*nondimensional_end_to_end_length_per_link_per_link.powi(2)*model.nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link_per_link);
-            let integral = integrate(integrand, &ZERO, &ONE, &POINTS);
+            let integrand = |nondimensional_end_to_end_length_per_link_per_link: &f64| 4.0*PI*nondimensional_end_to_end_length_per_link_per_link.powi(2)*model.nondimensional_equilibrium_distribution(&nondimensional_end_to_end_length_per_link_per_link);
+            let integral = integrate_1d(&integrand, &ZERO, &ONE, &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -115,8 +115,8 @@ mod normalization
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let integrand = |end_to_end_length: f64| model.equilibrium_radial_distribution(&end_to_end_length);
-            let integral = integrate(integrand, &(ZERO*(number_of_links as f64)*link_length), &(ONE*(number_of_links as f64)*link_length), &POINTS);
+            let integrand = |end_to_end_length: &f64| model.equilibrium_radial_distribution(&end_to_end_length);
+            let integral = integrate_1d(&integrand, &(ZERO*(number_of_links as f64)*link_length), &(ONE*(number_of_links as f64)*link_length), &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }
@@ -131,8 +131,8 @@ mod normalization
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let model = FJC::init(number_of_links, link_length, hinge_mass);
-            let integrand = |nondimensional_end_to_end_length_per_link_per_link: f64| model.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link_per_link);
-            let integral = integrate(integrand, &ZERO, &ONE, &POINTS);
+            let integrand = |nondimensional_end_to_end_length_per_link_per_link: &f64| model.nondimensional_equilibrium_radial_distribution(&nondimensional_end_to_end_length_per_link_per_link);
+            let integral = integrate_1d(&integrand, &ZERO, &ONE, &POINTS);
             assert!((integral - 1.0).abs() <= parameters.rel_tol);
         }
     }

@@ -541,11 +541,11 @@ mod modified_canonical_strong_potential_isometric
 {
     use super::*;
     use rand::Rng;
+    use crate::math::integrate_1d;
     use crate::physics::single_chain::
     {
         ZERO,
-        POINTS,
-        test::integrate
+        POINTS
     };
     #[test]
     fn force()
@@ -562,16 +562,16 @@ mod modified_canonical_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.modified_canonical.force(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.force(&end_to_end_length, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     model.modified_canonical.force(&end_to_end_length, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -593,16 +593,16 @@ mod modified_canonical_strong_potential_isometric
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.modified_canonical.nondimensional_force(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) - model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     model.modified_canonical.nondimensional_force(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -626,16 +626,16 @@ mod modified_canonical_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.modified_canonical.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.relative_helmholtz_free_energy(&end_to_end_length, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     model.modified_canonical.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -659,16 +659,16 @@ mod modified_canonical_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.modified_canonical.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) - model.isometric.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     model.modified_canonical.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -690,16 +690,16 @@ mod modified_canonical_strong_potential_isometric
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.modified_canonical.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) - model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     model.modified_canonical.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -721,16 +721,16 @@ mod modified_canonical_strong_potential_isometric
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.modified_canonical.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) - model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     model.modified_canonical.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -744,7 +744,7 @@ mod modified_canonical_weak_potential_isotensional
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::test::integrate;
+    use crate::math::integrate_1d;
     use crate::physics::single_chain::POINTS;
     #[test]
     fn end_to_end_length()
@@ -761,19 +761,19 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.force(&potential_distance, &potential_stiffness, &temperature);
                     (model.modified_canonical.end_to_end_length(&potential_distance, &potential_stiffness, &temperature) - model.isotensional.end_to_end_length(&force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.end_to_end_length(&potential_distance, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -797,19 +797,19 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.force(&potential_distance, &potential_stiffness, &temperature);
                     (model.modified_canonical.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature) - model.isotensional.end_to_end_length_per_link(&force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -831,17 +831,17 @@ mod modified_canonical_weak_potential_isotensional
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.isotensional.nondimensional_end_to_end_length(&nondimensional_force)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     model.modified_canonical.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -863,17 +863,17 @@ mod modified_canonical_weak_potential_isotensional
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     model.modified_canonical.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -899,19 +899,19 @@ mod modified_canonical_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.force(&potential_distance, &potential_stiffness, &temperature);
                     (model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(&potential_distance_ref, &potential_stiffness, &temperature) - model.isotensional.gibbs_free_energy(&force, &temperature) + model.isotensional.gibbs_free_energy(&force_ref, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     (model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -937,19 +937,19 @@ mod modified_canonical_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.force(&potential_distance, &potential_stiffness, &temperature);
                     (model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance_ref, &potential_stiffness, &temperature) - model.isotensional.gibbs_free_energy_per_link(&force, &temperature) + model.isotensional.gibbs_free_energy_per_link(&force_ref, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     (model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -975,19 +975,19 @@ mod modified_canonical_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.force(&potential_distance, &potential_stiffness, &temperature);
                     (model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance_ref, &potential_stiffness, &temperature) - model.isotensional.relative_gibbs_free_energy(&force, &temperature) + model.isotensional.relative_gibbs_free_energy(&force_ref, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     (model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1013,19 +1013,19 @@ mod modified_canonical_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.force(&potential_distance_ref, &potential_stiffness, &temperature);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.force(&potential_distance, &potential_stiffness, &temperature);
                     (model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance_ref, &potential_stiffness, &temperature) - model.isotensional.relative_gibbs_free_energy_per_link(&force, &temperature) + model.isotensional.relative_gibbs_free_energy_per_link(&force_ref, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     (model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1050,17 +1050,17 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness, &temperature) - model.isotensional.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) + model.isotensional.nondimensional_gibbs_free_energy(&nondimensional_force_ref, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1085,17 +1085,17 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness, &temperature) - model.isotensional.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) + model.isotensional.nondimensional_gibbs_free_energy_per_link(&nondimensional_force_ref, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1119,17 +1119,17 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness) - model.isotensional.nondimensional_relative_gibbs_free_energy(&nondimensional_force) + model.isotensional.nondimensional_relative_gibbs_free_energy(&nondimensional_force_ref)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1153,17 +1153,17 @@ mod modified_canonical_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness) - model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force) + model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force_ref)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1177,11 +1177,11 @@ mod modified_canonical_asymptotic_strong_potential_isometric
 {
     use super::*;
     use rand::Rng;
+    use crate::math::integrate_1d;
     use crate::physics::single_chain::
     {
         ZERO,
-        POINTS,
-        test::integrate
+        POINTS
     };
     #[test]
     fn force()
@@ -1198,16 +1198,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.isometric.force(&end_to_end_length, &temperature) - model.modified_canonical.asymptotic.strong_potential.force(&end_to_end_length, &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     model.isometric.force(&end_to_end_length, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1229,16 +1229,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link) - model.modified_canonical.asymptotic.strong_potential.nondimensional_force(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1262,16 +1262,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.isometric.helmholtz_free_energy(&end_to_end_length, &temperature) - model.isometric.helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     (model.isometric.helmholtz_free_energy(&end_to_end_length, &temperature) - model.isometric.helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1295,16 +1295,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.isometric.helmholtz_free_energy_per_link(&end_to_end_length, &temperature) - model.isometric.helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     (model.isometric.helmholtz_free_energy_per_link(&end_to_end_length, &temperature) - model.isometric.helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1328,16 +1328,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.isometric.relative_helmholtz_free_energy(&end_to_end_length, &temperature) - model.isometric.relative_helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     (model.isometric.relative_helmholtz_free_energy(&end_to_end_length, &temperature) - model.isometric.relative_helmholtz_free_energy(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1361,16 +1361,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |end_to_end_length: f64|
+                let integrand_numerator = |end_to_end_length: &f64|
                 {
                     (model.isometric.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature) - model.isometric.relative_helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature) - model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy_per_link(&end_to_end_length, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.relative_helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |end_to_end_length: f64|
+                let integrand_denominator = |end_to_end_length: &f64|
                 {
                     (model.isometric.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature) - model.isometric.relative_helmholtz_free_energy_per_link(&(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
-                let denominator = integrate(integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &(ZERO*(number_of_links as f64)*link_length), &(parameters.nondimensional_potential_distance_small*(number_of_links as f64)*link_length), &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1393,16 +1393,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature) - model.isometric.nondimensional_helmholtz_free_energy(&parameters.nondimensional_potential_distance_small, &temperature) - model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy(&parameters.nondimensional_potential_distance_small, &nondimensional_potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature) - model.isometric.nondimensional_helmholtz_free_energy(&parameters.nondimensional_potential_distance_small, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1425,16 +1425,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature) - model.isometric.nondimensional_helmholtz_free_energy_per_link(&parameters.nondimensional_potential_distance_small, &temperature) - model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness, &temperature) + model.modified_canonical.asymptotic.strong_potential.nondimensional_helmholtz_free_energy_per_link(&parameters.nondimensional_potential_distance_small, &nondimensional_potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature) - model.isometric.nondimensional_helmholtz_free_energy_per_link(&parameters.nondimensional_potential_distance_small, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1456,16 +1456,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link) - model.isometric.nondimensional_relative_helmholtz_free_energy(&parameters.nondimensional_potential_distance_small) - model.modified_canonical.asymptotic.strong_potential.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) + model.modified_canonical.asymptotic.strong_potential.nondimensional_relative_helmholtz_free_energy(&parameters.nondimensional_potential_distance_small, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link) - model.isometric.nondimensional_relative_helmholtz_free_energy(&parameters.nondimensional_potential_distance_small)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1487,16 +1487,16 @@ mod modified_canonical_asymptotic_strong_potential_isometric
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link) - model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_potential_distance_small) - model.modified_canonical.asymptotic.strong_potential.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &nondimensional_potential_stiffness) + model.modified_canonical.asymptotic.strong_potential.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_potential_distance_small, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_end_to_end_length_per_link: f64|
+                let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
                 {
                     (model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link) - model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&parameters.nondimensional_potential_distance_small)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_potential_distance_small, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_large);
@@ -1510,7 +1510,7 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
 {
     use super::*;
     use rand::Rng;
-    use crate::physics::single_chain::test::integrate;
+    use crate::math::integrate_1d;
     use crate::physics::single_chain::POINTS;
     #[test]
     fn end_to_end_length()
@@ -1527,19 +1527,19 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.end_to_end_length(&potential_distance, &potential_stiffness, &temperature) - model.isotensional.end_to_end_length(&force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.asymptotic.weak_potential.end_to_end_length(&potential_distance, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1563,19 +1563,19 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature) - model.isotensional.end_to_end_length_per_link(&force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     model.modified_canonical.asymptotic.weak_potential.end_to_end_length_per_link(&potential_distance, &potential_stiffness, &temperature).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1597,17 +1597,17 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.isotensional.nondimensional_end_to_end_length(&nondimensional_force)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     model.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1629,17 +1629,17 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let model = FJC::init(number_of_links, link_length, hinge_mass);
             let residual_rel = |nondimensional_potential_stiffness|
             {
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) - model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     model.modified_canonical.asymptotic.weak_potential.nondimensional_end_to_end_length_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1665,20 +1665,20 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.gibbs_free_energy(&force, &temperature) - model.isotensional.gibbs_free_energy(&force_ref, &temperature) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.gibbs_free_energy(&force, &temperature) - model.isotensional.gibbs_free_energy(&force_ref, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1704,20 +1704,20 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.gibbs_free_energy_per_link(&force, &temperature) - model.isotensional.gibbs_free_energy_per_link(&force_ref, &temperature) - model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.weak_potential.gibbs_free_energy_per_link(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.gibbs_free_energy_per_link(&force, &temperature) - model.isotensional.gibbs_free_energy_per_link(&force_ref, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1743,20 +1743,20 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.relative_gibbs_free_energy(&force, &temperature) - model.isotensional.relative_gibbs_free_energy(&force_ref, &temperature) - model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.relative_gibbs_free_energy(&force, &temperature) - model.isotensional.relative_gibbs_free_energy(&force_ref, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1782,20 +1782,20 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             {
                 let potential_stiffness = nondimensional_potential_stiffness/link_length.powi(2)*BOLTZMANN_CONSTANT*temperature;
                 let force_ref = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance_ref, &potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.relative_gibbs_free_energy_per_link(&force, &temperature) - model.isotensional.relative_gibbs_free_energy_per_link(&force_ref, &temperature) - model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance, &potential_stiffness, &temperature) + model.modified_canonical.asymptotic.weak_potential.relative_gibbs_free_energy_per_link(&potential_distance_ref, &potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let potential_distance = (number_of_links as f64)*link_length*nondimensional_potential_distance;
                     let force = model.modified_canonical.asymptotic.weak_potential.force(&potential_distance, &potential_stiffness);
                     (model.isotensional.relative_gibbs_free_energy_per_link(&force, &temperature) - model.isotensional.relative_gibbs_free_energy_per_link(&force_ref, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1820,18 +1820,18 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) - model.isotensional.nondimensional_gibbs_free_energy(&nondimensional_force_ref, &temperature) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) + model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature) - model.isotensional.nondimensional_gibbs_free_energy(&nondimensional_force_ref, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1856,18 +1856,18 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.isotensional.nondimensional_gibbs_free_energy_per_link(&nondimensional_force_ref, &temperature) - model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness, &temperature) + model.modified_canonical.asymptotic.weak_potential.nondimensional_gibbs_free_energy_per_link(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature) - model.isotensional.nondimensional_gibbs_free_energy_per_link(&nondimensional_force_ref, &temperature)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1891,18 +1891,18 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_relative_gibbs_free_energy(&nondimensional_force,) - model.isotensional.nondimensional_relative_gibbs_free_energy(&nondimensional_force_ref) - model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance, &nondimensional_potential_stiffness) + model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_relative_gibbs_free_energy(&nondimensional_force) - model.isotensional.nondimensional_relative_gibbs_free_energy(&nondimensional_force_ref)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
@@ -1926,18 +1926,18 @@ mod modified_canonical_asymptotic_weak_potential_isotensional
             let residual_rel = |nondimensional_potential_stiffness|
             {
                 let nondimensional_force_ref = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness);
-                let integrand_numerator = |nondimensional_potential_distance: f64|
+                let integrand_numerator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force,) - model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force_ref) - model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance, &nondimensional_potential_stiffness) + model.modified_canonical.asymptotic.weak_potential.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_potential_distance_ref, &nondimensional_potential_stiffness)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_potential_distance: f64|
+                let integrand_denominator = |nondimensional_potential_distance: &f64|
                 {
                     let nondimensional_force = model.modified_canonical.asymptotic.weak_potential.nondimensional_force(&nondimensional_potential_distance, &nondimensional_potential_stiffness);
                     (model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force) - model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force_ref)).powi(2)
                 };
-                let numerator = integrate(integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
-                let denominator = integrate(integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &parameters.nondimensional_potential_distance_large_1, &parameters.nondimensional_potential_distance_large_2, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_potential_stiffness_small);
