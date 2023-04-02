@@ -1,17 +1,24 @@
 pub fn inverse_newton_raphson(y: &f64, f: &dyn Fn(&f64) -> f64, fp: &dyn Fn(&f64) -> f64, guess: &f64, &rel_tol: &f64, max_iters: &u8) -> f64
 {
-    let mut x = *guess;
-    let mut y_minus_f: f64;
-    let mut iters = 0;
-    let mut residual_rel = 1.0;
-    while residual_rel > rel_tol || &iters < max_iters
+    if y <= &1e-3
     {
-        y_minus_f = y - f(&x);
-        x += y_minus_f/fp(&x);
-        iters += 1;
-        residual_rel = (y_minus_f/y).abs();
+        3.0*y
     }
-    x
+    else
+    {
+        let mut x = *guess;
+        let mut y_minus_f: f64;
+        let mut iters = 0;
+        let mut residual_rel = 1.0;
+        while residual_rel > rel_tol || &iters < max_iters
+        {
+	    y_minus_f = y - f(&x);
+	    x += y_minus_f/fp(&x);
+	    iters += 1;
+	    residual_rel = (y_minus_f/y).abs();
+        }
+        x
+    }
 }
 
 pub fn inverse_langevin(y: &f64) -> f64
