@@ -1,29 +1,29 @@
 pub fn inverse_newton_raphson(y: &f64, f: &dyn Fn(&f64) -> f64, fp: &dyn Fn(&f64) -> f64, guess: &f64, &rel_tol: &f64, max_iters: &u8) -> f64
 {
+    let mut x = *guess;
+    let mut y_minus_f: f64;
+    let mut iters = 0;
+    let mut residual_rel = 1.0;
+    while residual_rel > rel_tol || &iters < max_iters
+    {
+        y_minus_f = y - f(&x);
+        x += y_minus_f/fp(&x);
+        iters += 1;
+        residual_rel = (y_minus_f/y).abs();
+    }
+    x
+}
+
+pub fn inverse_langevin(y: &f64) -> f64
+{
     if y <= &1e-3
     {
         3.0*y
     }
     else
     {
-        let mut x = *guess;
-        let mut y_minus_f: f64;
-        let mut iters = 0;
-        let mut residual_rel = 1.0;
-        while residual_rel > rel_tol || &iters < max_iters
-        {
-	    y_minus_f = y - f(&x);
-	    x += y_minus_f/fp(&x);
-	    iters += 1;
-	    residual_rel = (y_minus_f/y).abs();
-        }
-        x
+        inverse_newton_raphson(y, &|x: &f64| 1.0/x.tanh() - 1.0/x, &|x: &f64| 1.0/x.powi(2) - 1.0/x.sinh().powi(2), &((2.14234*y.powi(3) - 4.22785*y.powi(2) + 3.0*y)/(1.0 - y)/(0.71716*y.powi(3) - 0.41103*y.powi(2) - 0.39165*y + 1.0)), &1e-2, &100)
     }
-}
-
-pub fn inverse_langevin(y: &f64) -> f64
-{
-    inverse_newton_raphson(y, &|x: &f64| 1.0/x.tanh() - 1.0/x, &|x: &f64| 1.0/x.powi(2) - 1.0/x.sinh().powi(2), &((2.14234*y.powi(3) - 4.22785*y.powi(2) + 3.0*y)/(1.0 - y)/(0.71716*y.powi(3) - 0.41103*y.powi(2) - 0.39165*y + 1.0)), &1e-2, &100)
 }
 
 // for 1D and 2D
@@ -47,6 +47,17 @@ pub fn integrate_1d(f: &dyn Fn(&f64) -> f64, x_min: &f64, x_max: &f64, num_point
 pub fn integrate_1d_given_grid(f: &dyn Fn(&f64) -> f64, grid: &[f64]) -> f64
 {
     grid.iter().map(|x| f(x)).sum::<f64>()*(grid[1] - grid[0])
+}
+
+pub fn lambert_w(x: &f64) -> f64
+{
+    let amount_of_iterations = ((x.log10()/3.0).ceil() as u8).max(4_u8);
+    let mut w = 0.75*(x + 1.0).ln();
+    for _ in 0..amount_of_iterations
+    {
+        w -= (w*w.exp() - x)/(w.exp()*(w + 1.0) - (w + 2.0)*(w*w.exp() - x)/(2.0 * w + 2.0));
+    }
+    w
 }
 
 pub fn erf(x: &f64) -> f64

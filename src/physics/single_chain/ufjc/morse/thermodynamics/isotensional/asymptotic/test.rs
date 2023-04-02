@@ -951,8 +951,8 @@ mod asymptotic_reduced
 {
     use super::*;
     use rand::Rng;
+    use crate::math::integrate_1d;
     use crate::physics::single_chain::POINTS;
-    use crate::physics::single_chain::test::integrate;
     #[test]
     fn end_to_end_length()
     {
@@ -969,19 +969,19 @@ mod asymptotic_reduced
                 let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                 let link_energy = link_stiffness/2.0/link_length.powi(2);
                 let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
-                let integrand_numerator = |nondimensional_force: f64|
+                let integrand_numerator = |nondimensional_force: &f64|
                 {
                     let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
                     (model.end_to_end_length(&force, &temperature) - model.reduced.end_to_end_length(&force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_force: f64|
+                let integrand_denominator = |nondimensional_force: &f64|
                 {
                     let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
                     model.end_to_end_length(&force, &temperature).powi(2)
                 };
                 let nondimensional_force_max = (link_stiffness*link_energy/8.0).sqrt()/BOLTZMANN_CONSTANT/temperature*link_length;
-                let numerator = integrate(integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
@@ -1008,19 +1008,19 @@ mod asymptotic_reduced
                 let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                 let link_energy = link_stiffness/2.0/link_length.powi(2);
                 let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
-                let integrand_numerator = |nondimensional_force: f64|
+                let integrand_numerator = |nondimensional_force: &f64|
                 {
                     let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
                     (model.end_to_end_length_per_link(&force, &temperature) - model.reduced.end_to_end_length_per_link(&force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_force: f64|
+                let integrand_denominator = |nondimensional_force: &f64|
                 {
                     let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
                     model.end_to_end_length_per_link(&force, &temperature).powi(2)
                 };
                 let nondimensional_force_max = (link_stiffness*link_energy/8.0).sqrt()/BOLTZMANN_CONSTANT/temperature*link_length;
-                let numerator = integrate(integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
@@ -1047,17 +1047,17 @@ mod asymptotic_reduced
                 let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                 let link_energy = link_stiffness/2.0/link_length.powi(2);
                 let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
-                let integrand_numerator = |nondimensional_force: f64|
+                let integrand_numerator = |nondimensional_force: &f64|
                 {
                     (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.reduced.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_force: f64|
+                let integrand_denominator = |nondimensional_force: &f64|
                 {
                     model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powi(2)
                 };
                 let nondimensional_force_max = (link_stiffness*link_energy/8.0).sqrt()/BOLTZMANN_CONSTANT/temperature*link_length;
-                let numerator = integrate(integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
@@ -1084,17 +1084,17 @@ mod asymptotic_reduced
                 let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
                 let link_energy = link_stiffness/2.0/link_length.powi(2);
                 let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
-                let integrand_numerator = |nondimensional_force: f64|
+                let integrand_numerator = |nondimensional_force: &f64|
                 {
                     (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.reduced.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powi(2)
                 };
-                let integrand_denominator = |nondimensional_force: f64|
+                let integrand_denominator = |nondimensional_force: &f64|
                 {
                     model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powi(2)
                 };
                 let nondimensional_force_max = (link_stiffness*link_energy/8.0).sqrt()/BOLTZMANN_CONSTANT/temperature*link_length;
-                let numerator = integrate(integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
-                let denominator = integrate(integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
             let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);

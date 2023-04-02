@@ -41,14 +41,3 @@ impl LOGSQUAREDFJC
         }
     }
 }
-
-fn lambert_w(x: &f64) -> f64
-{
-    let amount_of_iterations = ((x.log10()/3.0).ceil() as u8).max(4_u8);
-    let mut w = 0.75*(x + 1.0).ln();
-    for _ in 0..amount_of_iterations
-    {
-        w -= (w*w.exp() - x)/(w.exp()*(w + 1.0) - (w + 2.0)*(w*w.exp() - x)/(2.0 * w + 2.0));
-    }
-    w
-}

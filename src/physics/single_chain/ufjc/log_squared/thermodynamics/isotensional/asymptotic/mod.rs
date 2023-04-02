@@ -9,8 +9,8 @@ pub mod reduced;
 /// The log-squared link potential freely-jointed chain (log-squared-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
-use super::lambert_w;
 use std::f64::consts::PI;
+use crate::math::lambert_w;
 use crate::physics::
 {
     PLANCK_CONSTANT,
