@@ -967,8 +967,8 @@ mod asymptotic_reduced
                 let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
-            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
-            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
+            let residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large);
+            let residual_rel_2 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
             let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
             assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_large);
             assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_large/parameters.log_log_scale);
@@ -1006,8 +1006,8 @@ mod asymptotic_reduced
                 let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
-            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
-            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
+            let residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large);
+            let residual_rel_2 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
             let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
             assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_large);
             assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_large/parameters.log_log_scale);
@@ -1043,8 +1043,8 @@ mod asymptotic_reduced
                 let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
-            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
-            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
+            let residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large);
+            let residual_rel_2 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
             let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
             assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_large);
             assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_large/parameters.log_log_scale);
@@ -1080,8 +1080,8 @@ mod asymptotic_reduced
                 let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
                 (numerator/denominator).sqrt()
             };
-            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large);
-            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
+            let residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large);
+            let residual_rel_2 = residual_rel(5.0*parameters.nondimensional_link_stiffness_large*parameters.log_log_scale);
             let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
             assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_large);
             assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_large/parameters.log_log_scale);

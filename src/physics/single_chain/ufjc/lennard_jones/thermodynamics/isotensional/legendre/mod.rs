@@ -4,13 +4,13 @@ pub mod py;
 mod test;
 
 use std::f64::consts::PI;
+use crate::math::integrate_1d;
 use crate::physics::
 {
     PLANCK_CONSTANT,
     BOLTZMANN_CONSTANT,
     single_chain::
     {
-        ONE,
         ZERO,
         POINTS
     }
@@ -65,7 +65,24 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
 /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional force and temperature, parameterized by the link length, hinge mass, nondimensional link stiffness, and nondimensional link energy.
 pub fn nondimensional_helmholtz_free_energy_per_link(link_length: &f64, hinge_mass: &f64, nondimensional_link_stiffness: &f64, nondimensional_force: &f64, temperature: &f64) -> f64
 {
-    *nondimensional_force
+    let nondimensional_link_stretch_max = (13.0/7.0_f64).powf(1.0/6.0);
+    let rescaled_partition_function_integrand = |nondimensional_link_stretch: &f64|
+    {
+        let exponent_1 = nondimensional_force*nondimensional_link_stretch - nondimensional_link_stiffness/72.0*(nondimensional_link_stretch.powi(-12) - 2.0*nondimensional_link_stretch.powi(-6)) + nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_2 = exponent_1 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        exponent_1.exp() - exponent_2.exp()
+    };
+    let rescaled_partition_function = integrate_1d(&rescaled_partition_function_integrand, &ZERO, &nondimensional_link_stretch_max, &POINTS);
+    let nondimensional_end_to_end_length_per_link_integrand = |nondimensional_link_stretch: &f64|
+    {
+        let exponent_1 = nondimensional_force*nondimensional_link_stretch - nondimensional_link_stiffness/72.0*(nondimensional_link_stretch.powi(-12) - 2.0*nondimensional_link_stretch.powi(-6)) + 2.0*nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_2 = exponent_1 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        let exponent_3 = exponent_1 - nondimensional_link_stretch.ln() - nondimensional_force.ln();
+        let exponent_4 = exponent_3 - 2.0*nondimensional_force*nondimensional_link_stretch;
+        (exponent_1.exp() + exponent_2.exp() - exponent_3.exp() + exponent_4.exp())/rescaled_partition_function
+    };
+    let nondimensional_end_to_end_length_per_link = integrate_1d(&nondimensional_end_to_end_length_per_link_integrand, &ZERO, &nondimensional_link_stretch_max, &POINTS);
+    -rescaled_partition_function.ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln() + nondimensional_force*nondimensional_end_to_end_length_per_link
 }
 
 /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional force, parameterized by the number of links, nondimensional link stiffness, and nondimensional link energy.
