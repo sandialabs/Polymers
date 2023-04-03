@@ -949,19 +949,327 @@ mod legendre_connection
 }
 mod asymptotic
 {
-    #[test]
-    fn dummy()
+    use super::*;
+    use rand::Rng;
+    use crate::math::integrate_1d;
+    use crate::physics::single_chain::
     {
-        assert_eq!(0.0, 1.0);
-        // dont forget to verify (slope -2)
+        ZERO,
+        POINTS
+    };
+    #[test]
+    fn end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    (model.end_to_end_length(&force, &temperature) - model.asymptotic.end_to_end_length(&force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    model.end_to_end_length(&force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((0.5*log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    (model.end_to_end_length_per_link(&force, &temperature) - model.asymptotic.end_to_end_length_per_link(&force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    model.end_to_end_length_per_link(&force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((0.5*log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.asymptotic.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((0.5*log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.asymptotic.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((0.5*log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
     }
 }
 mod asymptotic_reduced
 {
-    #[test]
-    fn dummy()
+    use super::*;
+    use rand::Rng;
+    use crate::math::integrate_1d;
+    use crate::physics::single_chain::
     {
-        assert_eq!(0.0, 1.0);
-        // dont forget to verify (slope -1)
+        ZERO,
+        POINTS
+    };
+    #[test]
+    fn end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    (model.end_to_end_length(&force, &temperature) - model.asymptotic.reduced.end_to_end_length(&force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    model.end_to_end_length(&force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    (model.end_to_end_length_per_link(&force, &temperature) - model.asymptotic.reduced.end_to_end_length_per_link(&force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    model.end_to_end_length_per_link(&force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.asymptotic.reduced.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let link_energy = 0.5*link_stiffness*link_length.powi(2);
+                let model = MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.asymptotic.reduced.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powi(2)
+                };
+                let nondimensional_morse_parameter = (link_stiffness*link_length.powi(2)/link_energy/2.0).sqrt();
+                let nondimensional_link_stretch_max = 1.0 + 2.0_f64.ln()/nondimensional_morse_parameter;
+                let nondimensional_force_max = nondimensional_link_stretch_max;
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &nondimensional_force_max, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &nondimensional_force_max, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
     }
 }
