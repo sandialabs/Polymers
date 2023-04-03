@@ -26,27 +26,41 @@ pub fn inverse_langevin(y: &f64) -> f64
     }
 }
 
-// for 1D and 2D
-// should make version that generate grid, and version that takes grid input
-// for example, will be more memory efficient if 2D references existing array as argument
-// so when integrating many times for constitutive model (attribte is grid?), wont keep regenerating it
-// should be faster, right?
-// consider similar idea for 1D integrals, ie calling modified_canonical functions many times!
-// would store grid as attribute?
-//
-// is this all really a big speed boost? try out and see!
-//
-// because if not, is a waste of memory
-
 pub fn integrate_1d(f: &dyn Fn(&f64) -> f64, x_min: &f64, x_max: &f64, num_points: &u128) -> f64
 {
     let dx = (x_max - x_min)/(*num_points as f64);
-    (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| f(&(x_min + (0.5 + *index as f64)*dx))).sum::<f64>()*dx
+    (0..*num_points).collect::<Vec::<u128>>().iter().map(|index| f(&(x_min + (0.5 + *index as f64)*dx))).sum::<f64>()*dx
 }
 
-pub fn integrate_1d_given_grid(f: &dyn Fn(&f64) -> f64, grid: &[f64]) -> f64
+pub fn integrate_1d_grid(f: &dyn Fn(&f64) -> f64, grid: &[f64], dx: &f64) -> f64
 {
-    grid.iter().map(|x| f(x)).sum::<f64>()*(grid[1] - grid[0])
+    grid.iter().map(|x| f(x)).sum::<f64>()*dx
+}
+
+pub fn integrate_2d(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, y_min: &f64, y_max: &f64, num_points: &u128) -> f64
+{
+    let dx = (x_max - x_min)/(*num_points as f64);
+    let dy = (y_max - y_min)/(*num_points as f64);
+    let grid_x = (0..*num_points).collect::<Vec<u128>>().iter().map(|index| x_min + (0.5 + *index as f64)*dx).collect::<Vec<f64>>();
+    let grid_y = (0..*num_points).collect::<Vec<u128>>().iter().map(|index| y_min + (0.5 + *index as f64)*dy).collect::<Vec<f64>>();
+    grid_x.iter().flat_map(|x| grid_y.iter().map(|y| f(x, y))).sum::<f64>()*dx*dy
+}
+
+pub fn integrate_2d_symmetric(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, num_points: &u128) -> f64
+{
+    let dx = (x_max - x_min)/(*num_points as f64);
+    let grid = (0..*num_points).collect::<Vec<u128>>().iter().map(|index| x_min + (0.5 + *index as f64)*dx).collect::<Vec<f64>>();
+    grid.iter().flat_map(|x| grid.iter().map(|y| f(x, y))).sum::<f64>()*dx.powi(2)
+}
+
+pub fn integrate_2d_grid(f: &dyn Fn(&f64, &f64) -> f64, grid_x: &[f64], grid_y: &[f64], da: &f64) -> f64
+{
+    grid_x.iter().flat_map(|x| grid_y.iter().map(|y| f(x, y))).sum::<f64>()*da
+}
+
+pub fn integrate_2d_symmetric_grid(f: &dyn Fn(&f64, &f64) -> f64, grid: &[f64], da: &f64) -> f64
+{
+    grid.iter().flat_map(|x| grid.iter().map(|y| f(x, y))).sum::<f64>()*da
 }
 
 pub fn lambert_w(x: &f64) -> f64
