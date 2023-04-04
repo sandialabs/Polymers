@@ -5,6 +5,7 @@ import unittest
 import numpy as np
 from polymers import physics
 from ..test import Parameters
+from ......test import integrate
 
 parameters = Parameters()
 LENNARDJONESFJC = physics.single_chain.ufjc.lennard_jones.thermodynamics.\
@@ -2270,4 +2271,366 @@ class LegendreConnection(unittest.TestCase):
             residual_rel = residual_abs/nondimensional_force
             self.assertLessEqual(
                 np.abs(residual_rel), h_step
+            )
+
+
+class AsymptoticReduced(unittest.TestCase):
+    """Class for asymptotic tests for reduced approach.
+
+    """
+    def test_end_to_end_length(self):
+        """Function to test the asymptotics
+        of the end-to-end length.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_link_stiffness):
+                link_stiffness = nondimensional_link_stiffness * \
+                    parameters.boltzmann_constant*temperature/link_length**2
+                model = LENNARDJONESFJC(
+                    number_of_links,
+                    link_length,
+                    hinge_mass,
+                    link_stiffness
+                )
+
+                def integrand_numerator(nondimensional_force):
+                    force = nondimensional_force * \
+                        parameters.boltzmann_constant*temperature/link_length
+                    return (
+                        model.end_to_end_length(
+                            force, temperature
+                        ) -
+                        model.reduced.end_to_end_length(
+                            force, temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_force):
+                    force = nondimensional_force * \
+                        parameters.boltzmann_constant*temperature/link_length
+                    return (
+                        model.end_to_end_length(
+                            force, temperature
+                        )
+                    )**2
+
+                lambda_max = (13/7)**(1/6)
+                nondimensional_force_max = link_stiffness / \
+                    parameters.boltzmann_constant/temperature * \
+                    link_length**2/6.0*(1/lambda_max**7 - 1/lambda_max**13)
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                5.0/parameters.nondimensional_link_stiffness_large
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                5.0/parameters.nondimensional_link_stiffness_large
+                / parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_end_to_end_length_per_link(self):
+        """Function to test the asymptotics
+        of the end-to-end length per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_link_stiffness):
+                link_stiffness = nondimensional_link_stiffness * \
+                    parameters.boltzmann_constant*temperature/link_length**2
+                model = LENNARDJONESFJC(
+                    number_of_links,
+                    link_length,
+                    hinge_mass,
+                    link_stiffness
+                )
+
+                def integrand_numerator(nondimensional_force):
+                    force = nondimensional_force * \
+                        parameters.boltzmann_constant*temperature/link_length
+                    return (
+                        model.end_to_end_length_per_link(
+                            force, temperature
+                        ) -
+                        model.reduced.end_to_end_length_per_link(
+                            force, temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_force):
+                    force = nondimensional_force * \
+                        parameters.boltzmann_constant*temperature/link_length
+                    return (
+                        model.end_to_end_length_per_link(
+                            force, temperature
+                        )
+                    )**2
+
+                lambda_max = (13/7)**(1/6)
+                nondimensional_force_max = link_stiffness / \
+                    parameters.boltzmann_constant/temperature * \
+                    link_length**2/6.0*(1/lambda_max**7 - 1/lambda_max**13)
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                5.0/parameters.nondimensional_link_stiffness_large
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                5.0/parameters.nondimensional_link_stiffness_large
+                / parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_end_to_end_length(self):
+        """Function to test the asymptotics
+        of the nondimensional end-to-end length.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_link_stiffness):
+                link_stiffness = nondimensional_link_stiffness * \
+                    parameters.boltzmann_constant*temperature/link_length**2
+                model = LENNARDJONESFJC(
+                    number_of_links,
+                    link_length,
+                    hinge_mass,
+                    link_stiffness
+                )
+
+                def integrand_numerator(nondimensional_force):
+                    return (
+                        model.nondimensional_end_to_end_length(
+                            nondimensional_force, temperature
+                        ) -
+                        model.reduced.nondimensional_end_to_end_length(
+                            nondimensional_force, temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_force):
+                    return (
+                        model.nondimensional_end_to_end_length(
+                            nondimensional_force, temperature
+                        )
+                    )**2
+
+                lambda_max = (13/7)**(1/6)
+                nondimensional_force_max = link_stiffness / \
+                    parameters.boltzmann_constant/temperature * \
+                    link_length**2/6.0*(1/lambda_max**7 - 1/lambda_max**13)
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                5.0/parameters.nondimensional_link_stiffness_large
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                5.0/parameters.nondimensional_link_stiffness_large
+                / parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
+            )
+
+    def test_nondimensional_end_to_end_length_per_link(self):
+        """Function to test the asymptotics
+        of the nondimensional end-to-end length per link.
+
+        """
+        for _ in range(parameters.number_of_loops):
+            number_of_links = \
+                np.random.randint(
+                    parameters.number_of_links_minimum,
+                    high=parameters.number_of_links_maximum
+                )
+            link_length = \
+                parameters.link_length_reference + \
+                parameters.link_length_scale*(0.5 - np.random.rand())
+            hinge_mass = \
+                parameters.hinge_mass_reference + \
+                parameters.hinge_mass_scale*(0.5 - np.random.rand())
+            temperature = \
+                parameters.temperature_reference + \
+                parameters.temperature_scale*(0.5 - np.random.rand())
+
+            def residual_rel(nondimensional_link_stiffness):
+                link_stiffness = nondimensional_link_stiffness * \
+                    parameters.boltzmann_constant*temperature/link_length**2
+                model = LENNARDJONESFJC(
+                    number_of_links,
+                    link_length,
+                    hinge_mass,
+                    link_stiffness
+                )
+
+                def integrand_numerator(nondimensional_force):
+                    return (
+                        model.nondimensional_end_to_end_length_per_link(
+                            nondimensional_force, temperature
+                        ) -
+                        model.reduced.
+                        nondimensional_end_to_end_length_per_link(
+                            nondimensional_force, temperature
+                        )
+                    )**2
+
+                def integrand_denominator(nondimensional_force):
+                    return (
+                        model.nondimensional_end_to_end_length_per_link(
+                            nondimensional_force, temperature
+                        )
+                    )**2
+
+                lambda_max = (13/7)**(1/6)
+                nondimensional_force_max = link_stiffness / \
+                    parameters.boltzmann_constant/temperature * \
+                    link_length**2/6.0*(1/lambda_max**7 - 1/lambda_max**13)
+                numerator = integrate(
+                    integrand_numerator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                denominator = integrate(
+                    integrand_denominator,
+                    parameters.zero,
+                    nondimensional_force_max,
+                    parameters.points)
+                return np.sqrt(numerator/denominator)
+
+            residual_rel_1 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large
+            )
+            residual_rel_2 = residual_rel(
+                5*parameters.nondimensional_link_stiffness_large *
+                parameters.log_log_scale
+            )
+            log_log_slope = np.log(residual_rel_2/residual_rel_1) / \
+                np.log(parameters.log_log_scale)
+            self.assertLessEqual(
+                np.abs(residual_rel_1),
+                5.0/parameters.nondimensional_link_stiffness_large
+            )
+            self.assertLessEqual(
+                np.abs(residual_rel_2),
+                5.0/parameters.nondimensional_link_stiffness_large
+                / parameters.log_log_scale
+            )
+            self.assertLessEqual(
+                np.abs(log_log_slope + 1.0),
+                parameters.log_log_tol
             )

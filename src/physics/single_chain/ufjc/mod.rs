@@ -1,8 +1,6 @@
 #[cfg(feature = "python")]
 pub mod py;
 
-mod test;
-
 /// The uFJC single-chain model with the Lennard-Jones link potential.
 pub mod lennard_jones;
 

@@ -38,7 +38,7 @@ class Parameters:
         self.link_energy_reference = 5e4
         self.link_energy_scale = 99e3
         self.nondimensional_link_stiffness_large = 1e4
-        self.nondimensional_link_stiffness_big = 1e4
+        self.nondimensional_link_stiffness_big = 1e3
         self.nondimensional_link_stiffness_medium = 1e1
         self.well_width_reference = 99e-2
         self.well_width_scale = 5e-1
