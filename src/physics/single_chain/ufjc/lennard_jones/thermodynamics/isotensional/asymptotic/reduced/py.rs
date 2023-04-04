@@ -217,7 +217,7 @@ impl LENNARDJONESFJC
     /// The nondimensional relative Gibbs free energy per link as a function of the applied nondimensional force, given by :footcite:t:`buche2022freely` as
     ///
     /// .. math::
-    ///     \Delta\varrho(\eta) = \ln\left[\frac{\eta}{\sinh(\eta)}\right] + \beta u[\lambda(\eta)] - \eta\Delta\lambda(\eta) \quad \text{for } \varepsilon,\kappa\gg 1,
+    ///     \Delta\varrho(\eta) \sim \ln\left[\frac{\eta}{\sinh(\eta)}\right] + \beta u[\lambda(\eta)] - \eta\Delta\lambda(\eta) \quad \text{for } \varepsilon,\kappa\gg 1,
     ///
     /// where the nondimensional link potential :math:`\beta u` is given by :footcite:t:`jones1924determinationii` as
     ///
