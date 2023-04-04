@@ -92,7 +92,7 @@ mod nondimensional
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force, &temperature);
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -117,7 +117,7 @@ mod nondimensional
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature);
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -142,7 +142,7 @@ mod nondimensional
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature);
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -167,7 +167,7 @@ mod nondimensional
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature);
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -192,7 +192,7 @@ mod nondimensional
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature);
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -217,7 +217,7 @@ mod nondimensional
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature);
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -247,7 +247,7 @@ mod per_link
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length = model.end_to_end_length(&force, &temperature);
@@ -272,7 +272,7 @@ mod per_link
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force, &temperature);
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature);
@@ -296,7 +296,7 @@ mod per_link
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let gibbs_free_energy = model.gibbs_free_energy(&force, &temperature);
@@ -321,7 +321,7 @@ mod per_link
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let relative_gibbs_free_energy = model.relative_gibbs_free_energy(&force, &temperature);
@@ -346,7 +346,7 @@ mod per_link
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature);
             let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature);
@@ -370,7 +370,7 @@ mod per_link
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_relative_gibbs_free_energy = model.nondimensional_relative_gibbs_free_energy(&nondimensional_force, &temperature);
             let nondimensional_relative_gibbs_free_energy_per_link = model.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force, &temperature);
@@ -399,7 +399,7 @@ mod relative
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let gibbs_free_energy = model.gibbs_free_energy(&force, &temperature);
@@ -425,7 +425,7 @@ mod relative
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(&force, &temperature);
@@ -451,7 +451,7 @@ mod relative
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature);
             let nondimensional_gibbs_free_energy_0 = model.nondimensional_gibbs_free_energy(&ZERO, &temperature);
@@ -476,7 +476,7 @@ mod relative
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature);
             let nondimensional_gibbs_free_energy_per_link_0 = model.nondimensional_gibbs_free_energy_per_link(&ZERO, &temperature);
@@ -579,7 +579,7 @@ mod connection
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length = model.end_to_end_length(&force, &temperature);
@@ -604,7 +604,7 @@ mod connection
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, &temperature);
@@ -629,7 +629,7 @@ mod connection
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force, &temperature);
             let h = parameters.rel_tol;
@@ -653,7 +653,7 @@ mod connection
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature);
             let h = parameters.rel_tol;
@@ -683,7 +683,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length = model.end_to_end_length(&force, &temperature);
@@ -709,7 +709,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, &temperature);
@@ -735,7 +735,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length = model.end_to_end_length(&force, &temperature);
@@ -762,7 +762,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let end_to_end_length_per_link = model.end_to_end_length_per_link(&force, &temperature);
@@ -789,7 +789,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force, &temperature);
             let nondimensional_gibbs_free_energy = model.nondimensional_gibbs_free_energy(&nondimensional_force, &temperature);
@@ -814,7 +814,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature);
             let nondimensional_gibbs_free_energy_per_link = model.nondimensional_gibbs_free_energy_per_link(&nondimensional_force, &temperature);
@@ -839,7 +839,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length = model.nondimensional_end_to_end_length(&nondimensional_force, &temperature);
             let nondimensional_end_to_end_length_0 = model.nondimensional_end_to_end_length(&ZERO, &temperature);
@@ -865,7 +865,7 @@ mod legendre
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let nondimensional_end_to_end_length_per_link = model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature);
             let nondimensional_end_to_end_length_per_link_0 = model.nondimensional_end_to_end_length_per_link(&ZERO, &temperature);
@@ -896,7 +896,7 @@ mod legendre_connection
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
             let h = parameters.rel_tol*BOLTZMANN_CONSTANT*temperature/link_length;
@@ -920,7 +920,7 @@ mod legendre_connection
             let model = LENNARDJONESFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
-            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*((lambda_max).powi(-7) - lambda_max.powi(-13));
+            let nondimensional_force_max = link_stiffness/BOLTZMANN_CONSTANT/temperature*link_length.powi(2)/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
             let nondimensional_force = nondimensional_force_max*rng.gen::<f64>();
             let h = parameters.rel_tol;
             let nondimensional_force_from_derivative = (model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&(nondimensional_force + 0.5*h), &temperature) - model.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&(nondimensional_force - 0.5*h), &temperature))/(model.nondimensional_end_to_end_length_per_link(&(nondimensional_force + 0.5*h), &temperature) - model.nondimensional_end_to_end_length_per_link(&(nondimensional_force - 0.5*h), &temperature));
