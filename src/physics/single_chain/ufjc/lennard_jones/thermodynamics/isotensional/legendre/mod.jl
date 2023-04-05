@@ -10,9 +10,10 @@ import .......Physics: BOLTZMANN_CONSTANT
 
 """
 The structure of the thermodynamics of the Lennard-Jones-FJC model in the isotensional ensemble approximated using a Legendre transformation.
+
 $(FIELDS)
 """
-struct LENNARDJONES
+struct LENNARDJONESFJC
     """
     The number of links in the chain ``N_b``.
     """
@@ -362,14 +363,14 @@ Initializes and returns an instance of the thermodynamics of the Lennard-Jones-F
 
 $(TYPEDSIGNATURES)
 """
-function LENNARDJONES(
+function LENNARDJONESFJC(
     number_of_links::UInt8,
     link_length::Float64,
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
     BOLTZMANN_CONSTANT::Float64 = 8.314462618
-    return LENNARDJONES(
+    return LENNARDJONESFJC(
         number_of_links,
         link_length,
         hinge_mass,

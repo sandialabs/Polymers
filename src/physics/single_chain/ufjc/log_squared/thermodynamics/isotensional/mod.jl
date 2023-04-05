@@ -16,7 +16,7 @@ The structure of the thermodynamics of the log-squared-FJC model in the isotensi
 
 $(FIELDS)
 """
-struct LOGSQUARED
+struct LOGSQUAREDFJC
     """
     The number of links in the chain ``N_b``.
     """
@@ -536,20 +536,20 @@ Initializes and returns an instance of the thermodynamics of the log-squared-FJC
 
 $(TYPEDSIGNATURES)
 """
-function LOGSQUARED(
+function LOGSQUAREDFJC(
     number_of_links::UInt8,
     link_length::Float64,
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
     BOLTZMANN_CONSTANT::Float64 = 8.314462618
-    return LOGSQUARED(
+    return LOGSQUAREDFJC(
         number_of_links,
         link_length,
         hinge_mass,
         link_stiffness,
-        Asymptotic.LOGSQUARED(number_of_links, link_length, hinge_mass, link_stiffness),
-        Legendre.LOGSQUARED(number_of_links, link_length, hinge_mass, link_stiffness),
+        Asymptotic.LOGSQUAREDFJC(number_of_links, link_length, hinge_mass, link_stiffness),
+        Legendre.LOGSQUAREDFJC(number_of_links, link_length, hinge_mass, link_stiffness),
         (force, temperature) -> end_to_end_length(
             number_of_links,
             link_length,

@@ -12,7 +12,7 @@ The structure of the thermodynamics of the log-squared-FJC model.
 
 $(FIELDS)
 """
-struct LOGSQUARED
+struct LOGSQUAREDFJC
     """
     The number of links in the chain ``N_b``.
     """
@@ -40,18 +40,23 @@ Initializes and returns an instance of the thermodynamics of the log-squared-FJC
 
 $(TYPEDSIGNATURES)
 """
-function LOGSQUARED(
+function LOGSQUAREDFJC(
     number_of_links::UInt8,
     link_length::Float64,
     hinge_mass::Float64,
     link_stiffness::Float64,
 )
-    return LOGSQUARED(
+    return LOGSQUAREDFJC(
         number_of_links,
         link_length,
         hinge_mass,
         link_stiffness,
-        Isotensional.LOGSQUARED(number_of_links, link_length, hinge_mass, link_stiffness),
+        Isotensional.LOGSQUAREDFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness,
+        ),
     )
 end
 
