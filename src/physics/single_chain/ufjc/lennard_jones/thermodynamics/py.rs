@@ -9,7 +9,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
     Ok(())
 }
 
-/// The Lennard-Jones link potential freely-jointed chain (log-squared-FJC) model thermodynamics.
+/// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct LENNARDJONESFJC

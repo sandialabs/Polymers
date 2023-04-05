@@ -5,7 +5,7 @@ module Thermodynamics
 
 using DocStringExtensions
 
-# include("isotensional/mod.jl")
+include("isotensional/mod.jl")
 
 """
 The structure of the thermodynamics of the Morse-FJC model.
@@ -33,10 +33,10 @@ struct MORSEFJC
     The energy of each link in the chain ``u_0`` in units of J/mol.
     """
     link_energy::Float64
-    # """
-    # The thermodynamic functions of the model in the isotensional ensemble.
-    # """
-    # isotensional::Any
+    """
+    The thermodynamic functions of the model in the isotensional ensemble.
+    """
+    isotensional::Any
 end
 
 """
@@ -57,13 +57,13 @@ function MORSEFJC(
         hinge_mass,
         link_stiffness,
         link_energy,
-        # Isotensional.MORSEFJC(
-        #     number_of_links,
-        #     link_length,
-        #     hinge_mass,
-        #     link_stiffness,
-        #     link_energy,
-        # ),
+        Isotensional.MORSEFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness,
+            link_energy,
+        ),
     )
 end
 

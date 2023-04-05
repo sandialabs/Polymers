@@ -15,7 +15,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
     Ok(())
 }
 
-/// The Lennard-Jones link potential freely-jointed chain (log-squared-FJC) model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
+/// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct LENNARDJONESFJC

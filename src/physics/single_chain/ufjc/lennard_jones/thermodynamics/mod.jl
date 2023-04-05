@@ -5,7 +5,7 @@ module Thermodynamics
 
 using DocStringExtensions
 
-# include("isotensional/mod.jl")
+include("isotensional/mod.jl")
 
 """
 The structure of the thermodynamics of the Lennard-Jones-FJC model.
@@ -29,10 +29,10 @@ struct LENNARDJONESFJC
     The stiffness of each link in the chain ``k_0`` in units of J/(mol⋅nm^2).
     """
     link_stiffness::Float64
-    # """
-    # The thermodynamic functions of the model in the isotensional ensemble.
-    # """
-    # isotensional::Any
+    """
+    The thermodynamic functions of the model in the isotensional ensemble.
+    """
+    isotensional::Any
 end
 
 """
@@ -51,12 +51,12 @@ function LENNARDJONESFJC(
         link_length,
         hinge_mass,
         link_stiffness,
-        # Isotensional.LENNARDJONESFJC(
-        #     number_of_links,
-        #     link_length,
-        #     hinge_mass,
-        #     link_stiffness,
-        # ),
+        Isotensional.LENNARDJONESFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness,
+        ),
     )
 end
 
