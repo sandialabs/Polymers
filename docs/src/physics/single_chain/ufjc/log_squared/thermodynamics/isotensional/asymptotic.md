@@ -4,5 +4,5 @@
   * [Log-squared-FJC model thermodynamics (isotensional/asymptotic/legendre)](../../../../../../legendre)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.Ufjc.LogSquaredFjc.Thermodynamics.Isotensional.Asymptotic]
+Modules = [Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isotensional.Asymptotic]
 ```

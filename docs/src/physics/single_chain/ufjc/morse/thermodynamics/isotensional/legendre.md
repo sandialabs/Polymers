@@ -1,5 +1,5 @@
 # Morse-FJC model thermodynamics (isotensional/legendre)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.Ufjc.MorseFjc.Thermodynamics.Isotensional.Legendre]
+Modules = [Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isotensional.Legendre]
 ```

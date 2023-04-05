@@ -3,5 +3,5 @@
   * [Log-squared-FJC model thermodynamics (isotensional)](../../../../isotensional)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.Ufjc.LogSquaredFjc.Thermodynamics]
+Modules = [Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics]
 ```

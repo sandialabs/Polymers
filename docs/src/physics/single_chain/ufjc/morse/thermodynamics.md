@@ -3,5 +3,5 @@
   * [Morse-FJC model thermodynamics (isotensional)](../../../../isotensional)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.Ufjc.MorseFjc.Thermodynamics]
+Modules = [Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics]
 ```

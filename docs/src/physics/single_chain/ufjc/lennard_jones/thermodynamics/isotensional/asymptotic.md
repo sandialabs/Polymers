@@ -4,5 +4,5 @@
   * [Lennard-Jones-FJC model thermodynamics (isotensional/asymptotic/legendre)](../../../../../../legendre)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.Ufjc.LennardJonesFjc.Thermodynamics.Isotensional.Asymptotic]
+Modules = [Polymers.Physics.SingleChain.Ufjc.LennardJones.Thermodynamics.Isotensional.Asymptotic]
 ```
