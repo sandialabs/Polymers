@@ -277,7 +277,7 @@ function nondimensional_helmholtz_free_energy_per_link(
         (
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i,
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
             temperature_i,
         ) -> ccall(
@@ -289,7 +289,7 @@ function nondimensional_helmholtz_free_energy_per_link(
             (Float64, Float64, Float64, Float64, Float64),
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i,
+            nondimensional_link_stiffness_i,
             nondimensional_force_i,
             temperature_i,
         ),

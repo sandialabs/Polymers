@@ -104,27 +104,36 @@ function end_to_end_length(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) ->
-            ccall(
-                (
-                    :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_end_to_end_length,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (UInt8, Float64, Float64, Float64, Float64),
-                number_of_links_i,
-                link_length_i,
-                link_stiffness_i,
-                force_i,
-                temperature_i,
+        (
+            number_of_links_i,
+            link_length_i,
+            link_stiffness_i,
+            link_energy_i,
+            force_i,
+            temperature_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_end_to_end_length,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
+            Float64,
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
+            number_of_links_i,
+            link_length_i,
+            link_stiffness_i,
+            link_energy_i,
+            force_i,
+            temperature_i,
+        ),
         number_of_links,
         link_length,
         link_stiffness,
+        link_energy,
         force,
         temperature,
     )
@@ -139,24 +148,27 @@ $(TYPEDSIGNATURES)
 function end_to_end_length_per_link(
     link_length::Union{Float64,Vector,Matrix,Array},
     link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
+        (link_length_i, link_stiffness_i, link_energy_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_end_to_end_length_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64, Float64, Float64),
+            (Float64, Float64, Float64, Float64, Float64),
             link_length_i,
             link_stiffness_i,
+            link_energy_i,
             force_i,
             temperature_i,
         ),
         link_length,
         link_stiffness,
+        link_energy,
         force,
         temperature,
     )
@@ -171,23 +183,30 @@ $(TYPEDSIGNATURES)
 function nondimensional_end_to_end_length(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_link_stiffness_i, nondimensional_force_i) ->
-            ccall(
-                (
-                    :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_nondimensional_end_to_end_length,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (UInt8, Float64, Float64),
-                number_of_links_i,
-                nondimensional_link_stiffness_i,
-                nondimensional_force_i,
+        (
+            number_of_links_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_force_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_nondimensional_end_to_end_length,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
+            Float64,
+            (UInt8, Float64, Float64, Float64),
+            number_of_links_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_force_i,
+        ),
         number_of_links,
         nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_force,
     )
 end
@@ -213,20 +232,27 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_end_to_end_length_per_link(
     nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
+        (
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_force_i,
+        ) -> ccall(
             (
                 :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_nondimensional_end_to_end_length_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64),
+            (Float64, Float64, Float64),
             nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_force_i,
         ),
         nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_force,
     )
 end
@@ -246,6 +272,7 @@ function gibbs_free_energy(
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
     link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -255,6 +282,7 @@ function gibbs_free_energy(
             link_length_i,
             hinge_mass_i,
             link_stiffness_i,
+            link_energy_i,
             force_i,
             temperature_i,
         ) -> ccall(
@@ -263,11 +291,12 @@ function gibbs_free_energy(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
             link_stiffness_i,
+            link_energy_i,
             force_i,
             temperature_i,
         ),
@@ -275,6 +304,7 @@ function gibbs_free_energy(
         link_length,
         hinge_mass,
         link_stiffness,
+        link_energy,
         force,
         temperature,
     )
@@ -290,26 +320,36 @@ function gibbs_free_energy_per_link(
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
     link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (link_length_i, hinge_mass_i, link_stiffness_i, force_i, temperature_i) -> ccall(
+        (
+            link_length_i,
+            hinge_mass_i,
+            link_stiffness_i,
+            link_energy_i,
+            force_i,
+            temperature_i,
+        ) -> ccall(
             (
                 :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64, Float64, Float64, Float64),
+            (Float64, Float64, Float64, Float64, Float64, Float64),
             link_length_i,
             hinge_mass_i,
             link_stiffness_i,
+            link_energy_i,
             force_i,
             temperature_i,
         ),
         link_length,
         hinge_mass,
         link_stiffness,
+        link_energy,
         force,
         temperature,
     )
@@ -325,27 +365,36 @@ function relative_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, link_stiffness_i, force_i, temperature_i) ->
-            ccall(
-                (
-                    :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_relative_gibbs_free_energy,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (UInt8, Float64, Float64, Float64, Float64),
-                number_of_links_i,
-                link_length_i,
-                link_stiffness_i,
-                force_i,
-                temperature_i,
+        (
+            number_of_links_i,
+            link_length_i,
+            link_stiffness_i,
+            link_energy_i,
+            force_i,
+            temperature_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_relative_gibbs_free_energy,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
+            Float64,
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
+            number_of_links_i,
+            link_length_i,
+            link_stiffness_i,
+            link_energy_i,
+            force_i,
+            temperature_i,
+        ),
         number_of_links,
         link_length,
         link_stiffness,
+        link_energy,
         force,
         temperature,
     )
@@ -360,24 +409,27 @@ $(TYPEDSIGNATURES)
 function relative_gibbs_free_energy_per_link(
     link_length::Union{Float64,Vector,Matrix,Array},
     link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
+        (link_length_i, link_stiffness_i, link_energy_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64, Float64, Float64),
+            (Float64, Float64, Float64, Float64, Float64),
             link_length_i,
             link_stiffness_i,
+            link_energy_i,
             force_i,
             temperature_i,
         ),
         link_length,
         link_stiffness,
+        link_energy,
         force,
         temperature,
     )
@@ -394,6 +446,7 @@ function nondimensional_gibbs_free_energy(
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
     nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -403,6 +456,7 @@ function nondimensional_gibbs_free_energy(
             link_length_i,
             hinge_mass_i,
             nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_force_i,
             temperature_i,
         ) -> ccall(
@@ -411,11 +465,12 @@ function nondimensional_gibbs_free_energy(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
             nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_force_i,
             temperature_i,
         ),
@@ -423,6 +478,7 @@ function nondimensional_gibbs_free_energy(
         link_length,
         hinge_mass,
         nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_force,
         temperature,
     )
@@ -438,6 +494,7 @@ function nondimensional_gibbs_free_energy_per_link(
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
     nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -446,6 +503,7 @@ function nondimensional_gibbs_free_energy_per_link(
             link_length_i,
             hinge_mass_i,
             nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_force_i,
             temperature_i,
         ) -> ccall(
@@ -454,16 +512,18 @@ function nondimensional_gibbs_free_energy_per_link(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64, Float64, Float64, Float64),
+            (Float64, Float64, Float64, Float64, Float64, Float64),
             link_length_i,
             hinge_mass_i,
             nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_force_i,
             temperature_i,
         ),
         link_length,
         hinge_mass,
         nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_force,
         temperature,
     )
@@ -478,23 +538,30 @@ $(TYPEDSIGNATURES)
 function nondimensional_relative_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_link_stiffness_i, nondimensional_force_i) ->
-            ccall(
-                (
-                    :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_nondimensional_relative_gibbs_free_energy,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (UInt8, Float64, Float64),
-                number_of_links_i,
-                nondimensional_link_stiffness_i,
-                nondimensional_force_i,
+        (
+            number_of_links_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_force_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_nondimensional_relative_gibbs_free_energy,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
+            Float64,
+            (UInt8, Float64, Float64, Float64),
+            number_of_links_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_force_i,
+        ),
         number_of_links,
         nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_force,
     )
 end
@@ -520,20 +587,27 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy_per_link(
     nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
+        (
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_force_i,
+        ) -> ccall(
             (
                 :physics_single_chain_ufjc_morse_thermodynamics_isotensional_asymptotic_reduced_nondimensional_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (Float64, Float64),
+            (Float64, Float64, Float64),
             nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_force_i,
         ),
         nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_force,
     )
 end
@@ -572,8 +646,13 @@ function MORSEFJC(
             force,
             temperature,
         ),
-        (force, temperature) ->
-            end_to_end_length_per_link(link_length, link_stiffness, link_energy, force, temperature),
+        (force, temperature) -> end_to_end_length_per_link(
+            link_length,
+            link_stiffness,
+            link_energy,
+            force,
+            temperature,
+        ),
         (nondimensional_force, temperature) -> nondimensional_end_to_end_length(
             number_of_links,
             link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
@@ -613,6 +692,7 @@ function MORSEFJC(
         (force, temperature) -> relative_gibbs_free_energy_per_link(
             link_length,
             link_stiffness,
+            link_energy,
             force,
             temperature,
         ),

@@ -38,6 +38,8 @@ struct Parameters
     number_of_links_maximum::UInt8
     link_stiffness_reference::Float64
     link_stiffness_scale::Float64
+    link_energy_reference::Float64
+    link_energy_scale::Float64
     nondimensional_link_stiffness_large::Float64
     nondimensional_link_stiffness_big::Float64
     nondimensional_link_stiffness_medium::Float64
@@ -78,6 +80,8 @@ parameters = Parameters(
     0x19,
     5e5,
     99e4,
+    5e4,
+    99e3,
     1e4,
     1e3,
     1e1,
