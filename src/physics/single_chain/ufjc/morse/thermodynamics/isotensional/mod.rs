@@ -1,3 +1,6 @@
+#[cfg(feature = "extern")]
+pub mod ex;
+
 #[cfg(feature = "python")]
 pub mod py;
 
