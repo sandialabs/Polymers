@@ -51,7 +51,12 @@ function LENNARDJONESFJC(
         link_length,
         hinge_mass,
         link_stiffness,
-        Thermodynamics.LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness),
+        Thermodynamics.LENNARDJONESFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness,
+        ),
     )
 end
 
