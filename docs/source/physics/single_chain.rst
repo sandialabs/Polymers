@@ -8,6 +8,7 @@ Single-chain models for polymer physics
    FJC <single_chain/fjc>
    EFJC <single_chain/efjc>
    SWFJC <single_chain/swfjc>
+   uFJC <single_chain/ufjc>
 
 .. automodule:: polymers.physics.single_chain
    :members:

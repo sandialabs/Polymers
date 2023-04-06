@@ -6,12 +6,6 @@ use super::{
     swfjc::SWFJC
 };
 use crate::physics::BOLTZMANN_CONSTANT;
-pub fn integrate<F>(function: F, lower_lim: &f64, upper_lim: &f64, num_points: &u128) -> f64
-where F: Fn(f64) -> f64
-{
-    let dx = (upper_lim - lower_lim)/(*num_points as f64);
-    (0..=num_points-1).collect::<Vec::<u128>>().iter().map(|index| function(lower_lim + (0.5 + *index as f64)*dx)).sum::<f64>()*dx
-}
 pub struct Parameters
 {
     pub abs_tol: f64,
@@ -28,7 +22,10 @@ pub struct Parameters
     pub number_of_links_maximum: u8,
     pub link_stiffness_reference: f64,
     pub link_stiffness_scale: f64,
+    pub link_energy_reference: f64,
+    pub link_energy_scale: f64,
     pub nondimensional_link_stiffness_large: f64,
+    pub nondimensional_link_stiffness_big: f64,
     pub nondimensional_link_stiffness_medium: f64,
     pub well_width_reference: f64,
     pub well_width_scale: f64,
@@ -81,7 +78,10 @@ impl Default for Parameters
             number_of_links_maximum: 25,
             link_stiffness_reference: 5e5,
             link_stiffness_scale: 99e4,
+            link_energy_reference: 5e4,
+            link_energy_scale: 99e3,
             nondimensional_link_stiffness_large: 1e4,
+            nondimensional_link_stiffness_big: 1e3,
             nondimensional_link_stiffness_medium: 1e1,
             well_width_reference: 99e-2,
             well_width_scale: 5e-1,

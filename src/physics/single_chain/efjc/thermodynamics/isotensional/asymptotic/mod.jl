@@ -212,7 +212,7 @@ where ``\\mathcal{L}(x)=\\coth(x)-1/x`` is the Langevin function.
 $(TYPEDSIGNATURES)
 """
 function nondimensional_end_to_end_length_per_link(
-    nondimensional_link_stiffness_i::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
     nondimensional_force::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
@@ -226,7 +226,7 @@ function nondimensional_end_to_end_length_per_link(
             nondimensional_link_stiffness_i,
             nondimensional_force_i,
         ),
-        nondimensional_link_stiffness_i,
+        nondimensional_link_stiffness,
         nondimensional_force,
     )
 end

@@ -15,6 +15,9 @@ pub mod efjc;
 /// The square-well freely-jointed chain (SWFJC) single-chain model.
 pub mod swfjc;
 
+/// The arbitrary link potential freely-jointed chain (uFJC) single-chain model.
+pub mod ufjc;
+
 /// The composite UFJC (CUFJC) single-chain model.
 pub mod cufjc;
 

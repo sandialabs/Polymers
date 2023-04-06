@@ -1927,4 +1927,232 @@ end
     end
 end
 
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::asymptotic_reduced::end_to_end_length" begin
+    for _ = 1:parameters.number_of_loops
+        number_of_links =
+            rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
+        link_length =
+            parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
+        hinge_mass =
+            parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
+        temperature =
+            parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
+        function residual_rel(nondimensional_link_stiffness)
+            link_stiffness =
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
+                nondimensional_link_stiffness
+            model = EFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            function integrand_numerator(nondimensional_force)
+                force =
+                    nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
+                return (
+                    model.end_to_end_length(force, temperature) -
+                    model.asymptotic.reduced.end_to_end_length(force, temperature)
+                )^2
+            end
+            function integrand_denominator(nondimensional_force)
+                force =
+                    nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
+                return model.end_to_end_length(force, temperature)^2
+            end
+            numerator = integrate(
+                integrand_numerator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            denominator = integrate(
+                integrand_denominator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            return sqrt(numerator / denominator)
+        end
+        residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
+        residual_rel_2 = residual_rel(
+            parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+        )
+        log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(residual_rel_1) <= 5.0 / parameters.nondimensional_link_stiffness_big &&
+              abs(residual_rel_1) <=
+              5.0 / parameters.nondimensional_link_stiffness_big /
+              parameters.log_log_scale &&
+              abs(log_log_slope + 1.0) <= parameters.log_log_tol
+    end
+end
+
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::asymptotic_reduced::end_to_end_length_per_link" begin
+    for _ = 1:parameters.number_of_loops
+        number_of_links =
+            rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
+        link_length =
+            parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
+        hinge_mass =
+            parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
+        temperature =
+            parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
+        function residual_rel(nondimensional_link_stiffness)
+            link_stiffness =
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
+                nondimensional_link_stiffness
+            model = EFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            function integrand_numerator(nondimensional_force)
+                force =
+                    nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
+                return (
+                    model.end_to_end_length_per_link(force, temperature) -
+                    model.asymptotic.reduced.end_to_end_length_per_link(force, temperature)
+                )^2
+            end
+            function integrand_denominator(nondimensional_force)
+                force =
+                    nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
+                return model.end_to_end_length_per_link(force, temperature)^2
+            end
+            numerator = integrate(
+                integrand_numerator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            denominator = integrate(
+                integrand_denominator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            return sqrt(numerator / denominator)
+        end
+        residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
+        residual_rel_2 = residual_rel(
+            parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+        )
+        log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(residual_rel_1) <= 5.0 / parameters.nondimensional_link_stiffness_big &&
+              abs(residual_rel_1) <=
+              5.0 / parameters.nondimensional_link_stiffness_big /
+              parameters.log_log_scale &&
+              abs(log_log_slope + 1.0) <= parameters.log_log_tol
+    end
+end
+
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::asymptotic_reduced::nondimensional_end_to_end_length" begin
+    for _ = 1:parameters.number_of_loops
+        number_of_links =
+            rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
+        link_length =
+            parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
+        hinge_mass =
+            parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
+        temperature =
+            parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
+        function residual_rel(nondimensional_link_stiffness)
+            link_stiffness =
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
+                nondimensional_link_stiffness
+            model = EFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            function integrand_numerator(nondimensional_force)
+                return (
+                    model.nondimensional_end_to_end_length(
+                        nondimensional_force,
+                        temperature,
+                    ) - model.asymptotic.reduced.nondimensional_end_to_end_length(
+                        nondimensional_force,
+                        temperature,
+                    )
+                )^2
+            end
+            function integrand_denominator(nondimensional_force)
+                return model.nondimensional_end_to_end_length(
+                    nondimensional_force,
+                    temperature,
+                )^2
+            end
+            numerator = integrate(
+                integrand_numerator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            denominator = integrate(
+                integrand_denominator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            return sqrt(numerator / denominator)
+        end
+        residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
+        residual_rel_2 = residual_rel(
+            parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+        )
+        log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(residual_rel_1) <= 5.0 / parameters.nondimensional_link_stiffness_big &&
+              abs(residual_rel_1) <=
+              5.0 / parameters.nondimensional_link_stiffness_big /
+              parameters.log_log_scale &&
+              abs(log_log_slope + 1.0) <= parameters.log_log_tol
+    end
+end
+
+@testset "physics::single_chain::efjc::thermodynamics::isotensional::test::asymptotic_reduced::nondimensional_end_to_end_length_per_link" begin
+    for _ = 1:parameters.number_of_loops
+        number_of_links =
+            rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
+        link_length =
+            parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
+        hinge_mass =
+            parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
+        temperature =
+            parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
+        function residual_rel(nondimensional_link_stiffness)
+            link_stiffness =
+                BOLTZMANN_CONSTANT * temperature / link_length^2 *
+                nondimensional_link_stiffness
+            model = EFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            function integrand_numerator(nondimensional_force)
+                return (
+                    model.nondimensional_end_to_end_length_per_link(
+                        nondimensional_force,
+                        temperature,
+                    ) - model.asymptotic.reduced.nondimensional_end_to_end_length_per_link(
+                        nondimensional_force,
+                        temperature,
+                    )
+                )^2
+            end
+            function integrand_denominator(nondimensional_force)
+                return model.nondimensional_end_to_end_length_per_link(
+                    nondimensional_force,
+                    temperature,
+                )^2
+            end
+            numerator = integrate(
+                integrand_numerator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            denominator = integrate(
+                integrand_denominator,
+                ZERO,
+                parameters.nondimensional_force_scale,
+                POINTS,
+            )
+            return sqrt(numerator / denominator)
+        end
+        residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
+        residual_rel_2 = residual_rel(
+            parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+        )
+        log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
+        @test abs(residual_rel_1) <= 5.0 / parameters.nondimensional_link_stiffness_big &&
+              abs(residual_rel_1) <=
+              5.0 / parameters.nondimensional_link_stiffness_big /
+              parameters.log_log_scale &&
+              abs(log_log_slope + 1.0) <= parameters.log_log_tol
+    end
+end
+
 end
