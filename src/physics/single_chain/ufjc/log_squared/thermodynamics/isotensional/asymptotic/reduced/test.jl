@@ -3,7 +3,8 @@ module Test
 using Test
 using Polymers.Physics: BOLTZMANN_CONSTANT
 using Polymers.Physics.SingleChain: ZERO, parameters
-using Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isotensional.Asymptotic.Reduced: LOGSQUAREDFJC
+using Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isotensional.Asymptotic.Reduced:
+    LOGSQUAREDFJC
 
 @testset "physics::single_chain::ufjc::log_squared::thermodynamics::isotensional::asymptotic::reduced::test::base::init" begin
     @test isa(

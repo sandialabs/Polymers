@@ -3,7 +3,8 @@ module Test
 using Test
 using Polymers.Physics: BOLTZMANN_CONSTANT
 using Polymers.Physics.SingleChain: ONE, ZERO, POINTS, integrate, parameters
-using Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isotensional.Asymptotic: LOGSQUAREDFJC
+using Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isotensional.Asymptotic:
+    LOGSQUAREDFJC
 
 @testset "physics::single_chain::ufjc::log_squared::thermodynamics::isotensional::asymptotic::test::base::init" begin
     @test isa(
@@ -1257,18 +1258,10 @@ end
             end
             nondimensional_force_max =
                 link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / exp(1)
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large)
@@ -1314,18 +1307,10 @@ end
             end
             nondimensional_force_max =
                 link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / exp(1)
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large)
@@ -1375,18 +1360,10 @@ end
             end
             nondimensional_force_max =
                 link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / exp(1)
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large)
@@ -1436,18 +1413,10 @@ end
             end
             nondimensional_force_max =
                 link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / exp(1)
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_large)

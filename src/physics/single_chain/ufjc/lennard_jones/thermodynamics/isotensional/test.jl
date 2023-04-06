@@ -3,7 +3,8 @@ module Test
 using Test
 using Polymers.Physics: BOLTZMANN_CONSTANT
 using Polymers.Physics.SingleChain: ONE, ZERO, POINTS, integrate, parameters
-using Polymers.Physics.SingleChain.Ufjc.LennardJones.Thermodynamics.Isotensional: LENNARDJONESFJC
+using Polymers.Physics.SingleChain.Ufjc.LennardJones.Thermodynamics.Isotensional:
+    LENNARDJONESFJC
 
 @testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isotensional::test::base::init" begin
     @test isa(
@@ -124,9 +125,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length =
             model.nondimensional_end_to_end_length(nondimensional_force, temperature)
@@ -153,9 +155,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length_per_link =
             model.nondimensional_end_to_end_length_per_link(
@@ -187,9 +190,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_gibbs_free_energy =
             model.nondimensional_gibbs_free_energy(nondimensional_force, temperature)
@@ -218,9 +222,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_gibbs_free_energy_per_link =
             model.nondimensional_gibbs_free_energy_per_link(
@@ -252,9 +257,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_relative_gibbs_free_energy =
             model.nondimensional_relative_gibbs_free_energy(
@@ -286,9 +292,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_relative_gibbs_free_energy_per_link =
             model.nondimensional_relative_gibbs_free_energy_per_link(
@@ -321,9 +328,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length = model.end_to_end_length(force, temperature)
@@ -349,9 +357,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length =
             model.nondimensional_end_to_end_length(nondimensional_force, temperature)
@@ -383,9 +392,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         gibbs_free_energy = model.gibbs_free_energy(force, temperature)
@@ -411,9 +421,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         relative_gibbs_free_energy = model.relative_gibbs_free_energy(force, temperature)
@@ -442,9 +453,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_gibbs_free_energy =
             model.nondimensional_gibbs_free_energy(nondimensional_force, temperature)
@@ -476,9 +488,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_relative_gibbs_free_energy =
             model.nondimensional_relative_gibbs_free_energy(
@@ -513,9 +526,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         gibbs_free_energy = model.gibbs_free_energy(force, temperature)
@@ -546,9 +560,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         gibbs_free_energy_per_link = model.gibbs_free_energy_per_link(force, temperature)
@@ -581,9 +596,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_gibbs_free_energy =
             model.nondimensional_gibbs_free_energy(nondimensional_force, temperature)
@@ -617,9 +633,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_gibbs_free_energy_per_link =
             model.nondimensional_gibbs_free_energy_per_link(
@@ -743,9 +760,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length = model.end_to_end_length(force, temperature)
@@ -775,9 +793,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length_per_link = model.end_to_end_length_per_link(force, temperature)
@@ -808,9 +827,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length =
             model.nondimensional_end_to_end_length(nondimensional_force, temperature)
@@ -847,9 +867,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length_per_link =
             model.nondimensional_end_to_end_length_per_link(
@@ -889,9 +910,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length = model.end_to_end_length(force, temperature)
@@ -920,9 +942,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length_per_link = model.end_to_end_length_per_link(force, temperature)
@@ -951,9 +974,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length = model.end_to_end_length(force, temperature)
@@ -987,9 +1011,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         end_to_end_length_per_link = model.end_to_end_length_per_link(force, temperature)
@@ -1027,9 +1052,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length =
             model.nondimensional_end_to_end_length(nondimensional_force, temperature)
@@ -1062,9 +1088,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length_per_link =
             model.nondimensional_end_to_end_length_per_link(
@@ -1104,9 +1131,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length =
             model.nondimensional_end_to_end_length(nondimensional_force, temperature)
@@ -1146,9 +1174,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         nondimensional_end_to_end_length_per_link =
             model.nondimensional_end_to_end_length_per_link(
@@ -1191,9 +1220,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         force = nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
         h = parameters.rel_tol * BOLTZMANN_CONSTANT * temperature / link_length
@@ -1228,9 +1258,10 @@ end
         model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        lambda_max = (13.0/7.0)^(1.0/6.0)
+        lambda_max = (13.0 / 7.0)^(1.0 / 6.0)
         nondimensional_force_max =
-            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 * (lambda_max^(-7) - lambda_max^(-13))
+            link_stiffness / BOLTZMANN_CONSTANT / temperature * link_length^2 / 6 *
+            (lambda_max^(-7) - lambda_max^(-13))
         nondimensional_force = nondimensional_force_max * rand()
         h = parameters.rel_tol
         nondimensional_force_from_derivative =
@@ -1271,7 +1302,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 force =
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
@@ -1285,28 +1317,20 @@ end
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
                 return model.end_to_end_length(force, temperature)^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
-        residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_big)
+        residual_rel_1 = residual_rel(5.0 * parameters.nondimensional_link_stiffness_big)
         residual_rel_2 = residual_rel(
-            5.0*parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+            5.0 * parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
         )
         log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
-        @test abs(0.5*log_log_slope + 1.0) <= parameters.log_log_tol
+        @test abs(0.5 * log_log_slope + 1.0) <= parameters.log_log_tol
     end
 end
 
@@ -1324,7 +1348,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 force =
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
@@ -1338,28 +1363,20 @@ end
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
                 return model.end_to_end_length_per_link(force, temperature)^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
-        residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_big)
+        residual_rel_1 = residual_rel(5.0 * parameters.nondimensional_link_stiffness_big)
         residual_rel_2 = residual_rel(
-            5.0*parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+            5.0 * parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
         )
         log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
-        @test abs(0.5*log_log_slope + 1.0) <= parameters.log_log_tol
+        @test abs(0.5 * log_log_slope + 1.0) <= parameters.log_log_tol
     end
 end
 
@@ -1377,7 +1394,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 return (
                     model.nondimensional_end_to_end_length(
@@ -1395,28 +1413,20 @@ end
                     temperature,
                 )^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
-        residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_big)
+        residual_rel_1 = residual_rel(5.0 * parameters.nondimensional_link_stiffness_big)
         residual_rel_2 = residual_rel(
-            5.0*parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+            5.0 * parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
         )
         log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
-        @test abs(0.5*log_log_slope + 1.0) <= parameters.log_log_tol
+        @test abs(0.5 * log_log_slope + 1.0) <= parameters.log_log_tol
     end
 end
 
@@ -1434,7 +1444,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 return (
                     model.nondimensional_end_to_end_length_per_link(
@@ -1452,28 +1463,20 @@ end
                     temperature,
                 )^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
-        residual_rel_1 = residual_rel(5.0*parameters.nondimensional_link_stiffness_big)
+        residual_rel_1 = residual_rel(5.0 * parameters.nondimensional_link_stiffness_big)
         residual_rel_2 = residual_rel(
-            5.0*parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
+            5.0 * parameters.nondimensional_link_stiffness_big * parameters.log_log_scale,
         )
         log_log_slope = log(residual_rel_2 / residual_rel_1) / log(parameters.log_log_scale)
-        @test abs(0.5*log_log_slope + 1.0) <= parameters.log_log_tol
+        @test abs(0.5 * log_log_slope + 1.0) <= parameters.log_log_tol
     end
 end
 
@@ -1491,7 +1494,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 force =
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
@@ -1505,20 +1509,12 @@ end
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
                 return model.end_to_end_length(force, temperature)^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
@@ -1544,7 +1540,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 force =
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
@@ -1558,20 +1555,12 @@ end
                     nondimensional_force * BOLTZMANN_CONSTANT * temperature / link_length
                 return model.end_to_end_length_per_link(force, temperature)^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
@@ -1597,7 +1586,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 return (
                     model.nondimensional_end_to_end_length(
@@ -1615,20 +1605,12 @@ end
                     temperature,
                 )^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)
@@ -1654,7 +1636,8 @@ end
             link_stiffness =
                 BOLTZMANN_CONSTANT * temperature / link_length^2 *
                 nondimensional_link_stiffness
-            model = LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+            model =
+                LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness)
             function integrand_numerator(nondimensional_force)
                 return (
                     model.nondimensional_end_to_end_length_per_link(
@@ -1672,20 +1655,12 @@ end
                     temperature,
                 )^2
             end
-            nondimensional_link_stretch_max = (13/7)^(1/6)
+            nondimensional_link_stretch_max = (13 / 7)^(1 / 6)
             nondimensional_force_max = nondimensional_link_stretch_max
-            numerator = integrate(
-                integrand_numerator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
-            denominator = integrate(
-                integrand_denominator,
-                ZERO,
-                nondimensional_force_max,
-                POINTS,
-            )
+            numerator =
+                integrate(integrand_numerator, ZERO, nondimensional_force_max, POINTS)
+            denominator =
+                integrate(integrand_denominator, ZERO, nondimensional_force_max, POINTS)
             return sqrt(numerator / denominator)
         end
         residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big)

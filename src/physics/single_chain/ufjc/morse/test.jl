@@ -74,7 +74,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::morse::::test::base::link_energy" begin
+@testset "physics::single_chain::ufjc::morse::test::base::link_energy" begin
     for _ = 1:parameters.number_of_loops
         link_energy =
             parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())

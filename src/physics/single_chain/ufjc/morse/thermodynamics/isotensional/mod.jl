@@ -654,7 +654,6 @@ function MORSEFJC(
             link_length,
             link_stiffness,
             link_energy,
-            link_energy,
             force,
             temperature,
         ),
