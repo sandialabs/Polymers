@@ -6,7 +6,7 @@ pub mod py;
 
 mod test;
 
-/// The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensional ensemble approximated using an alternative alternative asymptotic approach.
+/// The extensible freely-jointed chain (EFJC) model thermodynamics in the isotensional ensemble approximated using an alternative alternative asymptotic approach and a Legendre transformation.
 pub mod legendre;
 
 use std::f64::consts::PI;

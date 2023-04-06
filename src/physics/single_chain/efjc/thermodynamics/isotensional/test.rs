@@ -1309,3 +1309,154 @@ mod asymptotic
         }
     }
 }
+mod asymptotic_reduced
+{
+    use super::*;
+    use rand::Rng;
+    use crate::math::integrate_1d;
+    use crate::physics::single_chain::POINTS;
+    #[test]
+    fn end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    (model.end_to_end_length(&force, &temperature) - model.asymptotic.reduced.end_to_end_length(&force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    model.end_to_end_length(&force, &temperature).powi(2)
+                };
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_big);
+            assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_big/parameters.log_log_scale);
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    (model.end_to_end_length_per_link(&force, &temperature) - model.asymptotic.reduced.end_to_end_length_per_link(&force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    let force = nondimensional_force*BOLTZMANN_CONSTANT*temperature/link_length;
+                    model.end_to_end_length_per_link(&force, &temperature).powi(2)
+                };
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_big);
+            assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_big/parameters.log_log_scale);
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    (model.nondimensional_end_to_end_length(&nondimensional_force, &temperature) - model.asymptotic.reduced.nondimensional_end_to_end_length(&nondimensional_force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    model.nondimensional_end_to_end_length(&nondimensional_force, &temperature).powi(2)
+                };
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_big);
+            assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_big/parameters.log_log_scale);
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let residual_rel = |nondimensional_link_stiffness|
+            {
+                let link_stiffness = BOLTZMANN_CONSTANT*temperature/link_length.powi(2)*nondimensional_link_stiffness;
+                let model = EFJC::init(number_of_links, link_length, hinge_mass, link_stiffness);
+                let integrand_numerator = |nondimensional_force: &f64|
+                {
+                    (model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature) - model.asymptotic.reduced.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature)).powi(2)
+                };
+                let integrand_denominator = |nondimensional_force: &f64|
+                {
+                    model.nondimensional_end_to_end_length_per_link(&nondimensional_force, &temperature).powi(2)
+                };
+                let numerator = integrate_1d(&integrand_numerator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                let denominator = integrate_1d(&integrand_denominator, &ZERO, &parameters.nondimensional_force_scale, &POINTS);
+                (numerator/denominator).sqrt()
+            };
+            let residual_rel_1 = residual_rel(parameters.nondimensional_link_stiffness_big);
+            let residual_rel_2 = residual_rel(parameters.nondimensional_link_stiffness_big*parameters.log_log_scale);
+            let log_log_slope = (residual_rel_2/residual_rel_1).ln()/(parameters.log_log_scale).ln();
+            assert!(residual_rel_1.abs() <= 5.0/parameters.nondimensional_link_stiffness_big);
+            assert!(residual_rel_2.abs() <= 5.0/parameters.nondimensional_link_stiffness_big/parameters.log_log_scale);
+            assert!((log_log_slope + 1.0).abs() <= parameters.log_log_tol);
+        }
+    }
+}

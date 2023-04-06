@@ -15,6 +15,9 @@ pub mod efjc;
 /// The square-well freely-jointed chain (SWFJC) single-chain model.
 pub mod swfjc;
 
+/// The arbitrary link potential freely-jointed chain (uFJC) single-chain model.
+pub mod ufjc;
+
 static ONE: f64 = 1.0;
 static ZERO: f64 = 1e-6;
 static POINTS: u128 = 64;

@@ -36,5 +36,6 @@ disable = """
     no-name-in-module,
     too-many-instance-attributes,
     too-many-lines,
+    too-many-locals,
     too-many-public-methods
 """
