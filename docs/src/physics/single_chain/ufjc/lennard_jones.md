@@ -1,7 +1,7 @@
-# Morse potential freely-jointed chain (Morse-FJC) model
+# Lennard-Jones potential freely-jointed chain (Lennard-Jones-FJC) model
 
-  * [Morse-FJC model thermodynamics](../../../thermodynamics)
+  * [Lennard-Jones-FJC model thermodynamics](../../../thermodynamics)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.Ufjc.Morse]
+Modules = [Polymers.Physics.SingleChain.Ufjc.LennardJones]
 ```
