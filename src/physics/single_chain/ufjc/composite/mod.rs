@@ -1,8 +1,6 @@
-maybe put this in ufjc/composite ?
-
 mod test;
 
-/// The structure of the CUFJC model.
+/// The structure of the CuFJC model.
 pub struct CUFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
@@ -31,10 +29,10 @@ pub struct CUFJC
 
 }
 
-/// The implemented functionality of the CUFJC model.
+/// The implemented functionality of the CuFJC model.
 impl CUFJC
 {
-    /// Initializes and returns an instance of the CUFJC model.
+    /// Initializes and returns an instance of the CuFJC model.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, number_of_bonds: u8, bond_stiffness: f64, bond_energy: f64, bond_scission_energy: f64, bond_attempt_frequency: f64) -> Self
     {
         CUFJC
