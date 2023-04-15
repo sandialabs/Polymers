@@ -64,6 +64,7 @@ class Parameters:
         self.zero = 1e-6
         self.points = 64
         self.boltzmann_constant = 8.314462618
+        self.planck_constant = 0.06350779923502961
 
     def dummy_1(self):
         """Dummy function to please pylint.
