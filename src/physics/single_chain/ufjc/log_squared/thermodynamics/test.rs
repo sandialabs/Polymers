@@ -74,3 +74,113 @@ mod base
         }
     }
 }
+mod legendre_asymptotic
+{
+    use super::*;
+    use rand::Rng;
+    #[test]
+    fn force()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_force()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn relative_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn relative_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+}
+mod legendre_asymptotic_reduced
+{
+    use super::*;
+    use rand::Rng;
+    #[test]
+    fn force()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_force()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn relative_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn relative_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+}
