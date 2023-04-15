@@ -74,3 +74,63 @@ mod base
         }
     }
 }
+#[test]
+fn should_implement_isometric_legendre_distributions_here_since_not_temperature_dependent_and_has_finite_integration_limit()
+{
+    assert!(0.0 == 1.0);
+}
+mod legendre
+{
+    use super::*;
+    use rand::Rng;
+    #[test]
+    fn force()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_force()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn relative_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn relative_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy()
+    {
+        assert!(0.0 == 1.0);
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy_per_link()
+    {
+        assert!(0.0 == 1.0);
+    }
+}
