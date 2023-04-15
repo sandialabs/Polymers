@@ -153,8 +153,7 @@ function force(
 end
 
 """
-The expected nondimensional force as a function ``\\eta`` of the applied nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+The expected nondimensional force as a function ``\\eta`` of the applied nondimensional end-to-end length per link ``\\gamma``.
 
 ```math
 \\eta(\\gamma) \\sim \\mathcal{L}^{-1}(\\gamma) \\quad \\text{for } N_b\\gg 1,
@@ -450,7 +449,6 @@ end
 
 """
 The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``,
 given by [Buche and Silberstein](https://doi.org/10.1016/j.jmps.2021.104593) as
 
 ```math
