@@ -50,7 +50,7 @@ pub fn force(number_of_links: &u8, link_length: &f64, end_to_end_length: &f64, t
     BOLTZMANN_CONSTANT*temperature/link_length*nondimensional_force(&(end_to_end_length/((*number_of_links as f64)*link_length)))
 }
 
-/// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links.
+/// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link.
 pub fn nondimensional_force(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     inverse_langevin(nondimensional_end_to_end_length_per_link)
@@ -98,7 +98,7 @@ pub fn nondimensional_relative_helmholtz_free_energy(number_of_links: &u8, nondi
     nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link)*(*number_of_links as f64)
 }
 
-/// The nondimensional relative Helmholtz free energy per link as a function of the nondimensional end-to-end length per link, parameterized by the number of links.
+/// The nondimensional relative Helmholtz free energy per link as a function of the nondimensional end-to-end length per link.
 pub fn nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     let nondimensional_force = nondimensional_force(nondimensional_end_to_end_length_per_link);
@@ -116,7 +116,7 @@ pub fn equilibrium_distribution(number_of_links: &u8, link_length: &f64, normali
 pub fn nondimensional_equilibrium_distribution(number_of_links: &u8, normalization_nondimensional_equilibrium_distribution: &f64, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     let nondimensional_force = nondimensional_force(nondimensional_end_to_end_length_per_link);
-(nondimensional_force.sinh()/nondimensional_force*(-nondimensional_force**nondimensional_end_to_end_length_per_link).exp()).powi(*number_of_links as i32)/normalization_nondimensional_equilibrium_distribution
+    (nondimensional_force.sinh()/nondimensional_force*(-nondimensional_force**nondimensional_end_to_end_length_per_link).exp()).powi(*number_of_links as i32)/normalization_nondimensional_equilibrium_distribution
 }
 
 /// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length, parameterized by the number of links and link length.
