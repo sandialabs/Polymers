@@ -335,7 +335,8 @@ end
             )
         residual_abs =
             nondimensional_helmholtz_free_energy_per_link_legendre -
-            nondimensional_helmholtz_free_energy_per_link_legendre_out + log(
+            nondimensional_helmholtz_free_energy_per_link_legendre_out +
+            log(
                 8.0 * pi^2 * hinge_mass * link_length^2 * BOLTZMANN_CONSTANT * temperature /
                 PLANCK_CONSTANT^2,
             ) / number_of_links
