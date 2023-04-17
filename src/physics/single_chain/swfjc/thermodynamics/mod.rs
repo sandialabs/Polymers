@@ -3,6 +3,9 @@ pub mod py;
 
 mod test;
 
+/// The square-well freely-jointed chain (SWFJC) model thermodynamics in the isometric ensemble.
+pub mod isometric;
+
 /// The square-well freely-jointed chain (SWFJC) model thermodynamics in the isotensional ensemble.
 pub mod isotensional;
 
@@ -21,6 +24,9 @@ pub struct SWFJC
     /// The width of the well in units of nm.
     pub well_width: f64,
 
+    /// The thermodynamic functions of the model in the isometric ensemble.
+    pub isometric: isometric::SWFJC,
+
     /// The thermodynamic functions of the model in the isotensional ensemble.
     pub isotensional: isotensional::SWFJC
 }
@@ -37,7 +43,8 @@ impl SWFJC
             link_length,
             number_of_links,
             well_width,
-            isotensional: self::isotensional::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
+            isometric: self::isometric::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
+            isotensional: self::isotensional::SWFJC::init(number_of_links, link_length, hinge_mass, well_width)
         }
     }
 }
