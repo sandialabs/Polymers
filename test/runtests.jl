@@ -44,6 +44,8 @@ include(
 )
 include("../src/physics/single_chain/swfjc/test.jl")
 include("../src/physics/single_chain/swfjc/thermodynamics/test.jl")
+include("../src/physics/single_chain/swfjc/thermodynamics/isometric/test.jl")
+include("../src/physics/single_chain/swfjc/thermodynamics/isometric/legendre/test.jl")
 include("../src/physics/single_chain/swfjc/thermodynamics/isotensional/test.jl")
 include("../src/physics/single_chain/swfjc/thermodynamics/isotensional/legendre/test.jl")
 include("../src/physics/single_chain/ufjc/test.jl")

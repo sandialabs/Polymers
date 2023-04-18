@@ -1908,7 +1908,7 @@ class Zero(unittest.TestCase):
             )
             nondimensional_relative_helmholtz_free_energy_0 = \
                 model.nondimensional_relative_helmholtz_free_energy(
-                    np.array(parameters.zero*number_of_links*link_length)
+                    np.array(parameters.zero)
                 )
             self.assertLessEqual(
                 np.abs(nondimensional_relative_helmholtz_free_energy_0),
@@ -1939,7 +1939,7 @@ class Zero(unittest.TestCase):
             )
             nondimensional_relative_helmholtz_free_energy_per_link_0 = \
                 model.nondimensional_relative_helmholtz_free_energy_per_link(
-                    np.array(parameters.zero*number_of_links*link_length)
+                    np.array(parameters.zero)
                 )
             self.assertLessEqual(
                 np.abs(
@@ -2043,7 +2043,7 @@ class Zero(unittest.TestCase):
             )
             nondimensional_relative_gibbs_free_energy_0 = \
                 model.nondimensional_relative_gibbs_free_energy(
-                    np.array(parameters.zero*number_of_links*link_length)
+                    np.array(parameters.zero)
                 )
             self.assertLessEqual(
                 np.abs(nondimensional_relative_gibbs_free_energy_0),
@@ -2074,7 +2074,7 @@ class Zero(unittest.TestCase):
             )
             nondimensional_relative_gibbs_free_energy_per_link_0 = \
                 model.nondimensional_relative_gibbs_free_energy_per_link(
-                    np.array(parameters.zero*number_of_links*link_length)
+                    np.array(parameters.zero)
                 )
             self.assertLessEqual(
                 np.abs(

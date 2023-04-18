@@ -36,10 +36,6 @@ pub struct SWFJC
     pub legendre: legendre::SWFJC
 }
 
-///
-/// use nondimensional_well_parameter as input for nondimensional functions, like efjc depending on nondimensionall link stiffness
-///
-
 /// The expected end-to-end length as a function of the applied force and temperature, parameterized by the number of links, link length, and well width.
 pub fn end_to_end_length(number_of_links: &u8, link_length: &f64, well_width: &f64, force: &f64, temperature: &f64) -> f64
 {

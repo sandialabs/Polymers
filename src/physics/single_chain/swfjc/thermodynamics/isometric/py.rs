@@ -2,15 +2,14 @@ use pyo3::prelude::*;
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
-    let thermodynamics = PyModule::new(py, "thermodynamics")?;
-    super::isometric::py::register_module(py, thermodynamics)?;
-    super::isotensional::py::register_module(py, thermodynamics)?;
-    parent_module.add_submodule(thermodynamics)?;
-    thermodynamics.add_class::<SWFJC>()?;
+    let isometric = PyModule::new(py, "isometric")?;
+    super::legendre::py::register_module(py, isometric)?;
+    parent_module.add_submodule(isometric)?;
+    isometric.add_class::<SWFJC>()?;
     Ok(())
 }
 
-/// The square-well freely-jointed chain (SWFJC) model thermodynamics.
+/// The square-well freely-jointed chain (SWFJC) model thermodynamics in the isometric ensemble.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct SWFJC
@@ -31,13 +30,9 @@ pub struct SWFJC
     #[pyo3(get)]
     pub well_width: f64,
 
-    /// The thermodynamic functions of the model in the isometric ensemble.
+    /// The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
     #[pyo3(get)]
-    pub isometric: super::isometric::py::SWFJC,
-
-    /// The thermodynamic functions of the model in the isotensional ensemble.
-    #[pyo3(get)]
-    pub isotensional: super::isotensional::py::SWFJC
+    pub legendre: super::legendre::py::SWFJC
 }
 
 #[pymethods]
@@ -52,8 +47,7 @@ impl SWFJC
             link_length,
             number_of_links,
             well_width,
-            isometric: super::isometric::py::SWFJC::init(number_of_links, link_length, hinge_mass, well_width),
-            isotensional: super::isotensional::py::SWFJC::init(number_of_links, link_length, hinge_mass, well_width)
+            legendre: super::legendre::py::SWFJC::init(number_of_links, link_length, hinge_mass, well_width)
         }
     }
 }
