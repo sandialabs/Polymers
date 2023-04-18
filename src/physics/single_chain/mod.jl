@@ -3,12 +3,6 @@ Single-chain models for polymer physics.
 """
 module SingleChain
 
-include("ideal/mod.jl")
-include("fjc/mod.jl")
-include("efjc/mod.jl")
-include("swfjc/mod.jl")
-include("ufjc/mod.jl")
-
 const ONE::Float64 = 1.0
 const ZERO::Float64 = 1e-6
 const POINTS::UInt128 = 64
@@ -106,5 +100,11 @@ parameters = Parameters(
     3e2,
     1e2,
 )
+
+include("ideal/mod.jl")
+include("fjc/mod.jl")
+include("efjc/mod.jl")
+include("swfjc/mod.jl")
+include("ufjc/mod.jl")
 
 end
