@@ -5,6 +5,7 @@ module Legendre
 
 using DocStringExtensions
 using .......Polymers: PROJECT_ROOT
+using .....SingleChain: ONE, ZERO, POINTS, integrate
 
 """
 The structure of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
@@ -153,7 +154,7 @@ function force(
 end
 
 """
-The expected nondimensional force as a function ``\\eta`` of the applied nondimensional end-to-end length per link ``\\gamma``.
+The expected nondimensional force as a function ``\\eta`` of the applied nondimensional end-to-end length per link ``\\gamma``,
 
 ```math
 \\eta(\\gamma) \\sim \\mathcal{L}^{-1}(\\gamma) \\quad \\text{for } N_b\\gg 1,
@@ -902,17 +903,17 @@ Initializes and returns an instance of the thermodynamics of the FJC model in th
 $(TYPEDSIGNATURES)
 """
 function FJC(number_of_links::UInt8, link_length::Float64, hinge_mass::Float64)
-    normalization_nondimensional_equilibrium_distribution =
-        sum(
-            map(
-                index -> nondimensional_equilibrium_radial_distribution(
-                    number_of_links,
-                    1.0,
-                    1e-6 + (0.5 + index) * 0.00999999,
-                ),
-                collect(0.0:99.0),
+    normalization_nondimensional_equilibrium_distribution = integrate(
+        nondimensional_end_to_end_length_per_link ->
+            nondimensional_equilibrium_radial_distribution(
+                number_of_links,
+                1.0,
+                nondimensional_end_to_end_length_per_link,
             ),
-        ) * 0.00999999
+        ZERO,
+        ONE,
+        POINTS,
+    )
     return FJC(
         number_of_links,
         link_length,
