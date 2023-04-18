@@ -1,15 +1,15 @@
 """
-The square-well freely-jointed chain (SWFJC) model thermodynamics.
+The square-well freely-jointed chain (SWFJC) model thermodynamics in the isometric ensemble.
 """
-module Thermodynamics
+module Isometric
 
 using DocStringExtensions
+using ......Polymers: PROJECT_ROOT
 
-include("isometric/mod.jl")
-include("isotensional/mod.jl")
+include("legendre/mod.jl")
 
 """
-The structure of the thermodynamics of the SWFJC model.
+The structure of the thermodynamics of the SWFJC model in the isometric ensemble.
 
 $(FIELDS)
 """
@@ -31,17 +31,13 @@ struct SWFJC
     """
     well_width::Float64
     """
-    The thermodynamic functions of the model in the isometric ensemble.
+    The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
     """
-    isometric::Any
-    """
-    The thermodynamic functions of the model in the isotensional ensemble.
-    """
-    isotensional::Any
+    legendre::Any
 end
 
 """
-Initializes and returns an instance of the thermodynamics of the SWFJC model.
+Initializes and returns an instance of the thermodynamics of the SWFJC model in the isometric ensemble.
 
 $(TYPEDSIGNATURES)
 """
@@ -56,8 +52,7 @@ function SWFJC(
         link_length,
         hinge_mass,
         well_width,
-        Isometric.SWFJC(number_of_links, link_length, hinge_mass, well_width),
-        Isotensional.SWFJC(number_of_links, link_length, hinge_mass, well_width),
+        Legendre.SWFJC(number_of_links, link_length, hinge_mass, well_width),
     )
 end
 
