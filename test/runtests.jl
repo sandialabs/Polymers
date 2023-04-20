@@ -24,6 +24,23 @@ include(
 )
 include("../src/physics/single_chain/efjc/test.jl")
 include("../src/physics/single_chain/efjc/thermodynamics/test.jl")
+include("../src/physics/single_chain/efjc/thermodynamics/isometric/test.jl")
+include("../src/physics/single_chain/efjc/thermodynamics/isometric/asymptotic/test.jl")
+include(
+    "../src/physics/single_chain/efjc/thermodynamics/isometric/asymptotic/legendre/test.jl",
+)
+include(
+    "../src/physics/single_chain/efjc/thermodynamics/isometric/asymptotic/alternative/test.jl",
+)
+include(
+    "../src/physics/single_chain/efjc/thermodynamics/isometric/asymptotic/alternative/legendre/test.jl",
+)
+include(
+    "../src/physics/single_chain/efjc/thermodynamics/isometric/asymptotic/reduced/test.jl",
+)
+include(
+    "../src/physics/single_chain/efjc/thermodynamics/isometric/asymptotic/reduced/legendre/test.jl",
+)
 include("../src/physics/single_chain/efjc/thermodynamics/isotensional/test.jl")
 include("../src/physics/single_chain/efjc/thermodynamics/isotensional/legendre/test.jl")
 include("../src/physics/single_chain/efjc/thermodynamics/isotensional/asymptotic/test.jl")
