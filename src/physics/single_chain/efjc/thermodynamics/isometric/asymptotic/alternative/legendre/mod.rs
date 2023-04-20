@@ -89,7 +89,7 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
 pub fn nondimensional_helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_link_stiffness: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     let nondimensional_force = nondimensional_force(nondimensional_link_stiffness, nondimensional_end_to_end_length_per_link);
-    -(nondimensional_force.sinh()/nondimensional_force).ln() - (0.5*nondimensional_force.powi(2) + nondimensional_force/nondimensional_force.tanh())/(nondimensional_link_stiffness) + nondimensional_force*nondimensional_end_to_end_length_per_link + (1.0 - 1.0/(*number_of_links as f64))*(0.5*(2.0*PI*link_length.powi(2)/nondimensional_link_stiffness).ln() - (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
+    -(nondimensional_force.sinh()/nondimensional_force).ln() - (0.5*nondimensional_force.powi(2) + nondimensional_force/nondimensional_force.tanh())/(nondimensional_link_stiffness) + nondimensional_force*nondimensional_end_to_end_length_per_link - (1.0 - 1.0/(*number_of_links as f64))*(0.5*(2.0*PI*link_length.powi(2)/nondimensional_link_stiffness).ln() + (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln())
 }
 
 /// The nondimensional relative Helmholtz free energy as a function of the nondimensional end-to-end length per link, parameterized by the number of links and nondimensional link stiffness.
