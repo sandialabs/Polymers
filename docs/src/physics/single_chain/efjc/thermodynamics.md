@@ -1,5 +1,6 @@
 # EFJC model thermodynamics
 
+  * [EFJC model thermodynamics (isometric)](../../../isometric)
   * [EFJC model thermodynamics (isotensional)](../../../isotensional)
 
 ```@autodocs
