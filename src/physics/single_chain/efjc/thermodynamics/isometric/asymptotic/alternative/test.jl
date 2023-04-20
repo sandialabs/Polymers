@@ -2,7 +2,8 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Efjc.Thermodynamics.Isometric.Asymptotic.Alternative: EFJC
+using Polymers.Physics.SingleChain.Efjc.Thermodynamics.Isometric.Asymptotic.Alternative:
+    EFJC
 
 @testset "physics::single_chain::efjc::thermodynamics::isometric::asymptotic::alternative::test::base::init" begin
     @test isa(
