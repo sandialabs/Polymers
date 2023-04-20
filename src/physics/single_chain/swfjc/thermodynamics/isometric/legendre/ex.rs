@@ -11,12 +11,12 @@ pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_nondi
 #[no_mangle]
 pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_helmholtz_free_energy(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64, end_to_end_length: f64, temperature: f64) -> f64
 {
-    super::helmholtz_free_energy(&&number_of_links, &link_length, &hinge_mass, &well_width, &end_to_end_length, &temperature)
+    super::helmholtz_free_energy(&number_of_links, &link_length, &hinge_mass, &well_width, &end_to_end_length, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_helmholtz_free_energy_per_link(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64, end_to_end_length: f64, temperature: f64) -> f64
 {
-    super::helmholtz_free_energy_per_link(&&number_of_links, &link_length, &hinge_mass, &well_width, &end_to_end_length, &temperature)
+    super::helmholtz_free_energy_per_link(&number_of_links, &link_length, &hinge_mass, &well_width, &end_to_end_length, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_relative_helmholtz_free_energy(number_of_links: u8, link_length: f64, well_width: f64, end_to_end_length: f64, temperature: f64) -> f64
@@ -31,12 +31,12 @@ pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_relat
 #[no_mangle]
 pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_nondimensional_helmholtz_free_energy(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64, nondimensional_end_to_end_length_per_link: f64, temperature: f64) -> f64
 {
-    super::nondimensional_helmholtz_free_energy(&&number_of_links, &link_length, &hinge_mass, &well_width, &nondimensional_end_to_end_length_per_link, &temperature)
+    super::nondimensional_helmholtz_free_energy(&number_of_links, &link_length, &hinge_mass, &well_width, &nondimensional_end_to_end_length_per_link, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_nondimensional_helmholtz_free_energy_per_link(number_of_links: u8, link_length: f64, hinge_mass: f64, well_width: f64, nondimensional_end_to_end_length_per_link: f64, temperature: f64) -> f64
 {
-    super::nondimensional_helmholtz_free_energy_per_link(&&number_of_links, &link_length, &hinge_mass, &well_width, &nondimensional_end_to_end_length_per_link, &temperature)
+    super::nondimensional_helmholtz_free_energy_per_link(&number_of_links, &link_length, &hinge_mass, &well_width, &nondimensional_end_to_end_length_per_link, &temperature)
 }
 #[no_mangle]
 pub extern fn physics_single_chain_swfjc_thermodynamics_isometric_legendre_nondimensional_relative_helmholtz_free_energy(number_of_links: u8, link_length: f64, well_width: f64, nondimensional_end_to_end_length_per_link: f64) -> f64

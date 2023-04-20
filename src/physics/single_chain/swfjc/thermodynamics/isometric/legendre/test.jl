@@ -810,8 +810,6 @@ end
         nondimensional_end_to_end_length_per_link =
             parameters.nondimensional_end_to_end_length_per_link_reference +
             parameters.nondimensional_end_to_end_length_per_link_scale * (0.5 - rand())
-        temperature =
-            parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_force =
             model.nondimensional_force(nondimensional_end_to_end_length_per_link)
         h = parameters.rel_tol
