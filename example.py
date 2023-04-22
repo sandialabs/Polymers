@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import iv
+from scipy.integrate import quad_vec
 
 
 a = 14.054
@@ -109,10 +110,18 @@ for kappa in kappas:
 plt.legend()
 plt.show()
 for kappa in kappas:
-    plt.semilogy(gamma, -d_Q_I_d_r(gamma, kappa)/Q_I(gamma, kappa), label=kappa)
+    eta = -d_Q_I_d_r(gamma, kappa)/Q_I(gamma, kappa)
+    plt.semilogy(gamma, eta, label=kappa)
     P_eq = Q_I(gamma, kappa)
     beta_Delta_psi = -np.log(P_eq/P_eq[0])
-    eta = np.gradient(beta_Delta_psi)/np.gradient(gamma)
-    plt.semilogy(gamma, eta, 'k--', label=kappa)
+    eta_numerical = np.gradient(beta_Delta_psi)/np.gradient(gamma)
+    plt.semilogy(gamma, eta_numerical, 'k:')
+    Z, _ = quad_vec(
+        lambda gamma:
+            Q_I(gamma, kappa)*np.sinh(eta*gamma)*gamma/eta,
+        1e-6, 1 - 1e-6
+    )
+    gamma_isotensional = np.gradient(np.log(Z))/np.gradient(eta)
+    plt.semilogy(gamma_isotensional, eta, 'k--')
 plt.legend()
 plt.show()
