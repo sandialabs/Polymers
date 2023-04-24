@@ -89,6 +89,7 @@ def d_Q_I_d_r(r, kappa):
             ) * I_1(arg)
         )
 
+print(-d_Q_I_d_r(0.9, 0.3)/Q_I(0.9, 0.3))
 
 gamma = np.linspace(0, 1, 10000)[1:-1]
 kappas = (1/7, 5/27, 5/19, 5/11, 5/3)
