@@ -87,13 +87,15 @@ pub fn nondimensional_force(number_of_links: &u8, nondimensional_persistance_len
 /// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, hinge mass, and persistance length.
 pub fn helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, persistance_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
-    nondimensional_helmholtz_free_energy(number_of_links, link_length, hinge_mass, persistance_length, &(end_to_end_length/((*number_of_links as f64)*link_length)), temperature)*BOLTZMANN_CONSTANT*temperature
+    let contour_length = (*number_of_links as f64)*link_length;
+    nondimensional_helmholtz_free_energy(number_of_links, link_length, hinge_mass, &(persistance_length/contour_length), &(end_to_end_length/contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
 }
 
 /// The Helmholtz free energy per link as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, hinge mass, and persistance length.
 pub fn helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, persistance_length: &f64, end_to_end_length: &f64, temperature: &f64) -> f64
 {
-    nondimensional_helmholtz_free_energy_per_link(number_of_links, link_length, hinge_mass, persistance_length, &(end_to_end_length/((*number_of_links as f64)*link_length)), temperature)*BOLTZMANN_CONSTANT*temperature
+    let contour_length = (*number_of_links as f64)*link_length;
+    nondimensional_helmholtz_free_energy_per_link(number_of_links, link_length, hinge_mass, &(persistance_length/contour_length), &(end_to_end_length/contour_length), temperature)*BOLTZMANN_CONSTANT*temperature
 }
 
 /// The relative Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, and persistance length.
@@ -110,16 +112,19 @@ pub fn relative_helmholtz_free_energy_per_link(number_of_links: &u8, link_length
     nondimensional_relative_helmholtz_free_energy_per_link(number_of_links, &(persistance_length/contour_length), &(end_to_end_length/contour_length))*BOLTZMANN_CONSTANT*temperature
 }
 
-/// The nondimensional Helmholtz free energy as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, hinge mass, and persistance length.
-pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
+/// The nondimensional Helmholtz free energy as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, hinge mass, and nondimensional persistance length.
+pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
-    -(equilibrium_distribution(number_of_links, link_length, persistance_length, &1.0, &(nondimensional_end_to_end_length_per_link*(*number_of_links as f64)*link_length))).ln() - ((*number_of_links as f64) - 1.0)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    //
+    // is not entirely correct (not first part, nor second (normalization different for wlc)) and will fix later
+    //
+    nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length, nondimensional_end_to_end_length_per_link) - ((*number_of_links as f64) - 1.0)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
-/// The nondimensional Helmholtz free energy per link as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass, and persistance length.
-pub fn nondimensional_helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
+/// The nondimensional Helmholtz free energy per link as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass, and nondimensional persistance length.
+pub fn nondimensional_helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
-    nondimensional_helmholtz_free_energy(number_of_links, link_length, hinge_mass, persistance_length, nondimensional_end_to_end_length_per_link, temperature)/(*number_of_links as f64)
+    nondimensional_helmholtz_free_energy(number_of_links, link_length, hinge_mass, nondimensional_persistance_length, nondimensional_end_to_end_length_per_link, temperature)/(*number_of_links as f64)
 }
 
 /// The nondimensional relative Helmholtz free energy as a function of the nondimensional end-to-end length per link, parameterized by the nondimensional persistance length.
@@ -236,12 +241,12 @@ impl WLC
     /// The nondimensional Helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        nondimensional_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.persistance_length, nondimensional_end_to_end_length_per_link, temperature)
+        nondimensional_helmholtz_free_energy(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.nondimensional_persistance_length, nondimensional_end_to_end_length_per_link, temperature)
     }
     /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature.
     pub fn nondimensional_helmholtz_free_energy_per_link(&self, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
     {
-        nondimensional_helmholtz_free_energy_per_link(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.persistance_length, nondimensional_end_to_end_length_per_link, temperature)
+        nondimensional_helmholtz_free_energy_per_link(&self.number_of_links, &self.link_length, &self.hinge_mass, &self.nondimensional_persistance_length, nondimensional_end_to_end_length_per_link, temperature)
     }
     /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional end-to-end length per link.
     pub fn nondimensional_relative_helmholtz_free_energy(&self, nondimensional_end_to_end_length_per_link: &f64) -> f64

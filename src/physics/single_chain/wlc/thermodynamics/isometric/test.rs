@@ -662,17 +662,292 @@ mod connection
 }
 mod legendre
 {
+    use super::*;
+    use rand::Rng;
+    use crate::physics::single_chain::ZERO;
     #[test]
-    fn dummy()
+    fn helmholtz_free_energy()
     {
-        assert!(0.0 == 1.0);
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let force = model.force(&end_to_end_length, &temperature);
+            let helmholtz_free_energy = model.helmholtz_free_energy(&end_to_end_length, &temperature);
+            let helmholtz_free_energy_legendre = model.legendre.gibbs_free_energy(&end_to_end_length, &temperature) + force*end_to_end_length;
+            let residual_abs = &helmholtz_free_energy - &helmholtz_free_energy_legendre;
+            let residual_rel = &residual_abs/&helmholtz_free_energy;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn helmholtz_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let end_to_end_length_per_link = nondimensional_end_to_end_length_per_link*link_length;
+            let force = model.force(&end_to_end_length, &temperature);
+            let helmholtz_free_energy_per_link = model.helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
+            let helmholtz_free_energy_per_link_legendre = model.legendre.gibbs_free_energy_per_link(&end_to_end_length, &temperature) + force*end_to_end_length_per_link;
+            let residual_abs = &helmholtz_free_energy_per_link - &helmholtz_free_energy_per_link_legendre;
+            let residual_rel = &residual_abs/&helmholtz_free_energy_per_link;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn relative_helmholtz_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let force = model.force(&end_to_end_length, &temperature);
+            let force_0 = model.force(&(ZERO*(number_of_links as f64)*link_length), &temperature);
+            let relative_helmholtz_free_energy = model.relative_helmholtz_free_energy(&end_to_end_length, &temperature);
+            let relative_helmholtz_free_energy_legendre = model.legendre.relative_gibbs_free_energy(&end_to_end_length, &temperature) + force*end_to_end_length - force_0*ZERO*(number_of_links as f64)*link_length;
+            let residual_abs = &relative_helmholtz_free_energy - &relative_helmholtz_free_energy_legendre;
+            let residual_rel = &residual_abs/&relative_helmholtz_free_energy;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn relative_helmholtz_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let end_to_end_length_per_link = nondimensional_end_to_end_length_per_link*link_length;
+            let force = model.force(&end_to_end_length, &temperature);
+            let force_0 = model.force(&(ZERO*(number_of_links as f64)*link_length), &temperature);
+            let relative_helmholtz_free_energy_per_link = model.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
+            let relative_helmholtz_free_energy_per_link_legendre = model.legendre.relative_gibbs_free_energy_per_link(&end_to_end_length, &temperature) + force*end_to_end_length_per_link - force_0*ZERO*link_length;
+            let residual_abs = &relative_helmholtz_free_energy_per_link - &relative_helmholtz_free_energy_per_link_legendre;
+            let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64);
+            let nondimensional_force = model.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature);
+            let nondimensional_helmholtz_free_energy_legendre = model.legendre.nondimensional_gibbs_free_energy(&nondimensional_end_to_end_length_per_link, &temperature) + nondimensional_force*nondimensional_end_to_end_length;
+            let residual_abs = &nondimensional_helmholtz_free_energy - &nondimensional_helmholtz_free_energy_legendre;
+            let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_helmholtz_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_force = model.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_helmholtz_free_energy_per_link = model.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature);
+            let nondimensional_helmholtz_free_energy_per_link_legendre = model.legendre.nondimensional_gibbs_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature) + nondimensional_force*nondimensional_end_to_end_length_per_link;
+            let residual_abs = &nondimensional_helmholtz_free_energy_per_link - &nondimensional_helmholtz_free_energy_per_link_legendre;
+            let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64);
+            let nondimensional_force = model.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_force_0 = model.nondimensional_force(&ZERO);
+            let nondimensional_relative_helmholtz_free_energy = model.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_relative_helmholtz_free_energy_legendre = model.legendre.nondimensional_relative_gibbs_free_energy(&nondimensional_end_to_end_length_per_link) + nondimensional_force*nondimensional_end_to_end_length - nondimensional_force_0*(number_of_links as f64)*ZERO;
+            let residual_abs = &nondimensional_relative_helmholtz_free_energy - &nondimensional_relative_helmholtz_free_energy_legendre;
+            let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
+    }
+    #[test]
+    fn nondimensional_relative_helmholtz_free_energy_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_force = model.nondimensional_force(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_force_0 = model.nondimensional_force(&ZERO);
+            let nondimensional_relative_helmholtz_free_energy_per_link = model.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
+            let nondimensional_relative_helmholtz_free_energy_per_link_legendre = model.legendre.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_end_to_end_length_per_link) + nondimensional_force*nondimensional_end_to_end_length_per_link - nondimensional_force_0*ZERO;
+            let residual_abs = &nondimensional_relative_helmholtz_free_energy_per_link - &nondimensional_relative_helmholtz_free_energy_per_link_legendre;
+            let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link;
+            assert!(residual_abs.abs() <= parameters.abs_tol);
+            assert!(residual_rel.abs() <= parameters.rel_tol);
+        }
     }
 }
 mod legendre_connection
 {
+    use super::*;
+    use rand::Rng;
     #[test]
-    fn dummy()
+    fn end_to_end_length()
     {
-        assert!(0.0 == 1.0);
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let h = parameters.rel_tol*(number_of_links as f64)*link_length;
+            let end_to_end_length_from_derivative = -(model.legendre.relative_gibbs_free_energy(&(end_to_end_length + 0.5*h), &temperature) - model.legendre.relative_gibbs_free_energy(&(end_to_end_length - 0.5*h), &temperature))/(model.force(&(end_to_end_length + 0.5*h), &temperature) - model.force(&(end_to_end_length - 0.5*h), &temperature));
+            let residual_abs = &end_to_end_length - &end_to_end_length_from_derivative;
+            let residual_rel = &residual_abs/&end_to_end_length;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
+            let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
+            let end_to_end_length_per_link = nondimensional_end_to_end_length_per_link*link_length;
+            let h = parameters.rel_tol*(number_of_links as f64)*link_length;
+            let end_to_end_length_per_link_from_derivative = -(model.legendre.relative_gibbs_free_energy_per_link(&(end_to_end_length + 0.5*h), &temperature) - model.legendre.relative_gibbs_free_energy_per_link(&(end_to_end_length - 0.5*h), &temperature))/(model.force(&(end_to_end_length + 0.5*h), &temperature) - model.force(&(end_to_end_length - 0.5*h), &temperature));
+            let residual_abs = &end_to_end_length_per_link - &end_to_end_length_per_link_from_derivative;
+            let residual_rel = &residual_abs/&end_to_end_length_per_link;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64);
+            let h = parameters.rel_tol;
+            let nondimensional_end_to_end_length_from_derivative = -(model.legendre.nondimensional_relative_gibbs_free_energy(&(nondimensional_end_to_end_length_per_link + 0.5*h)) - model.legendre.nondimensional_relative_gibbs_free_energy(&(nondimensional_end_to_end_length_per_link - 0.5*h)))/(model.nondimensional_force(&(nondimensional_end_to_end_length_per_link + 0.5*h)) - model.nondimensional_force(&(nondimensional_end_to_end_length_per_link - 0.5*h)));
+            let residual_abs = &nondimensional_end_to_end_length - &nondimensional_end_to_end_length_from_derivative;
+            let residual_rel = &residual_abs/&nondimensional_end_to_end_length;
+            assert!(residual_rel.abs() <= h);
+        }
+    }
+    #[test]
+    fn nondimensional_end_to_end_length_per_link()
+    {
+        let mut rng = rand::thread_rng();
+        let parameters = Parameters::default();
+        for _ in 0..parameters.number_of_loops
+        {
+            let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
+            let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
+            let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
+            let persistance_length = parameters.persistance_length_reference + parameters.persistance_length_scale*(0.5 - rng.gen::<f64>());
+            let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let h = parameters.rel_tol;
+            let nondimensional_end_to_end_length_per_link_from_derivative = -(model.legendre.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_end_to_end_length_per_link + 0.5*h)) - model.legendre.nondimensional_relative_gibbs_free_energy_per_link(&(nondimensional_end_to_end_length_per_link - 0.5*h)))/(model.nondimensional_force(&(nondimensional_end_to_end_length_per_link + 0.5*h)) - model.nondimensional_force(&(nondimensional_end_to_end_length_per_link - 0.5*h)));
+            let residual_abs = &nondimensional_end_to_end_length_per_link - &nondimensional_end_to_end_length_per_link_from_derivative;
+            let residual_rel = &residual_abs/&nondimensional_end_to_end_length_per_link;
+            assert!(residual_rel.abs() <= h);
+        }
     }
 }
