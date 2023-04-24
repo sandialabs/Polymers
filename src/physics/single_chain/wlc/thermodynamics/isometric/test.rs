@@ -107,7 +107,7 @@ mod normalization
     {
         let parameters = Parameters::default();
         let mut rng = rand::thread_rng();
-        for _ in 0..parameters.number_of_loops
+        for _ in 0..88//parameters.number_of_loops
         {
             let number_of_links: u8 = rng.gen_range(parameters.number_of_links_minimum..parameters.number_of_links_maximum);
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
