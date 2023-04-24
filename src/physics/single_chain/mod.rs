@@ -18,6 +18,9 @@ pub mod swfjc;
 /// The arbitrary link potential freely-jointed chain (uFJC) single-chain model.
 pub mod ufjc;
 
+/// The worm-like chain (WLC) single-chain model.
+pub mod wlc;
+
 static ONE: f64 = 1.0;
 static ZERO: f64 = 1e-6;
 static POINTS: u128 = 64;
