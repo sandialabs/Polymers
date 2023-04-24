@@ -9,8 +9,14 @@ pub mod thermodynamics;
 /// The structure of the WLC model.
 pub struct WLC
 {
-    /// The contour length of the chain in units of nm.
-    pub chain_length: f64,
+    /// The mass of each hinge in the chain in units of kg/mol.
+    pub hinge_mass: f64,
+
+    /// The length of each link in the chain in units of nm.
+    pub link_length: f64,
+
+    /// The number of links in the chain.
+    pub number_of_links: u8,
 
     /// The persistance length of the chain in units of nm.
     pub persistance_length: f64,
@@ -23,13 +29,15 @@ pub struct WLC
 impl WLC
 {
     /// Initializes and returns an instance of the WLC model.
-    pub fn init(chain_length: f64, persistance_length: f64) -> Self
+    pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, persistance_length: f64) -> Self
     {
         WLC
         {
-            chain_length,
+            hinge_mass,
+            link_length,
+            number_of_links,
             persistance_length,
-            thermodynamics: self::thermodynamics::WLC::init(chain_length, persistance_length),
+            thermodynamics: self::thermodynamics::WLC::init(number_of_links, link_length, hinge_mass, persistance_length),
         }
     }
 }
