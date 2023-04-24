@@ -11,7 +11,12 @@ pub mod legendre;
 
 use std::f64::consts::PI;
 use crate::math::bessel_i;
-use crate::physics::BOLTZMANN_CONSTANT;
+use crate::physics::
+{
+    PLANCK_CONSTANT,
+    BOLTZMANN_CONSTANT
+};
+use crate::physics::single_chain::ZERO;
 
 /// The structure of the thermodynamics of the WLC model in the isometric ensemble.
 pub struct WLC
