@@ -3,6 +3,9 @@ pub mod py;
 
 mod test;
 
+/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isometric ensemble.
+pub mod isometric;
+
 /// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isotensional ensemble.
 pub mod isotensional;
 
@@ -24,6 +27,9 @@ pub struct MORSEFJC
     /// The energy of each link in the chain in units of J/mol.
     pub link_energy: f64,
 
+    /// The thermodynamic functions of the model in the isometric ensemble.
+    pub isometric: self::isometric::MORSEFJC,
+
     /// The thermodynamic functions of the model in the isotensional ensemble.
     pub isotensional: self::isotensional::MORSEFJC
 }
@@ -41,7 +47,8 @@ impl MORSEFJC
             number_of_links,
             link_stiffness,
             link_energy,
-            isotensional: self::isotensional::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
+            isometric: self::isometric::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
+            isotensional: self::isotensional::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         }
     }
 }

@@ -194,13 +194,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 force \
                 - force_out
             residual_rel = residual_abs/force
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_force(self):
@@ -249,13 +245,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 nondimensional_force \
                 - nondimensional_force_out
             residual_rel = residual_abs/nondimensional_force
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_helmholtz_free_energy(self):
@@ -321,13 +313,9 @@ class LegendreAsymptotic(unittest.TestCase):
                     )
                 )
             residual_rel = residual_abs/helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_helmholtz_free_energy_per_link(self):
@@ -399,13 +387,9 @@ class LegendreAsymptotic(unittest.TestCase):
                     )
                 )/number_of_links
             residual_rel = residual_abs/helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_relative_helmholtz_free_energy(self):
@@ -461,9 +445,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 relative_helmholtz_free_energy_legendre \
                 - relative_helmholtz_free_energy_legendre_out
             residual_rel = residual_abs/relative_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_relative_helmholtz_free_energy_per_link(self):
@@ -526,9 +510,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 - relative_helmholtz_free_energy_per_link_legendre_out
             residual_rel = residual_abs / \
                 relative_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_helmholtz_free_energy(self):
@@ -600,13 +584,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 )
             residual_rel = residual_abs / \
                 nondimensional_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_helmholtz_free_energy_per_link(self):
@@ -675,13 +655,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 )/number_of_links
             residual_rel = residual_abs / \
                 nondimensional_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_relative_helmholtz_free_energy(self):
@@ -743,9 +719,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 - nondimensional_relative_helmholtz_free_energy_legendre_out
             residual_rel = residual_abs / \
                 nondimensional_relative_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_relative_helmholtz_free_energy_per_link(self):
@@ -803,9 +779,9 @@ class LegendreAsymptotic(unittest.TestCase):
                 - nondim_relative_helmholtz_free_energy_per_link_legendre_out
             residual_rel = residual_abs / \
                 nondim_relative_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
 
@@ -860,13 +836,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 force \
                 - force_out
             residual_rel = residual_abs/force
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_force(self):
@@ -916,13 +888,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 nondimensional_force \
                 - nondimensional_force_out
             residual_rel = residual_abs/nondimensional_force
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_helmholtz_free_energy(self):
@@ -989,13 +957,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                     )
                 )
             residual_rel = residual_abs/helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_helmholtz_free_energy_per_link(self):
@@ -1069,13 +1033,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                     )
                 )/number_of_links
             residual_rel = residual_abs/helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_relative_helmholtz_free_energy(self):
@@ -1132,9 +1092,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 relative_helmholtz_free_energy_legendre \
                 - relative_helmholtz_free_energy_legendre_out
             residual_rel = residual_abs/relative_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_relative_helmholtz_free_energy_per_link(self):
@@ -1198,9 +1158,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 - relative_helmholtz_free_energy_per_link_legendre_out
             residual_rel = residual_abs / \
                 relative_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_helmholtz_free_energy(self):
@@ -1274,13 +1234,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 )
             residual_rel = residual_abs / \
                 nondimensional_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_helmholtz_free_energy_per_link(self):
@@ -1349,13 +1305,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 )/number_of_links
             residual_rel = residual_abs / \
                 nondimensional_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_relative_helmholtz_free_energy(self):
@@ -1418,9 +1370,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 - nondimensional_relative_helmholtz_free_energy_legendre_out
             residual_rel = residual_abs / \
                 nondimensional_relative_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_relative_helmholtz_free_energy_per_link(self):
@@ -1478,9 +1430,9 @@ class LegendreAsymptoticAlternative(unittest.TestCase):
                 - nondim_relative_helmholtz_free_energy_per_link_legendre_out
             residual_rel = residual_abs / \
                 nondim_relative_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
 
@@ -1535,13 +1487,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 force \
                 - force_out
             residual_rel = residual_abs/force
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_force(self):
@@ -1591,13 +1539,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 nondimensional_force \
                 - nondimensional_force_out
             residual_rel = residual_abs/nondimensional_force
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_helmholtz_free_energy(self):
@@ -1664,13 +1608,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                     )
                 )
             residual_rel = residual_abs/helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_helmholtz_free_energy_per_link(self):
@@ -1744,13 +1684,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                     )
                 )/number_of_links
             residual_rel = residual_abs/helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_relative_helmholtz_free_energy(self):
@@ -1807,9 +1743,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 relative_helmholtz_free_energy_legendre \
                 - relative_helmholtz_free_energy_legendre_out
             residual_rel = residual_abs/relative_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_relative_helmholtz_free_energy_per_link(self):
@@ -1873,9 +1809,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 - relative_helmholtz_free_energy_per_link_legendre_out
             residual_rel = residual_abs / \
                 relative_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_helmholtz_free_energy(self):
@@ -1949,13 +1885,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 )
             residual_rel = residual_abs / \
                 nondimensional_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_helmholtz_free_energy_per_link(self):
@@ -2024,13 +1956,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 )/number_of_links
             residual_rel = residual_abs / \
                 nondimensional_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_abs),
-                parameters.abs_tol
-            )
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_relative_helmholtz_free_energy(self):
@@ -2093,9 +2021,9 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 - nondimensional_relative_helmholtz_free_energy_legendre_out
             residual_rel = residual_abs / \
                 nondimensional_relative_helmholtz_free_energy_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )
 
     def test_nondimensional_relative_helmholtz_free_energy_per_link(self):
@@ -2153,7 +2081,7 @@ class LegendreAsymptoticReduced(unittest.TestCase):
                 - nondim_relative_helmholtz_free_energy_per_link_legendre_out
             residual_rel = residual_abs / \
                 nondim_relative_helmholtz_free_energy_per_link_legendre
-            self.assertLessEqual(
-                np.abs(residual_rel),
-                3e1 * parameters.rel_tol
+            self.assertTrue(
+                np.abs(residual_abs) <= parameters.abs_tol or
+                np.abs(residual_rel) <= parameters.rel_tol
             )

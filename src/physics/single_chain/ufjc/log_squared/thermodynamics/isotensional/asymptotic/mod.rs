@@ -9,7 +9,7 @@ mod test;
 /// The log-squared link potential freely-jointed chain (log-squared-FJC) model thermodynamics in the isotensional ensemble approximated using a reduced asymptotic approach.
 pub mod reduced;
 
-/// The log-squared link potential freely-jointed chain (log-squared-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
+/// The log-squared link potential freely-jointed chain (log-squared-FJC) model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
 pub mod legendre;
 
 use std::f64::consts::PI;
@@ -39,7 +39,7 @@ pub struct LOGSQUAREDFJC
     /// The thermodynamic functions of the model in the isotensional ensemble approximated using a reduced asymptotic approach.
     pub reduced: self::reduced::LOGSQUAREDFJC,
 
-    /// The thermodynamic functions of the model in the isotensional ensemble approximated using a Legendre transformation.
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
     pub legendre: self::legendre::LOGSQUAREDFJC
 }
 

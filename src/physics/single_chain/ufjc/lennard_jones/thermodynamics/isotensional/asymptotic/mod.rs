@@ -9,7 +9,7 @@ mod test;
 /// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics in the isotensional ensemble approximated using a reduced asymptotic approach.
 pub mod reduced;
 
-/// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
+/// The Lennard-Jones link potential freely-jointed chain (Lennard-Jones-FJC) model thermodynamics in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
 pub mod legendre;
 
 use super::nondimensional_link_stretch;
@@ -39,7 +39,7 @@ pub struct LENNARDJONESFJC
     /// The thermodynamic functions of the model in the isotensional ensemble approximated using a reduced asymptotic approach.
     pub reduced: self::reduced::LENNARDJONESFJC,
 
-    /// The thermodynamic functions of the model in the isotensional ensemble approximated using a Legendre transformation.
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach and a Legendre transformation.
     pub legendre: self::legendre::LENNARDJONESFJC
 }
 

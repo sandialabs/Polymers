@@ -46,5 +46,5 @@ impl LENNARDJONESFJC
 
 fn nondimensional_link_stretch(nondimensional_link_stiffness: &f64, nondimensional_force: &f64) -> f64
 {
-    inverse_newton_raphson(&(6.0*nondimensional_force/nondimensional_link_stiffness), &|x: &f64| x.powi(-7) - x.powi(-13), &|x: &f64| 13.0*x.powi(-14) - 7.0*x.powi(-8), &1.0, &1e-2, &100)
+    inverse_newton_raphson(&(6.0*nondimensional_force/nondimensional_link_stiffness), &|x: &f64| x.powi(-7) - x.powi(-13), &|x: &f64| 13.0*x.powi(-14) - 7.0*x.powi(-8), &1.0, &1e-6, &100)
 }
