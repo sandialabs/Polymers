@@ -87,6 +87,8 @@ mod base
         }
     }
 }
-//
-// will need to get nondimensional_end_to_end_length_per_link_max
-//
+#[test]
+fn implement_standard_tests_will_need_nondimensional_end_to_end_length_per_link_max()
+{
+    assert_eq!(0.0, 1.0);
+}
