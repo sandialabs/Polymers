@@ -116,9 +116,10 @@ pub fn relative_helmholtz_free_energy_per_link(number_of_links: &u8, link_length
 pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     //
-    // is not entirely correct (not first part, nor second (normalization different for wlc)) and will fix later
+    // not exactly correct unless P_eq is already normalized (see the &1.0)
     //
-    nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length, nondimensional_end_to_end_length_per_link) - ((*number_of_links as f64) - 1.0)*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    let contour_length = (*number_of_links as f64)*link_length;
+    -(equilibrium_distribution(number_of_links, link_length, &(contour_length*nondimensional_persistance_length), &1.0, &(contour_length*nondimensional_end_to_end_length_per_link))).ln() - ((*number_of_links as f64) - 1.0)*(4.0*(-1.0/nondimensional_persistance_length).exp().acos().sin()*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional Helmholtz free energy per link as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass, and nondimensional persistance length.
