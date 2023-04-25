@@ -112,7 +112,7 @@ pub fn relative_helmholtz_free_energy_per_link(number_of_links: &u8, link_length
     nondimensional_relative_helmholtz_free_energy_per_link(number_of_links, &(persistance_length/contour_length), &(end_to_end_length/contour_length))*BOLTZMANN_CONSTANT*temperature
 }
 
-/// The nondimensional Helmholtz free energy as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, hinge mass, and nondimensional persistance length.
+/// The nondimensional Helmholtz free energy as a function of the applied nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, hinge mass, and nondimensional persistance length.
 pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     //
@@ -122,19 +122,19 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
     -(equilibrium_distribution(number_of_links, link_length, &(contour_length*nondimensional_persistance_length), &1.0, &(contour_length*nondimensional_end_to_end_length_per_link))).ln() - ((*number_of_links as f64) - 1.0)*(4.0*(-1.0/nondimensional_persistance_length).exp().acos().sin()*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
-/// The nondimensional Helmholtz free energy per link as a function of the nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass, and nondimensional persistance length.
+/// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass, and nondimensional persistance length.
 pub fn nondimensional_helmholtz_free_energy_per_link(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     nondimensional_helmholtz_free_energy(number_of_links, link_length, hinge_mass, nondimensional_persistance_length, nondimensional_end_to_end_length_per_link, temperature)/(*number_of_links as f64)
 }
 
-/// The nondimensional relative Helmholtz free energy as a function of the nondimensional end-to-end length per link, parameterized by the nondimensional persistance length.
+/// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional end-to-end length per link, parameterized by the nondimensional persistance length.
 pub fn nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     (nondimensional_equilibrium_distribution(nondimensional_persistance_length, &1.0, &ZERO)/nondimensional_equilibrium_distribution(nondimensional_persistance_length, &1.0, nondimensional_end_to_end_length_per_link)).ln()
 }
 
-/// The nondimensional relative Helmholtz free energy per link as a function of the nondimensional end-to-end length per link, parameterized by the number of links and nondimensional persistance length.
+/// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links and nondimensional persistance length.
 pub fn nondimensional_relative_helmholtz_free_energy_per_link(number_of_links: &u8, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length, nondimensional_end_to_end_length_per_link)/(*number_of_links as f64)
@@ -147,7 +147,7 @@ pub fn equilibrium_distribution(number_of_links: &u8, link_length: &f64, persist
     nondimensional_equilibrium_distribution(&(persistance_length/contour_length), normalization_nondimensional_equilibrium_distribution, &(end_to_end_length/contour_length))/contour_length.powi(3)
 }
 
-/// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the nondimensional end-to-end length per link, parameterized by the nondimensional persistance length.
+/// The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link as a function of the applied nondimensional end-to-end length per link, parameterized by the nondimensional persistance length.
 pub fn nondimensional_equilibrium_distribution(nondimensional_persistance_length: &f64, normalization_nondimensional_equilibrium_distribution: &f64, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
     let g2 = nondimensional_end_to_end_length_per_link.powi(2);
