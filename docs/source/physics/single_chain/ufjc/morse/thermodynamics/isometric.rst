@@ -5,7 +5,6 @@ Morse-FJC model thermodynamics (isometric)
    :maxdepth: 1
 
    Asymptotic <isometric/asymptotic>
-   Legendre <isometric/legendre>
 
 .. autoclass:: polymers.physics.single_chain.ufjc.morse.thermodynamics.isometric::MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
 
@@ -15,4 +14,3 @@ Morse-FJC model thermodynamics (isometric)
    .. autoattribute:: link_stiffness
    .. autoattribute:: link_energy
    .. autoattribute:: asymptotic
-   .. autoattribute:: legendre
