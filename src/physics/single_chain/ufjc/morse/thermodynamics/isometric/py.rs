@@ -2,15 +2,14 @@ use pyo3::prelude::*;
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
-    let thermodynamics = PyModule::new(py, "thermodynamics")?;
-    super::isometric::py::register_module(py, thermodynamics)?;
-    super::isotensional::py::register_module(py, thermodynamics)?;
-    parent_module.add_submodule(thermodynamics)?;
-    thermodynamics.add_class::<MORSEFJC>()?;
+    let isometric = PyModule::new(py, "isometric")?;
+    super::asymptotic::py::register_module(py, isometric)?;
+    parent_module.add_submodule(isometric)?;
+    isometric.add_class::<MORSEFJC>()?;
     Ok(())
 }
 
-/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics.
+/// The Morse link potential freely-jointed chain (Morse-FJC) model thermodynamics in the isometric ensemble.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct MORSEFJC
@@ -34,14 +33,10 @@ pub struct MORSEFJC
     /// The energy of each link in the chain in units of J/mol.
     #[pyo3(get)]
     pub link_energy: f64,
-    
-    /// The thermodynamic functions of the model in the isometric ensemble.
+
+    /// The thermodynamic functions of the model in the isometric ensemble approximated using an asymptotic approach.
     #[pyo3(get)]
-    pub isometric: super::isometric::py::MORSEFJC,
-    
-    /// The thermodynamic functions of the model in the isotensional ensemble.
-    #[pyo3(get)]
-    pub isotensional: super::isotensional::py::MORSEFJC
+    pub asymptotic: super::asymptotic::py::MORSEFJC
 }
 
 #[pymethods]
@@ -57,8 +52,7 @@ impl MORSEFJC
             number_of_links,
             link_stiffness,
             link_energy,
-            isometric: super::isometric::py::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
-            isotensional: super::isotensional::py::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            asymptotic: super::asymptotic::py::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         }
     }
 }

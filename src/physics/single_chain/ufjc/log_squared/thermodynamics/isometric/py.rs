@@ -2,15 +2,14 @@ use pyo3::prelude::*;
 
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
-    let thermodynamics = PyModule::new(py, "thermodynamics")?;
-    super::isometric::py::register_module(py, thermodynamics)?;
-    super::isotensional::py::register_module(py, thermodynamics)?;
-    parent_module.add_submodule(thermodynamics)?;
-    thermodynamics.add_class::<LOGSQUAREDFJC>()?;
+    let isometric = PyModule::new(py, "isometric")?;
+    super::asymptotic::py::register_module(py, isometric)?;
+    parent_module.add_submodule(isometric)?;
+    isometric.add_class::<LOGSQUAREDFJC>()?;
     Ok(())
 }
 
-/// The log-squared link potential freely-jointed chain (log-squared-FJC) model thermodynamics.
+/// The log-squared link potential freely-jointed chain (log-squared-FJC) model thermodynamics in the isometric ensemble.
 #[pyclass]
 #[derive(Copy, Clone)]
 pub struct LOGSQUAREDFJC
@@ -30,14 +29,10 @@ pub struct LOGSQUAREDFJC
     /// The stiffness of each link in the chain in units of J/(mol⋅nm^2).
     #[pyo3(get)]
     pub link_stiffness: f64,
-    
-    /// The thermodynamic functions of the model in the isometric ensemble.
+
+    /// The thermodynamic functions of the model in the isometric ensemble approximated using an asymptotic approach.
     #[pyo3(get)]
-    pub isometric: super::isometric::py::LOGSQUAREDFJC,
-    
-    /// The thermodynamic functions of the model in the isotensional ensemble.
-    #[pyo3(get)]
-    pub isotensional: super::isotensional::py::LOGSQUAREDFJC
+    pub asymptotic: super::asymptotic::py::LOGSQUAREDFJC
 }
 
 #[pymethods]
@@ -52,8 +47,7 @@ impl LOGSQUAREDFJC
             link_length,
             number_of_links,
             link_stiffness,
-            isometric: super::isometric::py::LOGSQUAREDFJC::init(number_of_links, link_length, hinge_mass, link_stiffness),
-            isotensional: super::isotensional::py::LOGSQUAREDFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
+            asymptotic: super::asymptotic::py::LOGSQUAREDFJC::init(number_of_links, link_length, hinge_mass, link_stiffness)
         }
     }
 }
