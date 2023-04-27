@@ -52,7 +52,7 @@ pub fn nondimensional_force(nondimensional_link_stiffness: &f64, nondimensional_
     {
         nondimensional_link_stiffness*(nondimensional_end_to_end_length_per_link - 1.0)
     };
-    inverse_newton_raphson(nondimensional_end_to_end_length_per_link, &|nondimensional_force: &f64| 1.0/nondimensional_force.tanh() - 1.0/nondimensional_force + (nondimensional_force + 1.0/nondimensional_force.tanh() - nondimensional_force/nondimensional_force.sinh().powi(2))/nondimensional_link_stiffness, &|nondimensional_force: &f64| 1.0/nondimensional_force.powi(2) - 1.0/nondimensional_force.sinh().powi(2) + (1.0 + 2.0*(nondimensional_force/nondimensional_force.tanh() - 1.0)/nondimensional_force.sinh().powi(2))/nondimensional_link_stiffness, &guess, &1e-2, &100)
+    inverse_newton_raphson(nondimensional_end_to_end_length_per_link, &|nondimensional_force: &f64| 1.0/nondimensional_force.tanh() - 1.0/nondimensional_force + (nondimensional_force + 1.0/nondimensional_force.tanh() - nondimensional_force/nondimensional_force.sinh().powi(2))/nondimensional_link_stiffness, &|nondimensional_force: &f64| 1.0/nondimensional_force.powi(2) - 1.0/nondimensional_force.sinh().powi(2) + (1.0 + 2.0*(nondimensional_force/nondimensional_force.tanh() - 1.0)/nondimensional_force.sinh().powi(2))/nondimensional_link_stiffness, &guess, &1e-6, &100)
 }
 
 /// The Helmholtz free energy as a function of the applied end-to-end length and temperature, parameterized by the number of links, link length, hinge mass, and link stiffness.

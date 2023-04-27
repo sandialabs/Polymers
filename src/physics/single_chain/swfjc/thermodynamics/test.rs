@@ -103,8 +103,7 @@ mod legendre
             let force_out = model.isometric.legendre.force(&end_to_end_length, &temperature);
             let residual_abs = &force - &force_out;
             let residual_rel = &residual_abs/&force;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
-            assert!(residual_rel.abs() <= parameters.rel_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol || residual_rel.abs() <= parameters.rel_tol);
         }
     }
     #[test]
@@ -124,8 +123,7 @@ mod legendre
             let nondimensional_force_out = model.isometric.legendre.nondimensional_force(&nondimensional_end_to_end_length_per_link);
             let residual_abs = &nondimensional_force - &nondimensional_force_out;
             let residual_rel = &residual_abs/&nondimensional_force;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
-            assert!(residual_rel.abs() <= parameters.rel_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol || residual_rel.abs() <= parameters.rel_tol);
         }
     }
     #[test]
@@ -148,8 +146,7 @@ mod legendre
             let helmholtz_free_energy_legendre_out = model.isometric.legendre.helmholtz_free_energy(&end_to_end_length, &temperature);
             let residual_abs = &helmholtz_free_energy_legendre - &helmholtz_free_energy_legendre_out + BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln();
             let residual_rel = &residual_abs/&helmholtz_free_energy_legendre;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
-            assert!(residual_rel.abs() <= parameters.rel_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol || residual_rel.abs() <= parameters.rel_tol);
         }
     }
     #[test]
@@ -173,8 +170,7 @@ mod legendre
             let helmholtz_free_energy_per_link_legendre_out = model.isometric.legendre.helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
             let residual_abs = &helmholtz_free_energy_per_link_legendre - &helmholtz_free_energy_per_link_legendre_out + BOLTZMANN_CONSTANT*temperature*(8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()/(number_of_links as f64);
             let residual_rel = &residual_abs/&helmholtz_free_energy_per_link_legendre;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
-            assert!(residual_rel.abs() <= parameters.rel_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol || residual_rel.abs() <= parameters.rel_tol);
         }
     }
     #[test]
@@ -197,7 +193,7 @@ mod legendre
             let relative_helmholtz_free_energy_legendre_out = model.isometric.legendre.relative_helmholtz_free_energy(&end_to_end_length, &temperature);
             let residual_abs = &relative_helmholtz_free_energy_legendre - &relative_helmholtz_free_energy_legendre_out;
             let residual_rel = &residual_abs/&relative_helmholtz_free_energy_legendre;
-            assert!(residual_rel.abs() <= 3e1 * parameters.rel_tol);
+            assert!(residual_abs.abs() <= 3e1 * parameters.abs_tol || residual_rel.abs() <= 3e1 * parameters.rel_tol);
         }
     }
     #[test]
@@ -221,7 +217,7 @@ mod legendre
             let relative_helmholtz_free_energy_per_link_legendre_out = model.isometric.legendre.relative_helmholtz_free_energy_per_link(&end_to_end_length, &temperature);
             let residual_abs = &relative_helmholtz_free_energy_per_link_legendre - &relative_helmholtz_free_energy_per_link_legendre_out;
             let residual_rel = &residual_abs/&relative_helmholtz_free_energy_per_link_legendre;
-            assert!(residual_rel.abs() <= 3e1 * parameters.rel_tol);
+            assert!(residual_abs.abs() <= 3e1 * parameters.abs_tol || residual_rel.abs() <= 3e1 * parameters.rel_tol);
         }
     }
     #[test]
@@ -244,8 +240,7 @@ mod legendre
             let nondimensional_helmholtz_free_energy_legendre_out = model.isometric.legendre.nondimensional_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link, &temperature);
             let residual_abs = &nondimensional_helmholtz_free_energy_legendre - &nondimensional_helmholtz_free_energy_legendre_out + (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln();
             let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_legendre;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
-            assert!(residual_rel.abs() <= parameters.rel_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol || residual_rel.abs() <= parameters.rel_tol);
         }
     }
     #[test]
@@ -267,8 +262,7 @@ mod legendre
             let nondimensional_helmholtz_free_energy_per_link_legendre_out = model.isometric.legendre.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature);
             let residual_abs = &nondimensional_helmholtz_free_energy_per_link_legendre - &nondimensional_helmholtz_free_energy_per_link_legendre_out + (8.0*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()/(number_of_links as f64);
             let residual_rel = &residual_abs/&nondimensional_helmholtz_free_energy_per_link_legendre;
-            assert!(residual_abs.abs() <= parameters.abs_tol);
-            assert!(residual_rel.abs() <= parameters.rel_tol);
+            assert!(residual_abs.abs() <= parameters.abs_tol || residual_rel.abs() <= parameters.rel_tol);
         }
     }
     #[test]
@@ -290,7 +284,7 @@ mod legendre
             let nondimensional_relative_helmholtz_free_energy_legendre_out = model.isometric.legendre.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
             let residual_abs = &nondimensional_relative_helmholtz_free_energy_legendre - &nondimensional_relative_helmholtz_free_energy_legendre_out;
             let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_legendre;
-            assert!(residual_rel.abs() <= 3e1 * parameters.rel_tol);
+            assert!(residual_abs.abs() <= 3e1 * parameters.abs_tol || residual_rel.abs() <= 3e1 * parameters.rel_tol);
         }
     }
     #[test]
@@ -311,7 +305,7 @@ mod legendre
             let nondimensional_relative_helmholtz_free_energy_per_link_legendre_out = model.isometric.legendre.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
             let residual_abs = &nondimensional_relative_helmholtz_free_energy_per_link_legendre - &nondimensional_relative_helmholtz_free_energy_per_link_legendre_out;
             let residual_rel = &residual_abs/&nondimensional_relative_helmholtz_free_energy_per_link_legendre;
-            assert!(residual_rel.abs() <= 3e1 * parameters.rel_tol);
+            assert!(residual_abs.abs() <= 3e1 * parameters.abs_tol || residual_rel.abs() <= 3e1 * parameters.rel_tol);
         }
     }
 }

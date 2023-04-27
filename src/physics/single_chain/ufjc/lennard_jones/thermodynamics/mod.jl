@@ -5,6 +5,7 @@ module Thermodynamics
 
 using DocStringExtensions
 
+include("isometric/mod.jl")
 include("isotensional/mod.jl")
 
 """
@@ -30,6 +31,10 @@ struct LENNARDJONESFJC
     """
     link_stiffness::Float64
     """
+    The thermodynamic functions of the model in the isometric ensemble.
+    """
+    isometric::Any
+    """
     The thermodynamic functions of the model in the isotensional ensemble.
     """
     isotensional::Any
@@ -51,6 +56,7 @@ function LENNARDJONESFJC(
         link_length,
         hinge_mass,
         link_stiffness,
+        Isometric.LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness),
         Isotensional.LENNARDJONESFJC(
             number_of_links,
             link_length,
