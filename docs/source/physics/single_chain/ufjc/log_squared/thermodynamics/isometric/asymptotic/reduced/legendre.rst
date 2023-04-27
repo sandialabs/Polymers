@@ -1,7 +1,7 @@
-EFJC model thermodynamics (isometric/legendre)
-==============================================
+Log-squared-FJC model thermodynamics (isometric/asymptotic/reduced/legendre)
+============================================================================
 
-.. autoclass:: polymers.physics.single_chain.efjc.thermodynamics.isometric.legendre::EFJC(number_of_links, link_length, hinge_mass, link_stiffness)
+.. autoclass:: polymers.physics.single_chain.ufjc.log_squared.thermodynamics.isometric.asymptotic.reduced.legendre::LOGSQUAREDFJC(number_of_links, link_length, hinge_mass, link_stiffness)
 
    .. autoattribute:: number_of_links
    .. autoattribute:: link_length

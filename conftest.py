@@ -1,6 +1,5 @@
 import pytest
 from re import sub
-from sys import stdout
 from subprocess import run
 
 
