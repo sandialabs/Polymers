@@ -5,7 +5,6 @@ Log-squared-FJC model thermodynamics (isometric)
    :maxdepth: 1
 
    Asymptotic <isometric/asymptotic>
-   Legendre <isometric/legendre>
 
 .. autoclass:: polymers.physics.single_chain.ufjc.log_squared.thermodynamics.isometric::LOGSQUAREDFJC(number_of_links, link_length, hinge_mass, link_stiffness)
 
@@ -14,4 +13,3 @@ Log-squared-FJC model thermodynamics (isometric)
    .. autoattribute:: hinge_mass
    .. autoattribute:: link_stiffness
    .. autoattribute:: asymptotic
-   .. autoattribute:: legendre

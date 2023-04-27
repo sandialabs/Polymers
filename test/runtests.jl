@@ -68,6 +68,19 @@ include("../src/physics/single_chain/swfjc/thermodynamics/isotensional/legendre/
 include("../src/physics/single_chain/ufjc/test.jl")
 include("../src/physics/single_chain/ufjc/lennard_jones/test.jl")
 include("../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/test.jl")
+include("../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/isometric/test.jl")
+include(
+    "../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/isometric/asymptotic/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/isometric/asymptotic/legendre/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/isometric/asymptotic/reduced/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/isometric/asymptotic/reduced/legendre/test.jl",
+)
 include(
     "../src/physics/single_chain/ufjc/lennard_jones/thermodynamics/isotensional/test.jl",
 )
@@ -88,6 +101,19 @@ include(
 )
 include("../src/physics/single_chain/ufjc/log_squared/test.jl")
 include("../src/physics/single_chain/ufjc/log_squared/thermodynamics/test.jl")
+include("../src/physics/single_chain/ufjc/log_squared/thermodynamics/isometric/test.jl")
+include(
+    "../src/physics/single_chain/ufjc/log_squared/thermodynamics/isometric/asymptotic/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/log_squared/thermodynamics/isometric/asymptotic/legendre/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/log_squared/thermodynamics/isometric/asymptotic/reduced/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/log_squared/thermodynamics/isometric/asymptotic/reduced/legendre/test.jl",
+)
 include("../src/physics/single_chain/ufjc/log_squared/thermodynamics/isotensional/test.jl")
 include(
     "../src/physics/single_chain/ufjc/log_squared/thermodynamics/isotensional/legendre/test.jl",
@@ -106,6 +132,19 @@ include(
 )
 include("../src/physics/single_chain/ufjc/morse/test.jl")
 include("../src/physics/single_chain/ufjc/morse/thermodynamics/test.jl")
+include("../src/physics/single_chain/ufjc/morse/thermodynamics/isometric/test.jl")
+include(
+    "../src/physics/single_chain/ufjc/morse/thermodynamics/isometric/asymptotic/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/morse/thermodynamics/isometric/asymptotic/legendre/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/morse/thermodynamics/isometric/asymptotic/reduced/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/morse/thermodynamics/isometric/asymptotic/reduced/legendre/test.jl",
+)
 include("../src/physics/single_chain/ufjc/morse/thermodynamics/isotensional/test.jl")
 include(
     "../src/physics/single_chain/ufjc/morse/thermodynamics/isotensional/legendre/test.jl",

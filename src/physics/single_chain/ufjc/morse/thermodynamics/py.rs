@@ -3,6 +3,7 @@ use pyo3::prelude::*;
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
     let thermodynamics = PyModule::new(py, "thermodynamics")?;
+    super::isometric::py::register_module(py, thermodynamics)?;
     super::isotensional::py::register_module(py, thermodynamics)?;
     parent_module.add_submodule(thermodynamics)?;
     thermodynamics.add_class::<MORSEFJC>()?;
@@ -34,6 +35,10 @@ pub struct MORSEFJC
     #[pyo3(get)]
     pub link_energy: f64,
     
+    /// The thermodynamic functions of the model in the isometric ensemble.
+    #[pyo3(get)]
+    pub isometric: super::isometric::py::MORSEFJC,
+    
     /// The thermodynamic functions of the model in the isotensional ensemble.
     #[pyo3(get)]
     pub isotensional: super::isotensional::py::MORSEFJC
@@ -52,6 +57,7 @@ impl MORSEFJC
             number_of_links,
             link_stiffness,
             link_energy,
+            isometric: super::isometric::py::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
             isotensional: super::isotensional::py::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         }
     }

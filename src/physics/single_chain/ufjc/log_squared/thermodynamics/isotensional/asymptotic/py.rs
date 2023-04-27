@@ -113,7 +113,7 @@ impl LOGSQUAREDFJC
     /// where :math:`\mathcal{L}(x)=\coth(x)-1/x` is the Langevin function, and :math:`\Delta\lambda(\eta)` is the incremental link stretch,
     ///
     /// .. math::
-    ///     \Delta\lambda(\eta) = W_0(\eta),
+    ///     \Delta\lambda(\eta) = e^{-W_0(-\eta/\kappa)} - 1,
     ///
     /// where :math:`W_0(\eta)` is the Lambert :math:`W` function.
     ///
