@@ -45,7 +45,7 @@ pub fn force(number_of_links: &u8, link_length: &f64, link_stiffness: &f64, end_
 /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, parameterized by the nondimensional link stiffness.
 pub fn nondimensional_force(nondimensional_link_stiffness: &f64, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
-    let lambda_max = (13.0/7.0 as f64).powf(1.0/6.0);
+    let lambda_max = (13.0/7.0_f64).powf(1.0/6.0);
     let nondimensional_force_max = nondimensional_link_stiffness/6.0*(lambda_max.powi(-7) - lambda_max.powi(-13));
     let mut guess: f64 = if nondimensional_end_to_end_length_per_link < &1.0
     {
