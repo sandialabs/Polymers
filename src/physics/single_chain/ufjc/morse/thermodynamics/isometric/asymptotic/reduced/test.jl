@@ -2,7 +2,8 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isometric.Asymptotic.Reduced: MORSEFJC
+using Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isometric.Asymptotic.Reduced:
+    MORSEFJC
 
 @testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::test::base::init" begin
     @test isa(

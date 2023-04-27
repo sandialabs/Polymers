@@ -293,7 +293,8 @@ end
             relative_helmholtz_free_energy_legendre -
             relative_helmholtz_free_energy_legendre_out
         residual_rel = residual_abs / relative_helmholtz_free_energy_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -333,7 +334,8 @@ end
             relative_helmholtz_free_energy_per_link_legendre -
             relative_helmholtz_free_energy_per_link_legendre_out
         residual_rel = residual_abs / relative_helmholtz_free_energy_per_link_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -486,7 +488,8 @@ end
             nondimensional_relative_helmholtz_free_energy_legendre -
             nondimensional_relative_helmholtz_free_energy_legendre_out
         residual_rel = residual_abs / nondimensional_relative_helmholtz_free_energy_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -527,7 +530,8 @@ end
             nondimensional_relative_helmholtz_free_energy_per_link_legendre_out
         residual_rel =
             residual_abs / nondimensional_relative_helmholtz_free_energy_per_link_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -738,7 +742,8 @@ end
             relative_helmholtz_free_energy_legendre -
             relative_helmholtz_free_energy_legendre_out
         residual_rel = residual_abs / relative_helmholtz_free_energy_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -781,7 +786,8 @@ end
             relative_helmholtz_free_energy_per_link_legendre -
             relative_helmholtz_free_energy_per_link_legendre_out
         residual_rel = residual_abs / relative_helmholtz_free_energy_per_link_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -934,7 +940,8 @@ end
             nondimensional_relative_helmholtz_free_energy_legendre -
             nondimensional_relative_helmholtz_free_energy_legendre_out
         residual_rel = residual_abs / nondimensional_relative_helmholtz_free_energy_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -975,7 +982,8 @@ end
             nondimensional_relative_helmholtz_free_energy_per_link_legendre_out
         residual_rel =
             residual_abs / nondimensional_relative_helmholtz_free_energy_per_link_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -1184,7 +1192,8 @@ end
             relative_helmholtz_free_energy_legendre -
             relative_helmholtz_free_energy_legendre_out
         residual_rel = residual_abs / relative_helmholtz_free_energy_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -1227,7 +1236,8 @@ end
             relative_helmholtz_free_energy_per_link_legendre -
             relative_helmholtz_free_energy_per_link_legendre_out
         residual_rel = residual_abs / relative_helmholtz_free_energy_per_link_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -1380,7 +1390,8 @@ end
             nondimensional_relative_helmholtz_free_energy_legendre -
             nondimensional_relative_helmholtz_free_energy_legendre_out
         residual_rel = residual_abs / nondimensional_relative_helmholtz_free_energy_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 
@@ -1421,7 +1432,8 @@ end
             nondimensional_relative_helmholtz_free_energy_per_link_legendre_out
         residual_rel =
             residual_abs / nondimensional_relative_helmholtz_free_energy_per_link_legendre
-        @test abs(residual_abs) <= parameters.abs_tol || abs(residual_rel) <= parameters.rel_tol
+        @test abs(residual_abs) <= parameters.abs_tol ||
+              abs(residual_rel) <= parameters.rel_tol
     end
 end
 

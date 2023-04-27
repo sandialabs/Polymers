@@ -2,7 +2,8 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isometric.Asymptotic: LOGSQUAREDFJC
+using Polymers.Physics.SingleChain.Ufjc.LogSquared.Thermodynamics.Isometric.Asymptotic:
+    LOGSQUAREDFJC
 
 @testset "physics::single_chain::ufjc::log_squared::thermodynamics::isometric::asymptotic::test::base::init" begin
     @test isa(

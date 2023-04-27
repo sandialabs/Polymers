@@ -3,8 +3,10 @@ module Test
 using Test
 using Polymers.Physics: BOLTZMANN_CONSTANT
 using Polymers.Physics.SingleChain: ZERO, parameters
-using Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isometric.Asymptotic.Reduced.Legendre: MORSEFJC
-using Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isotensional.Asymptotic.Reduced: nondimensional_end_to_end_length_per_link as isotensional_nondimensional_end_to_end_length_per_link
+using Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isometric.Asymptotic.Reduced.Legendre:
+    MORSEFJC
+using Polymers.Physics.SingleChain.Ufjc.Morse.Thermodynamics.Isotensional.Asymptotic.Reduced:
+    nondimensional_end_to_end_length_per_link as isotensional_nondimensional_end_to_end_length_per_link
 
 @testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::base::init" begin
     @test isa(
@@ -65,7 +67,9 @@ end
     for _ = 1:parameters.number_of_loops
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
         link_energy =
             parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
         @test MORSEFJC(
@@ -102,7 +106,9 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
         link_energy =
             parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
         link_energy =
@@ -147,7 +153,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::force" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::force" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -157,14 +163,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_force = model.nondimensional_force(
             nondimensional_end_to_end_length_per_link,
             temperature,
@@ -180,7 +197,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -190,14 +207,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(
             nondimensional_end_to_end_length_per_link,
             temperature,
@@ -214,7 +242,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -224,14 +252,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_helmholtz_free_energy_per_link =
             model.nondimensional_helmholtz_free_energy_per_link(
                 nondimensional_end_to_end_length_per_link,
@@ -250,7 +289,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -260,14 +299,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_relative_helmholtz_free_energy =
             model.nondimensional_relative_helmholtz_free_energy(
                 nondimensional_end_to_end_length_per_link,
@@ -286,7 +336,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::relative_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::nondimensional::relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -296,14 +346,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_relative_helmholtz_free_energy_per_link =
             model.nondimensional_relative_helmholtz_free_energy_per_link(
                 nondimensional_end_to_end_length_per_link,
@@ -322,7 +383,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -332,14 +393,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         end_to_end_length =
             nondimensional_end_to_end_length_per_link * number_of_links * link_length
         helmholtz_free_energy = model.helmholtz_free_energy(end_to_end_length, temperature)
@@ -353,7 +425,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -363,14 +435,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         end_to_end_length =
             nondimensional_end_to_end_length_per_link * number_of_links * link_length
         relative_helmholtz_free_energy =
@@ -386,7 +469,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::nondimensional_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::nondimensional_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -396,14 +479,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(
             nondimensional_end_to_end_length_per_link,
             temperature,
@@ -422,7 +516,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::nondimensional_relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::per_link::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -432,14 +526,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_relative_helmholtz_free_energy =
             model.nondimensional_relative_helmholtz_free_energy(
                 nondimensional_end_to_end_length_per_link,
@@ -459,7 +564,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -469,14 +574,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         end_to_end_length =
             nondimensional_end_to_end_length_per_link * number_of_links * link_length
         helmholtz_free_energy = model.helmholtz_free_energy(end_to_end_length, temperature)
@@ -491,7 +607,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -501,14 +617,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         end_to_end_length =
             nondimensional_end_to_end_length_per_link * number_of_links * link_length
         helmholtz_free_energy_per_link =
@@ -527,7 +654,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::nondimensional_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::nondimensional_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -537,14 +664,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_helmholtz_free_energy = model.nondimensional_helmholtz_free_energy(
             nondimensional_end_to_end_length_per_link,
             temperature,
@@ -564,7 +702,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::nondimensional_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::relative::nondimensional_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -574,14 +712,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_helmholtz_free_energy_per_link =
             model.nondimensional_helmholtz_free_energy_per_link(
                 nondimensional_end_to_end_length_per_link,
@@ -603,7 +752,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::force" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::force" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -613,8 +762,11 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         force_0 = model.force(ZERO * number_of_links * link_length, temperature)
@@ -623,7 +775,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::nondimensional_force" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::nondimensional_force" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -633,8 +785,11 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_force_0 = model.nondimensional_force(ZERO, temperature)
@@ -642,7 +797,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -652,8 +807,11 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         relative_helmholtz_free_energy_0 = model.relative_helmholtz_free_energy(
@@ -665,7 +823,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::relative_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -675,8 +833,11 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         relative_helmholtz_free_energy_per_link_0 =
@@ -689,7 +850,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::nondimensional_relative_helmholtz_free_energy" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -699,8 +860,11 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy_0 =
@@ -709,7 +873,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::nondimensional_relative_helmholtz_free_energy_per_link" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::zero::nondimensional_relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -719,8 +883,11 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
         nondimensional_relative_helmholtz_free_energy_per_link_0 =
@@ -729,7 +896,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::connection::force" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::connection::force" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -739,14 +906,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         end_to_end_length =
             nondimensional_end_to_end_length_per_link * number_of_links * link_length
         force = model.force(end_to_end_length, temperature)
@@ -767,7 +945,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::reduced::legendre::test::connection::nondimensional_force" begin
+@testset "physics::single_chain::ufjc::morse::thermodynamics::isometric::asymptotic::reduced::legendre::test::connection::nondimensional_force" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -777,14 +955,25 @@ end
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
         link_stiffness =
             parameters.link_stiffness_reference +
-            parameters.link_stiffness_scale * (0.5 - rand()); link_energy = parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
-        model = MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
+            parameters.link_stiffness_scale * (0.5 - rand())
+        link_energy =
+            parameters.link_energy_reference + parameters.link_energy_scale * (0.5 - rand())
+        model =
+            MORSEFJC(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         temperature =
             parameters.temperature_reference + parameters.temperature_scale * (0.5 - rand())
-        
-        nondimensional_force_max = sqrt(link_stiffness*link_energy/8)/BOLTZMANN_CONSTANT/temperature*link_length
-        nondimensional_end_to_end_length_per_link_max = isotensional_nondimensional_end_to_end_length_per_link(link_stiffness*link_length^2/BOLTZMANN_CONSTANT/temperature, link_energy/BOLTZMANN_CONSTANT/temperature, 0.999*nondimensional_force_max)
-        nondimensional_end_to_end_length_per_link = nondimensional_end_to_end_length_per_link_max * rand()
+
+        nondimensional_force_max =
+            sqrt(link_stiffness * link_energy / 8) / BOLTZMANN_CONSTANT / temperature *
+            link_length
+        nondimensional_end_to_end_length_per_link_max =
+            isotensional_nondimensional_end_to_end_length_per_link(
+                link_stiffness * link_length^2 / BOLTZMANN_CONSTANT / temperature,
+                link_energy / BOLTZMANN_CONSTANT / temperature,
+                0.999 * nondimensional_force_max,
+            )
+        nondimensional_end_to_end_length_per_link =
+            nondimensional_end_to_end_length_per_link_max * rand()
         nondimensional_force = model.nondimensional_force(
             nondimensional_end_to_end_length_per_link,
             temperature,

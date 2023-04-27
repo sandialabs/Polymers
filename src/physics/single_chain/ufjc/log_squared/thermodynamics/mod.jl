@@ -56,12 +56,7 @@ function LOGSQUAREDFJC(
         link_length,
         hinge_mass,
         link_stiffness,
-        Isometric.LOGSQUAREDFJC(
-            number_of_links,
-            link_length,
-            hinge_mass,
-            link_stiffness,
-        ),
+        Isometric.LOGSQUAREDFJC(number_of_links, link_length, hinge_mass, link_stiffness),
         Isotensional.LOGSQUAREDFJC(
             number_of_links,
             link_length,

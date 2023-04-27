@@ -84,7 +84,8 @@ $(TYPEDSIGNATURES)
 function force(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array}, link_energy::Union{Float64,Vector,Matrix,Array},
+    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -92,7 +93,8 @@ function force(
         (
             number_of_links_i,
             link_length_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -104,13 +106,15 @@ function force(
             (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
-        link_stiffness, link_energy,
+        link_stiffness,
+        link_energy,
         end_to_end_length,
         temperature,
     )
@@ -123,22 +127,28 @@ parameterized by the link length ``\\ell_b`` and nondimensional link stiffness `
 $(TYPEDSIGNATURES)
 """
 function nondimensional_force(
-    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array}, nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (nondimensional_link_stiffness_i, nondimensional_link_energy_i, nondimensional_end_to_end_length_per_link_i) ->
-            ccall(
-                (
-                    :physics_single_chain_ufjc_morse_thermodynamics_isometric_asymptotic_legendre_nondimensional_force,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (Float64, Float64, Float64),
-                nondimensional_link_stiffness_i, nondimensional_link_energy_i,
-                nondimensional_end_to_end_length_per_link_i,
+        (
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_ufjc_morse_thermodynamics_isometric_asymptotic_legendre_nondimensional_force,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
-        nondimensional_link_stiffness, nondimensional_link_energy,
+            Float64,
+            (Float64, Float64, Float64),
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ),
+        nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -159,7 +169,8 @@ function helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array}, link_energy::Union{Float64,Vector,Matrix,Array},
+    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -168,7 +179,8 @@ function helmholtz_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -181,14 +193,16 @@ function helmholtz_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
-        link_stiffness, link_energy,
+        link_stiffness,
+        link_energy,
         end_to_end_length,
         temperature,
     )
@@ -204,7 +218,8 @@ function helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array}, link_energy::Union{Float64,Vector,Matrix,Array},
+    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -213,7 +228,8 @@ function helmholtz_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -226,14 +242,16 @@ function helmholtz_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
-        link_stiffness, link_energy,
+        link_stiffness,
+        link_energy,
         end_to_end_length,
         temperature,
     )
@@ -248,7 +266,8 @@ $(TYPEDSIGNATURES)
 function relative_helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array}, link_energy::Union{Float64,Vector,Matrix,Array},
+    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -256,7 +275,8 @@ function relative_helmholtz_free_energy(
         (
             number_of_links_i,
             link_length_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -268,13 +288,15 @@ function relative_helmholtz_free_energy(
             (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
-        link_stiffness, link_energy,
+        link_stiffness,
+        link_energy,
         end_to_end_length,
         temperature,
     )
@@ -289,7 +311,8 @@ $(TYPEDSIGNATURES)
 function relative_helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
-    link_stiffness::Union{Float64,Vector,Matrix,Array}, link_energy::Union{Float64,Vector,Matrix,Array},
+    link_stiffness::Union{Float64,Vector,Matrix,Array},
+    link_energy::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -297,7 +320,8 @@ function relative_helmholtz_free_energy_per_link(
         (
             number_of_links_i,
             link_length_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -309,13 +333,15 @@ function relative_helmholtz_free_energy_per_link(
             (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
-            link_stiffness_i, link_energy_i,
+            link_stiffness_i,
+            link_energy_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
-        link_stiffness, link_energy,
+        link_stiffness,
+        link_energy,
         end_to_end_length,
         temperature,
     )
@@ -331,7 +357,8 @@ function nondimensional_helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array}, nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -340,7 +367,8 @@ function nondimensional_helmholtz_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            nondimensional_link_stiffness_i, nondimensional_link_energy_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ) -> ccall(
@@ -353,14 +381,16 @@ function nondimensional_helmholtz_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            nondimensional_link_stiffness_i, nondimensional_link_energy_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
-        nondimensional_link_stiffness, nondimensional_link_energy,
+        nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_end_to_end_length_per_link,
         temperature,
     )
@@ -376,7 +406,8 @@ function nondimensional_helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
-    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array}, nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -385,7 +416,8 @@ function nondimensional_helmholtz_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            nondimensional_link_stiffness_i, nondimensional_link_energy_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ) -> ccall(
@@ -398,14 +430,16 @@ function nondimensional_helmholtz_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
-            nondimensional_link_stiffness_i, nondimensional_link_energy_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
-        nondimensional_link_stiffness, nondimensional_link_energy,
+        nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_end_to_end_length_per_link,
         temperature,
     )
@@ -419,13 +453,15 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
-    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array}, nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
         (
             number_of_links_i,
-            nondimensional_link_stiffness_i, nondimensional_link_energy_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_end_to_end_length_per_link_i,
         ) -> ccall(
             (
@@ -435,11 +471,13 @@ function nondimensional_relative_helmholtz_free_energy(
             Float64,
             (UInt8, Float64, Float64, Float64),
             number_of_links_i,
-            nondimensional_link_stiffness_i, nondimensional_link_energy_i,
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
-        nondimensional_link_stiffness, nondimensional_link_energy,
+        nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -451,22 +489,28 @@ parameterized by the nondimensional link stiffness ``\\kappa\\equiv\\beta k_0\\e
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_helmholtz_free_energy_per_link(
-    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array}, nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_stiffness::Union{Float64,Vector,Matrix,Array},
+    nondimensional_link_energy::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (nondimensional_link_stiffness_i, nondimensional_link_energy_i, nondimensional_end_to_end_length_per_link_i) ->
-            ccall(
-                (
-                    :physics_single_chain_ufjc_morse_thermodynamics_isometric_asymptotic_legendre_nondimensional_relative_helmholtz_free_energy_per_link,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
-                ),
-                Float64,
-                (Float64, Float64, Float64),
-                nondimensional_link_stiffness_i, nondimensional_link_energy_i,
-                nondimensional_end_to_end_length_per_link_i,
+        (
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
+            (
+                :physics_single_chain_ufjc_morse_thermodynamics_isometric_asymptotic_legendre_nondimensional_relative_helmholtz_free_energy_per_link,
+                string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
-        nondimensional_link_stiffness, nondimensional_link_energy,
+            Float64,
+            (Float64, Float64, Float64),
+            nondimensional_link_stiffness_i,
+            nondimensional_link_energy_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ),
+        nondimensional_link_stiffness,
+        nondimensional_link_energy,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -493,7 +537,8 @@ function MORSEFJC(
         (end_to_end_length, temperature) -> force(
             number_of_links,
             link_length,
-            link_stiffness, link_energy,
+            link_stiffness,
+            link_energy,
             end_to_end_length,
             temperature,
         ),
@@ -506,7 +551,8 @@ function MORSEFJC(
             number_of_links,
             link_length,
             hinge_mass,
-            link_stiffness, link_energy,
+            link_stiffness,
+            link_energy,
             end_to_end_length,
             temperature,
         ),
@@ -514,21 +560,24 @@ function MORSEFJC(
             number_of_links,
             link_length,
             hinge_mass,
-            link_stiffness, link_energy,
+            link_stiffness,
+            link_energy,
             end_to_end_length,
             temperature,
         ),
         (end_to_end_length, temperature) -> relative_helmholtz_free_energy(
             number_of_links,
             link_length,
-            link_stiffness, link_energy,
+            link_stiffness,
+            link_energy,
             end_to_end_length,
             temperature,
         ),
         (end_to_end_length, temperature) -> relative_helmholtz_free_energy_per_link(
             number_of_links,
             link_length,
-            link_stiffness, link_energy,
+            link_stiffness,
+            link_energy,
             end_to_end_length,
             temperature,
         ),

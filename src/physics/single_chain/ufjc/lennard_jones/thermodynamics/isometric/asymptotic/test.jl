@@ -3,7 +3,8 @@ module Test
 using Test
 using Polymers.Physics: BOLTZMANN_CONSTANT
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Ufjc.LennardJones.Thermodynamics.Isometric.Asymptotic: LENNARDJONESFJC
+using Polymers.Physics.SingleChain.Ufjc.LennardJones.Thermodynamics.Isometric.Asymptotic:
+    LENNARDJONESFJC
 
 @testset "physics::single_chain::ufjc::lennard_jones::thermodynamics::isometric::asymptotic::test::base::init" begin
     @test isa(

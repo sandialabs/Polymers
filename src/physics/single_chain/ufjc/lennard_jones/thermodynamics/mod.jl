@@ -56,12 +56,7 @@ function LENNARDJONESFJC(
         link_length,
         hinge_mass,
         link_stiffness,
-        Isometric.LENNARDJONESFJC(
-            number_of_links,
-            link_length,
-            hinge_mass,
-            link_stiffness,
-        ),
+        Isometric.LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness),
         Isotensional.LENNARDJONESFJC(
             number_of_links,
             link_length,

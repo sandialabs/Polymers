@@ -52,7 +52,12 @@ function LENNARDJONESFJC(
         link_length,
         hinge_mass,
         link_stiffness,
-        Asymptotic.LENNARDJONESFJC(number_of_links, link_length, hinge_mass, link_stiffness),
+        Asymptotic.LENNARDJONESFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            link_stiffness,
+        ),
     )
 end
 
