@@ -28,6 +28,8 @@ struct Parameters
     hinge_mass_scale::Float64
     link_length_reference::Float64
     link_length_scale::Float64
+    persistance_length_reference::Float64
+    persistance_length_scale::Float64
     number_of_links_minimum::UInt8
     number_of_links_maximum::UInt8
     link_stiffness_reference::Float64
@@ -67,9 +69,11 @@ parameters = Parameters(
     12e-1,
     8,
     1e0,
+    1e-1,
     1e0,
-    1e0,
-    1e0,
+    1e-2,
+    25e-1,
+    49e-1,
     0x08,
     0x19,
     5e5,
@@ -106,5 +110,6 @@ include("fjc/mod.jl")
 include("efjc/mod.jl")
 include("swfjc/mod.jl")
 include("ufjc/mod.jl")
+include("wlc/mod.jl")
 
 end
