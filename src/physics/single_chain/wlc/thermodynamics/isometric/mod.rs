@@ -197,15 +197,15 @@ impl WLC
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, persistance_length: f64) -> Self
     {
         let nondimensional_persistance_length = persistance_length/(number_of_links as f64)/link_length;
-        let normalization = integrate_1d(&|nondimensional_end_to_end_length_per_link: &f64| nondimensional_equilibrium_radial_distribution(&nondimensional_persistance_length, &1.0, nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
+        let normalization_nondimensional_equilibrium_distribution = integrate_1d(&|nondimensional_end_to_end_length_per_link: &f64| nondimensional_equilibrium_radial_distribution(&nondimensional_persistance_length, &1.0, nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
         WLC
         {
             hinge_mass,
             link_length,
             number_of_links,
             persistance_length,
-            nondimensional_persistance_length: nondimensional_persistance_length,
-            normalization_nondimensional_equilibrium_distribution: normalization,
+            nondimensional_persistance_length,
+            normalization_nondimensional_equilibrium_distribution,
             legendre: self::legendre::WLC::init(number_of_links, link_length, hinge_mass, persistance_length),
         }
     }

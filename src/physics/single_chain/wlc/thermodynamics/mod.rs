@@ -6,9 +6,6 @@ mod test;
 /// The worm-like chain (WLC) model thermodynamics in the isometric ensemble.
 pub mod isometric;
 
-/// The worm-like chain (WLC) model thermodynamics in the isotensional ensemble.
-pub mod isotensional;
-
 /// The structure of the thermodynamics of the WLC model.
 pub struct WLC
 {
@@ -25,10 +22,7 @@ pub struct WLC
     pub persistance_length: f64,
 
     /// The thermodynamic functions of the model in the isometric ensemble.
-    pub isometric: self::isometric::WLC,
-
-    /// The thermodynamic functions of the model in the isotensional ensemble.
-    pub isotensional: self::isotensional::WLC
+    pub isometric: self::isometric::WLC
 }
 
 /// The implemented functionality of the thermodynamics of the WLC model.
@@ -43,8 +37,7 @@ impl WLC
             link_length,
             number_of_links,
             persistance_length,
-            isometric: self::isometric::WLC::init(number_of_links, link_length, hinge_mass, persistance_length),
-            isotensional: self::isotensional::WLC::init(number_of_links, link_length, hinge_mass, persistance_length)
+            isometric: self::isometric::WLC::init(number_of_links, link_length, hinge_mass, persistance_length)
         }
     }
 }
