@@ -110,5 +110,6 @@ include("fjc/mod.jl")
 include("efjc/mod.jl")
 include("swfjc/mod.jl")
 include("ufjc/mod.jl")
+include("wlc/mod.jl")
 
 end

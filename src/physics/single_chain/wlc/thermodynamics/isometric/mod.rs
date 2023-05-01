@@ -206,7 +206,7 @@ impl WLC
             persistance_length,
             nondimensional_persistance_length,
             normalization_nondimensional_equilibrium_distribution,
-            legendre: self::legendre::WLC::init(number_of_links, link_length, hinge_mass, persistance_length),
+            legendre: self::legendre::WLC::init(number_of_links, link_length, hinge_mass, persistance_length)
         }
     }
     /// The expected force as a function of the applied end-to-end length and temperature.
