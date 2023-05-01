@@ -31,6 +31,7 @@ struct WLC
     The persistance length of the chain in units of nm.
     """
     persistance_length::Float64
+    nondimensional_persistance_length::Float64
     normalization_nondimensional_equilibrium_distribution::Float64
     """
     The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
@@ -107,24 +108,33 @@ $(TYPEDSIGNATURES)
 function force(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
+        (
+            number_of_links_i,
+            link_length_i,
+            persistance_length_i,
+            end_to_end_length_i,
+            temperature_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_force,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -142,20 +152,27 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_force(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            number_of_links_i,
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_nondimensional_force,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
+            (UInt8, Float64, Float64),
             number_of_links_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -174,6 +191,7 @@ function helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -182,6 +200,7 @@ function helmholtz_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -190,16 +209,18 @@ function helmholtz_free_energy(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -215,6 +236,7 @@ function helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -223,6 +245,7 @@ function helmholtz_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -231,16 +254,18 @@ function helmholtz_free_energy_per_link(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -259,24 +284,33 @@ $(TYPEDSIGNATURES)
 function relative_helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
+        (
+            number_of_links_i,
+            link_length_i,
+            persistance_length_i,
+            end_to_end_length_i,
+            temperature_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_relative_helmholtz_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -291,24 +325,33 @@ $(TYPEDSIGNATURES)
 function relative_helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
+        (
+            number_of_links_i,
+            link_length_i,
+            persistance_length_i,
+            end_to_end_length_i,
+            temperature_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_relative_helmholtz_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -324,6 +367,7 @@ function nondimensional_helmholtz_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -332,6 +376,7 @@ function nondimensional_helmholtz_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ) -> ccall(
@@ -340,16 +385,18 @@ function nondimensional_helmholtz_free_energy(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
         temperature,
     )
@@ -365,6 +412,7 @@ function nondimensional_helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -373,6 +421,7 @@ function nondimensional_helmholtz_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ) -> ccall(
@@ -381,16 +430,18 @@ function nondimensional_helmholtz_free_energy_per_link(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
         temperature,
     )
@@ -407,21 +458,24 @@ parameterized by the number of links ``N_b``,
 $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_helmholtz_free_energy(
-    number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_nondimensional_relative_helmholtz_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
-            number_of_links_i,
+            (Float64, Float64),
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
-        number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -438,20 +492,27 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_helmholtz_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            number_of_links_i,
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_nondimensional_relative_helmholtz_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
+            (UInt8, Float64, Float64),
             number_of_links_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -469,22 +530,28 @@ $(TYPEDSIGNATURES)
 function equilibrium_distribution(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
+    normalization_nondimensional_equilibrium_distribution::Float64,
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i) -> ccall(
-            (
-                :physics_single_chain_wlc_thermodynamics_isometric_equilibrium_distribution,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, link_length_i, persistance_length_i, end_to_end_length_i) ->
+            ccall(
+                (
+                    :physics_single_chain_wlc_thermodynamics_isometric_equilibrium_distribution,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64, Float64, Float64),
+                number_of_links_i,
+                link_length_i,
+                persistance_length_i,
+                normalization_nondimensional_equilibrium_distribution,
+                end_to_end_length_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            end_to_end_length_i,
-        ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
     )
 end
@@ -501,20 +568,29 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_equilibrium_distribution(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
+    normalization_nondimensional_equilibrium_distribution::Float64,
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            number_of_links_i,
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_nondimensional_equilibrium_distribution,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
+            (UInt8, Float64, Float64, Float64),
             number_of_links_i,
+            nondimensional_persistance_length_i,
+            normalization_nondimensional_equilibrium_distribution,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -532,22 +608,28 @@ $(TYPEDSIGNATURES)
 function equilibrium_radial_distribution(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
+    normalization_nondimensional_equilibrium_distribution::Float64,
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i) -> ccall(
-            (
-                :physics_single_chain_wlc_thermodynamics_isometric_equilibrium_radial_distribution,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+        (number_of_links_i, link_length_i, persistance_length_i, end_to_end_length_i) ->
+            ccall(
+                (
+                    :physics_single_chain_wlc_thermodynamics_isometric_equilibrium_radial_distribution,
+                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                ),
+                Float64,
+                (UInt8, Float64, Float64, Float64, Float64),
+                number_of_links_i,
+                link_length_i,
+                persistance_length_i,
+                normalization_nondimensional_equilibrium_distribution,
+                end_to_end_length_i,
             ),
-            Float64,
-            (UInt8, Float64, Float64),
-            number_of_links_i,
-            link_length_i,
-            end_to_end_length_i,
-        ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
     )
 end
@@ -564,20 +646,29 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_equilibrium_radial_distribution(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
+    normalization_nondimensional_equilibrium_distribution::Float64,
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            number_of_links_i,
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_nondimensional_equilibrium_radial_distribution,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
+            (UInt8, Float64, Float64, Float64),
             number_of_links_i,
+            nondimensional_persistance_length_i,
+            normalization_nondimensional_equilibrium_distribution,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -593,10 +684,12 @@ function WLC(
     hinge_mass::Float64,
     persistance_length::Float64,
 )
+    nondimensional_persistance_length = persistance_length / number_of_links / link_length
     normalization_nondimensional_equilibrium_distribution = integrate(
         nondimensional_end_to_end_length_per_link ->
             nondimensional_equilibrium_radial_distribution(
                 number_of_links,
+                nondimensional_persistance_length,
                 1.0,
                 nondimensional_end_to_end_length_per_link,
             ),
@@ -609,18 +702,26 @@ function WLC(
         link_length,
         hinge_mass,
         persistance_length,
+        nondimensional_persistance_length,
         normalization_nondimensional_equilibrium_distribution,
         Legendre.WLC(number_of_links, link_length, hinge_mass, persistance_length),
-        (end_to_end_length, temperature) ->
-            force(number_of_links, link_length, end_to_end_length, temperature),
+        (end_to_end_length, temperature) -> force(
+            number_of_links,
+            link_length,
+            persistance_length,
+            end_to_end_length,
+            temperature,
+        ),
         (nondimensional_end_to_end_length_per_link) -> nondimensional_force(
             number_of_links,
+            nondimensional_persistance_length,
             nondimensional_end_to_end_length_per_link,
         ),
         (end_to_end_length, temperature) -> helmholtz_free_energy(
             number_of_links,
             link_length,
             hinge_mass,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
@@ -628,18 +729,21 @@ function WLC(
             number_of_links,
             link_length,
             hinge_mass,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
         (end_to_end_length, temperature) -> relative_helmholtz_free_energy(
             number_of_links,
             link_length,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
         (end_to_end_length, temperature) -> relative_helmholtz_free_energy_per_link(
             number_of_links,
             link_length,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
@@ -648,6 +752,7 @@ function WLC(
                 number_of_links,
                 link_length,
                 hinge_mass,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
                 temperature,
             ),
@@ -656,34 +761,47 @@ function WLC(
                 number_of_links,
                 link_length,
                 hinge_mass,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
                 temperature,
             ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_relative_helmholtz_free_energy(
-                number_of_links,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
             ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_relative_helmholtz_free_energy_per_link(
                 number_of_links,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
             ),
-        (end_to_end_length) ->
-            equilibrium_distribution(number_of_links, link_length, end_to_end_length),
+        (end_to_end_length) -> equilibrium_distribution(
+            number_of_links,
+            link_length,
+            persistance_length,
+            normalization_nondimensional_equilibrium_distribution,
+            end_to_end_length,
+        ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_equilibrium_distribution(
                 number_of_links,
+                nondimensional_persistance_length,
+                normalization_nondimensional_equilibrium_distribution,
                 nondimensional_end_to_end_length_per_link,
             ),
         (end_to_end_length) -> equilibrium_radial_distribution(
             number_of_links,
             link_length,
+            persistance_length,
+            normalization_nondimensional_equilibrium_distribution,
             end_to_end_length,
         ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_equilibrium_radial_distribution(
                 number_of_links,
+                nondimensional_persistance_length,
+                normalization_nondimensional_equilibrium_distribution,
                 nondimensional_end_to_end_length_per_link,
             ),
     )

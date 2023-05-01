@@ -1,5 +1,5 @@
 """
-The worm-like chain (FJC) model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
+The worm-like chain (WLC) model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
 """
 module Legendre
 
@@ -7,10 +7,10 @@ using DocStringExtensions
 using .......Polymers: PROJECT_ROOT
 
 """
-The structure of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
+The structure of the thermodynamics of the WLC model in the isometric ensemble approximated using a Legendre transformation.
 $(FIELDS)
 """
-struct FJC
+struct WLC
     """
     The number of links in the chain ``N_b``.
     """
@@ -27,7 +27,7 @@ struct FJC
     The persistance length of the chain in units of nm.
     """
     persistance_length::Float64
-    normalization_nondimensional_equilibrium_distribution::Float64
+    nondimensional_persistance_length::Float64
     """
     The Gibbs free energy ``\\varphi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``.
     """
@@ -78,6 +78,7 @@ function gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -86,6 +87,7 @@ function gibbs_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -94,16 +96,18 @@ function gibbs_free_energy(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -119,6 +123,7 @@ function gibbs_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -127,6 +132,7 @@ function gibbs_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ) -> ccall(
@@ -135,16 +141,18 @@ function gibbs_free_energy_per_link(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -159,24 +167,33 @@ $(TYPEDSIGNATURES)
 function relative_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
+        (
+            number_of_links_i,
+            link_length_i,
+            persistance_length_i,
+            end_to_end_length_i,
+            temperature_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_relative_gibbs_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -191,24 +208,33 @@ $(TYPEDSIGNATURES)
 function relative_gibbs_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
+    persistance_length::Union{Float64,Vector,Matrix,Array},
     end_to_end_length::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
+        (
+            number_of_links_i,
+            link_length_i,
+            persistance_length_i,
+            end_to_end_length_i,
+            temperature_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
+            persistance_length_i,
             end_to_end_length_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
+        persistance_length,
         end_to_end_length,
         temperature,
     )
@@ -224,6 +250,7 @@ function nondimensional_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -232,6 +259,7 @@ function nondimensional_gibbs_free_energy(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ) -> ccall(
@@ -240,16 +268,18 @@ function nondimensional_gibbs_free_energy(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
         temperature,
     )
@@ -265,6 +295,7 @@ function nondimensional_gibbs_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
     link_length::Union{Float64,Vector,Matrix,Array},
     hinge_mass::Union{Float64,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
     temperature::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
@@ -273,6 +304,7 @@ function nondimensional_gibbs_free_energy_per_link(
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ) -> ccall(
@@ -281,16 +313,18 @@ function nondimensional_gibbs_free_energy_per_link(
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64, Float64, Float64, Float64),
+            (UInt8, Float64, Float64, Float64, Float64, Float64),
             number_of_links_i,
             link_length_i,
             hinge_mass_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
             temperature_i,
         ),
         number_of_links,
         link_length,
         hinge_mass,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
         temperature,
     )
@@ -304,20 +338,27 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            number_of_links_i,
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_nondimensional_relative_gibbs_free_energy,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
+            (UInt8, Float64, Float64),
             number_of_links_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
@@ -330,44 +371,54 @@ $(TYPEDSIGNATURES)
 """
 function nondimensional_relative_gibbs_free_energy_per_link(
     number_of_links::Union{UInt8,Vector,Matrix,Array},
+    nondimensional_persistance_length::Union{Float64,Vector,Matrix,Array},
     nondimensional_end_to_end_length_per_link::Union{Float64,Vector,Matrix,Array},
 )::Union{Float64,Vector,Matrix,Array}
     return broadcast(
-        (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
+        (
+            number_of_links_i,
+            nondimensional_persistance_length_i,
+            nondimensional_end_to_end_length_per_link_i,
+        ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_nondimensional_relative_gibbs_free_energy_per_link,
                 string(PROJECT_ROOT, "target/debug/libpolymers"),
             ),
             Float64,
-            (UInt8, Float64),
+            (UInt8, Float64, Float64),
             number_of_links_i,
+            nondimensional_persistance_length_i,
             nondimensional_end_to_end_length_per_link_i,
         ),
         number_of_links,
+        nondimensional_persistance_length,
         nondimensional_end_to_end_length_per_link,
     )
 end
 
 """
-Initializes and returns an instance of the thermodynamics of the FJC model in the isometric ensemble approximated using a Legendre transformation.
+Initializes and returns an instance of the thermodynamics of the WLC model in the isometric ensemble approximated using a Legendre transformation.
 
 $(TYPEDSIGNATURES)
 """
-function FJC(
+function WLC(
     number_of_links::UInt8,
     link_length::Float64,
     hinge_mass::Float64,
     persistance_length::Float64,
 )
-    return FJC(
+    nondimensional_persistance_length = persistance_length / number_of_links / link_length
+    return WLC(
         number_of_links,
         link_length,
         hinge_mass,
         persistance_length,
+        nondimensional_persistance_length,
         (end_to_end_length, temperature) -> gibbs_free_energy(
             number_of_links,
             link_length,
             hinge_mass,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
@@ -375,18 +426,21 @@ function FJC(
             number_of_links,
             link_length,
             hinge_mass,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
         (end_to_end_length, temperature) -> relative_gibbs_free_energy(
             number_of_links,
             link_length,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
         (end_to_end_length, temperature) -> relative_gibbs_free_energy_per_link(
             number_of_links,
             link_length,
+            persistance_length,
             end_to_end_length,
             temperature,
         ),
@@ -395,6 +449,7 @@ function FJC(
                 number_of_links,
                 link_length,
                 hinge_mass,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
                 temperature,
             ),
@@ -403,17 +458,20 @@ function FJC(
                 number_of_links,
                 link_length,
                 hinge_mass,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
                 temperature,
             ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_relative_gibbs_free_energy(
                 number_of_links,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
             ),
         (nondimensional_end_to_end_length_per_link) ->
             nondimensional_relative_gibbs_free_energy_per_link(
                 number_of_links,
+                nondimensional_persistance_length,
                 nondimensional_end_to_end_length_per_link,
             ),
     )

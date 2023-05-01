@@ -1557,4 +1557,5 @@ end
               abs(residual_rel) <= 1.0 / sqrt(number_of_links)
     end
 end
+
 end
