@@ -118,7 +118,6 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
     //
     // Note: not exactly correct unless P_eq is already normalized.
     //
-    let contour_length = (*number_of_links as f64)*link_length;
     let g2 = nondimensional_end_to_end_length_per_link.powi(2);
     let a: f64 = 14.054;
     let b: f64 = 0.473;

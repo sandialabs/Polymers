@@ -141,3 +141,8 @@ class Base(unittest.TestCase):
                 persistance_length,
                 model.persistance_length
             )
+
+
+class Dummy(unittest.TestCase):
+    def remember_to_use_half_of_scale_of_gamma_for_thermodynamic_limit_tests_like_rust_and_minimum_Nb_and_small_lp(self):
+        self.assertEqual(0.0, 1.0)
