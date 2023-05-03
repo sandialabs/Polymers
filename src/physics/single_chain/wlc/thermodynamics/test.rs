@@ -96,7 +96,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let force = model.isometric.force(&end_to_end_length, &temperature);
@@ -118,7 +118,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let force = model.isometric.force(&end_to_end_length, &temperature);
@@ -141,7 +141,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
             let nondimensional_end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64);
             let nondimensional_end_to_end_length_out = model.isotensional.nondimensional_end_to_end_length(&nondimensional_force);
@@ -162,7 +162,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
             let nondimensional_end_to_end_length_per_link_out = model.isotensional.nondimensional_end_to_end_length_per_link(&nondimensional_force);
             let residual_abs = &nondimensional_end_to_end_length_per_link - &nondimensional_end_to_end_length_per_link_out;
@@ -224,7 +224,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let force = model.isometric.force(&end_to_end_length, &temperature);
@@ -247,7 +247,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let end_to_end_length_per_link = nondimensional_end_to_end_length_per_link*link_length;
@@ -271,7 +271,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let force = model.isometric.force(&end_to_end_length, &temperature);
@@ -294,7 +294,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64)*link_length;
             let end_to_end_length_per_link = nondimensional_end_to_end_length_per_link*link_length;
@@ -318,7 +318,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64);
             let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
@@ -341,7 +341,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let temperature = parameters.temperature_reference + parameters.temperature_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
             let nondimensional_helmholtz_free_energy_per_link = model.isometric.nondimensional_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link, &temperature);
@@ -363,7 +363,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_end_to_end_length = nondimensional_end_to_end_length_per_link*(number_of_links as f64);
             let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
             let nondimensional_relative_helmholtz_free_energy = model.isometric.nondimensional_relative_helmholtz_free_energy(&nondimensional_end_to_end_length_per_link);
@@ -385,7 +385,7 @@ mod thermodynamic_limit
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
             let model = WLC::init(number_of_links, link_length, hinge_mass, persistance_length);
-            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + 0.5*parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
+            let nondimensional_end_to_end_length_per_link = parameters.nondimensional_end_to_end_length_per_link_reference + parameters.nondimensional_end_to_end_length_per_link_scale*(0.5 - rng.gen::<f64>());
             let nondimensional_force = model.isometric.nondimensional_force(&nondimensional_end_to_end_length_per_link);
             let nondimensional_relative_helmholtz_free_energy_per_link = model.isometric.nondimensional_relative_helmholtz_free_energy_per_link(&nondimensional_end_to_end_length_per_link);
             let nondimensional_relative_helmholtz_free_energy_per_link_out = model.isotensional.nondimensional_relative_gibbs_free_energy_per_link(&nondimensional_force) + nondimensional_force*nondimensional_end_to_end_length_per_link;
