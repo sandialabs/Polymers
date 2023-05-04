@@ -41,12 +41,6 @@ The library can be added to an existing Rust project:
 ```shell
 cargo add polymers
 ```
-To use the latest edition of the library, add the GitHub repository to Cargo.toml:
-
-```toml
-[dependencies]
-regex = { git = "https://github.com/sandialabs/polymers" }
-```
 
 ## Citation
 
