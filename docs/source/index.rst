@@ -16,16 +16,6 @@ The library can be installed as a Python package:
 
    pip install polymers
 
-If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
-
-.. code-block:: sh
-
-   git clone git@github.com:sandialabs/Polymers.git
-   cd Polymers/
-   pip install maturin
-   maturin build --features python
-   pip install target/wheels/*.whl
-
 Citation
 --------
 

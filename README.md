@@ -17,16 +17,6 @@ The library can be installed as a Python package:
 pip install polymers
 ```
 
-If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
-
-```shell
-git clone git@github.com:sandialabs/Polymers.git
-cd Polymers/
-pip install maturin
-maturin build --features python
-pip install target/wheels/*.whl
-```
-
 ## Julia
 
 [![docs (stable)](https://raw.githubusercontent.com/sandialabs/Polymers/main/pages/assets/images/julia-docs-stable.svg)](https://sandialabs.github.io/Polymers/julia/docs/stable)
@@ -40,24 +30,16 @@ using Pkg
 Pkg.add("Polymers")
 ```
 
-If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
-
-```julia
-using Pkg
-Pkg.add(url="https://github.com/sandialabs/Polymers")
-```
-
 ## Rust
 
 [![docs (stable)](https://img.shields.io/badge/Docs-stable-e57300?logo=rust&logoColor=000000)](https://docs.rs/crate/polymers)
 [![docs (latest)](https://img.shields.io/badge/Docs-latest-e57300?logo=rust&logoColor=000000)](https://sandialabs.github.io/Polymers/rust/docs/latest)
 [![crates](https://img.shields.io/crates/v/polymers?logo=rust&logoColor=000000&label=Crates&color=32592f)](https://crates.io/crates/polymers)
 
-The library can be used in an existing Rust project by adding the `polymers` crate to Cargo.toml:
+The library can be added to an existing Rust project:
 
-```toml
-[dependencies]
-polymers = "*"
+```shell
+cargo add polymers
 ```
 To use the latest edition of the library, add the GitHub repository to Cargo.toml:
 
