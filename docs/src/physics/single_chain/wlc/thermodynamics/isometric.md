@@ -3,5 +3,5 @@
   * [WLC model thermodynamics (isometric/legendre)](../../../../legendre)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.WLC.Thermodynamics.Isometric]
+Modules = [Polymers.Physics.SingleChain.Wlc.Thermodynamics.Isometric]
 ```

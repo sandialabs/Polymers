@@ -4,5 +4,5 @@
   * [WLC model thermodynamics (isotensional)](../../../isotensional)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.WLC.Thermodynamics]
+Modules = [Polymers.Physics.SingleChain.Wlc.Thermodynamics]
 ```
