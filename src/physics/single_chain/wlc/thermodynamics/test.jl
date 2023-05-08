@@ -104,7 +104,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -131,7 +131,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -160,7 +160,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_end_to_end_length" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -188,7 +188,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_end_to_end_length_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -217,7 +217,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::force" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -243,7 +243,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_force" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -270,7 +270,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -301,7 +301,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -333,7 +333,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -364,7 +364,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -401,7 +401,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -439,7 +439,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -476,7 +476,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_relative_helmholtz_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -511,7 +511,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_relative_helmholtz_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -544,7 +544,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -573,7 +573,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -604,7 +604,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -634,7 +634,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -668,7 +668,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -708,7 +708,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -747,7 +747,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_relative_gibbs_free_energy" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =
@@ -784,7 +784,7 @@ end
 
 @testset "physics::single_chain::wlc::thermodynamics::test::thermodynamic_limit::nondimensional_relative_gibbs_free_energy_per_link" begin
     for _ = 1:parameters.number_of_loops
-        number_of_links = parameters.number_of_links_minimum
+        number_of_links = parameters.number_of_links_maximum
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
         hinge_mass =

@@ -154,7 +154,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -206,7 +206,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -260,7 +260,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -307,7 +307,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -353,7 +353,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -405,7 +405,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -450,7 +450,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -514,7 +514,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -578,7 +578,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -635,7 +635,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -692,7 +692,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -755,7 +755,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -818,7 +818,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -871,7 +871,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -924,7 +924,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -988,7 +988,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -1052,7 +1052,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -1109,7 +1109,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -1166,7 +1166,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -1229,7 +1229,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -1292,7 +1292,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
@@ -1345,7 +1345,7 @@ class ThermodynamicLimit(unittest.TestCase):
 
         """
         for _ in range(parameters.number_of_loops):
-            number_of_links = parameters.number_of_links_minimum
+            number_of_links = parameters.number_of_links_maximum
             link_length = \
                 parameters.link_length_reference + \
                 parameters.link_length_scale*(0.5 - np.random.rand())
