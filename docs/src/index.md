@@ -16,13 +16,6 @@ using Pkg
 Pkg.add("Polymers")
 ```
 
-If Rust is installed, the latest edition of the library can be installed from the GitHub repository:
-
-```julia
-using Pkg
-Pkg.add(url="https://github.com/sandialabs/Polymers")
-```
-
 ## Citation
 
 [![doi](https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.7041983-blue)](https://doi.org/10.5281/zenodo.7041983)

@@ -36,6 +36,7 @@ struct Parameters
     link_stiffness_scale::Float64
     link_energy_reference::Float64
     link_energy_scale::Float64
+    nondimensional_persistance_length_small::Float64
     nondimensional_link_stiffness_large::Float64
     nondimensional_link_stiffness_big::Float64
     nondimensional_link_stiffness_medium::Float64
@@ -80,6 +81,7 @@ parameters = Parameters(
     99e4,
     5e4,
     99e3,
+    2e-2,
     1e4,
     1e3,
     1e1,

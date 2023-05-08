@@ -3,5 +3,5 @@
   * [WLC model thermodynamics](../../thermodynamics)
 
 ```@autodocs
-Modules = [Polymers.Physics.SingleChain.WLC]
+Modules = [Polymers.Physics.SingleChain.Wlc]
 ```

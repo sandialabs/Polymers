@@ -6,6 +6,7 @@ module Thermodynamics
 using DocStringExtensions
 
 include("isometric/mod.jl")
+include("isotensional/mod.jl")
 
 """
 The structure of the thermodynamics of the WLC model.
@@ -33,6 +34,10 @@ struct WLC
     The thermodynamic functions of the model in the isometric ensemble.
     """
     isometric::Any
+    """
+    The thermodynamic functions of the model in the isotensional ensemble.
+    """
+    isotensional::Any
 end
 
 """
@@ -52,6 +57,7 @@ function WLC(
         hinge_mass,
         persistance_length,
         Isometric.WLC(number_of_links, link_length, hinge_mass, persistance_length),
+        Isotensional.WLC(number_of_links, link_length, hinge_mass, persistance_length),
     )
 end
 

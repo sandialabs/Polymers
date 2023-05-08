@@ -116,10 +116,33 @@ pub fn relative_helmholtz_free_energy_per_link(number_of_links: &u8, link_length
 pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &f64, hinge_mass: &f64, nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64, temperature: &f64) -> f64
 {
     //
-    // not exactly correct unless P_eq is already normalized (see the &1.0)
+    // Note: not exactly correct unless P_eq is already normalized.
     //
-    let contour_length = (*number_of_links as f64)*link_length;
-    -(equilibrium_distribution(number_of_links, link_length, &(contour_length*nondimensional_persistance_length), &1.0, &(contour_length*nondimensional_end_to_end_length_per_link))).ln() - ((*number_of_links as f64) - 1.0)*(4.0*(-1.0/nondimensional_persistance_length).exp().acos().sin()*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
+    let g2 = nondimensional_end_to_end_length_per_link.powi(2);
+    let a: f64 = 14.054;
+    let b: f64 = 0.473;
+    let c = vec![
+        vec![-0.75, 0.359375, -0.109375],
+        vec![-0.5, 1.0625, -0.5625]
+    ];
+    let c0: f64 = 1.0 - (1.0 + (0.38/nondimensional_persistance_length.powf(0.95)).powi(-5)).powf(-0.2);
+    let d: f64;
+    let e: f64;
+    if nondimensional_persistance_length < &0.125
+    {
+        d = 1.0;
+        e = (0.75/PI/nondimensional_persistance_length).powf(1.5)*(1.0 - 1.25*nondimensional_persistance_length);
+    }
+    else
+    {
+        d = 1.0 - 1.0/(0.177/(nondimensional_persistance_length - 0.111) + 6.40*(nondimensional_persistance_length - 0.111).powf(0.783));
+        e = 112.04*nondimensional_persistance_length.powi(2)*(0.246/nondimensional_persistance_length - a*nondimensional_persistance_length).exp();
+    }
+    let f = (1.0 - c0*g2)/(1.0 - g2);
+    let h = nondimensional_end_to_end_length_per_link/(1.0 - b.powi(2)*g2);
+    let arg = -d*nondimensional_persistance_length*a*(1.0 + b)*h;
+    let sum = (0..2).collect::<Vec<usize>>().iter().map(|i| (1..4).collect::<Vec<usize>>().iter().map(|j| c[*i][j - 1]*(nondimensional_persistance_length.powi(*i as i32 - 1)*g2.powi((*j).try_into().unwrap()))).sum::<f64>()).sum::<f64>();
+    -e.ln() - 2.5*f.ln() - sum/(1.0 - g2) - arg*b*nondimensional_end_to_end_length_per_link - bessel_i(&0, &arg).ln() - ((*number_of_links as f64) - 1.0)*(4.0*(-1.0/nondimensional_persistance_length).exp().acos().sin()*PI.powi(2)*hinge_mass*link_length.powi(2)*BOLTZMANN_CONSTANT*temperature/PLANCK_CONSTANT.powi(2)).ln()
 }
 
 /// The nondimensional Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link and temperature, parameterized by the number of links, link length, and hinge mass, and nondimensional persistance length.
@@ -131,7 +154,7 @@ pub fn nondimensional_helmholtz_free_energy_per_link(number_of_links: &u8, link_
 /// The nondimensional relative Helmholtz free energy as a function of the applied nondimensional end-to-end length per link, parameterized by the nondimensional persistance length.
 pub fn nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length: &f64, nondimensional_end_to_end_length_per_link: &f64) -> f64
 {
-    (nondimensional_equilibrium_distribution(nondimensional_persistance_length, &1.0, &ZERO)/nondimensional_equilibrium_distribution(nondimensional_persistance_length, &1.0, nondimensional_end_to_end_length_per_link)).ln()
+    nondimensional_helmholtz_free_energy(&8, &1.0, &1.0, nondimensional_persistance_length, nondimensional_end_to_end_length_per_link, &300.0) - nondimensional_helmholtz_free_energy(&8, &1.0, &1.0, nondimensional_persistance_length, &ZERO, &300.0)
 }
 
 /// The nondimensional relative Helmholtz free energy per link as a function of the applied nondimensional end-to-end length per link, parameterized by the number of links and nondimensional persistance length.
