@@ -66,19 +66,26 @@ pub fn end_to_end_length_per_link(number_of_links: &u8, link_length: &f64, persi
 /// The expected nondimensional end-to-end length as a function of the applied nondimensional force, parameterized by the number of links and nondimensional persistance length.
 pub fn nondimensional_end_to_end_length(number_of_links: &u8, nondimensional_persistance_length: &f64, nondimensional_force: &f64) -> f64
 {
-    let eta_n = (*number_of_links as f64)*nondimensional_force;
+    let f = &|nondimensional_end_to_end_length_per_link: &f64| isometric_nondimensional_force(number_of_links, nondimensional_persistance_length, nondimensional_end_to_end_length_per_link);
+    let fp = &|nondimensional_end_to_end_length_per_link: &f64| (isometric_nondimensional_force(number_of_links, nondimensional_persistance_length, &(nondimensional_end_to_end_length_per_link + 1e-8)) - isometric_nondimensional_force(number_of_links, nondimensional_persistance_length, &(nondimensional_end_to_end_length_per_link - 1e-8)))/2e-8;
+    let gamma_hat = inverse_newton_raphson_powered(nondimensional_force, f, fp, &0.9999, &1e-5, &100, 2);
+    if !(0.0..=1.0).contains(&gamma_hat)
+    {
+        panic!("Root finding failed!");
+    }
+    let scale = (*number_of_links as f64)*nondimensional_force*gamma_hat - isometric_nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length, &gamma_hat);
     let integrand_denominator = |nondimensional_end_to_end_length_per_link: &f64|
     {
         let beta_delta_psi = isometric_nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length, nondimensional_end_to_end_length_per_link);
         let beta_f_xi = (*number_of_links as f64)*nondimensional_force*nondimensional_end_to_end_length_per_link;
-        ((beta_f_xi - eta_n - beta_delta_psi).exp() - (-beta_f_xi - eta_n - beta_delta_psi).exp())*nondimensional_end_to_end_length_per_link/nondimensional_force
+        ((beta_f_xi - scale - beta_delta_psi).exp() - (-beta_f_xi - scale - beta_delta_psi).exp())*nondimensional_end_to_end_length_per_link/nondimensional_force
     };
     let integrand_numerator = |nondimensional_end_to_end_length_per_link: &f64|
     {
         let beta_delta_psi = isometric_nondimensional_relative_helmholtz_free_energy(nondimensional_persistance_length, nondimensional_end_to_end_length_per_link);
         let beta_f_xi = (*number_of_links as f64)*nondimensional_force*nondimensional_end_to_end_length_per_link;
-        let exp_1 = (beta_f_xi - eta_n - beta_delta_psi).exp();
-        let exp_2 = (-beta_f_xi - eta_n - beta_delta_psi).exp();
+        let exp_1 = (beta_f_xi - scale - beta_delta_psi).exp();
+        let exp_2 = (-beta_f_xi - scale - beta_delta_psi).exp();
         ((exp_1 + exp_2)*(*number_of_links as f64)*nondimensional_end_to_end_length_per_link - (exp_1 - exp_2)/nondimensional_force)*nondimensional_end_to_end_length_per_link/nondimensional_force
     };
     integrate_1d(&integrand_numerator, &ZERO, &ONE, &POINTS)/integrate_1d(&integrand_denominator, &ZERO, &ONE, &POINTS)
@@ -121,7 +128,7 @@ pub fn nondimensional_gibbs_free_energy(number_of_links: &u8, link_length: &f64,
     let fp = &|nondimensional_end_to_end_length_per_link: &f64| (isometric_nondimensional_force(number_of_links, nondimensional_persistance_length, &(nondimensional_end_to_end_length_per_link + 1e-8)) - isometric_nondimensional_force(number_of_links, nondimensional_persistance_length, &(nondimensional_end_to_end_length_per_link - 1e-8)))/2e-8;
     let fpp = &|x: &f64| (fp(&(x + 1e-8)) - fp(&(x - 1e-8)))/2e-8;
     let gamma_hat = inverse_newton_raphson_powered(nondimensional_force, f, fp, &0.9999, &1e-5, &100, 2);
-    if gamma_hat > 1.0 || gamma_hat < 0.0
+    if !(0.0..=1.0).contains(&gamma_hat)
     {
         panic!("Root finding failed!");
     }
