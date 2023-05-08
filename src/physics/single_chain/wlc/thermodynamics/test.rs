@@ -91,7 +91,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -113,7 +113,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -136,7 +136,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -157,7 +157,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -177,7 +177,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -199,7 +199,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -219,7 +219,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -242,7 +242,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -266,7 +266,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -289,7 +289,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -313,7 +313,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -336,7 +336,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -358,7 +358,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -380,7 +380,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -401,7 +401,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -424,7 +424,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -448,7 +448,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -471,7 +471,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -495,7 +495,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -518,7 +518,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -540,7 +540,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
@@ -562,7 +562,7 @@ mod thermodynamic_limit
         let parameters = Parameters::default();
         for _ in 0..parameters.number_of_loops
         {
-            let number_of_links: u8 = parameters.number_of_links_minimum;
+            let number_of_links: u8 = parameters.number_of_links_maximum;
             let link_length = parameters.link_length_reference + parameters.link_length_scale*(0.5 - rng.gen::<f64>());
             let hinge_mass = parameters.hinge_mass_reference + parameters.hinge_mass_scale*(0.5 - rng.gen::<f64>());
             let persistance_length = parameters.nondimensional_persistance_length_small*(number_of_links as f64)*link_length;
