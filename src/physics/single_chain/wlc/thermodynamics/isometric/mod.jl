@@ -97,7 +97,7 @@ end
 
 """
 The expected force ``f`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and persistance length ``\\ell_p``,
 
 ```math
 f(\\xi, T) = \\frac{\\partial \\psi}{\\partial\\xi}.
@@ -142,7 +142,7 @@ end
 
 """
 The expected nondimensional force ``\\eta`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+parameterized by the number of links ``N_b`` and nondimensional persistance length ``\\zeta``,
 
 ```math
 \\eta(\\gamma) = \\frac{\\partial\\vartheta}{\\partial\\gamma}.
@@ -179,7 +179,7 @@ end
 
 """
 The Helmholtz free energy ``\\psi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and persistance length ``\\ell_p``,
 
 ```math
 \\psi(\\xi, T) = -kT\\ln Q(\\xi, T).
@@ -228,7 +228,7 @@ end
 
 """
 The Helmholtz free energy per link ``\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and persistance length ``\\ell_p``.
 
 $(TYPEDSIGNATURES)
 """
@@ -273,7 +273,7 @@ end
 
 """
 The relative Helmholtz free energy ``\\Delta\\psi\\equiv\\psi(\\xi,T)-\\psi(0,T)`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+parameterized by the number of links ``N_b`` link length ``\\ell_b``, and persistance length ``\\ell_p``,
 
 ```math
 \\Delta\\psi(\\xi, T) = kT\\ln\\left[\\frac{P_\\mathrm{eq}(0)}{P_\\mathrm{eq}(\\xi)}\\right].
@@ -318,7 +318,7 @@ end
 
 """
 The relative Helmholtz free energy per link ``\\Delta\\psi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+parameterized by the number of links ``N_b`` link length ``\\ell_b``, and persistance length ``\\ell_p``.
 
 $(TYPEDSIGNATURES)
 """
@@ -359,7 +359,7 @@ end
 
 """
 The nondimensional Helmholtz free energy ``N_b\\vartheta=\\beta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and nondimensional persistance length ``\\zeta``.
 
 $(TYPEDSIGNATURES)
 """
@@ -404,7 +404,7 @@ end
 
 """
 The nondimensional Helmholtz free energy per link ``\\vartheta\\equiv\\beta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and nondimensional persistance length ``\\zeta``.
 
 $(TYPEDSIGNATURES)
 """
@@ -449,7 +449,7 @@ end
 
 """
 The nondimensional relative Helmholtz free energy ``N_b\\Delta\\vartheta=\\beta\\Delta\\psi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+parameterized by the nondimensional persistance length ``\\zeta``,
 
 ```math
 \\beta\\Delta\\psi(\\gamma) = \\ln\\left[\\frac{\\mathscr{P}_\\mathrm{eq}(0)}{\\mathscr{P}_\\mathrm{eq}(\\gamma)}\\right].
@@ -482,7 +482,7 @@ end
 
 """
 The nondimensional relative Helmholtz free energy per link ``\\Delta\\vartheta\\equiv\\beta\\Delta\\psi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+parameterized by the number of links ``N_b`` and nondimensional persistance length ``\\zeta``,
 
 ```math
 \\Delta\\vartheta(\\gamma) = \\ln\\left[\\frac{\\mathscr{P}_\\mathrm{eq}(0)}{\\mathscr{P}_\\mathrm{eq}(\\gamma)}\\right]^{1/N_b}.
@@ -519,7 +519,7 @@ end
 
 """
 The equilibrium probability density of end-to-end vectors ``P_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and persistance length ``\\ell_p``,
 
 ```math
 P_\\mathrm{eq}(\\xi) = \\frac{e^{-\\beta\\psi(\\xi, T)}}{4\\pi\\int e^{-\\beta\\psi(\\xi', T)} \\,{\\xi'}{}^2 d\\xi'},
@@ -558,7 +558,7 @@ end
 
 """
 The nondimensional equilibrium probability density of nondimensional end-to-end vectors per link ``\\mathscr{P}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+parameterized by the number of links ``N_b`` and nondimensional persistance length ``\\zeta``,
 
 ```math
 \\mathscr{P}_\\mathrm{eq}(\\gamma) = \\frac{e^{-\\Delta\\vartheta(\\gamma)}}{4\\pi\\int e^{-\\Delta\\vartheta(\\gamma')} \\,{\\gamma'}{}^2 d\\gamma'}.
@@ -597,7 +597,7 @@ end
 
 """
 The equilibrium probability density of end-to-end lengths ``g_\\mathrm{eq}`` as a function of the end-to-end length ``\\xi``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and persistance length ``\\ell_p``,
 
 ```math
 g_\\mathrm{eq}(\\xi) = 4\\pi\\xi^2 P_\\mathrm{eq}(\\xi).
@@ -636,7 +636,7 @@ end
 
 """
 The nondimensional equilibrium probability density of nondimensional end-to-end lenghts per link ``\\mathscr{g}_\\mathrm{eq}`` as a function of the nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+parameterized by the number of links ``N_b`` and nondimensional persistance length ``\\zeta``,
 
 ```math
 \\mathscr{g}_\\mathrm{eq}(\\gamma) = 4\\pi\\gamma^2 \\mathscr{P}_\\mathrm{eq}(\\gamma).

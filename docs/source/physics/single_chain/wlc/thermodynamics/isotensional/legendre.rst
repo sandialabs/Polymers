@@ -1,0 +1,17 @@
+WLC model thermodynamics (isotensional/legendre)
+================================================
+
+.. autoclass:: polymers.physics.single_chain.wlc.thermodynamics.isotensional.legendre::WLC(number_of_links, link_length, hinge_mass, persistance_length)
+
+   .. autoattribute:: number_of_links
+   .. autoattribute:: link_length
+   .. autoattribute:: hinge_mass
+   .. autoattribute:: persistance_length
+   .. automethod:: helmholtz_free_energy(force, temperature)
+   .. automethod:: helmholtz_free_energy_per_link(force, temperature)
+   .. automethod:: relative_helmholtz_free_energy(force, temperature)
+   .. automethod:: relative_helmholtz_free_energy_per_link(force, temperature)
+   .. automethod:: nondimensional_helmholtz_free_energy(nondimensional_force, temperature)
+   .. automethod:: nondimensional_helmholtz_free_energy_per_link(nondimensional_force, temperature)
+   .. automethod:: nondimensional_relative_helmholtz_free_energy(nondimensional_force)
+   .. automethod:: nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_force)

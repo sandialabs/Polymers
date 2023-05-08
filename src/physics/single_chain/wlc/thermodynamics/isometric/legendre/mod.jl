@@ -64,7 +64,7 @@ end
 
 """
 The Gibbs free energy ``\\varphi`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``,
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and persistance length ``\\ell_p``,
 
 ```math
 \\varphi(\\xi, T) \\sim \\psi(\\xi, T) - \\xi f(\\xi, T) \\quad \\text{for } N_b\\gg 1,
@@ -115,7 +115,7 @@ end
 
 """
 The Gibbs free energy per link ``\\varphi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and persistance length ``\\ell_p``.
 
 $(TYPEDSIGNATURES)
 """
@@ -160,7 +160,7 @@ end
 
 """
 The relative Helmholtz free energy ``\\Delta\\varphi\\equiv\\varphi(\\xi,T)-\\varphi(0,T)`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and persistance length ``\\ell_p``.
 
 $(TYPEDSIGNATURES)
 """
@@ -201,7 +201,7 @@ end
 
 """
 The relative Gibbs free energy per link ``\\Delta\\varphi/N_b`` as a function of the applied end-to-end length ``\\xi`` and temperature ``T``,
-parameterized by the number of links ``N_b`` and link length ``\\ell_b``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, and persistance length ``\\ell_p``.
 
 $(TYPEDSIGNATURES)
 """
@@ -242,7 +242,7 @@ end
 
 """
 The nondimensional Gibbs free energy ``N_b\\varrho=\\beta\\varphi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and nondimensional persistance length ``\\zeta``.
 
 $(TYPEDSIGNATURES)
 """
@@ -287,7 +287,7 @@ end
 
 """
 The nondimensional Gibbs free energy per link ``\\varrho\\equiv\\beta\\varphi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``, link length ``\\ell_b``, and hinge mass ``m``.
+parameterized by the number of links ``N_b``, link length ``\\ell_b``, hinge mass ``m``, and nondimensional persistance length ``\\zeta``.
 
 $(TYPEDSIGNATURES)
 """
@@ -332,7 +332,7 @@ end
 
 """
 The nondimensional relative Gibbs free energy ``N_b\\Delta\\varrho=\\beta\\Delta\\varphi`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``.
+parameterized by the number of links ``N_b`` and nondimensional persistance length ``\\zeta``.
 
 $(TYPEDSIGNATURES)
 """
@@ -365,7 +365,7 @@ end
 
 """
 The nondimensional relative Helmholtz free energy per link ``\\Delta\\varrho\\equiv\\beta\\Delta\\varphi/N_b`` as a function of the applied nondimensional end-to-end length per link ``\\gamma`` and temperature ``T``,
-parameterized by the number of links ``N_b``.
+parameterized by the number of links ``N_b`` and nondimensional persistance length ``\\zeta``.
 
 $(TYPEDSIGNATURES)
 """

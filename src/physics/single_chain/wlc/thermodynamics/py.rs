@@ -4,6 +4,7 @@ pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
     let thermodynamics = PyModule::new(py, "thermodynamics")?;
     super::isometric::py::register_module(py, thermodynamics)?;
+    super::isotensional::py::register_module(py, thermodynamics)?;
     parent_module.add_submodule(thermodynamics)?;
     thermodynamics.add_class::<WLC>()?;
     Ok(())
@@ -32,7 +33,11 @@ pub struct WLC
 
     /// The thermodynamic functions of the model in the isometric ensemble.
     #[pyo3(get)]
-    pub isometric: super::isometric::py::WLC
+    pub isometric: super::isometric::py::WLC,
+
+    /// The thermodynamic functions of the model in the isotensional ensemble.
+    #[pyo3(get)]
+    pub isotensional: super::isotensional::py::WLC
 }
 
 #[pymethods]
@@ -47,7 +52,8 @@ impl WLC
             link_length,
             number_of_links,
             persistance_length,
-            isometric: super::isometric::py::WLC::init(number_of_links, link_length, hinge_mass, persistance_length)
+            isometric: super::isometric::py::WLC::init(number_of_links, link_length, hinge_mass, persistance_length),
+            isotensional: super::isotensional::py::WLC::init(number_of_links, link_length, hinge_mass, persistance_length)
         }
     }
 }
