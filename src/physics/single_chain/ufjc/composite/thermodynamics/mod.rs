@@ -3,10 +3,13 @@ pub mod py;
 
 mod test;
 
-/// The composite uFJC (CuFJC) model thermodynamics.
-pub mod thermodynamics;
+/// The composite uFJC (CuFJC) model thermodynamics in the isometric ensemble.
+pub mod isometric;
 
-/// The structure of the CuFJC model.
+/// The composite uFJC (CuFJC) model thermodynamics in the isotensional ensemble.
+pub mod isotensional;
+
+/// The structure of the thermodynamics of the CuFJC model.
 pub struct CUFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
@@ -33,15 +36,18 @@ pub struct CUFJC
     /// The attempt frequency of each bond in units of 1/ns.
     pub bond_attempt_frequency: f64,
 
-    /// The thermodynamic functions of the model.
-    pub thermodynamics: self::thermodynamics::CUFJC
+    /// The thermodynamic functions of the model in the isometric ensemble.
+    pub isometric: self::isometric::CUFJC,
+
+    /// The thermodynamic functions of the model in the isometric ensemble.
+    pub isotensional: self::isotensional::CUFJC
 
 }
 
-/// The implemented functionality of the CuFJC model.
+/// The implemented functionality of the thermodynamics of the CuFJC model.
 impl CUFJC
 {
-    /// Initializes and returns an instance of the CuFJC model.
+    /// Initializes and returns an instance of the thermodynamics of the CuFJC model.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, number_of_bonds: u8, bond_stiffness: f64, bond_energy: f64, bond_scission_energy: f64, bond_attempt_frequency: f64) -> Self
     {
         CUFJC
@@ -54,7 +60,8 @@ impl CUFJC
             bond_energy,
             bond_scission_energy,
             bond_attempt_frequency,
-            thermodynamics: self::thermodynamics::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
+            isometric: self::isometric::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency),
+            isotensional: self::isotensional::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
         }
     }
 }

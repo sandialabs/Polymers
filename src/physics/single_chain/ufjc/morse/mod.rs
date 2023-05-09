@@ -41,7 +41,7 @@ impl MORSEFJC
             number_of_links,
             link_stiffness,
             link_energy,
-            thermodynamics: self::thermodynamics::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy),
+            thermodynamics: self::thermodynamics::MORSEFJC::init(number_of_links, link_length, hinge_mass, link_stiffness, link_energy)
         }
     }
 }
