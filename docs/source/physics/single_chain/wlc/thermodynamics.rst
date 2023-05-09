@@ -5,7 +5,7 @@ WLC model thermodynamics
    :maxdepth: 1
 
    Isometric <thermodynamics/isometric>
-   Isometric <thermodynamics/isotensional>
+   Isotensional <thermodynamics/isotensional>
 
 .. autoclass:: polymers.physics.single_chain.wlc.thermodynamics::WLC(number_of_links, link_length, hinge_mass, persistance_length)
 
