@@ -1,14 +1,15 @@
 """
-The composite uFJC (CuFJC) single-chain model.
+The composite uFJC (CuFJC) single-chain model thermodynamics.
 """
-module Composite
+module Thermodynamics
 
 using DocStringExtensions
 
-include("thermodynamics/mod.jl")
+include("isometric/mod.jl")
+include("isotensional/mod.jl")
 
 """
-The structure of the CuFJC model.
+The structure of the CuFJC model thermodynamics.
 
 $(FIELDS)
 """
@@ -46,13 +47,17 @@ struct CUFJC
     """
     bond_attempt_frequency::Float64
     """
-    The thermodynamic functions of the model.
+    The thermodynamic functions of the model in the isometric ensemble.
     """
-    thermodynamics::Any
+    isometric::Any
+    """
+    The thermodynamic functions of the model in the isotensional ensemble.
+    """
+    isotensional::Any
 end
 
 """
-Initializes and returns an instance of the CuFJC model.
+Initializes and returns an instance of the CuFJC model thermodynamics.
 
 $(TYPEDSIGNATURES)
 """
@@ -75,7 +80,17 @@ function CUFJC(
         bond_energy,
         bond_scission_energy,
         bond_attempt_frequency,
-        Thermodynamics.CUFJC(
+        Isometric.CUFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            number_of_bonds,
+            bond_stiffness,
+            bond_energy,
+            bond_scission_energy,
+            bond_attempt_frequency,
+        ),
+        Isotensional.CUFJC(
             number_of_links,
             link_length,
             hinge_mass,
