@@ -3,7 +3,7 @@ use pyo3::prelude::*;
 pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
 {
     let isometric = PyModule::new(py, "isometric")?;
-    super::legendre::py::register_module(py, isometric)?;
+    super::asymptotic::py::register_module(py, isometric)?;
     parent_module.add_submodule(isometric)?;
     isometric.add_class::<CUFJC>()?;
     Ok(())
@@ -46,9 +46,9 @@ pub struct CUFJC
     #[pyo3(get)]
     pub bond_attempt_frequency: f64,
     
-    /// The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
+    /// The thermodynamic functions of the model in the isometric ensemble approximated using an asymptotic approach.
     #[pyo3(get)]
-    pub legendre: super::legendre::py::CUFJC
+    pub asymptotic: super::asymptotic::py::CUFJC
 }
 
 #[pymethods]
@@ -67,7 +67,7 @@ impl CUFJC
             bond_energy,
             bond_scission_energy,
             bond_attempt_frequency,
-            legendre: super::legendre::py::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
+            asymptotic: super::asymptotic::py::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
         }
     }
 }

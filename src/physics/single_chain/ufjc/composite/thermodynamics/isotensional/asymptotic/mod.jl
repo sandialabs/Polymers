@@ -1,12 +1,14 @@
 """
-The composite uFJC (CuFJC) single-chain model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
+The composite uFJC (CuFJC) single-chain model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
 """
-module Legendre
+module Asymptotic
 
 using DocStringExtensions
 
+include("reduced/mod.jl")
+
 """
-The structure of the CuFJC model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
+The structure of the CuFJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
 
 $(FIELDS)
 """
@@ -43,10 +45,14 @@ struct CUFJC
     The attempt frequency of each bond in units of 1/ns.
     """
     bond_attempt_frequency::Float64
+    """
+    The thermodynamic functions of the model in the isotensional ensemble approximated using a reduced asymptotic approach.
+    """
+    reduced::Any
 end
 
 """
-Initializes and returns an instance of the CuFJC model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
+Initializes and returns an instance of the CuFJC model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
 
 $(TYPEDSIGNATURES)
 """
@@ -69,6 +75,16 @@ function CUFJC(
         bond_energy,
         bond_scission_energy,
         bond_attempt_frequency,
+        Reduced.CUFJC(
+            number_of_links,
+            link_length,
+            hinge_mass,
+            number_of_bonds,
+            bond_stiffness,
+            bond_energy,
+            bond_scission_energy,
+            bond_attempt_frequency,
+        ),
     )
 end
 

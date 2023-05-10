@@ -1,55 +1,46 @@
-use pyo3::prelude::*;
+#[cfg(feature = "python")]
+pub mod py;
 
-pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
-{
-    let legendre = PyModule::new(py, "legendre")?;
-    parent_module.add_submodule(legendre)?;
-    legendre.add_class::<CUFJC>()?;
-    Ok(())
-}
+mod test;
 
-/// The composite uFJC (CuFJC) model thermodynamics in the isometric ensemble using a Legendre transformation.
-#[pyclass]
-#[derive(Copy, Clone)]
+/// The composite uFJC (CuFJC) model thermodynamics in the isometric ensemble approximated using a reduced asymptotic approach.
+pub mod reduced;
+
+/// The structure of the thermodynamics of the CuFJC model in the isometric ensemble approximated using an asymptotic approach.
 pub struct CUFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
-    #[pyo3(get)]
     pub hinge_mass: f64,
-    
+
     /// The length of each link in the chain in units of nm.
-    #[pyo3(get)]
     pub link_length: f64,
-    
+
     /// The number of links in the chain.
-    #[pyo3(get)]
     pub number_of_links: u8,
 
     /// The number of bonds in each link.
-    #[pyo3(get)]
     pub number_of_bonds: u8,
 
     /// The stiffness of each bond in units of J/(mol⋅nm^2).
-    #[pyo3(get)]
     pub bond_stiffness: f64,
 
     /// The energy of each bond in units of J/mol.
-    #[pyo3(get)]
     pub bond_energy: f64,
 
     /// The scission energy of each bond in units of J/mol.
-    #[pyo3(get)]
     pub bond_scission_energy: f64,
 
     /// The attempt frequency of each bond in units of 1/ns.
-    #[pyo3(get)]
-    pub bond_attempt_frequency: f64
+    pub bond_attempt_frequency: f64,
+
+    /// The thermodynamic functions of the model in the isometric ensemble approximated using a reduced asymptotic approach.
+    pub reduced: self::reduced::CUFJC
 }
 
-#[pymethods]
+/// The implemented functionality of the thermodynamics of the CuFJC model in the isometric ensemble approximated using an asymptotic approach.
 impl CUFJC
 {
-    #[new]
+    /// Initializes and returns an instance of the thermodynamics of the CuFJC model in the isometric ensemble approximated using an asymptotic approach.
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, number_of_bonds: u8, bond_stiffness: f64, bond_energy: f64, bond_scission_energy: f64, bond_attempt_frequency: f64) -> Self
     {
         CUFJC
@@ -62,6 +53,7 @@ impl CUFJC
             bond_energy,
             bond_scission_energy,
             bond_attempt_frequency,
+            reduced: self::reduced::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
         }
     }
 }

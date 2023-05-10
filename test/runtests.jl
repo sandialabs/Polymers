@@ -165,11 +165,23 @@ include("../src/physics/single_chain/ufjc/composite/test.jl")
 include("../src/physics/single_chain/ufjc/composite/thermodynamics/test.jl")
 include("../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/test.jl")
 include(
-    "../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/legendre/test.jl",
+    "../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/asymptotic/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/asymptotic/reduced/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/asymptotic/reduced/legendre/test.jl",
 )
 include("../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/test.jl")
 include(
-    "../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/legendre/test.jl",
+    "../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/asymptotic/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/asymptotic/reduced/test.jl",
+)
+include(
+    "../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/asymptotic/reduced/legendre/test.jl",
 )
 include("../src/physics/single_chain/wlc/test.jl")
 include("../src/physics/single_chain/wlc/thermodynamics/test.jl")

@@ -1,12 +1,12 @@
 """
-The composite uFJC (CuFJC) single-chain model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
+The composite uFJC (CuFJC) single-chain model thermodynamics in the isometric ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
 """
 module Legendre
 
 using DocStringExtensions
 
 """
-The structure of the CuFJC model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
+The structure of the CuFJC model thermodynamics in the isometric ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
 
 $(FIELDS)
 """
@@ -46,7 +46,7 @@ struct CUFJC
 end
 
 """
-Initializes and returns an instance of the CuFJC model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
+Initializes and returns an instance of the CuFJC model thermodynamics in the isometric ensemble approximated using a reduced asymptotic approach and a Legendre transformation.
 
 $(TYPEDSIGNATURES)
 """

@@ -5,7 +5,7 @@ module Isometric
 
 using DocStringExtensions
 
-include("legendre/mod.jl")
+include("asymptotic/mod.jl")
 
 """
 The structure of the CuFJC model thermodynamics in the isometric ensemble.
@@ -46,9 +46,9 @@ struct CUFJC
     """
     bond_attempt_frequency::Float64
     """
-    The thermodynamic functions of the model in the isometric ensemble approximated using a Legendre transformation.
+    The thermodynamic functions of the model in the isometric ensemble approximated using an asymptotic approach.
     """
-    legendre::Any
+    asymptotic::Any
 end
 
 """
@@ -75,7 +75,7 @@ function CUFJC(
         bond_energy,
         bond_scission_energy,
         bond_attempt_frequency,
-        Legendre.CUFJC(
+        Asymptotic.CUFJC(
             number_of_links,
             link_length,
             hinge_mass,

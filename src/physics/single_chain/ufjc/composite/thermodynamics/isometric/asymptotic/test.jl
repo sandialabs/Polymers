@@ -2,9 +2,9 @@ module Test
 
 using Test
 using Polymers.Physics.SingleChain: parameters
-using Polymers.Physics.SingleChain.Ufjc.Composite.Thermodynamics.Isometric.Legendre: CUFJC
+using Polymers.Physics.SingleChain.Ufjc.Composite.Thermodynamics.Isometric.Asymptotic: CUFJC
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::init" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::init" begin
     @test isa(
         CUFJC(
             parameters.number_of_links_minimum,
@@ -20,7 +20,7 @@ using Polymers.Physics.SingleChain.Ufjc.Composite.Thermodynamics.Isometric.Legen
     )
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::number_of_links" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::number_of_links" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -37,7 +37,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::link_length" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::link_length" begin
     for _ = 1:parameters.number_of_loops
         link_length =
             parameters.link_length_reference + parameters.link_length_scale * (0.5 - rand())
@@ -54,7 +54,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::hinge_mass" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::hinge_mass" begin
     for _ = 1:parameters.number_of_loops
         hinge_mass =
             parameters.hinge_mass_reference + parameters.hinge_mass_scale * (0.5 - rand())
@@ -71,7 +71,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::number_of_bonds" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::number_of_bonds" begin
     for _ = 1:parameters.number_of_loops
         number_of_bonds =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)
@@ -88,7 +88,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::bond_stiffness" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::bond_stiffness" begin
     for _ = 1:parameters.number_of_loops
         bond_stiffness =
             parameters.bond_stiffness_reference +
@@ -106,7 +106,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::bond_energy" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::bond_energy" begin
     for _ = 1:parameters.number_of_loops
         bond_energy =
             parameters.bond_energy_reference + parameters.bond_energy_scale * (0.5 - rand())
@@ -123,7 +123,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::bond_scission_energy" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::bond_scission_energy" begin
     for _ = 1:parameters.number_of_loops
         bond_scission_energy =
             parameters.bond_scission_energy_reference +
@@ -141,7 +141,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::bond_attempt_frequency" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::bond_attempt_frequency" begin
     for _ = 1:parameters.number_of_loops
         bond_attempt_frequency =
             parameters.bond_attempt_frequency_reference +
@@ -159,7 +159,7 @@ end
     end
 end
 
-@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::legendre::test::base::all_parameters" begin
+@testset "physics::single_chain::ufjc::composite::thermodynamics::isometric::asymptotic::test::base::all_parameters" begin
     for _ = 1:parameters.number_of_loops
         number_of_links =
             rand(parameters.number_of_links_minimum:parameters.number_of_links_maximum)

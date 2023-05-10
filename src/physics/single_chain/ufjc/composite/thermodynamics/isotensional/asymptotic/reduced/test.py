@@ -8,7 +8,7 @@ from ..test import Parameters
 
 parameters = Parameters()
 CUFJC = physics.single_chain.ufjc.composite. \
-    thermodynamics.isotensional.legendre.CUFJC
+    thermodynamics.isotensional.asymptotic.reduced.CUFJC
 
 
 class Base(unittest.TestCase):
