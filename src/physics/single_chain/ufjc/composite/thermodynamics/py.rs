@@ -1,52 +1,65 @@
-#[cfg(feature = "python")]
-pub mod py;
+use pyo3::prelude::*;
 
-mod test;
+pub fn register_module(py: Python<'_>, parent_module: &PyModule) -> PyResult<()>
+{
+    let thermodynamics = PyModule::new(py, "thermodynamics")?;
+    super::isometric::py::register_module(py, thermodynamics)?;
+    super::isotensional::py::register_module(py, thermodynamics)?;
+    parent_module.add_submodule(thermodynamics)?;
+    thermodynamics.add_class::<CUFJC>()?;
+    Ok(())
+}
 
-/// The composite uFJC (CuFJC) model thermodynamics in the isometric ensemble.
-pub mod isometric;
-
-/// The composite uFJC (CuFJC) model thermodynamics in the isotensional ensemble.
-pub mod isotensional;
-
-/// The structure of the thermodynamics of the CuFJC model.
+/// The composite uFJC (CuFJC) model thermodynamics.
+#[pyclass]
+#[derive(Copy, Clone)]
 pub struct CUFJC
 {
     /// The mass of each hinge in the chain in units of kg/mol.
+    #[pyo3(get)]
     pub hinge_mass: f64,
-
+    
     /// The length of each link in the chain in units of nm.
+    #[pyo3(get)]
     pub link_length: f64,
-
+    
     /// The number of links in the chain.
+    #[pyo3(get)]
     pub number_of_links: u8,
 
     /// The number of bonds in each link.
+    #[pyo3(get)]
     pub number_of_bonds: u8,
 
     /// The stiffness of each bond in units of J/(mol⋅nm^2).
+    #[pyo3(get)]
     pub bond_stiffness: f64,
 
     /// The energy of each bond in units of J/mol.
+    #[pyo3(get)]
     pub bond_energy: f64,
 
     /// The scission energy of each bond in units of J/mol.
+    #[pyo3(get)]
     pub bond_scission_energy: f64,
 
     /// The attempt frequency of each bond in units of 1/ns.
+    #[pyo3(get)]
     pub bond_attempt_frequency: f64,
-
+    
     /// The thermodynamic functions of the model in the isometric ensemble.
-    pub isometric: self::isometric::CUFJC,
-
-    /// The thermodynamic functions of the model in the isometric ensemble.
-    pub isotensional: self::isotensional::CUFJC
+    #[pyo3(get)]
+    pub isometric: super::isometric::py::CUFJC,
+    
+    /// The thermodynamic functions of the model in the isotensional ensemble.
+    #[pyo3(get)]
+    pub isotensional: super::isotensional::py::CUFJC
 }
 
-/// The implemented functionality of the thermodynamics of the CuFJC model.
+#[pymethods]
 impl CUFJC
 {
-    /// Initializes and returns an instance of the thermodynamics of the CuFJC model.
+    #[new]
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64, number_of_bonds: u8, bond_stiffness: f64, bond_energy: f64, bond_scission_energy: f64, bond_attempt_frequency: f64) -> Self
     {
         CUFJC
@@ -59,8 +72,8 @@ impl CUFJC
             bond_energy,
             bond_scission_energy,
             bond_attempt_frequency,
-            isometric: self::isometric::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency),
-            isotensional: self::isotensional::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
+            isometric: super::isometric::py::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency),
+            isotensional: super::isotensional::py::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
         }
     }
 }

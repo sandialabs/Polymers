@@ -3,8 +3,8 @@ pub mod py;
 
 mod test;
 
-/// The composite uFJC (CuFJC) model thermodynamics in the isotensional ensemble approximated using an asymptotic approach.
-pub mod asymptotic;
+/// The composite uFJC (CuFJC) model thermodynamics in the isotensional ensemble approximated using a Legendre transformation.
+pub mod legendre;
 
 /// The structure of the thermodynamics of the CuFJC model in the isotensional ensemble.
 pub struct CUFJC
@@ -33,9 +33,8 @@ pub struct CUFJC
     /// The attempt frequency of each bond in units of 1/ns.
     pub bond_attempt_frequency: f64,
 
-    /// The thermodynamic functions of the model in the isotensional ensemble approximated using an asymptotic approach.
-    pub asymptotic: self::asymptotic::CUFJC
-
+    /// The thermodynamic functions of the model in the isotensional ensemble approximated using a Legendre transformation.
+    pub legendre: self::legendre::CUFJC
 }
 
 /// The implemented functionality of the thermodynamics of the CuFJC model in the isotensional ensemble.
@@ -54,7 +53,7 @@ impl CUFJC
             bond_energy,
             bond_scission_energy,
             bond_attempt_frequency,
-            asymptotic: self::asymptotic::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
+            legendre: self::legendre::CUFJC::init(number_of_links, link_length, hinge_mass, number_of_bonds, bond_stiffness, bond_energy, bond_scission_energy, bond_attempt_frequency)
         }
     }
 }

@@ -35,7 +35,6 @@ pub struct CUFJC
 
     /// The thermodynamic functions of the model.
     pub thermodynamics: self::thermodynamics::CUFJC
-
 }
 
 /// The implemented functionality of the CuFJC model.

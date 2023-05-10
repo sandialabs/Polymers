@@ -45,6 +45,7 @@ class Parameters:
         self.nondimensional_link_stiffness_medium = 1e1
         self.well_width_reference = 99e-2
         self.well_width_scale = 5e-1
+        self.nondimensional_well_width_small = 1e-2
         self.nondimensional_end_to_end_length_per_link_reference = 5e-1
         self.nondimensional_end_to_end_length_per_link_scale = 99e-2
         self.nondimensional_end_to_end_length_per_link_small = 25e-2
@@ -60,7 +61,16 @@ class Parameters:
         self.nondimensional_potential_stiffness_scale = 2e0
         self.nondimensional_potential_stiffness_small = 1e-3
         self.nondimensional_potential_stiffness_large = 1e1
-        self.nondimensional_well_width_small = 1e-2
+        self.number_of_bonds_minimum = 1
+        self.number_of_bonds_maximum = 64
+        self.bond_stiffness_reference = 5e5
+        self.bond_stiffness_scale = 99e4
+        self.bond_energy_reference = 1e2
+        self.bond_energy_scale = 1e1
+        self.bond_scission_energy_reference = 1e2
+        self.bond_scission_energy_scale = 1e1
+        self.bond_attempt_frequency_reference = 1e0
+        self.bond_attempt_frequency_scale = 1e-1
         self.temperature_reference = 3e2
         self.temperature_scale = 1e2
         self.one = 1e0

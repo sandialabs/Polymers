@@ -58,6 +58,16 @@ struct Parameters
     nondimensional_potential_stiffness_scale::Float64
     nondimensional_potential_stiffness_small::Float64
     nondimensional_potential_stiffness_large::Float64
+    pub number_of_bonds_minimum::UInt8
+    pub number_of_bonds_maximum::UInt8
+    pub bond_stiffness_reference::Float64
+    pub bond_stiffness_scale::Float64
+    pub bond_energy_reference::Float64
+    pub bond_energy_scale::Float64
+    pub bond_scission_energy_reference::Float64
+    pub bond_scission_energy_scale::Float64
+    pub bond_attempt_frequency_reference::Float64
+    pub bond_attempt_frequency_scale::Float64
     temperature_reference::Float64
     temperature_scale::Float64
 end
@@ -103,6 +113,16 @@ parameters = Parameters(
     2e0,
     1e-3,
     1e1,
+    1,
+    64,
+    5e5,
+    99e4,
+    1e2,
+    1e1,
+    1e2,
+    1e1,
+    1e0,
+    1e-1,
     3e2,
     1e2,
 )

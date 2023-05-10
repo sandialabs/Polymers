@@ -161,6 +161,12 @@ include(
 include(
     "../src/physics/single_chain/ufjc/morse/thermodynamics/isotensional/asymptotic/reduced/legendre/test.jl",
 )
+include("../src/physics/single_chain/ufjc/composite/test.jl")
+include("../src/physics/single_chain/ufjc/composite/thermodynamics/test.jl")
+include("../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/test.jl")
+include("../src/physics/single_chain/ufjc/composite/thermodynamics/isometric/legendre/test.jl")
+include("../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/test.jl")
+include("../src/physics/single_chain/ufjc/composite/thermodynamics/isotensional/legendre/test.jl")
 include("../src/physics/single_chain/wlc/test.jl")
 include("../src/physics/single_chain/wlc/thermodynamics/test.jl")
 include("../src/physics/single_chain/wlc/thermodynamics/isometric/test.jl")
