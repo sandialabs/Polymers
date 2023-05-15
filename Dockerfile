@@ -1,4 +1,4 @@
-FROM julia:1.8.5 as julia
+FROM julia:1.9.0 as julia
 FROM python:3.11
 WORKDIR /
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
