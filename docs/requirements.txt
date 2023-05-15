@@ -1,4 +1,4 @@
-docutils>=0.14,<0.20
+docutils>=0.14,<0.21
 ipykernel
 ipython
 jinja2>=3.0
