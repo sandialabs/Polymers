@@ -1,7 +1,5 @@
 name: Julia
 on:
-  push:
-    branches: [ "workflow-repairs" ]
   pull_request:
     branches: [ "main" ]
   release:
