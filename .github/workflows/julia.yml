@@ -1,7 +1,7 @@
 name: Julia
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "workflow-repairs" ]
   release:
     types: [ published ]
 env:
@@ -41,7 +41,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           julia -e 'using Pkg; Pkg.add("JuliaFormatter")'
-          julia -e 'using JuliaFormatter; if format("./") == true; exit(0); else exit(1); end'
+          julia -e 'using JuliaFormatter; if format(".", overwrite=false, verbose=true) == true; exit(0); else exit(1); end'
   register:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest

@@ -1,7 +1,7 @@
 name: Python
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "workflow-repairs" ]
   release:
     types: [ published ]
 jobs:
