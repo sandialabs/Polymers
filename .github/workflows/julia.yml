@@ -33,7 +33,7 @@ jobs:
         if: runner.os != 'Windows'
         run: julia -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
       - name: aqua
-        if runner.os == 'Linux'
+        if: runner.os == 'Linux'
         run: |
           julia -e 'using Pkg; Pkg.add("Aqua")'
           julia -e 'using Polymers; using Aqua; Aqua.test_all(Polymers)'
