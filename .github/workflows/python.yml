@@ -9,6 +9,8 @@ on:
 jobs:
   linux-wheels:
     runs-on: ubuntu-latest
+    strategy:
+      python-version: '3.11'
     container: quay.io/pypa/manylinux2014_x86_64
     steps:
      - uses: actions/checkout@v3
