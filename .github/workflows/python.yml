@@ -39,7 +39,7 @@ jobs:
          python-version: ${{ matrix.python-version }}
      - name: build wheels
        run: |
-         python3 -m pip install cffi "maturin>=0.14,<0.15"
+         python3 -m pip install cffi maturin
          maturin build --features python --release
      - uses: actions/upload-artifact@v3
        with:
@@ -56,7 +56,7 @@ jobs:
      - uses: actions/setup-python@v4
      - name: build wheels
        run: |
-         python -m pip install cffi "maturin>=0.14,<0.15"
+         python -m pip install cffi maturin
          maturin build --features python --release
      - uses: actions/upload-artifact@v3
        with:
@@ -92,7 +92,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: maturin
         run: |
-          pip install "maturin>=0.14,<0.15"
+          pip install maturin
           maturin build --features python --out .
           pip install --find-links=. polymers
       - name: pytest
