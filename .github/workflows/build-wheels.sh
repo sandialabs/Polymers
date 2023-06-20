@@ -2,7 +2,7 @@
 set -e -x
 
 for PYBIN in /opt/python/cp3[7891]*/bin; do
-    "${PYBIN}/pip" install cffi maturin
+    "${PYBIN}/pip" install cffi "maturin>=0.14,<0.15"
     "${PYBIN}/maturin" build --features python -i "${PYBIN}/python" --release
 done
 
