@@ -1,7 +1,9 @@
 name: Julia
 on:
-  pull_request:
+  push:
     branches: [ "workflow-repairs" ]
+  pull_request:
+    branches: [ "main" ]
   release:
     types: [ published ]
 env:
