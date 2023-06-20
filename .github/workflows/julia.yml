@@ -27,7 +27,7 @@ jobs:
       - name: julia
         uses: julia-actions/setup-julia@v1
         with:
-          version: 1.8
+          version: 1.9
       - name: test
         if: runner.os == 'Windows'
         run: julia -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
