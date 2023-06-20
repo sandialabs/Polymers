@@ -7,7 +7,7 @@ on:
 jobs:
   linux-wheels:
     runs-on: ubuntu-latest
-    container: quay.io/pypa/manylinux2014_x86_64
+    container: quay.io/pypa/manylinux2014_x86_64:2023-04-30-c9c30dc
     steps:
      - uses: actions/checkout@v3
      - uses: actions-rs/toolchain@v1
