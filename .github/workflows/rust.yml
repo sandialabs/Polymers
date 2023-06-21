@@ -23,7 +23,7 @@ jobs:
           toolchain: nightly
           override: true
       - name: test
-        run: cargo test --verbose
+        run: cargo test --release --verbose
         env:
           CARGO_INCREMENTAL: '0'
           RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
@@ -47,13 +47,13 @@ jobs:
       - name: tree
         run: $([[ $(cargo tree --edges normal | wc -l) -eq 1 ]])
       - name: build
-        run: cargo build --verbose
+        run: cargo build --release --verbose
       - name: clippy
-        run: cargo clippy -- -D warnings
+        run: cargo clippy --release -- -D warnings
       - name: bench
-        run: cargo bench --verbose
+        run: cargo bench --release --verbose
       - name: doc
-        run: cargo doc --verbose
+        run: cargo doc --release --verbose
       - name: package
         run: cargo package --verbose
   publish:
