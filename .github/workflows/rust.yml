@@ -51,7 +51,7 @@ jobs:
       - name: clippy
         run: cargo clippy --release -- -D warnings
       - name: bench
-        run: cargo bench --release --verbose
+        run: cargo bench --verbose
       - name: doc
         run: cargo doc --release --verbose
       - name: package
