@@ -1,2 +1,2 @@
 cd("..")
-run(`cargo build --features extern`)
+run(`cargo build --features extern --release`)

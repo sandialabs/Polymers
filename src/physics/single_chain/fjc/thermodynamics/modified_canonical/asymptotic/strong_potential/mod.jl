@@ -89,7 +89,7 @@ function force(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_force,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -126,7 +126,7 @@ function nondimensional_force(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_nondimensional_force,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -165,7 +165,7 @@ function helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -210,7 +210,7 @@ function helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -253,7 +253,7 @@ function relative_helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -294,7 +294,7 @@ function relative_helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_relative_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -337,7 +337,7 @@ function nondimensional_helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_nondimensional_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -382,7 +382,7 @@ function nondimensional_helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_nondimensional_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -421,7 +421,7 @@ function nondimensional_relative_helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_nondimensional_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -454,7 +454,7 @@ function nondimensional_relative_helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_strong_potential_nondimensional_relative_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),

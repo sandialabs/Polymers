@@ -108,7 +108,7 @@ function end_to_end_length(
             ccall(
                 (
                     :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_end_to_end_length,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64, Float64, Float64),
@@ -142,7 +142,7 @@ function end_to_end_length_per_link(
         (link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_end_to_end_length_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64, Float64, Float64),
@@ -174,7 +174,7 @@ function nondimensional_end_to_end_length(
             ccall(
                 (
                     :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_nondimensional_end_to_end_length,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64),
@@ -213,7 +213,7 @@ function nondimensional_end_to_end_length_per_link(
         (nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_nondimensional_end_to_end_length_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64),
@@ -254,7 +254,7 @@ function gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -291,7 +291,7 @@ function gibbs_free_energy_per_link(
         (link_length_i, hinge_mass_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64, Float64, Float64, Float64),
@@ -327,7 +327,7 @@ function relative_gibbs_free_energy(
             ccall(
                 (
                     :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_relative_gibbs_free_energy,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64, Float64, Float64),
@@ -361,7 +361,7 @@ function relative_gibbs_free_energy_per_link(
         (link_length_i, link_stiffness_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_relative_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64, Float64, Float64),
@@ -402,7 +402,7 @@ function nondimensional_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_nondimensional_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -445,7 +445,7 @@ function nondimensional_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_nondimensional_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64, Float64, Float64, Float64),
@@ -479,7 +479,7 @@ function nondimensional_relative_gibbs_free_energy(
             ccall(
                 (
                     :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_nondimensional_relative_gibbs_free_energy,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64),
@@ -520,7 +520,7 @@ function nondimensional_relative_gibbs_free_energy_per_link(
         (nondimensional_link_stiffness_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_ufjc_lennard_jones_thermodynamics_isotensional_asymptotic_reduced_nondimensional_relative_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64),

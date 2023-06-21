@@ -29,10 +29,13 @@ jobs:
           RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
           RUSTDOCFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
       - name: hack
+        if: runner.os == 'Linux'
         run: cp -r * ../
       - name: grcov
+        if: runner.os == 'Linux'
         uses: actions-rs/grcov@v0.1.6
       - name: codecov
+        if: runner.os == 'Linux'
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
@@ -40,20 +43,24 @@ jobs:
           verbose: true
   checks:
     if: github.event_name != 'release'
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: tree
         run: $([[ $(cargo tree --edges normal | wc -l) -eq 1 ]])
       - name: build
-        run: cargo build --verbose
+        run: cargo build --release --verbose
       - name: clippy
-        run: cargo clippy -- -D warnings
+        run: cargo clippy --release -- -D warnings
       - name: bench
         run: cargo bench --verbose
       - name: doc
-        run: cargo doc --verbose
+        run: cargo doc --release --verbose
       - name: package
         run: cargo package --verbose
   publish:
