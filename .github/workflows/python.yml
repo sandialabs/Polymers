@@ -91,7 +91,7 @@ jobs:
       - name: maturin
         run: |
           pip install maturin
-          maturin build --features python --out .
+          maturin build --features python --release --out .
           pip install --find-links=. polymers
       - name: pytest
         run: |

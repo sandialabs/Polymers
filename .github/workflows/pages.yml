@@ -33,7 +33,7 @@ jobs:
         run: |
           sudo chmod -R 777 _site/
           mkdir -p _site/rust/docs/
-          cargo doc
+          cargo doc --release
           grep -rl "polymers/index.html" target/ | xargs sed -i 's@polymers/index.html@latest/index.html@'
           cp -r target/doc/* _site/rust/docs/
           mv _site/rust/docs/polymers/ _site/rust/docs/latest/
