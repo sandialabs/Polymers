@@ -93,7 +93,7 @@ function gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -138,7 +138,7 @@ function gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -181,7 +181,7 @@ function relative_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_relative_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -222,7 +222,7 @@ function relative_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_relative_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -265,7 +265,7 @@ function nondimensional_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_nondimensional_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -310,7 +310,7 @@ function nondimensional_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_nondimensional_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -349,7 +349,7 @@ function nondimensional_relative_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_nondimensional_relative_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -382,7 +382,7 @@ function nondimensional_relative_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isometric_legendre_nondimensional_relative_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),

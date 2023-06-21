@@ -105,7 +105,7 @@ function end_to_end_length(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_end_to_end_length,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -146,7 +146,7 @@ function end_to_end_length_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_end_to_end_length_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -183,7 +183,7 @@ function nondimensional_end_to_end_length(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_end_to_end_length,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -216,7 +216,7 @@ function nondimensional_end_to_end_length_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_end_to_end_length_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -243,7 +243,7 @@ function force(
         (potential_distance_i, potential_stiffness_i) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_force,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (Float64, Float64),
@@ -273,7 +273,7 @@ function nondimensional_force(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_force,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -312,7 +312,7 @@ function gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -357,7 +357,7 @@ function gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -400,7 +400,7 @@ function relative_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_relative_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -441,7 +441,7 @@ function relative_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_relative_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -484,7 +484,7 @@ function nondimensional_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -529,7 +529,7 @@ function nondimensional_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -568,7 +568,7 @@ function nondimensional_relative_gibbs_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_relative_gibbs_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -601,7 +601,7 @@ function nondimensional_relative_gibbs_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_fjc_thermodynamics_modified_canonical_asymptotic_weak_potential_nondimensional_relative_gibbs_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64),

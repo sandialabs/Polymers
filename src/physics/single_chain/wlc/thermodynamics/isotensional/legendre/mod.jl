@@ -91,7 +91,7 @@ function helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isotensional_legendre_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -136,7 +136,7 @@ function helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isotensional_legendre_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -174,7 +174,7 @@ function relative_helmholtz_free_energy(
             ccall(
                 (
                     :physics_single_chain_wlc_thermodynamics_isotensional_legendre_relative_helmholtz_free_energy,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64, Float64, Float64),
@@ -210,7 +210,7 @@ function relative_helmholtz_free_energy_per_link(
             ccall(
                 (
                     :physics_single_chain_wlc_thermodynamics_isotensional_legendre_relative_helmholtz_free_energy_per_link,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64, Float64, Float64),
@@ -253,7 +253,7 @@ function nondimensional_helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isotensional_legendre_nondimensional_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -298,7 +298,7 @@ function nondimensional_helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_wlc_thermodynamics_isotensional_legendre_nondimensional_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/debug/libpolymers"),
+                string(PROJECT_ROOT, "target/release/libpolymers"),
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -334,7 +334,7 @@ function nondimensional_relative_helmholtz_free_energy(
             ccall(
                 (
                     :physics_single_chain_wlc_thermodynamics_isotensional_legendre_nondimensional_relative_helmholtz_free_energy,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64),
@@ -364,7 +364,7 @@ function nondimensional_relative_helmholtz_free_energy_per_link(
             ccall(
                 (
                     :physics_single_chain_wlc_thermodynamics_isotensional_legendre_nondimensional_relative_helmholtz_free_energy_per_link,
-                    string(PROJECT_ROOT, "target/debug/libpolymers"),
+                    string(PROJECT_ROOT, "target/release/libpolymers"),
                 ),
                 Float64,
                 (UInt8, Float64, Float64),
