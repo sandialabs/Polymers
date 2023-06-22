@@ -12,13 +12,11 @@ sources = [
 ]
 
 # Bash recipe for building across all platforms
-script = raw"""
-cd $WORKSPACE/srcdir/polymers
-
+script = raw
+"""
 if [[ "${target}" == *-mingw* ]]; then
     export RUSTFLAGS="-Clink-args=-L${libdir}"
 fi
-
 cargo build --release --features extern
 install -Dvm 755 "target/${rust_target}/release/polymers${exeext}" "${bindir}/polymers${exeext}"
 """
@@ -30,9 +28,7 @@ platforms = [supported_platforms()[2]]
 products = [ExecutableProduct("polymers", :polymers)]
 
 # Dependencies that must be installed before this package can be built
-dependencies = [
-    Dependency("DocStringExtensions"),
-]
+dependencies = [Dependency("DocStringExtensions")]
 
 # Build the tarballs, and possibly a `build.jl` as well.
 build_tarballs(
