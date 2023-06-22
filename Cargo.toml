@@ -5,10 +5,6 @@ keywords = ["julia", "polymers", "python", "rust"]
 license = "BSD-3-Clause"
 name = "polymers"
 version = "0.4.0"
-edition = "2021"
-description = "Polymers Modeling Library"
-license = "BSD-3-Clause"
-keywords = ["julia", "polymers", "python", "rust"]
 
 [lib]
 crate-type = ["cdylib", "rlib", "staticlib"]
