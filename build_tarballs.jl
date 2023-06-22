@@ -24,12 +24,7 @@ install -Dvm 755 "target/${rust_target}/release/polymers${exeext}" "${bindir}/po
 """
 
 # Some platforms disabled for now due issues with rust and musl cross compilation. See #1673.
-platforms = supported_platforms(; experimental = true)
-# We dont have all dependencies for armv6l
-filter!(p -> arch(p) != "armv6l", platforms)
-# Rust toolchain for i686 Windows is unusable
-filter!(p -> !Sys.iswindows(p) || arch(p) != "i686", platforms)
-platforms = expand_cxxstring_abis(platforms)
+platforms = [supported_platforms()[2]]
 
 # The products that we will ensure are always built
 products = [ExecutableProduct("polymers", :polymers)]
