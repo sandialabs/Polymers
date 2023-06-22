@@ -1,0 +1,25 @@
+name: TestBinaryBuilder
+on:
+  push:
+    branches: [ "binarybuilder" ]
+env:
+  CARGO_TERM_COLOR: always
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: 1.9
+      - name: build
+        run: |
+          julia -e 'using Pkg; Pkg.add("BinaryBuilder")'
+          julia build_tarballs.jl
