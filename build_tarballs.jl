@@ -6,13 +6,16 @@ version = v"0.3.7"
 # Collection of sources required to build tar
 sources = [
     GitSource(
-        "https://github.com/sandialabs/Polymers.git",
+        "https://github.com/sandialabs/polymers.git",
         "3cc31d8d27bca6b7cdc1b20aabec9f5110467808",
     ),
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
+ls
+ls $WORKSPACE/srcdir
+cd $WORKSPACE/srcdir/polymers
 if [[ "${target}" == *-mingw* ]]; then
     export RUSTFLAGS="-Clink-args=-L${libdir}"
 fi
