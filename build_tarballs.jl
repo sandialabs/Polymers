@@ -13,14 +13,8 @@ sources = [
 
 # Bash recipe for building across all platforms
 script = raw"""
-ls
-ls $WORKSPACE/srcdir
 cd $WORKSPACE/srcdir/polymers
-if [[ "${target}" == *-mingw* ]]; then
-    export RUSTFLAGS="-Clink-args=-L${libdir}"
-fi
 cargo build --release --features extern
-install -Dvm 755 "target/${rust_target}/release/polymers${exeext}" "${bindir}/polymers${exeext}"
 """
 
 # Some platforms disabled for now due issues with rust and musl cross compilation. See #1673.
