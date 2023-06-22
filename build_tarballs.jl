@@ -34,6 +34,11 @@ platforms = expand_cxxstring_abis(platforms)
 # The products that we will ensure are always built
 products = [ExecutableProduct("polymers", :polymers)]
 
+# Dependencies that must be installed before this package can be built
+dependencies = [
+    Dependency("DocStringExtensions"),
+]
+
 # Build the tarballs, and possibly a `build.jl` as well.
 build_tarballs(
     ARGS,
