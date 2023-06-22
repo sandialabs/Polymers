@@ -22,4 +22,4 @@ jobs:
       - name: build
         run: |
           julia -e 'using Pkg; Pkg.add("BinaryBuilder")'
-          julia build_tarballs.jl
+          julia --color=yes build_tarballs.jl --verbose --debug
