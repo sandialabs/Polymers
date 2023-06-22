@@ -12,8 +12,7 @@ sources = [
 ]
 
 # Bash recipe for building across all platforms
-script = raw
-"""
+script = raw"""
 if [[ "${target}" == *-mingw* ]]; then
     export RUSTFLAGS="-Clink-args=-L${libdir}"
 fi
