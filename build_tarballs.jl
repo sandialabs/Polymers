@@ -11,7 +11,7 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir/polymers
 cargo build --release --features extern
-install -Dvm 755 "target/release/libpolymers.so" "${bindir}/libpolymers.so"
+install -Dvm 755 "target/release/libpolymers.so" "${libdir}/libpolymers.so"
 """
 platforms = [supported_platforms()[2]]
 products = [LibraryProduct("libpolymers", :libpolymers)]
