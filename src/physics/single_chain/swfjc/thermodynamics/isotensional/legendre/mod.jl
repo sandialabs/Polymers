@@ -4,6 +4,7 @@ The square-well freely-jointed chain (SWFJC) model thermodynamics in the isotens
 module Legendre
 
 using DocStringExtensions
+using Polymers_jll
 using .......Polymers: PROJECT_ROOT
 
 """
@@ -90,7 +91,7 @@ function helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -127,7 +128,7 @@ function helmholtz_free_energy_per_link(
         (link_length_i, hinge_mass_i, well_width_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64, Float64, Float64, Float64, Float64),
@@ -162,7 +163,7 @@ function relative_helmholtz_free_energy(
         (number_of_links_i, link_length_i, well_width_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -196,7 +197,7 @@ function relative_helmholtz_free_energy_per_link(
         (link_length_i, well_width_i, force_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_relative_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64, Float64, Float64, Float64),
@@ -237,7 +238,7 @@ function nondimensional_helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_nondimensional_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64, Float64),
@@ -280,7 +281,7 @@ function nondimensional_helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_nondimensional_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64, Float64, Float64, Float64, Float64),
@@ -314,7 +315,7 @@ function nondimensional_relative_helmholtz_free_energy(
         (number_of_links_i, link_length_i, well_width_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_nondimensional_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64),
@@ -345,7 +346,7 @@ function nondimensional_relative_helmholtz_free_energy_per_link(
         (link_length_i, well_width_i, nondimensional_force_i) -> ccall(
             (
                 :physics_single_chain_swfjc_thermodynamics_isotensional_legendre_nondimensional_relative_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64, Float64, Float64),
