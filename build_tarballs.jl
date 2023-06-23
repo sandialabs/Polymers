@@ -11,11 +11,15 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir/Polymers
 cargo build --release --features extern
-install -Dvm 755 "target/${rust_target}/release/libpolymers.${dlext}" "${libdir}/libpolymers.${dlext}"
+install -Dvm 755 "target/${rust_target}/release/"*polymers.${dlext}" "${libdir}/libpolymers.${dlext}"
 """
+
 platforms = supported_platforms()
+filter!(p -> !(Sys.iswindows(p) && arch(p) == "i686"), platforms)
+filter!(p -> libc(p) != "musl", platforms)
+
 products = [LibraryProduct("libpolymers", :libpolymers)]
-dependencies = []
+dependencies = Dependency[]
 build_tarballs(
     ARGS,
     name,
