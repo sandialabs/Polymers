@@ -3,6 +3,7 @@
 **.pyc
 **dist/
 **build/
+**products/
 **polymers.egg-info/
 **.coverage
 **.vscode/
