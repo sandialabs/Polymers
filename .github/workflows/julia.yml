@@ -12,6 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        julia-version: ['1.6', '1.7', '1.8', '1.9']
         os: [macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -25,7 +26,7 @@ jobs:
       - name: julia
         uses: julia-actions/setup-julia@v1
         with:
-          version: 1.9
+          version: ${{ matrix.julia-version }}
       - name: test
         if: runner.os == 'Windows'
         run: julia -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
