@@ -29,16 +29,21 @@ jobs:
           version: ${{ matrix.julia-version }}
       - name: test
         if: runner.os == 'Windows'
-        run: julia -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
+        run: julia --color=yes -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
       - name: test
         if: runner.os != 'Windows'
-        run: julia -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
+        run: julia --color=yes -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
       - name: aqua
         if: runner.os == 'Linux'
-        run: julia -e 'using Pkg; Pkg.add("Aqua"); using Polymers; using Aqua; Aqua.test_all(Polymers)'
+        run: julia --color=yes -e 'using Pkg; Pkg.add("Aqua"); using Polymers; using Aqua; Aqua.test_all(Polymers)'
       - name: format
         if: runner.os == 'Linux'
-        run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format(".", overwrite=false, verbose=true) == true; exit(0); else exit(1); end'
+        run: julia --color=yes -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format(".", overwrite=false, verbose=true) == true; exit(0); else exit(1); end'
+      - name: jll
+        if: runner.os == 'Linux'
+        run:
+          julia -e 'using Pkg; Pkg.add("BinaryBuilder")'
+          julia --color=yes build_tarballs.jl --verbose --debug
   register:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -52,3 +57,5 @@ jobs:
               commit_sha: context.sha,
               body: '@JuliaRegistrator register'
             })
+      - name: tdd
+        run: need to have tests use local jll build, and need to set up fork/PR (custom branch name) for jll
