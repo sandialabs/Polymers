@@ -14,7 +14,7 @@ function integrate(
     num_points::Int,
 )
     dx = (upper_lim - lower_lim) / num_points
-    return sum(map(fun, lower_lim .+ (0.5 .+ collect(range(0, num_points - 1))) * dx)) * dx
+    return sum(map(fun, lower_lim .+ (0.5 .+ collect(range(0, num_points - 1, length=num_points))) * dx)) * dx
 end
 
 struct Parameters
