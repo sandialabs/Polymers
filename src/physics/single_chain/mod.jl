@@ -7,14 +7,15 @@ const ONE = 1.0
 const ZERO = 1e-6
 const POINTS = 64
 
-function integrate(
-    fun::Function,
-    lower_lim::Float64,
-    upper_lim::Float64,
-    num_points::Int,
-)
+function integrate(fun::Function, lower_lim::Float64, upper_lim::Float64, num_points::Int)
     dx = (upper_lim - lower_lim) / num_points
-    return sum(map(fun, lower_lim .+ (0.5 .+ collect(range(0, num_points - 1, length=num_points))) * dx)) * dx
+    return sum(
+        map(
+            fun,
+            lower_lim .+
+            (0.5 .+ collect(range(0, num_points - 1, length = num_points))) * dx,
+        ),
+    ) * dx
 end
 
 struct Parameters
