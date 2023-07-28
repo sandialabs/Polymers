@@ -12,6 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        julia-version: ['1.6', '1.7', '1.8', '1.9']
         os: [macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -25,19 +26,24 @@ jobs:
       - name: julia
         uses: julia-actions/setup-julia@v1
         with:
-          version: 1.9
+          version: ${{ matrix.julia-version }}
       - name: test
         if: runner.os == 'Windows'
-        run: julia -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
+        run: julia --color=yes -e 'using Pkg; Pkg.add(path=\".\"); Pkg.test(\"Polymers\")'
       - name: test
         if: runner.os != 'Windows'
-        run: julia -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
+        run: julia --color=yes -e 'using Pkg; Pkg.add(path="."); Pkg.test("Polymers")'
       - name: aqua
         if: runner.os == 'Linux'
-        run: julia -e 'using Pkg; Pkg.add("Aqua"); using Polymers; using Aqua; Aqua.test_all(Polymers)'
+        run: julia --color=yes -e 'using Pkg; Pkg.add("Aqua"); using Polymers; using Aqua; Aqua.test_all(Polymers)'
       - name: format
         if: runner.os == 'Linux'
-        run: julia -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format(".", overwrite=false, verbose=true) == true; exit(0); else exit(1); end'
+        run: julia --color=yes -e 'using Pkg; Pkg.add("JuliaFormatter"); using JuliaFormatter; if format(".", overwrite=false, verbose=true) == true; exit(0); else exit(1); end'
+      - name: jll
+        if: runner.os == 'Linux'
+        run:
+          julia -e 'using Pkg; Pkg.add("BinaryBuilder")'
+          julia --color=yes build_tarballs.jl --verbose --debug
   register:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest

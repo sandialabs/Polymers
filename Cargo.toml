@@ -4,7 +4,7 @@ edition = "2021"
 keywords = ["julia", "polymers", "python", "rust"]
 license = "BSD-3-Clause"
 name = "polymers"
-version = "0.3.7"
+version = "0.3.8"
 
 [lib]
 crate-type = ["cdylib", "rlib", "staticlib"]
@@ -20,8 +20,3 @@ pyo3 = {version = "0.19", features = ["extension-module"], optional = true}
 [dev-dependencies]
 rand = "0.8.5"
 
-[profile.dev]
-opt-level = 3
-
-[profile.release]
-opt-level = 3
