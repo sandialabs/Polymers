@@ -4,6 +4,7 @@ The ideal chain model thermodynamics in the isometric ensemble.
 module Isometric
 
 using DocStringExtensions
+using Polymers_jll
 using ......Polymers: PROJECT_ROOT
 
 """
@@ -102,7 +103,7 @@ function force(
         (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_force,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64),
@@ -134,7 +135,7 @@ function nondimensional_force(
         nondimensional_end_to_end_length_per_link_i -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_force,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64,),
@@ -171,7 +172,7 @@ function helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -212,7 +213,7 @@ function helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -250,7 +251,7 @@ function relative_helmholtz_free_energy(
         (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64),
@@ -282,7 +283,7 @@ function relative_helmholtz_free_energy_per_link(
         (number_of_links_i, link_length_i, end_to_end_length_i, temperature_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_relative_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64),
@@ -321,7 +322,7 @@ function nondimensional_helmholtz_free_energy(
         ) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64, Float64, Float64),
@@ -360,7 +361,7 @@ function nondimensional_helmholtz_free_energy_per_link(
         ) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64, Float64, Float64, Float64),
@@ -394,7 +395,7 @@ function nondimensional_relative_helmholtz_free_energy(
         (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_relative_helmholtz_free_energy,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64),
@@ -423,7 +424,7 @@ function nondimensional_relative_helmholtz_free_energy_per_link(
         nondimensional_end_to_end_length_per_link_i -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_relative_helmholtz_free_energy_per_link,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (Float64,),
@@ -452,7 +453,7 @@ function equilibrium_distribution(
         (number_of_links_i, link_length_i, end_to_end_length_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_equilibrium_distribution,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -484,7 +485,7 @@ function nondimensional_equilibrium_distribution(
         (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_equilibrium_distribution,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64),
@@ -515,7 +516,7 @@ function equilibrium_radial_distribution(
         (number_of_links_i, link_length_i, end_to_end_length_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_equilibrium_radial_distribution,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64, Float64),
@@ -547,7 +548,7 @@ function nondimensional_equilibrium_radial_distribution(
         (number_of_links_i, nondimensional_end_to_end_length_per_link_i) -> ccall(
             (
                 :physics_single_chain_ideal_thermodynamics_isometric_nondimensional_equilibrium_radial_distribution,
-                string(PROJECT_ROOT, "target/release/libpolymers"),
+                Polymers_jll.libpolymers,
             ),
             Float64,
             (UInt8, Float64),

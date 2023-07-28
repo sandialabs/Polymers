@@ -15,7 +15,7 @@ jobs:
          toolchain: 1.65.0
          default: true
      - name: build wheels
-       run: bash .github/workflows/build-wheels.sh
+       run: bash .github/workflows/build_wheels.sh
      - uses: actions/upload-artifact@v3
        with:
          name: linux-wheels

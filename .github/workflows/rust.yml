@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-latest, windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
@@ -23,7 +23,7 @@ jobs:
           toolchain: nightly
           override: true
       - name: test
-        run: cargo test --verbose
+        run: cargo test --color always --verbose
         env:
           CARGO_INCREMENTAL: '0'
           RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
@@ -52,17 +52,17 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: tree
-        run: $([[ $(cargo tree --edges normal | wc -l) -eq 1 ]])
+        run: $([[ $(cargo tree --color always --edges normal | wc -l) -eq 1 ]])
       - name: build
-        run: cargo build --release --verbose
+        run: cargo build --color always --release --verbose
       - name: clippy
-        run: cargo clippy --release -- -D warnings
+        run: cargo clippy --color always --release -- -D warnings
       - name: bench
-        run: cargo bench --verbose
+        run: cargo bench --color always --verbose
       - name: doc
-        run: cargo doc --release --verbose
+        run: cargo doc --color always --release --verbose
       - name: package
-        run: cargo package --verbose
+        run: cargo package --color always --verbose
   publish:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
@@ -70,8 +70,8 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: package
-        run: cargo package --verbose
+        run: cargo package --color always --verbose
       - name: login
         run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
       - name: publish
-        run: cargo publish --verbose
+        run: cargo publish --color always --verbose
