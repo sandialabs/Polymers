@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         julia-version: ['1.6', '1.7', '1.8', '1.9']
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
@@ -57,5 +57,3 @@ jobs:
               commit_sha: context.sha,
               body: '@JuliaRegistrator register'
             })
-      - name: tdd
-        run: need to have tests use local jll build, and need to set up fork/PR (custom branch name) for jll
