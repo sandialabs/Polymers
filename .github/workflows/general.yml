@@ -39,7 +39,6 @@ jobs:
           echo "julia version in PR is ${CURRENT_VERSION_JULIA}"
           export CHECK=$(python -c 'from packaging.version import parse; print(parse("'${CURRENT_VERSION_RUST}'") == parse("'${CURRENT_VERSION_JULIA}'"))' | tr '[:upper:]' '[:lower:]')
           $CHECK
-          need to ensure jll version in Project.toml is same too? but how?
   concurrency:
     runs-on: ubuntu-latest
     steps:
