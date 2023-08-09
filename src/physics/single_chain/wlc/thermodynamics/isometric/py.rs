@@ -240,10 +240,12 @@ impl WLC
     {
         nondimensional_end_to_end_length_per_link.as_array().mapv(|nondimensional_end_to_end_length_per_link: f64| super::nondimensional_equilibrium_distribution(&self.nondimensional_persistance_length, &self.normalization_nondimensional_equilibrium_distribution, &nondimensional_end_to_end_length_per_link)).into_pyarray(py)
     }
-    /// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length, given by :footcite:t:`treloar1949physics` as
+    /// The equilibrium probability density of end-to-end lengths as a function of the end-to-end length,
     ///
     /// .. math::
-    ///     g_\mathrm{eq}(\xi) = 4\pi\xi^2 P_\mathrm{eq}(\xi).
+    ///     g_\mathrm{eq}(\xi) = 4\pi\xi^2 P_\mathrm{eq}(\xi),
+    ///
+    /// which is calculated using the accurate analytic approximation provided by :footcite:t:`becker2010radial`.
     ///
     /// Args:
     ///     end_to_end_length (numpy.ndarray): The end-to-end length :math:`\xi`.

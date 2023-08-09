@@ -25,10 +25,3 @@ WLC model thermodynamics (isotensional)
    .. automethod:: nondimensional_gibbs_free_energy_per_link(nondimensional_force, temperature)
    .. automethod:: nondimensional_relative_gibbs_free_energy(nondimensional_force)
    .. automethod:: nondimensional_relative_gibbs_free_energy_per_link(nondimensional_force)
-
-.. raw::
- html
-
-   <hr>
-
-.. footbibliography::

@@ -6,7 +6,7 @@ WLC model
 
    Thermodynamics <wlc/thermodynamics>
 
-.. autoclass:: polymers.physics.single_chain.fjc::WLC(number_of_links, link_length, hinge_mass, persistance_length)
+.. autoclass:: polymers.physics.single_chain.wlc::WLC(number_of_links, link_length, hinge_mass, persistance_length)
 
    .. autoattribute:: number_of_links
    .. autoattribute:: link_length
