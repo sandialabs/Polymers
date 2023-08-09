@@ -601,8 +601,10 @@ The equilibrium probability density of end-to-end lengths ``g_\\mathrm{eq}`` as 
 parameterized by the number of links ``N_b``, link length ``\\ell_b``, and persistance length ``\\ell_p``,
 
 ```math
-g_\\mathrm{eq}(\\xi) = 4\\pi\\xi^2 P_\\mathrm{eq}(\\xi).
+g_\\mathrm{eq}(\\xi) = 4\\pi\\xi^2 P_\\mathrm{eq}(\\xi),
 ```
+
+which is calculated using the accurate analytic approximation provided by [Becker, Rosa, and Everaers](https://doi.org/10.1140/epje/i2010-10596-0).
 
 $(TYPEDSIGNATURES)
 """
