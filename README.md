@@ -26,8 +26,7 @@ pip install polymers
 The library can be installed as a Julia package:
 
 ```julia
-using Pkg
-Pkg.add("Polymers")
+pkg> add Polymers
 ```
 
 ## Rust

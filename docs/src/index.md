@@ -12,8 +12,7 @@ This is the documentation for Julia API, which calls the Rust library.
 The library can be installed as a Julia package:
 
 ```julia
-using Pkg
-Pkg.add("Polymers")
+pkg> add Polymers
 ```
 
 ## Citation
