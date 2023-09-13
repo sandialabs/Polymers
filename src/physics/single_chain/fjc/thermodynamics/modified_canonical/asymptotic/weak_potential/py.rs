@@ -45,6 +45,16 @@ impl FJC
             number_of_links
         }
     }
+    /// The expected end-to-end length as a function of the applied potential distance, potential stiffness, and temperature.
+    ///
+    /// Args:
+    ///     potential_distance (numpy.ndarray): The potential distance.
+    ///     potential_stiffness (float): The potential stiffness.
+    ///     temperature (float): The temperature :math:`T`.
+    ///
+    /// Returns:
+    ///     numpy.ndarray: The end-to-end length :math:`\xi`.
+    ///
     pub fn end_to_end_length<'py>(&self, py: Python<'py>, potential_distance: PyReadonlyArrayDyn<f64>, potential_stiffness: f64, temperature: f64) -> &'py PyArrayDyn<f64>
     {
         potential_distance.as_array().mapv(|potential_distance: f64| super::end_to_end_length(&self.number_of_links, &self.link_length, &potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
@@ -76,7 +86,12 @@ impl FJC
     {
         nondimensional_potential_distance.as_array().mapv(|nondimensional_potential_distance: f64| super::nondimensional_end_to_end_length(&self.number_of_links, &nondimensional_potential_distance, &nondimensional_potential_stiffness)).into_pyarray(py)
     }
-    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
+    /// The expected nondimensional end-to-end length per link as a function of the applied nondimensional potential distance and nondimensional potential stiffness, given by :footcite:t:`buche2023modeling` as
+    ///
+    /// .. math::
+    ///     \gamma(\eta) = \gamma_0(\eta)\left[1 - N_b\varpi\gamma_0'(\eta)\right],
+    ///
+    /// where :math:`\gamma_0(\eta)=\mathcal{L}(\eta)=\coth(\eta)-1/\eta` is the Langevin function.
     ///
     /// Args:
     ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.
@@ -90,7 +105,7 @@ impl FJC
         nondimensional_potential_distance.as_array().mapv(|nondimensional_potential_distance: f64| super::nondimensional_end_to_end_length_per_link(&self.number_of_links, &nondimensional_potential_distance, &nondimensional_potential_stiffness)).into_pyarray(py)
     }
     /// The expected force as a function of the applied potential distance and potential stiffness.
-
+    ///
     /// Args:
     ///     potential_distance (numpy.ndarray): The potential distance.
     ///     potential_stiffness (float): The potential stiffness.

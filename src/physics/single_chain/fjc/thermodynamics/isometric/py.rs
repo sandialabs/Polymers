@@ -69,7 +69,7 @@ impl FJC
     {
         end_to_end_length.as_array().mapv(|end_to_end_length: f64| super::force(&self.number_of_links, &self.link_length, &end_to_end_length, &temperature)).into_pyarray(py)
     }
-    /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link,
+    /// The expected nondimensional force as a function of the applied nondimensional end-to-end length per link, given by :footcite:t:`buche2023modeling` as
     ///
     /// .. math::
     ///     \eta(\gamma) = \frac{\partial\vartheta}{\partial\gamma} = \frac{1}{N_b\gamma} + \left(\frac{1}{2} - \frac{1}{N_b}\right)\frac{\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 3}}{\sum_{s=0}^{s_\mathrm{max}}(-1)^s\binom{N_b}{s}\left(m - \frac{s}{N_b}\right)^{N_b - 2}},

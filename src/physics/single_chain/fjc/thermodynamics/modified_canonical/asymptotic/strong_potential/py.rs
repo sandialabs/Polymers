@@ -59,7 +59,12 @@ impl FJC
     {
         potential_distance.as_array().mapv(|potential_distance: f64| super::force(&self.number_of_links, &self.link_length, &potential_distance, &potential_stiffness, &temperature)).into_pyarray(py)
     }
-    /// The expected nondimensional force as a function of the applied nondimensional potential distance and nondimensional potential stiffness.
+    /// The expected nondimensional force as a function of the applied nondimensional potential distance and nondimensional potential stiffness, given by :footcite:t:`buche2023modeling` as
+    ///
+    /// .. math::
+    ///     \eta(\gamma) = \eta_0(\gamma) - \frac{1}{N_b\varpi}\left[\eta_0(\gamma)\eta_0'(\gamma) - \frac{\eta_0''(\gamma)}{2N_b}\right],
+    ///
+    /// where :math:`\eta_0(\gamma)` is the isometric mechanical response.
     ///
     /// Args:
     ///     nondimensional_potential_distance (numpy.ndarray): The nondimensional potential distance.

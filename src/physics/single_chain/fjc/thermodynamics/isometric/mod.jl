@@ -129,7 +129,7 @@ end
 
 """
 The expected nondimensional force ``\\eta`` as a function of the applied nondimensional end-to-end length per link ``\\gamma``,
-parameterized by the number of links ``N_b``,
+parameterized by the number of links ``N_b``, given by [Buche and Rimsza](https://doi.org/10.48550/arXiv.2309.01009) as
 
 ```math
 \\eta(\\gamma) = \\frac{\\partial\\vartheta}{\\partial\\gamma} = \\frac{1}{N_b\\gamma} + \\left(\\frac{1}{2} - \\frac{1}{N_b}\\right)\\frac{\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 3}}{\\sum_{s=0}^{s_\\mathrm{max}}(-1)^s\\binom{N_b}{s}\\left(m - \\frac{s}{N_b}\\right)^{N_b - 2}},

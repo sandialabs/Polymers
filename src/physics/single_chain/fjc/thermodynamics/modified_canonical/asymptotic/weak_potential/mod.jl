@@ -200,7 +200,13 @@ end
 
 """
 The expected nondimensional end-to-end length ``\\gamma\\equiv\\xi/N_b\\ell_b`` as a function of the applied nondimensional potential distance and nondimensional potential stiffness,
-parameterized by the number of links ``N_b``.
+parameterized by the number of links ``N_b``, given by [Buche and Rimsza](https://doi.org/10.48550/arXiv.2309.01009) as
+
+```math
+\\gamma(\\eta) = \\gamma_0(\\eta)\\left[1 - N_b\\varpi\\gamma_0'(\\eta)\\right],
+```
+
+where ``\\gamma_0(\\eta)=\\mathcal{L}(\\eta)=\\coth(\\eta)-1/\\eta`` is the Langevin function.
 
 $(TYPEDSIGNATURES)
 """

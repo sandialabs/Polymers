@@ -20,3 +20,10 @@ FJC model thermodynamics (modified canonical/asymptotic/weak potential)
    .. automethod:: nondimensional_gibbs_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness, temperature)
    .. automethod:: nondimensional_relative_gibbs_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness)
    .. automethod:: nondimensional_relative_gibbs_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness)
+
+.. raw::
+ html
+
+   <hr>
+
+.. footbibliography::
