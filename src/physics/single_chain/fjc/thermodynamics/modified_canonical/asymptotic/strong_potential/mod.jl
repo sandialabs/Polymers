@@ -110,7 +110,13 @@ end
 
 """
 The expected nondimensional force ``\\eta`` as a function of the applied nondimensional potential distance and nondimensional potential stiffness,
-parameterized by the number of links ``N_b``.
+parameterized by the number of links ``N_b``, given by [Buche and Rimsza](https://doi.org/10.48550/arXiv.2309.01009) as
+
+```math
+\\eta(\\gamma) = \\eta_0(\\gamma) - \\frac{1}{N_b\\varpi}\\left[\\eta_0(\\gamma)\\eta_0'(\\gamma) - \\frac{\\eta_0''(\\gamma)}{2N_b}\\right],
+```
+
+where ``\\eta_0(\\gamma)`` is the isometric mechanical response.
 
 $(TYPEDSIGNATURES)
 """

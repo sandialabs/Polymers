@@ -16,3 +16,10 @@ FJC model thermodynamics (modified canonical/asymptotic/strong potential)
    .. automethod:: nondimensional_helmholtz_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness, temperature)
    .. automethod:: nondimensional_relative_helmholtz_free_energy(nondimensional_potential_distance, nondimensional_potential_stiffness)
    .. automethod:: nondimensional_relative_helmholtz_free_energy_per_link(nondimensional_potential_distance, nondimensional_potential_stiffness)
+
+.. raw::
+ html
+
+   <hr>
+
+.. footbibliography::
