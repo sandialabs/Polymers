@@ -112,7 +112,7 @@ fn bessel_i0(x: &f64) -> f64
 {
     if x < &7.75
     {
-        let coefficients = vec![
+        let coefficients = [
             1.0,
             2.499_999_999_999_999e-1,
             2.777_777_777_777_822e-2,
@@ -134,7 +134,7 @@ fn bessel_i0(x: &f64) -> f64
     }
     else if x < &500.0
     {
-        let coefficients = vec![
+        let coefficients = [
              3.989_422_804_014_25e-1,
              4.986_778_506_049_619e-2,
              2.805_062_339_283_126e-2,
@@ -162,7 +162,7 @@ fn bessel_i0(x: &f64) -> f64
     }
     else
     {
-        let coefficients = vec![
+        let coefficients = [
             3.989_422_804_014_329e-1,
             4.986_778_504_914_345e-2,
             2.805_063_089_165_061e-2,
@@ -178,7 +178,7 @@ fn bessel_i1(x: &f64) -> f64
 {
     if x < &7.75
     {
-        let coefficients = vec![
+        let coefficients = [
             8.333_333_333_333_333e-2,
             6.944_444_444_444_341e-3,
             3.472_222_222_225_921e-4,
@@ -194,7 +194,7 @@ fn bessel_i1(x: &f64) -> f64
             1.332_898_928_162_29e-23
         ];
         let t = 0.25*x.powi(2);
-        let more_coefficients = vec![
+        let more_coefficients = [
             1.0,
             0.5,
             coefficients.iter().enumerate().map(|(i, c)| c*t.powi(i.try_into().unwrap())).sum::<f64>()
@@ -203,7 +203,7 @@ fn bessel_i1(x: &f64) -> f64
     }
     else if x < &500.0
     {
-        let coefficients = vec![
+        let coefficients = [
              3.989_422_804_014_406e-1,
             -1.496_033_551_613_111e-1,
             -4.675_104_253_598_537e-2,
@@ -231,7 +231,7 @@ fn bessel_i1(x: &f64) -> f64
     }
     else
     {
-        let coefficients = vec![
+        let coefficients = [
              3.989_422_804_014_314e-1,
             -1.496_033_551_467_584e-1,
             -4.675_105_322_571_775e-2,
