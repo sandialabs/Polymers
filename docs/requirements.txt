@@ -3,7 +3,7 @@ ipykernel
 ipython
 jinja2>=3.0
 matplotlib
-mistune==2.0.5
+mistune==3.0.2
 nbsphinx
 numpy
 sphinx
