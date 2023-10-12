@@ -1,5 +1,5 @@
 FROM julia:1.9.3 as julia
-FROM python:3.11
+FROM python:3.12
 WORKDIR /
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
