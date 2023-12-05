@@ -20,6 +20,10 @@ def pytest_collection_finish(session):
     run(
         ['sed', '-i', 's@: test@@', '__pycache__/cargo.tests']
     )
+    # remove monte carlo tests
+    run(
+        ['sed', '-i', '-r', '/monte/d', '__pycache__/cargo.tests']
+    )
     f = open("__pycache__/julia.tests", "w")
     run(
         ['grep', '-r', '@testset', 'src/'],

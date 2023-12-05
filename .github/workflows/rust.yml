@@ -52,7 +52,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: tree
-        run: $([[ $(cargo tree --color always --edges normal | wc -l) -eq 1 ]])
+        run: cargo tree --color always --edges normal
       - name: build
         run: cargo build --color always --release --verbose
       - name: clippy

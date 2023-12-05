@@ -9,6 +9,9 @@ mod test;
 /// The freely-jointed chain (FJC) model thermodynamics in the isometric ensemble approximated using a Legendre transformation.
 pub mod legendre;
 
+/// The freely-jointed chain (FJC) model thermodynamics in the isometric ensemble calculated using Monte Carlo methods.
+pub mod monte_carlo;
+
 use super::
 {
     treloar_sums,

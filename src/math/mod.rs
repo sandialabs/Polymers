@@ -52,7 +52,7 @@ pub fn integrate_1d(f: &dyn Fn(&f64) -> f64, x_min: &f64, x_max: &f64, num_point
 
 pub fn integrate_1d_grid(f: &dyn Fn(&f64) -> f64, grid: &[f64], dx: &f64) -> f64
 {
-    grid.iter().map(|x| f(x)).sum::<f64>()*dx
+    grid.iter().map(f).sum::<f64>()*dx
 }
 
 pub fn integrate_2d(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, y_min: &f64, y_max: &f64, num_points: &u128) -> f64
