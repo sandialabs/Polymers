@@ -2,7 +2,7 @@ mod test;
 
 use rand::prelude::*;
 
-const TWO_PI: f64 = 6.283_185_307_179_586;
+use std::f64::consts::TAU as TWO_PI;
 
 pub fn random_configuration<const NUMBER_OF_LINKS: usize>(rng: &mut ThreadRng) -> [[f64; 3]; NUMBER_OF_LINKS]
 {
