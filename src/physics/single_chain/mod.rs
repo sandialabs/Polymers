@@ -18,6 +18,9 @@ pub mod swfjc;
 /// The arbitrary link potential freely-jointed chain (uFJC) single-chain model.
 pub mod ufjc;
 
+/// The freely-rotating chain (FRC) single-chain model.
+pub mod frc;
+
 /// The worm-like chain (WLC) single-chain model.
 pub mod wlc;
 
