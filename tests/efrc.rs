@@ -34,7 +34,6 @@ fn monte_carlo_nondimensional_equilibrium_radial_distribution_frc_limit()
     let mut residual = 0.0;
     g_eq.iter().zip(g_eq_frc.iter()).for_each(|(g_eq_i, g_eq_frc_i)|{
         residual = (g_eq_i - g_eq_frc_i).abs();
-        println!("{:?}", (g_eq_i, g_eq_frc_i, residual));
         assert!(residual < TOL || residual/g_eq_frc_i < TOL || g_eq_i < &TOL);
     });
 }
