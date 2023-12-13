@@ -21,6 +21,9 @@ pub mod ufjc;
 /// The freely-rotating chain (FRC) single-chain model.
 pub mod frc;
 
+/// The extensible freely-rotating chain (EFRC) single-chain model.
+pub mod efrc;
+
 /// The worm-like chain (WLC) single-chain model.
 pub mod wlc;
 
