@@ -10,7 +10,7 @@ const NUMBER_OF_SAMPLES: usize = 10000000;
 fn monte_carlo_nondimensional_equilibrium_radial_distribution()
 {
     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(&GAMMA_MAX, &KAPPA, NUMBER_OF_SAMPLES);
-    gamma.iter().zip(g_eq.iter()).for_each(|output|{
+    gamma.iter().zip(g_eq.iter()).for_each(|output|
         println!("{:?}", output)
-    });
+    );
 }
