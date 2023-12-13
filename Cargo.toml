@@ -17,4 +17,5 @@ python = ["dep:numpy", "dep:pyo3"]
 numpy = {version = "0.19", optional = true}
 pyo3 = {version = "0.19", features = ["extension-module"], optional = true}
 rand = "0.8.5"
+rand_distr = "0.4.3"
 

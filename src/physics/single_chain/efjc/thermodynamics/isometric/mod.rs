@@ -6,6 +6,9 @@ mod test;
 /// The extensible freely-jointed chain (EFJC) model thermodynamics in the isometric ensemble approximated using an asymptotic approach.
 pub mod asymptotic;
 
+/// The extensible freely-jointed chain (EFJC) model thermodynamics in the isometric ensemble calculated using Monte Carlo methods.
+pub mod monte_carlo;
+
 /// The structure of the thermodynamics of the EFJC model in the isometric ensemble.
 pub struct EFJC
 {

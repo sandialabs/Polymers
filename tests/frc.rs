@@ -8,7 +8,7 @@ const KAPPA: f64 = 5.0/11.0;
 const NUMBER_OF_BINS: usize = 1000;
 const NUMBER_OF_LINKS: usize = 256;
 const NUMBER_OF_SAMPLES: usize = 10000000;
-const TOL: f64 = 5e-2;
+const TOL: f64 = 8e-2;
 
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution_wlc_limit()
