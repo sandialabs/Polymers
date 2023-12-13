@@ -60,7 +60,7 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
     let gamma_max = (2.0 - 2.0*(PI - theta).cos()).sqrt()/2.0;
     let mut bin_centers = [0.0_f64; NUMBER_OF_BINS];
     bin_centers.iter_mut().enumerate().for_each(|(bin_index, bin_center)|
-        *bin_center = gamma_max*((bin_index as f64) + 0.5)/(NUMBER_OF_BINS as f64)
+        *bin_center = gamma_max * ((bin_index as f64) + 0.5)/(NUMBER_OF_BINS as f64)
     );
     let mut bin_counts = [0_u128; NUMBER_OF_BINS];
     let mut gamma: f64 = 0.0;
@@ -75,7 +75,7 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
             }
         }
     });
-    let normalization = (number_of_samples as f64)/(NUMBER_OF_BINS as f64);
+    let normalization = gamma_max * (number_of_samples as f64)/(NUMBER_OF_BINS as f64);
     let mut bin_probabilities = [0.0_f64; NUMBER_OF_BINS];
     bin_probabilities.iter_mut().zip(bin_counts.iter()).for_each(|(bin_probability, bin_count)|
         *bin_probability = (*bin_count as f64)/normalization
