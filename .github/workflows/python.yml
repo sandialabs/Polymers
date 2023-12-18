@@ -65,7 +65,7 @@ jobs:
     needs: [linux-wheels, osx-wheels, windows-wheels]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
       - name: check
         run: |
           mkdir wheelhouse/
