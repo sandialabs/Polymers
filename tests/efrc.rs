@@ -6,14 +6,23 @@ use polymers::physics::single_chain::
 
 use std::f64::consts::PI;
 
-const GAMMA_MAX: f64 = 1.5;
+const GAMMA_MAX: f64 = 1.2;
 const KAPPA: f64 = 50.0;
 const KAPPA_LARGE: f64 = 1e5;
-const NUMBER_OF_BINS: usize = 1000;
+const NUMBER_OF_BINS: usize = 1_000;
 const NUMBER_OF_LINKS: usize = 8;
-const NUMBER_OF_SAMPLES: usize = 10000000;
-const THETA: f64 = PI/8.0;
+const NUMBER_OF_SAMPLES: usize = 10_000_000;
+const THETA: f64 = PI/4.0;
 const TOL: f64 = 5e-2;
+
+#[test]
+fn temporary()
+{
+    let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(&GAMMA_MAX, &KAPPA, &THETA, 64_000_000_000);
+    gamma.iter().zip(g_eq.iter()).for_each(|output|
+        println!("{:?}", output)
+    );
+}
 
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution()
@@ -23,7 +32,6 @@ fn monte_carlo_nondimensional_equilibrium_radial_distribution()
         println!("{:?}", output)
     );
 }
-
 
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution_frc_limit()
