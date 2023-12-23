@@ -61,17 +61,17 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
     let mut rng = rand::thread_rng();
     let dist = Normal::new(1.0, 1.0/kappa.sqrt()).unwrap();
     let number_of_links_f64 = NUMBER_OF_LINKS as f64;
-    let mut bin_centers = [0.0_f64; NUMBER_OF_BINS];
-    bin_centers.iter_mut().enumerate().for_each(|(bin_index, bin_center)|
-        *bin_center = gamma_max * ((bin_index as f64) + 0.5)/(NUMBER_OF_BINS as f64)
+    let mut bin_edges = [0.0_f64; NUMBER_OF_BINS];
+    bin_edges.iter_mut().enumerate().for_each(|(bin_index, bin_edge)|
+        *bin_edge = gamma_max * (bin_index as f64 + 1.0)/(NUMBER_OF_BINS as f64)
     );
     let mut bin_counts = [0_u128; NUMBER_OF_BINS];
     let mut gamma: f64 = 0.0;
     (0..number_of_samples).for_each(|_|{
         gamma = random_nondimensional_end_to_end_length::<NUMBER_OF_LINKS>(theta, dist, &mut rng)/number_of_links_f64;
-        for (bin_center, bin_count) in bin_centers.iter().zip(bin_counts.iter_mut())
+        for (bin_edge, bin_count) in bin_edges.iter().zip(bin_counts.iter_mut())
         {
-            if &gamma < bin_center
+            if &gamma < bin_edge
             {
                 *bin_count += 1;
                 break
@@ -82,6 +82,10 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
     let mut bin_probabilities = [0.0_f64; NUMBER_OF_BINS];
     bin_probabilities.iter_mut().zip(bin_counts.iter()).for_each(|(bin_probability, bin_count)|
         *bin_probability = (*bin_count as f64)/normalization
+    );
+    let mut bin_centers = [0.0_f64; NUMBER_OF_BINS];
+    bin_centers.iter_mut().enumerate().for_each(|(bin_index, bin_center)|
+        *bin_center = gamma_max * (bin_index as f64 + 0.5)/(NUMBER_OF_BINS as f64)
     );
     (bin_centers, bin_probabilities)
 }
