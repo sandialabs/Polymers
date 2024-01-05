@@ -15,14 +15,14 @@ const NUMBER_OF_SAMPLES: usize = 10_000_000;
 const THETA: f64 = PI/4.0;
 const TOL: f64 = 5e-2;
 
-// #[test]
-// fn temporary()
-// {
-//     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(&GAMMA_MAX, &KAPPA, &THETA, 1_000_000_000);
-//     gamma.iter().zip(g_eq.iter()).for_each(|output|
-//         println!("{:?}", output)
-//     );
-// }
+#[test]
+fn temporary()
+{
+    let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&1.3, &25.0, &(PI/4.0), 1_000_000_000);
+    gamma.iter().zip(g_eq.iter()).for_each(|output|
+        println!("{:?}", output)
+    );
+}
 
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution()

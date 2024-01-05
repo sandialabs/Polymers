@@ -4,7 +4,7 @@ use polymers::physics::single_chain::
     wlc::thermodynamics::isometric::WLC
 };
 
-use std::f64::consts::PI;
+// use std::f64::consts::PI;
 
 const KAPPA: f64 = 5.0/11.0;
 const NUMBER_OF_BINS: usize = 1000;
@@ -12,7 +12,7 @@ const NUMBER_OF_LINKS: usize = 256;
 const NUMBER_OF_SAMPLES: usize = 10000000;
 const TOL: f64 = 8e-2;
 
-#[test]
+// #[test]
 // fn temporary()
 // {
 //     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&(PI/12.0), 1_000_000_000);
