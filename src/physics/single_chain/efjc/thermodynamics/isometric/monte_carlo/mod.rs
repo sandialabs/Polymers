@@ -47,6 +47,10 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
         gamma = random_nondimensional_end_to_end_length::<NUMBER_OF_LINKS>(dist, &mut rng)/number_of_links_f64;
         for (bin_edge, bin_count) in bin_edges.iter().zip(bin_counts.iter_mut())
         {
+            if &gamma > gamma_max
+            {
+                panic!()
+            }
             if &gamma < bin_edge
             {
                 *bin_count += 1;

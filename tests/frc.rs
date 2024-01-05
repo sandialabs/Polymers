@@ -13,12 +13,18 @@ const NUMBER_OF_SAMPLES: usize = 10000000;
 const TOL: f64 = 8e-2;
 
 #[test]
-fn temporary()
+// fn temporary()
+// {
+//     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&(PI/12.0), 1_000_000_000);
+//     gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|
+//         println!("{}\t{}", gamma, g_eq)
+//     );
+// }
+
+#[test]
+fn todo()
 {
-    let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&(PI/12.0), 1_000_000_000);
-    gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|
-        println!("{}\t{}", gamma, g_eq)
-    );
+    todo!("WLC analytic implementation seems to be wrong w.r.t. paper it came from and the Monte Carlo results.")
 }
 
 #[test]
