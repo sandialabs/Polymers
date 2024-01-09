@@ -26,8 +26,6 @@ fn monte_carlo_nondimensional_equilibrium_radial_distribution()
 fn monte_carlo_isotensional_mechanics_from_first_moments()
 {
     let (gamma, g_eq, first_moments, _, _) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(NUMBER_OF_SAMPLES);
-    // Z = 2*pi*int-dgamma ...
-    // <gamma> = sum_i <cos-theta_i>/N_b = ???
     // test small, medium, large force
     todo!()
 }
