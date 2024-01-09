@@ -40,8 +40,6 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
     // then make test where you integrate for isotensional ensemble and compare to exact
     // (use gamma_0 from exact FJC and corrections from this)
     //
-    // test that ensemble average of cosines gives you gamma
-    //
     let mut rng = rand::thread_rng();
     let number_of_links_f64 = NUMBER_OF_LINKS as f64;
     let mut bin_edges = [0.0_f64; NUMBER_OF_BINS];
