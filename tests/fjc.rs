@@ -12,7 +12,7 @@ const TOL: f64 = 5e-2;
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution()
 {
-    let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(NUMBER_OF_SAMPLES);
+    let (gamma, g_eq, _, _, _) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(NUMBER_OF_SAMPLES);
     let mut check = 0.0;
     let mut residual = 0.0;
     gamma.iter().zip(g_eq.iter()).for_each(|(gamma_i, g_eq_i)|{
