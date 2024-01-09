@@ -17,7 +17,7 @@ pub fn random_configuration<const NUMBER_OF_LINKS: usize>(rng: &mut ThreadRng) -
         position[0] += theta.sin() * phi.cos();
         position[1] += theta.sin() * phi.sin();
         position[2] += theta.cos();
-        *cos_angle = position[2];
+        *cos_angle = theta.cos();
         coordinate.iter_mut().zip(position.iter()).for_each(|(coordinate_i, position_i)|
             *coordinate_i = *position_i
         );
@@ -63,7 +63,7 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
             {
                 *bin_count += 1;
                 first_moment_links.iter_mut().zip(cos_angles.iter()).for_each(|(first_moment, cos_angle)|
-                    *first_moment += (cos_angle - *first_moment)/(sample_num as f64)
+                    *first_moment += (cos_angle - *first_moment)/(*bin_count as f64)
                 );
                 break
             }
