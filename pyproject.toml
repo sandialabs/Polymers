@@ -9,7 +9,7 @@ authors = [
   {email = "mrbuche@sandia.gov"},
   {name = "Michael R. Buche"}
 ]
-requires-python = ">=3.7,<=3.12"
+requires-python = ">=3.7,<3.13"
 dependencies = ["cffi", "maturin", "numpy"]
 classifiers = [
     'License :: OSI Approved :: BSD License',
