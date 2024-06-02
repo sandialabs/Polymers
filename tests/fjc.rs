@@ -25,9 +25,9 @@ fn monte_carlo_nondimensional_equilibrium_radial_distribution()
 #[test]
 fn monte_carlo_isotensional_mechanics_from_first_moments()
 {
-    for the corrections (not relevant here)
-    dont you get terms from derivatives of the sin(theta)s in the integrand jacobian?
-    or are those gone somehow?
+//    for the corrections (not relevant here)
+//    dont you get terms from derivatives of the sin(theta)s in the integrand jacobian?
+//    or are those gone somehow?
 
     let (gamma, g_eq, first_moments, _, _) = nondimensional_equilibrium_radial_distribution::<NUMBER_OF_BINS, NUMBER_OF_LINKS>(NUMBER_OF_SAMPLES);
     let dgamma = gamma[1] - gamma[0];

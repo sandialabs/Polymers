@@ -18,7 +18,7 @@ const TOL: f64 = 5e-2;
 // #[test]
 // fn temporary()
 // {
-//     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&1.6, &10.0, &(PI/4.0), 5_000_000_000);
+//     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&1.2, &50.0, &(PI/4.0), 1_000_000_000);
 //     gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|
 //         println!("{}\t{}", gamma, g_eq)
 //     );
