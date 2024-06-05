@@ -13,7 +13,7 @@ fn compute(index: usize)
 {
     let file_path = &env::args().collect::<Vec<String>>()[1];
     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&1.25, &50.0, &(PI/4.0), 1_000_000);
-    let mut file_name = file_path.to_owned() + &format!("/efrc_{}.csv", index);
+    let file_name = file_path.to_owned() + &format!("/efrc_{}.csv", index);
     let mut file = File::create(file_name).unwrap();
     gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|{
         writeln!(&mut file, "{}\t{}", gamma, g_eq).unwrap();
