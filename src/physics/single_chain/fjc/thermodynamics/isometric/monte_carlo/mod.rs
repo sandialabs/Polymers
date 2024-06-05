@@ -49,12 +49,12 @@ pub fn nondimensional_equilibrium_radial_distribution<const NUMBER_OF_BINS: usiz
     let mut germa: f64 = 0.0;
     let mut gamma: f64 = 0.0;
     let mut cos_angles = [0.0_f64; NUMBER_OF_LINKS];
-    let mut first_moment: f64 = 0.0;
+    // let first_moment: f64 = 0.0;
     let mut bin_counts = [0_u128; NUMBER_OF_BINS];
     let mut first_moments = [[0.0; NUMBER_OF_LINKS]; NUMBER_OF_BINS];
-    let mut second_moments = [[0.0; NUMBER_OF_LINKS]; NUMBER_OF_BINS];
-    let mut third_moments = [[0.0; NUMBER_OF_LINKS]; NUMBER_OF_BINS];
-    (0..number_of_samples).for_each(|sample_num|{
+    let second_moments = [[0.0; NUMBER_OF_LINKS]; NUMBER_OF_BINS];
+    let third_moments = [[0.0; NUMBER_OF_LINKS]; NUMBER_OF_BINS];
+    (0..number_of_samples).for_each(|_sample_num|{
         (germa, cos_angles) = random_nondimensional_end_to_end_length::<NUMBER_OF_LINKS>(&mut rng);
         gamma = germa/number_of_links_f64;
         for (bin_edge, (bin_count, first_moment_links)) in bin_edges.iter().zip(bin_counts.iter_mut().zip(first_moments.iter_mut()))

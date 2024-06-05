@@ -15,15 +15,6 @@ const NUMBER_OF_SAMPLES: usize = 10_000_000;
 const THETA: f64 = PI/4.0;
 const TOL: f64 = 5e-2;
 
-// #[test]
-// fn temporary()
-// {
-//     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&1.2, &50.0, &(PI/4.0), 1_000_000_000);
-//     gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|
-//         println!("{}\t{}", gamma, g_eq)
-//     );
-// }
-
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution()
 {
