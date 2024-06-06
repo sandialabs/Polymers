@@ -10,15 +10,6 @@ const NUMBER_OF_LINKS: usize = 256;
 const NUMBER_OF_SAMPLES: usize = 10000000;
 const TOL: f64 = 8e-2;
 
-// #[test]
-// fn temporary()
-// {
-//     let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 8>(&(std::f64::consts::PI/3.0), 1_000_000_000);
-//     gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|
-//         println!("{}\t{}", gamma, g_eq)
-//     );
-// }
-
 #[test]
 fn todo()
 {
