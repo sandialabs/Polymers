@@ -12,7 +12,7 @@ use std::
 fn compute(index: usize)
 {
     let file_path = &env::args().collect::<Vec<String>>()[1];
-    let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 16>(&(PI/4.0), 2_000_000_000);
+    let (gamma, g_eq) = nondimensional_equilibrium_radial_distribution::<1_000, 32>(&(PI/12.0), 2_000_000_000);
     let file_name = file_path.to_owned() + &format!("/frc_{}.csv", index);
     let mut file = File::create(file_name).unwrap();
     gamma.iter().zip(g_eq.iter()).for_each(|(gamma, g_eq)|{
