@@ -55,19 +55,19 @@ pub fn integrate_1d_grid(f: &dyn Fn(&f64) -> f64, grid: &[f64], dx: &f64) -> f64
     grid.iter().map(f).sum::<f64>()*dx
 }
 
-pub fn integrate_2d(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, y_min: &f64, y_max: &f64, num_points: &u128) -> f64
+pub fn integrate_2d(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, y_min: &f64, y_max: &f64, num_points: u128) -> f64
 {
-    let dx = (x_max - x_min)/(*num_points as f64);
-    let dy = (y_max - y_min)/(*num_points as f64);
-    let grid_x = (0..*num_points).collect::<Vec<u128>>().iter().map(|index| x_min + (0.5 + *index as f64)*dx).collect::<Vec<f64>>();
-    let grid_y = (0..*num_points).collect::<Vec<u128>>().iter().map(|index| y_min + (0.5 + *index as f64)*dy).collect::<Vec<f64>>();
+    let dx = (x_max - x_min)/(num_points as f64);
+    let dy = (y_max - y_min)/(num_points as f64);
+    let grid_x = (0..num_points).map(|index| x_min + (0.5 + index as f64)*dx).collect::<Vec<f64>>();
+    let grid_y = (0..num_points).map(|index| y_min + (0.5 + index as f64)*dy).collect::<Vec<f64>>();
     grid_x.iter().flat_map(|x| grid_y.iter().map(|y| f(x, y))).sum::<f64>()*dx*dy
 }
 
-pub fn integrate_2d_symmetric(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, num_points: &u128) -> f64
+pub fn integrate_2d_symmetric(f: &dyn Fn(&f64, &f64) -> f64, x_min: &f64, x_max: &f64, num_points: u128) -> f64
 {
-    let dx = (x_max - x_min)/(*num_points as f64);
-    let grid = (0..*num_points).collect::<Vec<u128>>().iter().map(|index| x_min + (0.5 + *index as f64)*dx).collect::<Vec<f64>>();
+    let dx = (x_max - x_min)/(num_points as f64);
+    let grid = (0..num_points).map(|index| x_min + (0.5 + index as f64)*dx).collect::<Vec<f64>>();
     grid.iter().flat_map(|x| grid.iter().map(|y| f(x, y))).sum::<f64>()*dx.powi(2)
 }
 
