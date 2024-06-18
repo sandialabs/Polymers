@@ -105,3 +105,5 @@ jobs:
         run: |
           pip install pylint
           pylint --verbose src
+      - name: clippy
+        run: cargo clippy --color always --features python --release -- -D warnings

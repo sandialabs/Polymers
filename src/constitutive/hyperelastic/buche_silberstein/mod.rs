@@ -1,3 +1,6 @@
+#[cfg(feature = "extern")]
+pub mod ex;
+
 #[cfg(feature = "python")]
 pub mod py;
 
@@ -56,7 +59,7 @@ pub fn init(method: u8, nondimensional_link_stiffness: f64, number_of_links: u8)
             factor = 0.0;
             normalization = grid.iter().zip(w.iter()).map(|(gamma_i, w_i)|
                 gamma_i.powi(2) / (1.0 - w_i.powi(2)) / nondimensional_relative_helmholtz_free_energy(
-                    &number_of_links, &nondimensional_link_stiffness, &gamma_i
+                    &number_of_links, &nondimensional_link_stiffness, gamma_i
                 ).exp()
             ).sum::<f64>() * 4.0 * PI * dw;
         }
@@ -73,6 +76,7 @@ pub fn init(method: u8, nondimensional_link_stiffness: f64, number_of_links: u8)
     (element, factor, grid, normalization)
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn uniaxial_tension(element: &[[f64; NUMGRID]], factor: &f64, grid: &[f64], normalization: &f64, method: &u8, nondimensional_link_stiffness: &f64, number_of_links: &u8, stretch: &f64) -> f64
 {
     match method {
@@ -81,7 +85,7 @@ pub fn uniaxial_tension(element: &[[f64; NUMGRID]], factor: &f64, grid: &[f64], 
             element.iter().zip(grid.iter()).flat_map(|(element_i, z_i)|
                 element_i.iter().zip(grid.iter()).map(|(element_ij, r_j)|
                     element_ij / nondimensional_relative_helmholtz_free_energy(
-                        &number_of_links, &nondimensional_link_stiffness, &((*z_i / stretch).powi(2) + stretch * r_j.powi(2)).sqrt()
+                        number_of_links, nondimensional_link_stiffness, &((*z_i / stretch).powi(2) + stretch * r_j.powi(2)).sqrt()
                     ).exp()
                 )
             ).sum::<f64>() / normalization
@@ -97,6 +101,7 @@ pub fn uniaxial_tension(element: &[[f64; NUMGRID]], factor: &f64, grid: &[f64], 
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn equibiaxial_tension(element: &[[f64; NUMGRID]], factor: &f64, grid: &[f64], normalization: &f64, method: &u8, nondimensional_link_stiffness: &f64, number_of_links: &u8, stretch: &f64) -> f64
 {
     match method {
@@ -105,7 +110,7 @@ pub fn equibiaxial_tension(element: &[[f64; NUMGRID]], factor: &f64, grid: &[f64
             element.iter().zip(grid.iter()).flat_map(|(element_i, z_i)|
                 element_i.iter().zip(grid.iter()).map(|(element_ij, r_j)|
                     -element_ij / nondimensional_relative_helmholtz_free_energy(
-                        &number_of_links, &nondimensional_link_stiffness, &((*z_i * stretch.powi(2)).powi(2) + (*r_j / stretch).powi(2)).sqrt()
+                        number_of_links, nondimensional_link_stiffness, &((*z_i * stretch.powi(2)).powi(2) + (*r_j / stretch).powi(2)).sqrt()
                     ).exp()
                 )
             ).sum::<f64>() / normalization
