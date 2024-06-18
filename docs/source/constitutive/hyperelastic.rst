@@ -1,8 +1,7 @@
 Hyperelastic constitutive models
 ================================
 
-.. automodule:: polymers.constitutive.hyperelastic
-   :members:
-   :undoc-members:
-   :show-inheritance:
-   :private-members:
+.. toctree::
+   :maxdepth: 1
+
+   Buche-Silberstein <hyperelastic/buche_silberstein>

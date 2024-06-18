@@ -2,6 +2,6 @@ Constitutive models
 ===================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    Hyperelastic constitutive models <constitutive/hyperelastic>
