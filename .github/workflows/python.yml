@@ -1,78 +1,48 @@
-name: Python
+name: PyPI
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: main
   release:
-    types: [ published ]
+    types: published
 jobs:
-  linux-wheels:
-    runs-on: ubuntu-latest
-    container: quay.io/pypa/manylinux2014_x86_64:2023-04-30-c9c30dc
-    steps:
-     - uses: actions/checkout@v4
-     - uses: actions-rs/toolchain@v1
-       with:
-         toolchain: 1.65.0
-         default: true
-     - name: build wheels
-       run: bash .github/workflows/build_wheels.sh
-     - uses: actions/upload-artifact@v4
-       with:
-         name: linux-wheels
-         path: wheelhouse/
-  osx-wheels:
-    runs-on: macos-latest
+  wheels:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+    runs-on: ${{ matrix.os }}
     steps:
-     - uses: actions/checkout@v4
-     - uses: actions-rs/toolchain@v1
-       with:
-         toolchain: 1.65.0
-         default: true
-     - uses: actions/setup-python@v5
-       with:
-         python-version: ${{ matrix.python-version }}
-     - name: build wheels
-       run: |
-         python3 -m pip install cffi maturin
-         maturin build --features python --release
-     - uses: actions/upload-artifact@v4
-       with:
-         name: osx-${{ matrix.python-version }}-wheel
-         path: target/wheels
-  windows-wheels:
-    runs-on: windows-latest
-    steps:
-     - uses: actions/checkout@v4
-     - uses: actions-rs/toolchain@v1
-       with:
-         toolchain: 1.65.0
-         default: true
-     - uses: actions/setup-python@v5
-     - name: build wheels
-       run: |
-         python -m pip install cffi maturin
-         maturin build --features python --release
-     - uses: actions/upload-artifact@v4
-       with:
-         name: windows-wheels
-         path: target/wheels
+    - uses: actions/checkout@v4
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: 1.79.0
+        default: true
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: build wheels
+      run: |
+        python -m pip install cffi maturin
+        maturin build --features python --release
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.os }}-${{ matrix.python-version }}-wheel
+        path: target/wheels
   twine:
-    if: github.event_name == 'release'
-    needs: [linux-wheels, osx-wheels, windows-wheels]
+    needs: wheels
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
       - name: check
         run: |
           mkdir wheelhouse/
-          mv ./*-wheel*/*.whl wheelhouse/ || true
+          mv ./*-wheel*/*.whl wheelhouse/
+          ls wheelhouse
           pip install twine
           twine check wheelhouse/*.whl
       - name: upload
+        if: github.event_name == 'release'
         run: twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} wheelhouse/*.whl
   test:
     if: github.event_name != 'release'
