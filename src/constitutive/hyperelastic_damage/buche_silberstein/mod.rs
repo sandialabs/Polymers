@@ -50,7 +50,7 @@ pub fn init(method: u8, nondimensional_critical_extension: f64, nondimensional_l
         element_i.iter_mut().zip(grid.iter()).for_each(|(element_ij, r_j)|
             *element_ij = nondimensional_force(&nondimensional_link_stiffness, &(z_i.powi(2) + r_j.powi(2)).sqrt())
                 * (2.0 * z_i.powi(2) - r_j.powi(2)) * 2.0 * PI * (number_of_links as f64) * r_j
-                / (z_i.powi(2) + r_j.powi(2)).sqrt() * (dz / swelling_ratio).powi(2)
+                / (z_i.powi(2) + r_j.powi(2)).sqrt() * dz.powi(2) / swelling_ratio.powi(3)
         )
     );
     let factor;
