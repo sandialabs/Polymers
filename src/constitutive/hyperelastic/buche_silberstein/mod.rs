@@ -66,7 +66,7 @@ pub fn init(method: u8, nondimensional_link_stiffness: f64, number_of_links: u8)
         3 => {
             factor = 1.5 * number_of_links as f64
                 * nondimensional_link_stiffness * (nondimensional_link_stiffness + 1.0)
-                / (nondimensional_link_stiffness * nondimensional_link_stiffness + 6.0 * nondimensional_link_stiffness + 3.0);
+                / (nondimensional_link_stiffness.powi(2) + 6.0 * nondimensional_link_stiffness + 3.0);
             normalization = grid.iter().zip(w.iter()).map(|(gamma_i, w_i)|
                 gamma_i.powi(2) / (1.0 - w_i.powi(2)) / (factor * gamma_i.powi(2)).exp()
             ).sum::<f64>() * 4.0 * PI * dw;

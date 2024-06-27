@@ -46,7 +46,6 @@ impl BucheSilberstein
     #[new]
     pub fn init(method: u8, nondimensional_link_stiffness: f64, number_of_links: u8) -> Self
     {
-        init(method, nondimensional_link_stiffness, number_of_links);
         let (element, factor, grid, normalization) = init(method, nondimensional_link_stiffness, number_of_links);
         BucheSilberstein
         {
