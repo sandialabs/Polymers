@@ -9,7 +9,7 @@ authors = [
   {email = "mrbuche@sandia.gov"},
   {name = "Michael R. Buche"}
 ]
-requires-python = ">=3.8,<=3.12"
+requires-python = ">=3.8,<3.13"
 dependencies = [
   "cffi==1.16.0",
   "maturin==1.6.0",
