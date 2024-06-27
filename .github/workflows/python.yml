@@ -1,4 +1,4 @@
-name: PyPI
+name: Python
 on:
   pull_request:
     branches: main
