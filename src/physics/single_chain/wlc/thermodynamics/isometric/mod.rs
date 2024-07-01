@@ -63,7 +63,7 @@ pub fn nondimensional_force(number_of_links: &u8, nondimensional_persistance_len
     let g2 = nondimensional_end_to_end_length_per_link.powi(2);
     let a: f64 = 14.054;
     let b: f64 = 0.473;
-    let c = vec![
+    let c = [
         vec![-0.75, 0.359375, -0.109375],
         vec![-0.5, 1.0625, -0.5625]
     ];
@@ -121,7 +121,7 @@ pub fn nondimensional_helmholtz_free_energy(number_of_links: &u8, link_length: &
     let g2 = nondimensional_end_to_end_length_per_link.powi(2);
     let a: f64 = 14.054;
     let b: f64 = 0.473;
-    let c = vec![
+    let c = [
         vec![-0.75, 0.359375, -0.109375],
         vec![-0.5, 1.0625, -0.5625]
     ];
@@ -176,7 +176,7 @@ pub fn nondimensional_equilibrium_distribution(nondimensional_persistance_length
     let g2 = nondimensional_end_to_end_length_per_link.powi(2);
     let a: f64 = 14.054;
     let b: f64 = 0.473;
-    let c = vec![
+    let c = [
         vec![-0.75, 0.359375, -0.109375],
         vec![-0.5, 1.0625, -0.5625]
     ];

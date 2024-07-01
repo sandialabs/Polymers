@@ -5,10 +5,16 @@ use polymers::physics::single_chain::
 };
 
 const KAPPA: f64 = 5.0/11.0;
-const NUMBER_OF_BINS: usize = 1000;
+const NUMBER_OF_BINS: usize = 1_000;
 const NUMBER_OF_LINKS: usize = 256;
-const NUMBER_OF_SAMPLES: usize = 10000000;
+const NUMBER_OF_SAMPLES: usize = 10_000_000;
 const TOL: f64 = 8e-2;
+
+#[test]
+fn todo()
+{
+    todo!("WLC analytic implementation seems to be wrong w.r.t. paper it came from and the Monte Carlo results.")
+}
 
 #[test]
 fn monte_carlo_nondimensional_equilibrium_radial_distribution_wlc_limit()

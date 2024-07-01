@@ -3,6 +3,9 @@
 #[cfg(feature = "python")]
 pub mod py;
 
+/// Constitutive models.
+pub mod constitutive;
+
 /// Mathematical methods.
 pub mod math;
 

@@ -47,7 +47,7 @@ impl FJC
     #[new]
     pub fn init(number_of_links: u8, link_length: f64, hinge_mass: f64) -> Self
     {
-        let normalization = integrate_1d(&|nondimensional_end_to_end_length_per_link| super::nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, &nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
+        let normalization = integrate_1d(&|nondimensional_end_to_end_length_per_link| super::nondimensional_equilibrium_radial_distribution(&number_of_links, &1.0, nondimensional_end_to_end_length_per_link), &ZERO, &ONE, &POINTS);
         FJC
         {
             hinge_mass,

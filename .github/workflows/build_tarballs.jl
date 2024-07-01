@@ -10,6 +10,7 @@ sources = [
 ]
 script = raw"""
 cd $WORKSPACE/srcdir/Polymers
+cargo clippy --color always --features extern --release -- -D warnings
 cargo build --release --features extern
 install -Dvm 755 "target/${rust_target}/release/"*polymers.${dlext} "${libdir}/libpolymers.${dlext}"
 """

@@ -8,3 +8,4 @@ Examples: single-chain models
    FJC <fjc/examples>
    EFJC <efjc/examples>
    SWFJC <swfjc/examples>
+   FRC <frc/examples>

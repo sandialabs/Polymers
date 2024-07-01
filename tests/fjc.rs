@@ -4,9 +4,9 @@ use polymers::physics::single_chain::fjc::thermodynamics::isometric::
     monte_carlo::nondimensional_equilibrium_radial_distribution
 };
 
-const NUMBER_OF_BINS: usize = 1000;
+const NUMBER_OF_BINS: usize = 1_000;
 const NUMBER_OF_LINKS: usize = 8;
-const NUMBER_OF_SAMPLES: usize = 10000000;
+const NUMBER_OF_SAMPLES: usize = 10_000_000;
 const TOL: f64 = 5e-2;
 
 #[test]

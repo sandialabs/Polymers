@@ -49,12 +49,14 @@ Copyright 2022 National Technology & Engineering Solutions of Sandia, LLC (NTESS
    :hidden:
    :caption: Modules
 
+   Constitutive <constitutive>
    Physics <physics>
 
 .. toctree::
    :hidden:
    :caption: Examples
 
+   Constitutive <constitutive/examples>
    Physics <physics/examples>
 
 .. toctree::
