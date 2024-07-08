@@ -107,7 +107,7 @@ impl BucheSilberstein
                 &self.element, &self.factor, &self.grid, &self.normalization, &self.method,
                 &self.nondimensional_critical_extension, &self.nondimensional_link_stiffness,
                 &self.number_of_links, &self.swelling_ratio,
-                &stretch, &maximum_previous_stretch
+                stretch, &maximum_previous_stretch
             )
         }).collect::<Vec<[f64; 2]>>();
         let results_1 = results.iter().map(|result| result[0]).collect();
