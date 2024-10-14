@@ -1,6 +1,6 @@
 [build-system]
-requires = ["maturin==1.7.4"]
 build-backend = "maturin"
+requires = ["maturin"]
 
 [project]
 name = "polymers"
@@ -9,12 +9,8 @@ authors = [
   {email = "mrbuche@sandia.gov"},
   {name = "Michael R. Buche"}
 ]
-requires-python = ">=3.8,<3.13"
-dependencies = [
-  "cffi==1.16.0",
-  "maturin==1.7.4",
-  "numpy"
-]
+requires-python = ">=3.8,<=3.13"
+dependencies = ["numpy"]
 classifiers = [
     'License :: OSI Approved :: BSD License',
     'Development Status :: 5 - Production/Stable',
