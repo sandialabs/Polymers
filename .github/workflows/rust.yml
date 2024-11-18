@@ -36,7 +36,7 @@ jobs:
         uses: actions-rs/grcov@v0.1.6
       - name: codecov
         if: runner.os == 'Linux'
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           flags: rust
