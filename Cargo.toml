@@ -14,7 +14,7 @@ extern = []
 python = ["dep:numpy", "dep:pyo3"]
 
 [dependencies]
-numpy = {version = "=0.19", optional = true}
+numpy = {version = "=0.26", optional = true}
 pyo3 = {version = "=0.19", features = ["extension-module"], optional = true}
 rand = "=0.9.2"
 rand_distr = "=0.4.3"
