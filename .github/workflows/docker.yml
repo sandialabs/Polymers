@@ -25,7 +25,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v6
       - name: login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: mrbuche
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -46,12 +46,12 @@ jobs:
       - name: checkout
         uses: actions/checkout@v6
       - name: login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: mrbuche
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
